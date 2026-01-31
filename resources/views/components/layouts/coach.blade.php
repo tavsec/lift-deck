@@ -187,8 +187,10 @@
         </div>
 
         <!-- Main Content -->
-        <main class="mt-14 md:mt-0 md:ml-64">
-            {{ $slot }}
+        <main class="mt-14 md:mt-0 md:ml-64 min-h-screen">
+            <div class="p-4 sm:p-6 lg:p-8">
+                {{ $slot }}
+            </div>
         </main>
 
         <!-- BladewindUI JS -->
