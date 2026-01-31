@@ -16,6 +16,23 @@ Route::middleware(['auth', 'verified', 'role:coach'])
         Route::get('/', Coach\DashboardController::class)->name('dashboard');
         Route::resource('clients', Coach\ClientController::class);
         Route::resource('programs', Coach\ProgramController::class);
+
+        // Program workout routes
+        Route::post('programs/{program}/workouts', [Coach\ProgramController::class, 'addWorkout'])->name('programs.workouts.store');
+        Route::put('programs/{program}/workouts/{workout}', [Coach\ProgramController::class, 'updateWorkout'])->name('programs.workouts.update');
+        Route::delete('programs/{program}/workouts/{workout}', [Coach\ProgramController::class, 'deleteWorkout'])->name('programs.workouts.destroy');
+
+        // Program exercise routes
+        Route::post('programs/{program}/workouts/{workout}/exercises', [Coach\ProgramController::class, 'addExercise'])->name('programs.exercises.store');
+        Route::put('programs/{program}/exercises/{workoutExercise}', [Coach\ProgramController::class, 'updateExercise'])->name('programs.exercises.update');
+        Route::delete('programs/{program}/exercises/{workoutExercise}', [Coach\ProgramController::class, 'deleteExercise'])->name('programs.exercises.destroy');
+        Route::post('programs/{program}/exercises/{workoutExercise}/move-up', [Coach\ProgramController::class, 'moveExerciseUp'])->name('programs.exercises.move-up');
+        Route::post('programs/{program}/exercises/{workoutExercise}/move-down', [Coach\ProgramController::class, 'moveExerciseDown'])->name('programs.exercises.move-down');
+
+        // Program assignment routes
+        Route::get('programs/{program}/assign', [Coach\ProgramController::class, 'assignForm'])->name('programs.assign');
+        Route::post('programs/{program}/assign', [Coach\ProgramController::class, 'assign'])->name('programs.assign.store');
+
         Route::resource('exercises', Coach\ExerciseController::class);
         Route::get('messages', [Coach\MessageController::class, 'index'])->name('messages.index');
         Route::get('messages/{user}', [Coach\MessageController::class, 'show'])->name('messages.show');

@@ -6,6 +6,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -86,5 +87,45 @@ class User extends Authenticatable
     public function isClient(): bool
     {
         return $this->role === 'client';
+    }
+
+    /**
+     * Get the client profile for this user.
+     */
+    public function clientProfile(): HasOne
+    {
+        return $this->hasOne(ClientProfile::class);
+    }
+
+    /**
+     * Get all invitations sent by this coach.
+     */
+    public function sentInvitations(): HasMany
+    {
+        return $this->hasMany(ClientInvitation::class, 'coach_id');
+    }
+
+    /**
+     * Get all programs created by this coach.
+     */
+    public function programs(): HasMany
+    {
+        return $this->hasMany(Program::class, 'coach_id');
+    }
+
+    /**
+     * Get all program assignments for this client.
+     */
+    public function clientPrograms(): HasMany
+    {
+        return $this->hasMany(ClientProgram::class, 'client_id');
+    }
+
+    /**
+     * Get the active program for this client.
+     */
+    public function activeProgram(): ?ClientProgram
+    {
+        return $this->clientPrograms()->active()->first();
     }
 }

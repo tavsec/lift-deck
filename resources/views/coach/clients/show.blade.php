@@ -1,0 +1,168 @@
+<x-layouts.coach>
+    <x-slot:title>{{ $client->name }}</x-slot:title>
+
+    <div class="space-y-6">
+        <!-- Header -->
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <div>
+                <a href="{{ route('coach.clients.index') }}" class="inline-flex items-center text-sm text-gray-500 hover:text-gray-700 mb-4">
+                    <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                    </svg>
+                    Back to Clients
+                </a>
+                <div class="flex items-center gap-4">
+                    <div class="h-16 w-16 rounded-full bg-blue-100 flex items-center justify-center">
+                        <span class="text-2xl font-bold text-blue-700">{{ strtoupper(substr($client->name, 0, 1)) }}</span>
+                    </div>
+                    <div>
+                        <h1 class="text-2xl font-bold text-gray-900">{{ $client->name }}</h1>
+                        <p class="text-sm text-gray-500">{{ $client->email }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="flex gap-2">
+                <a href="{{ route('coach.clients.edit', $client) }}" class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md font-medium text-sm text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition ease-in-out duration-150">
+                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+                    </svg>
+                    Edit
+                </a>
+                <form method="POST" action="{{ route('coach.clients.destroy', $client) }}" onsubmit="return confirm('Are you sure you want to remove this client?');">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="inline-flex items-center px-4 py-2 border border-red-300 rounded-md font-medium text-sm text-red-700 bg-white hover:bg-red-50 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition ease-in-out duration-150">
+                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                        </svg>
+                        Remove
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        @if(session('success'))
+            <div class="rounded-md bg-green-50 p-4">
+                <div class="flex">
+                    <div class="flex-shrink-0">
+                        <svg class="h-5 w-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                    </div>
+                    <div class="ml-3">
+                        <p class="text-sm font-medium text-green-800">{{ session('success') }}</p>
+                    </div>
+                </div>
+            </div>
+        @endif
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <!-- Client Info -->
+            <div class="lg:col-span-1 space-y-6">
+                <!-- Status Card -->
+                <div class="bg-white rounded-lg shadow p-6">
+                    <h2 class="text-lg font-medium text-gray-900 mb-4">Status</h2>
+                    <div class="space-y-4">
+                        <div>
+                            <span class="text-sm text-gray-500">Onboarding</span>
+                            <div class="mt-1">
+                                @if($client->clientProfile?->isOnboardingComplete())
+                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                        <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                                        </svg>
+                                        Complete
+                                    </span>
+                                @else
+                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                                        <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/>
+                                        </svg>
+                                        Pending
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+                        <div>
+                            <span class="text-sm text-gray-500">Member since</span>
+                            <p class="mt-1 text-sm font-medium text-gray-900">{{ $client->created_at->format('M d, Y') }}</p>
+                        </div>
+                        @if($client->phone)
+                        <div>
+                            <span class="text-sm text-gray-500">Phone</span>
+                            <p class="mt-1 text-sm font-medium text-gray-900">{{ $client->phone }}</p>
+                        </div>
+                        @endif
+                    </div>
+                </div>
+
+                <!-- Profile Card -->
+                @if($client->clientProfile)
+                <div class="bg-white rounded-lg shadow p-6">
+                    <h2 class="text-lg font-medium text-gray-900 mb-4">Profile</h2>
+                    <div class="space-y-4">
+                        @if($client->clientProfile->goal)
+                        <div>
+                            <span class="text-sm text-gray-500">Goal</span>
+                            <p class="mt-1">
+                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium
+                                    @if($client->clientProfile->goal === 'fat_loss') bg-orange-100 text-orange-800
+                                    @elseif($client->clientProfile->goal === 'strength') bg-blue-100 text-blue-800
+                                    @else bg-green-100 text-green-800 @endif">
+                                    {{ str_replace('_', ' ', ucfirst($client->clientProfile->goal)) }}
+                                </span>
+                            </p>
+                        </div>
+                        @endif
+                        @if($client->clientProfile->experience_level)
+                        <div>
+                            <span class="text-sm text-gray-500">Experience Level</span>
+                            <p class="mt-1 text-sm font-medium text-gray-900">{{ ucfirst($client->clientProfile->experience_level) }}</p>
+                        </div>
+                        @endif
+                        @if($client->clientProfile->injuries)
+                        <div>
+                            <span class="text-sm text-gray-500">Injuries / Limitations</span>
+                            <p class="mt-1 text-sm text-gray-900">{{ $client->clientProfile->injuries }}</p>
+                        </div>
+                        @endif
+                        @if($client->clientProfile->equipment_access)
+                        <div>
+                            <span class="text-sm text-gray-500">Equipment Access</span>
+                            <p class="mt-1 text-sm text-gray-900">{{ $client->clientProfile->equipment_access }}</p>
+                        </div>
+                        @endif
+                    </div>
+                </div>
+                @endif
+            </div>
+
+            <!-- Main Content -->
+            <div class="lg:col-span-2 space-y-6">
+                <!-- Active Program -->
+                <div class="bg-white rounded-lg shadow p-6">
+                    <h2 class="text-lg font-medium text-gray-900 mb-4">Active Program</h2>
+                    <div class="text-center py-8">
+                        <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+                        </svg>
+                        <p class="mt-2 text-sm text-gray-500">No active program assigned</p>
+                        <p class="mt-1 text-xs text-gray-400">Program assignment coming soon</p>
+                    </div>
+                </div>
+
+                <!-- Recent Activity -->
+                <div class="bg-white rounded-lg shadow p-6">
+                    <h2 class="text-lg font-medium text-gray-900 mb-4">Recent Activity</h2>
+                    <div class="text-center py-8">
+                        <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                        </svg>
+                        <p class="mt-2 text-sm text-gray-500">No recent activity</p>
+                        <p class="mt-1 text-xs text-gray-400">Activity tracking coming soon</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</x-layouts.coach>
