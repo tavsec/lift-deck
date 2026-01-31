@@ -36,6 +36,8 @@ Route::middleware(['auth', 'verified', 'role:coach'])
         Route::resource('exercises', Coach\ExerciseController::class);
         Route::get('messages', [Coach\MessageController::class, 'index'])->name('messages.index');
         Route::get('messages/{user}', [Coach\MessageController::class, 'show'])->name('messages.show');
+        Route::post('messages/{user}', [Coach\MessageController::class, 'store'])->name('messages.store');
+        Route::get('messages/{user}/poll', [Coach\MessageController::class, 'poll'])->name('messages.poll');
     });
 
 // Client routes
@@ -48,6 +50,8 @@ Route::middleware(['auth', 'verified', 'role:client'])
         Route::get('log', [Client\LogController::class, 'index'])->name('log');
         Route::get('history', [Client\HistoryController::class, 'index'])->name('history');
         Route::get('messages', [Client\MessageController::class, 'index'])->name('messages');
+        Route::post('messages', [Client\MessageController::class, 'store'])->name('messages.store');
+        Route::get('messages/poll', [Client\MessageController::class, 'poll'])->name('messages.poll');
     });
 
 require __DIR__.'/auth.php';

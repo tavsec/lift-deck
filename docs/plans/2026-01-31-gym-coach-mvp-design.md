@@ -1,7 +1,7 @@
 # Gym Coach MVP - Design Document
 
 **Date:** 2026-01-31
-**Status:** Approved
+**Status:** In Progress (5/6 phases complete)
 **Scope:** V1 MVP - Core coaching flow
 
 ## Overview
@@ -271,40 +271,40 @@ When client registers via invite:
 
 ## Implementation Phases
 
-### Phase 1: Foundation
+### Phase 1: Foundation ✅
 
-- [ ] Extend User model (role, coach_id, profile fields)
-- [ ] Create all migrations
-- [ ] Role middleware
-- [ ] Coach and client layouts (Blade + BladewindUI)
-- [ ] Coach registration
-- [ ] Basic dashboard shells
+- [x] Extend User model (role, coach_id, profile fields)
+- [x] Create all migrations
+- [x] Role middleware
+- [x] Coach and client layouts (Blade + Tailwind CSS)
+- [x] Coach registration
+- [x] Basic dashboard shells
 
-### Phase 2: Client Management
+### Phase 2: Client Management ✅
 
-- [ ] Client invitation system
+- [x] Client invitation system
 - [ ] Client registration from invite
 - [ ] Client onboarding form
-- [ ] Client list view
-- [ ] Client detail page
+- [x] Client list view
+- [x] Client detail page
 
-### Phase 3: Exercise Library
+### Phase 3: Exercise Library ✅
 
-- [ ] Exercise model and migration
-- [ ] Research public exercise API/database
-- [ ] Seed ~50 exercises
-- [ ] Exercise list with search/filter
-- [ ] Add custom exercise
-- [ ] Exercise detail with video
+- [x] Exercise model and migration
+- [x] Research public exercise API/database
+- [x] Seed ~50 exercises (51 exercises seeded)
+- [x] Exercise list with search/filter
+- [x] Add custom exercise
+- [x] Exercise detail with video
 
-### Phase 4: Program Builder
+### Phase 4: Program Builder ✅
 
-- [ ] Program CRUD
-- [ ] Workout (day) management
-- [ ] Add exercises to workouts
-- [ ] Reorder functionality
-- [ ] Save as template
-- [ ] Assign program to client
+- [x] Program CRUD
+- [x] Workout (day) management
+- [x] Add exercises to workouts
+- [x] Reorder functionality
+- [x] Save as template
+- [x] Assign program to client
 
 ### Phase 5: Client Workout Experience
 
@@ -313,13 +313,13 @@ When client registers via invite:
 - [ ] Workout logging form
 - [ ] Workout history view
 
-### Phase 6: Messaging
+### Phase 6: Messaging ✅
 
-- [ ] Message model
-- [ ] Coach inbox
-- [ ] Chat thread with Livewire polling
-- [ ] Unread indicators
-- [ ] Client messaging view
+- [x] Message model
+- [x] Coach inbox
+- [x] Chat thread with JS polling (10 seconds)
+- [x] Unread indicators
+- [x] Client messaging view
 
 ## Notes
 

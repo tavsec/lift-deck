@@ -128,4 +128,28 @@ class User extends Authenticatable
     {
         return $this->clientPrograms()->active()->first();
     }
+
+    /**
+     * Get all messages sent by this user.
+     */
+    public function sentMessages(): HasMany
+    {
+        return $this->hasMany(Message::class, 'sender_id');
+    }
+
+    /**
+     * Get all messages received by this user.
+     */
+    public function receivedMessages(): HasMany
+    {
+        return $this->hasMany(Message::class, 'receiver_id');
+    }
+
+    /**
+     * Get unread message count.
+     */
+    public function unreadMessagesCount(): int
+    {
+        return $this->receivedMessages()->unread()->count();
+    }
 }
