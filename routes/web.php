@@ -1,20 +1,36 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Client;
+use App\Http\Controllers\Coach;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// Coach routes
+Route::middleware(['auth', 'verified', 'role:coach'])
+    ->prefix('coach')
+    ->name('coach.')
+    ->group(function () {
+        Route::get('/', Coach\DashboardController::class)->name('dashboard');
+        Route::resource('clients', Coach\ClientController::class);
+        Route::resource('programs', Coach\ProgramController::class);
+        Route::resource('exercises', Coach\ExerciseController::class);
+        Route::get('messages', [Coach\MessageController::class, 'index'])->name('messages.index');
+        Route::get('messages/{user}', [Coach\MessageController::class, 'show'])->name('messages.show');
+    });
 
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
+// Client routes
+Route::middleware(['auth', 'verified', 'role:client'])
+    ->prefix('client')
+    ->name('client.')
+    ->group(function () {
+        Route::get('/', Client\DashboardController::class)->name('dashboard');
+        Route::get('program', [Client\ProgramController::class, 'index'])->name('program');
+        Route::get('log', [Client\LogController::class, 'index'])->name('log');
+        Route::get('history', [Client\HistoryController::class, 'index'])->name('history');
+        Route::get('messages', [Client\MessageController::class, 'index'])->name('messages');
+    });
 
 require __DIR__.'/auth.php';
