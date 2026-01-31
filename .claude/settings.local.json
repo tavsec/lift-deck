@@ -15,7 +15,8 @@
       "Bash(php artisan:*)",
       "Bash(vendor/bin/pint:*)",
       "Bash(composer require:*)",
-      "mcp__laravel-boost__list-routes"
+      "mcp__laravel-boost__list-routes",
+      "mcp__laravel-boost__database-query"
     ]
   },
   "enabledMcpjsonServers": [
