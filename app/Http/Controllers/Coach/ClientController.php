@@ -47,48 +47,21 @@ class ClientController extends Controller
     }
 
     /**
-     * Store a newly created invitation.
+     * Generate a new invitation code.
      */
     public function store(Request $request): RedirectResponse
     {
-        $validated = $request->validate([
-            'email' => ['required', 'email', 'max:255'],
-            'name' => ['nullable', 'string', 'max:255'],
-        ]);
-
         $coach = auth()->user();
 
-        // Check if client already exists for this coach
-        $existingClient = User::where('email', $validated['email'])
-            ->where('coach_id', $coach->id)
-            ->first();
-
-        if ($existingClient) {
-            return back()->withErrors(['email' => 'This email is already registered as your client.']);
-        }
-
-        // Check for pending invitation
-        $existingInvitation = ClientInvitation::where('email', $validated['email'])
-            ->where('coach_id', $coach->id)
-            ->whereNull('accepted_at')
-            ->where('expires_at', '>', now())
-            ->first();
-
-        if ($existingInvitation) {
-            return back()->withErrors(['email' => 'An invitation is already pending for this email.']);
-        }
-
-        // Create invitation
-        ClientInvitation::create([
+        $invitation = ClientInvitation::create([
             'coach_id' => $coach->id,
-            'email' => $validated['email'],
-            'name' => $validated['name'],
-            'token' => ClientInvitation::generateToken(),
+            'token' => ClientInvitation::generateUniqueToken(),
             'expires_at' => now()->addDays(7),
         ]);
 
         return redirect()->route('coach.clients.index')
-            ->with('success', 'Invitation sent successfully!');
+            ->with('success', 'Invitation code generated!')
+            ->with('invitation_code', $invitation->token);
     }
 
     /**
