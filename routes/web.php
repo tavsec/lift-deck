@@ -8,6 +8,13 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+// Client registration via invitation code
+Route::middleware('guest')->group(function () {
+    Route::get('join', [App\Http\Controllers\Auth\ClientRegistrationController::class, 'showCodeForm'])->name('join');
+    Route::get('join/{code}', [App\Http\Controllers\Auth\ClientRegistrationController::class, 'showRegistrationForm'])->name('join.code');
+    Route::post('join', [App\Http\Controllers\Auth\ClientRegistrationController::class, 'register'])->name('join.register');
+});
+
 // Coach routes
 Route::middleware(['auth', 'verified', 'role:coach'])
     ->prefix('coach')
@@ -46,6 +53,10 @@ Route::middleware(['auth', 'verified', 'role:client'])
     ->name('client.')
     ->group(function () {
         Route::get('/', Client\DashboardController::class)->name('dashboard');
+        Route::get('welcome', [Client\OnboardingController::class, 'welcome'])->name('welcome');
+        Route::get('onboarding', [Client\OnboardingController::class, 'show'])->name('onboarding');
+        Route::post('onboarding', [Client\OnboardingController::class, 'store'])->name('onboarding.store');
+        Route::post('onboarding/skip', [Client\OnboardingController::class, 'skip'])->name('onboarding.skip');
         Route::get('program', [Client\ProgramController::class, 'index'])->name('program');
         Route::get('log', [Client\LogController::class, 'index'])->name('log');
         Route::get('history', [Client\HistoryController::class, 'index'])->name('history');
