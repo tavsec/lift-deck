@@ -12,7 +12,7 @@
                 <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
                 </svg>
-                Invite Client
+                Generate Code
             </a>
         </div>
 
@@ -26,6 +26,55 @@
                     </div>
                     <div class="ml-3">
                         <p class="text-sm font-medium text-green-800">{{ session('success') }}</p>
+                    </div>
+                </div>
+            </div>
+        @endif
+
+        @if(session('invitation_code'))
+            <div x-data="{ open: true }" x-show="open" class="fixed inset-0 z-50 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+                <div class="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:p-0">
+                    <div x-show="open" class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" @click="open = false"></div>
+
+                    <div x-show="open" class="inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:p-6">
+                        <div>
+                            <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-green-100">
+                                <svg class="h-6 w-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                                </svg>
+                            </div>
+                            <div class="mt-3 text-center sm:mt-5">
+                                <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">Invitation Code Generated</h3>
+                                <div class="mt-4">
+                                    <p class="text-sm text-gray-500 mb-4">Share this code with your client to let them register:</p>
+                                    <div class="bg-gray-100 rounded-lg p-4 mb-4">
+                                        <p id="invitation-code" class="text-3xl font-mono font-bold tracking-wider text-gray-900">{{ session('invitation_code') }}</p>
+                                    </div>
+                                    <button onclick="navigator.clipboard.writeText('{{ session('invitation_code') }}')" class="inline-flex items-center px-3 py-2 border border-gray-300 shadow-sm text-sm leading-4 font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                                        <svg class="h-4 w-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                                        </svg>
+                                        Copy Code
+                                    </button>
+                                </div>
+                                <div class="mt-4 pt-4 border-t border-gray-200">
+                                    <p class="text-sm text-gray-500 mb-2">Or share this link:</p>
+                                    <div class="flex items-center gap-2">
+                                        <input type="text" readonly value="{{ url('/join/' . session('invitation_code')) }}" class="flex-1 text-sm rounded-md border-gray-300 bg-gray-50">
+                                        <button onclick="navigator.clipboard.writeText('{{ url('/join/' . session('invitation_code')) }}')" class="inline-flex items-center px-3 py-2 border border-gray-300 shadow-sm text-sm leading-4 font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                                            <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-5 sm:mt-6">
+                            <button @click="open = false" class="inline-flex justify-center w-full rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:text-sm">
+                                Done
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -50,9 +99,13 @@
                 <div class="space-y-2">
                     @foreach($pendingInvitations as $invitation)
                         <div class="flex items-center justify-between bg-white rounded-md p-3 border border-yellow-200">
-                            <div>
-                                <p class="text-sm font-medium text-gray-900">{{ $invitation->name ?? 'No name' }}</p>
-                                <p class="text-xs text-gray-500">{{ $invitation->email }}</p>
+                            <div class="flex items-center gap-4">
+                                <span class="font-mono font-bold text-gray-900 bg-gray-100 px-2 py-1 rounded">{{ $invitation->token }}</span>
+                                <button onclick="navigator.clipboard.writeText('{{ $invitation->token }}')" class="text-gray-400 hover:text-gray-600" title="Copy code">
+                                    <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                                    </svg>
+                                </button>
                             </div>
                             <div class="text-xs text-gray-500">
                                 Expires {{ $invitation->expires_at->diffForHumans() }}
@@ -139,7 +192,7 @@
                             <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
                             </svg>
-                            Invite Client
+                            Generate Code
                         </a>
                     </div>
                 </div>
