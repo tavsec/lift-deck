@@ -23,6 +23,7 @@ Route::middleware(['auth', 'verified', 'role:coach'])
         Route::get('/', Coach\DashboardController::class)->name('dashboard');
         Route::resource('clients', Coach\ClientController::class);
         Route::get('clients/{client}/workout-log/{workoutLog}', [Coach\ClientController::class, 'workoutLog'])->name('clients.workout-log');
+        Route::post('clients/{client}/workout-log/{workoutLog}/comment', [Coach\ClientController::class, 'workoutLogComment'])->name('clients.workout-log.comment');
         Route::resource('programs', Coach\ProgramController::class);
 
         // Program workout routes
@@ -64,6 +65,7 @@ Route::middleware(['auth', 'verified', 'role:client'])
         Route::post('log', [Client\LogController::class, 'store'])->name('log.store');
         Route::get('history', [Client\HistoryController::class, 'index'])->name('history');
         Route::get('history/{workoutLog}', [Client\HistoryController::class, 'show'])->name('history.show');
+        Route::post('history/{workoutLog}/comment', [Client\HistoryController::class, 'comment'])->name('history.comment');
         Route::get('messages', [Client\MessageController::class, 'index'])->name('messages');
         Route::post('messages', [Client\MessageController::class, 'store'])->name('messages.store');
         Route::get('messages/poll', [Client\MessageController::class, 'poll'])->name('messages.poll');

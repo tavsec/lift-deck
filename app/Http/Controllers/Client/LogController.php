@@ -63,7 +63,7 @@ class LogController extends Controller
             'client_id' => $user->id,
             'client_program_id' => $activeProgram->id,
             'program_workout_id' => $workout->id,
-            'completed_at' => now(),
+            'completed_at' => $validated['completed_at'] ?? now(),
             'notes' => $validated['notes'] ?? null,
         ]);
 

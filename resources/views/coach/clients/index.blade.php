@@ -140,7 +140,12 @@
                                             </div>
                                         </div>
                                         <div class="ml-4">
-                                            <div class="text-sm font-medium text-gray-900">{{ $client->name }}</div>
+                                            <div class="flex items-center gap-2">
+                                                <span class="text-sm font-medium text-gray-900">{{ $client->name }}</span>
+                                                @if($clientIdsWithUnread->contains($client->id))
+                                                    <span class="flex h-2 w-2 rounded-full bg-blue-500" title="Unread comments"></span>
+                                                @endif
+                                            </div>
                                             <div class="text-sm text-gray-500">{{ $client->email }}</div>
                                         </div>
                                     </div>

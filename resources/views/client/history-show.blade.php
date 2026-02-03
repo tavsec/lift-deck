@@ -67,5 +67,11 @@
                 </div>
             </x-bladewind::card>
         @endforeach
+
+        <!-- Comments -->
+        <x-workout-log-comments
+            :workout-log="$workoutLog"
+            :comment-route="route('client.history.comment', $workoutLog)"
+        />
     </div>
 </x-layouts.client>

@@ -92,6 +92,23 @@
                     </x-bladewind::card>
                 @endforeach
 
+                <!-- Date & Time -->
+                <x-bladewind::card class="!p-4">
+                    <label for="completed_at" class="block text-sm font-medium text-gray-700 mb-1">Date & Time</label>
+                    <input
+                        type="datetime-local"
+                        id="completed_at"
+                        name="completed_at"
+                        value="{{ old('completed_at', now()->format('Y-m-d\TH:i')) }}"
+                        max="{{ now()->format('Y-m-d\TH:i') }}"
+                        class="w-full rounded-md border-gray-300 shadow-sm text-sm focus:border-blue-500 focus:ring-blue-500 @error('completed_at') border-red-300 @enderror"
+                    >
+                    @error('completed_at')
+                        <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
+                    @enderror
+                    <p class="mt-1 text-xs text-gray-500">Defaults to now. Change if logging a past workout.</p>
+                </x-bladewind::card>
+
                 <!-- Notes -->
                 <x-bladewind::card class="!p-4">
                     <label for="notes" class="block text-sm font-medium text-gray-700 mb-1">Notes (optional)</label>

@@ -23,6 +23,7 @@ class StoreWorkoutLogRequest extends FormRequest
     {
         return [
             'program_workout_id' => ['required', 'exists:program_workouts,id'],
+            'completed_at' => ['nullable', 'date', 'before_or_equal:now'],
             'notes' => ['nullable', 'string', 'max:1000'],
             'exercises' => ['required', 'array'],
             'exercises.*.workout_exercise_id' => ['required', 'exists:workout_exercises,id'],

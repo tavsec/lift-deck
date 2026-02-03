@@ -70,5 +70,11 @@
                 </div>
             </div>
         @endforeach
+
+        <!-- Comments -->
+        <x-workout-log-comments
+            :workout-log="$workoutLog"
+            :comment-route="route('coach.clients.workout-log.comment', [$client, $workoutLog])"
+        />
     </div>
 </x-layouts.coach>

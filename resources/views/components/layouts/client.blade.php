@@ -25,6 +25,7 @@
                 <span class="text-lg font-semibold text-gray-900">
                     {{ auth()->user()->coach?->gym_name ?? 'My Training' }}
                 </span>
+                @php $unreadNotificationCount = auth()->user()->unreadNotifications()->count(); @endphp
                 <div class="flex items-center space-x-3">
                     <a href="{{ route('client.messages') }}" class="p-2 rounded-md text-gray-600 hover:text-gray-900 hover:bg-gray-100">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -77,7 +78,10 @@
                     </a>
 
                     <!-- History Tab -->
-                    <a href="{{ route('client.history') }}" class="flex flex-col items-center justify-center py-3 {{ request()->routeIs('client.history') ? 'text-blue-600' : 'text-gray-500' }}">
+                    <a href="{{ route('client.history') }}" class="relative flex flex-col items-center justify-center py-3 {{ request()->routeIs('client.history*') ? 'text-blue-600' : 'text-gray-500' }}">
+                        @if($unreadNotificationCount > 0)
+                            <span class="absolute top-2 right-1/4 flex h-4 w-4 items-center justify-center rounded-full bg-red-500 text-[10px] font-bold text-white">{{ $unreadNotificationCount > 9 ? '9+' : $unreadNotificationCount }}</span>
+                        @endif
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                         </svg>

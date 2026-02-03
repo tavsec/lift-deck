@@ -46,4 +46,9 @@ class WorkoutLog extends Model
     {
         return $this->hasMany(ExerciseLog::class)->orderBy('workout_exercise_id')->orderBy('set_number');
     }
+
+    public function comments(): HasMany
+    {
+        return $this->hasMany(WorkoutLogComment::class)->orderBy('created_at');
+    }
 }
