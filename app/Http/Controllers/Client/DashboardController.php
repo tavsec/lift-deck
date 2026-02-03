@@ -11,8 +11,11 @@ class DashboardController extends Controller
     {
         $user = auth()->user();
 
+        $activeProgram = $user->activeProgram()?->load('program');
+
         return view('client.dashboard', [
             'coach' => $user->coach,
+            'activeProgram' => $activeProgram,
         ]);
     }
 }

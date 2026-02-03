@@ -74,9 +74,13 @@ class ClientController extends Controller
             abort(403);
         }
 
-        $client->load('clientProfile');
+        $client->load(['clientProfile', 'clientPrograms' => function ($query) {
+            $query->active()->with('program');
+        }]);
 
-        return view('coach.clients.show', compact('client'));
+        $activeProgram = $client->clientPrograms->first();
+
+        return view('coach.clients.show', compact('client', 'activeProgram'));
     }
 
     /**

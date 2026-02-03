@@ -9,6 +9,12 @@ class ProgramController extends Controller
 {
     public function index(): View
     {
-        return view('client.program');
+        $user = auth()->user();
+
+        $activeProgram = $user->activeProgram()?->load('program.workouts.exercises.exercise');
+
+        return view('client.program', [
+            'activeProgram' => $activeProgram,
+        ]);
     }
 }
