@@ -177,16 +177,31 @@
                     @endif
                 </div>
 
-                <!-- Recent Activity -->
+                <!-- Recent Workouts -->
                 <div class="bg-white rounded-lg shadow p-6">
-                    <h2 class="text-lg font-medium text-gray-900 mb-4">Recent Activity</h2>
-                    <div class="text-center py-8">
-                        <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
-                        </svg>
-                        <p class="mt-2 text-sm text-gray-500">No recent activity</p>
-                        <p class="mt-1 text-xs text-gray-400">Activity tracking coming soon</p>
-                    </div>
+                    <h2 class="text-lg font-medium text-gray-900 mb-4">Recent Workouts</h2>
+                    @if($recentWorkoutLogs->count() > 0)
+                        <div class="divide-y divide-gray-200">
+                            @foreach($recentWorkoutLogs as $log)
+                                <a href="{{ route('coach.clients.workout-log', [$client, $log]) }}" class="flex items-center justify-between py-3 hover:bg-gray-50 -mx-2 px-2 rounded transition-colors">
+                                    <div>
+                                        <p class="text-sm font-medium text-gray-900">{{ $log->programWorkout->name }}</p>
+                                        <p class="text-xs text-gray-500">{{ $log->completed_at->format('M j, Y \a\t g:i A') }}</p>
+                                    </div>
+                                    <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                                    </svg>
+                                </a>
+                            @endforeach
+                        </div>
+                    @else
+                        <div class="text-center py-8">
+                            <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                            </svg>
+                            <p class="mt-2 text-sm text-gray-500">No workouts logged yet</p>
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>

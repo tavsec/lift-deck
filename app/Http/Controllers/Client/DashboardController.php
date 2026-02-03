@@ -13,9 +13,23 @@ class DashboardController extends Controller
 
         $activeProgram = $user->activeProgram()?->load('program');
 
+        $weeklyWorkoutCount = $user->workoutLogs()
+            ->where('completed_at', '>=', now()->startOfWeek())
+            ->count();
+
+        $weeklyWorkoutTarget = $activeProgram?->program?->workouts()?->count() ?? 0;
+
+        $lastWorkout = $user->workoutLogs()
+            ->with('programWorkout')
+            ->latest('completed_at')
+            ->first();
+
         return view('client.dashboard', [
             'coach' => $user->coach,
             'activeProgram' => $activeProgram,
+            'weeklyWorkoutCount' => $weeklyWorkoutCount,
+            'weeklyWorkoutTarget' => $weeklyWorkoutTarget,
+            'lastWorkout' => $lastWorkout,
         ]);
     }
 }

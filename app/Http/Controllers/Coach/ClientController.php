@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Coach;
 use App\Http\Controllers\Controller;
 use App\Models\ClientInvitation;
 use App\Models\User;
+use App\Models\WorkoutLog;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -80,7 +81,35 @@ class ClientController extends Controller
 
         $activeProgram = $client->clientPrograms->first();
 
-        return view('coach.clients.show', compact('client', 'activeProgram'));
+        $recentWorkoutLogs = $client->workoutLogs()
+            ->with('programWorkout')
+            ->latest('completed_at')
+            ->limit(5)
+            ->get();
+
+        return view('coach.clients.show', compact('client', 'activeProgram', 'recentWorkoutLogs'));
+    }
+
+    /**
+     * Display a client's workout log detail.
+     */
+    public function workoutLog(User $client, WorkoutLog $workoutLog): View
+    {
+        if ($client->coach_id !== auth()->id()) {
+            abort(403);
+        }
+
+        if ($workoutLog->client_id !== $client->id) {
+            abort(403);
+        }
+
+        $workoutLog->load([
+            'programWorkout',
+            'exerciseLogs.exercise',
+            'exerciseLogs.workoutExercise',
+        ]);
+
+        return view('coach.clients.workout-log', compact('client', 'workoutLog'));
     }
 
     /**

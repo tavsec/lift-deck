@@ -130,6 +130,14 @@ class User extends Authenticatable
     }
 
     /**
+     * Get all workout logs for this client.
+     */
+    public function workoutLogs(): HasMany
+    {
+        return $this->hasMany(WorkoutLog::class, 'client_id');
+    }
+
+    /**
      * Get all messages sent by this user.
      */
     public function sentMessages(): HasMany

@@ -52,17 +52,21 @@
             <x-bladewind::card>
                 <div class="space-y-2">
                     <h3 class="text-sm font-medium text-gray-600">This Week</h3>
-                    <p class="text-2xl font-bold text-gray-900">0 / 0</p>
+                    <p class="text-2xl font-bold text-gray-900">{{ $weeklyWorkoutCount }} / {{ $weeklyWorkoutTarget }}</p>
                     <p class="text-xs text-gray-500">workouts completed</p>
                 </div>
             </x-bladewind::card>
 
-            <!-- Streak -->
+            <!-- Last Workout -->
             <x-bladewind::card>
                 <div class="space-y-2">
-                    <h3 class="text-sm font-medium text-gray-600">Streak</h3>
-                    <p class="text-2xl font-bold text-gray-900">0</p>
-                    <p class="text-xs text-gray-500">days</p>
+                    <h3 class="text-sm font-medium text-gray-600">Last Workout</h3>
+                    @if($lastWorkout)
+                        <p class="text-sm font-bold text-gray-900">{{ $lastWorkout->programWorkout->name }}</p>
+                        <p class="text-xs text-gray-500">{{ $lastWorkout->completed_at->diffForHumans() }}</p>
+                    @else
+                        <p class="text-sm text-gray-400">None yet</p>
+                    @endif
                 </div>
             </x-bladewind::card>
         </div>

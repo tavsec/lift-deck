@@ -22,6 +22,7 @@ Route::middleware(['auth', 'verified', 'role:coach'])
     ->group(function () {
         Route::get('/', Coach\DashboardController::class)->name('dashboard');
         Route::resource('clients', Coach\ClientController::class);
+        Route::get('clients/{client}/workout-log/{workoutLog}', [Coach\ClientController::class, 'workoutLog'])->name('clients.workout-log');
         Route::resource('programs', Coach\ProgramController::class);
 
         // Program workout routes
@@ -59,7 +60,10 @@ Route::middleware(['auth', 'verified', 'role:client'])
         Route::post('onboarding/skip', [Client\OnboardingController::class, 'skip'])->name('onboarding.skip');
         Route::get('program', [Client\ProgramController::class, 'index'])->name('program');
         Route::get('log', [Client\LogController::class, 'index'])->name('log');
+        Route::get('log/{workout}', [Client\LogController::class, 'create'])->name('log.create');
+        Route::post('log', [Client\LogController::class, 'store'])->name('log.store');
         Route::get('history', [Client\HistoryController::class, 'index'])->name('history');
+        Route::get('history/{workoutLog}', [Client\HistoryController::class, 'show'])->name('history.show');
         Route::get('messages', [Client\MessageController::class, 'index'])->name('messages');
         Route::post('messages', [Client\MessageController::class, 'store'])->name('messages.store');
         Route::get('messages/poll', [Client\MessageController::class, 'poll'])->name('messages.poll');
