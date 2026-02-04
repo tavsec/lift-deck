@@ -109,7 +109,7 @@
                                     <p class="text-sm font-medium text-gray-900 truncate">
                                         {{ $log->client->name }}
                                         <span class="font-normal text-gray-500">completed</span>
-                                        {{ $log->programWorkout->name }}
+                                        {{ $log->displayName() }}
                                     </p>
                                     <p class="text-xs text-gray-500">{{ $log->completed_at->diffForHumans() }}</p>
                                 </div>
@@ -140,7 +140,7 @@
                                     <p class="text-sm text-gray-900">
                                         <span class="font-medium">{{ $comment->user->name }}</span>
                                         <span class="text-gray-500">on</span>
-                                        <span class="font-medium">{{ $comment->workoutLog->programWorkout->name }}</span>
+                                        <span class="font-medium">{{ $comment->workoutLog->displayName() }}</span>
                                     </p>
                                     <p class="text-sm text-gray-600 truncate">{{ $comment->body }}</p>
                                     <p class="text-xs text-gray-500 mt-0.5">{{ $comment->created_at->diffForHumans() }}</p>

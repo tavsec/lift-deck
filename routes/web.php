@@ -61,6 +61,8 @@ Route::middleware(['auth', 'verified', 'role:client'])
         Route::post('onboarding/skip', [Client\OnboardingController::class, 'skip'])->name('onboarding.skip');
         Route::get('program', [Client\ProgramController::class, 'index'])->name('program');
         Route::get('log', [Client\LogController::class, 'index'])->name('log');
+        Route::get('log/custom', [Client\LogController::class, 'createCustom'])->name('log.custom');
+        Route::get('log/exercises', [Client\LogController::class, 'exercises'])->name('log.exercises');
         Route::get('log/{workout}', [Client\LogController::class, 'create'])->name('log.create');
         Route::post('log', [Client\LogController::class, 'store'])->name('log.store');
         Route::get('history', [Client\HistoryController::class, 'index'])->name('history');

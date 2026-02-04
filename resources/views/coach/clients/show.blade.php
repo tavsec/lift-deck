@@ -186,7 +186,7 @@
                                 <a href="{{ route('coach.clients.workout-log', [$client, $log]) }}" class="flex items-center justify-between py-3 hover:bg-gray-50 -mx-2 px-2 rounded transition-colors">
                                     <div>
                                         <div class="flex items-center gap-2">
-                                            <p class="text-sm font-medium text-gray-900">{{ $log->programWorkout->name }}</p>
+                                            <p class="text-sm font-medium text-gray-900">{{ $log->displayName() }}</p>
                                             @if($unreadWorkoutLogIds->contains($log->id))
                                                 <span class="flex h-2 w-2 rounded-full bg-blue-500" title="Unread comments"></span>
                                             @endif

@@ -37,7 +37,7 @@ class WorkoutLogCommented extends Notification implements ShouldQueue
     public function toMail(object $notifiable): MailMessage
     {
         $commenterName = $this->comment->user->name;
-        $workoutName = $this->workoutLog->programWorkout->name;
+        $workoutName = $this->workoutLog->displayName();
 
         $url = $notifiable->isCoach()
             ? route('coach.clients.workout-log', [$this->workoutLog->client_id, $this->workoutLog])
@@ -62,7 +62,7 @@ class WorkoutLogCommented extends Notification implements ShouldQueue
             'comment_id' => $this->comment->id,
             'commenter_id' => $this->comment->user_id,
             'commenter_name' => $this->comment->user->name,
-            'workout_name' => $this->workoutLog->programWorkout->name,
+            'workout_name' => $this->workoutLog->displayName(),
             'body_preview' => str()->limit($this->comment->body, 80),
         ];
     }

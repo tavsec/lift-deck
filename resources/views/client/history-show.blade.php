@@ -1,5 +1,5 @@
 <x-layouts.client>
-    <x-slot:title>{{ $workoutLog->programWorkout->name }}</x-slot:title>
+    <x-slot:title>{{ $workoutLog->displayName() }}</x-slot:title>
 
     <div class="space-y-6">
         <!-- Header -->
@@ -10,7 +10,7 @@
                 </svg>
                 Back to History
             </a>
-            <h1 class="text-2xl font-bold text-gray-900">{{ $workoutLog->programWorkout->name }}</h1>
+            <h1 class="text-2xl font-bold text-gray-900">{{ $workoutLog->displayName() }}</h1>
             <p class="text-sm text-gray-500">{{ $workoutLog->completed_at->format('D, M j, Y \a\t g:i A') }}</p>
         </div>
 
@@ -22,10 +22,10 @@
 
         <!-- Exercise Logs grouped by exercise -->
         @php
-            $grouped = $workoutLog->exerciseLogs->groupBy('workout_exercise_id');
+            $grouped = $workoutLog->exerciseLogs->groupBy('exercise_id');
         @endphp
 
-        @foreach($grouped as $workoutExerciseId => $sets)
+        @foreach($grouped as $exerciseId => $sets)
             @php
                 $firstSet = $sets->first();
             @endphp

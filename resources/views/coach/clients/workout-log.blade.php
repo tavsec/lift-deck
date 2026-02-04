@@ -1,5 +1,5 @@
 <x-layouts.coach>
-    <x-slot:title>{{ $client->name }} - {{ $workoutLog->programWorkout->name }}</x-slot:title>
+    <x-slot:title>{{ $client->name }} - {{ $workoutLog->displayName() }}</x-slot:title>
 
     <div class="space-y-6">
         <!-- Header -->
@@ -10,7 +10,10 @@
                 </svg>
                 Back to {{ $client->name }}
             </a>
-            <h1 class="text-2xl font-bold text-gray-900">{{ $workoutLog->programWorkout->name }}</h1>
+            <h1 class="text-2xl font-bold text-gray-900">{{ $workoutLog->displayName() }}</h1>
+            @if($workoutLog->custom_name)
+                <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-yellow-100 text-yellow-800 mt-1">Custom Workout</span>
+            @endif
             <div class="flex items-center gap-3 mt-1">
                 <p class="text-sm text-gray-500">{{ $workoutLog->completed_at->format('D, M j, Y \a\t g:i A') }}</p>
                 <span class="text-sm text-gray-400">&middot;</span>
@@ -27,10 +30,10 @@
 
         <!-- Exercise Logs grouped by exercise -->
         @php
-            $grouped = $workoutLog->exerciseLogs->groupBy('workout_exercise_id');
+            $grouped = $workoutLog->exerciseLogs->groupBy('exercise_id');
         @endphp
 
-        @foreach($grouped as $workoutExerciseId => $sets)
+        @foreach($grouped as $exerciseId => $sets)
             @php
                 $firstSet = $sets->first();
             @endphp

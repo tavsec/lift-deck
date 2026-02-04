@@ -62,7 +62,7 @@
                 <div class="space-y-2">
                     <h3 class="text-sm font-medium text-gray-600">Last Workout</h3>
                     @if($lastWorkout)
-                        <p class="text-sm font-bold text-gray-900">{{ $lastWorkout->programWorkout->name }}</p>
+                        <p class="text-sm font-bold text-gray-900">{{ $lastWorkout->displayName() }}</p>
                         <p class="text-xs text-gray-500">{{ $lastWorkout->completed_at->diffForHumans() }}</p>
                     @else
                         <p class="text-sm text-gray-400">None yet</p>
