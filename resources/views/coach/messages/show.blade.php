@@ -46,9 +46,8 @@
 
         <!-- Message Input -->
         <div class="pt-4 border-t border-gray-200">
-            <form method="POST" action="{{ route('coach.messages.store', $client) }}" class="flex gap-2">
-                @csrf
-                <input type="text" name="body" required placeholder="Type your message..." autocomplete="off"
+            <form id="message-form" class="flex gap-2">
+                <input type="text" id="message-input" required placeholder="Type your message..." autocomplete="off"
                     class="flex-1 rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
                 <button type="submit" class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-lg font-semibold text-sm text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition ease-in-out duration-150">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -61,13 +60,64 @@
 
     @push('scripts')
     <script>
-        // Auto-scroll to bottom on load
         const container = document.getElementById('messages-container');
+        const form = document.getElementById('message-form');
+        const input = document.getElementById('message-input');
+        const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
         container.scrollTop = container.scrollHeight;
 
-        // Poll for new messages every 10 seconds
         let lastMessageId = {{ $messages->last()?->id ?? 0 }};
 
+        function appendMessage(msg) {
+            // Remove empty state if present
+            const emptyState = container.querySelector('.text-center.py-12');
+            if (emptyState) {
+                emptyState.remove();
+            }
+
+            const div = document.createElement('div');
+            div.className = `flex ${msg.is_mine ? 'justify-end' : 'justify-start'}`;
+            div.innerHTML = `
+                <div class="max-w-xs lg:max-w-md px-4 py-2 rounded-lg ${msg.is_mine ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-900'}">
+                    <p class="text-sm whitespace-pre-wrap">${msg.body}</p>
+                    <p class="text-xs mt-1 ${msg.is_mine ? 'text-blue-200' : 'text-gray-500'}">${msg.created_at}</p>
+                </div>
+            `;
+            container.appendChild(div);
+            container.scrollTop = container.scrollHeight;
+        }
+
+        // Send message via AJAX
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const body = input.value.trim();
+            if (!body) return;
+
+            input.value = '';
+            input.focus();
+
+            try {
+                const response = await fetch(`{{ route('coach.messages.store', $client) }}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                        'X-CSRF-TOKEN': csrfToken,
+                    },
+                    body: JSON.stringify({ body }),
+                });
+
+                const data = await response.json();
+                appendMessage(data.message);
+                lastMessageId = data.message.id;
+            } catch (error) {
+                console.error('Failed to send message:', error);
+                input.value = body;
+            }
+        });
+
+        // Poll for new messages every 5 seconds
         setInterval(async () => {
             try {
                 const response = await fetch(`{{ route('coach.messages.poll', $client) }}?last_id=${lastMessageId}`);
@@ -75,23 +125,14 @@
 
                 if (data.messages.length > 0) {
                     data.messages.forEach(msg => {
-                        const div = document.createElement('div');
-                        div.className = `flex ${msg.is_mine ? 'justify-end' : 'justify-start'}`;
-                        div.innerHTML = `
-                            <div class="max-w-xs lg:max-w-md px-4 py-2 rounded-lg ${msg.is_mine ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-900'}">
-                                <p class="text-sm whitespace-pre-wrap">${msg.body}</p>
-                                <p class="text-xs mt-1 ${msg.is_mine ? 'text-blue-200' : 'text-gray-500'}">${msg.created_at}</p>
-                            </div>
-                        `;
-                        container.appendChild(div);
+                        appendMessage(msg);
                         lastMessageId = msg.id;
                     });
-                    container.scrollTop = container.scrollHeight;
                 }
             } catch (error) {
                 console.error('Failed to poll messages:', error);
             }
-        }, 10000);
+        }, 5000);
     </script>
     @endpush
 </x-layouts.coach>

@@ -93,5 +93,7 @@
 
         <!-- BladewindUI JS -->
         <script src="{{ asset('vendor/bladewind/js/helpers.js') }}"></script>
+
+        @stack('scripts')
     </body>
 </html>

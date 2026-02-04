@@ -28,7 +28,7 @@
                     </svg>
                 </button>
                 <span class="text-lg font-semibold text-gray-900">
-                    {{ auth()->user()->gym_name ?? 'GymCoach' }}
+                    {{ auth()->user()->gym_name ?? 'LiftDeck' }}
                 </span>
                 <div class="w-10"></div>
             </div>
@@ -40,7 +40,7 @@
                 <!-- Brand -->
                 <div class="flex items-center h-16 px-6 border-b border-gray-200">
                     <span class="text-xl font-bold text-gray-900">
-                        {{ auth()->user()->gym_name ?? 'GymCoach' }}
+                        {{ auth()->user()->gym_name ?? 'LiftDeck' }}
                     </span>
                 </div>
 
@@ -121,7 +121,7 @@
                     <!-- Mobile Menu Header -->
                     <div class="flex items-center justify-between h-14 px-4 border-b border-gray-200">
                         <span class="text-lg font-bold text-gray-900">
-                            {{ auth()->user()->gym_name ?? 'GymCoach' }}
+                            {{ auth()->user()->gym_name ?? 'LiftDeck' }}
                         </span>
                         <button onclick="toggleMobileMenu()" class="p-2 rounded-md text-gray-600 hover:text-gray-900 hover:bg-gray-100">
                             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -215,5 +215,7 @@
                 menu.classList.toggle('hidden');
             }
         </script>
+
+        @stack('scripts')
     </body>
 </html>
