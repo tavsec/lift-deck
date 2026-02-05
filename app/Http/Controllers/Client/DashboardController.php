@@ -24,12 +24,20 @@ class DashboardController extends Controller
             ->latest('completed_at')
             ->first();
 
+        // Check-in status
+        $assignedMetricCount = $user->assignedTrackingMetrics()->count();
+        $todayLogCount = $assignedMetricCount > 0
+            ? $user->dailyLogs()->whereDate('date', now()->toDateString())->count()
+            : 0;
+
         return view('client.dashboard', [
             'coach' => $user->coach,
             'activeProgram' => $activeProgram,
             'weeklyWorkoutCount' => $weeklyWorkoutCount,
             'weeklyWorkoutTarget' => $weeklyWorkoutTarget,
             'lastWorkout' => $lastWorkout,
+            'assignedMetricCount' => $assignedMetricCount,
+            'todayLogCount' => $todayLogCount,
         ]);
     }
 }

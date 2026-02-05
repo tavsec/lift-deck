@@ -71,6 +71,42 @@
             </x-bladewind::card>
         </div>
 
+        <!-- Daily Check-in Widget -->
+        @if($assignedMetricCount > 0)
+            <a href="{{ route('client.check-in') }}" class="block">
+                <x-bladewind::card>
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center space-x-3">
+                            <div class="flex-shrink-0 w-10 h-10 rounded-full {{ $todayLogCount >= $assignedMetricCount ? 'bg-green-100' : 'bg-blue-100' }} flex items-center justify-center">
+                                @if($todayLogCount >= $assignedMetricCount)
+                                    <svg class="w-5 h-5 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                                    </svg>
+                                @else
+                                    <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                                    </svg>
+                                @endif
+                            </div>
+                            <div>
+                                <p class="text-sm font-semibold text-gray-900">
+                                    @if($todayLogCount >= $assignedMetricCount)
+                                        Check-in Complete
+                                    @else
+                                        Daily Check-in
+                                    @endif
+                                </p>
+                                <p class="text-xs text-gray-500">{{ $todayLogCount }} / {{ $assignedMetricCount }} metrics logged today</p>
+                            </div>
+                        </div>
+                        <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                        </svg>
+                    </div>
+                </x-bladewind::card>
+            </a>
+        @endif
+
         <!-- Coach Card -->
         @if ($coach)
             <x-bladewind::card>
