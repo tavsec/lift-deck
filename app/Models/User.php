@@ -184,4 +184,28 @@ class User extends Authenticatable
     {
         return $this->hasMany(DailyLog::class, 'client_id');
     }
+
+    /**
+     * Get macro goals for this client.
+     */
+    public function macroGoals(): HasMany
+    {
+        return $this->hasMany(MacroGoal::class, 'client_id');
+    }
+
+    /**
+     * Get meals created by this coach.
+     */
+    public function meals(): HasMany
+    {
+        return $this->hasMany(Meal::class, 'coach_id');
+    }
+
+    /**
+     * Get meal log entries for this client.
+     */
+    public function mealLogs(): HasMany
+    {
+        return $this->hasMany(MealLog::class, 'client_id');
+    }
 }
