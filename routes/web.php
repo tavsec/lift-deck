@@ -43,6 +43,10 @@ Route::middleware(['auth', 'verified', 'role:coach'])
         Route::get('programs/{program}/assign', [Coach\ProgramController::class, 'assignForm'])->name('programs.assign');
         Route::post('programs/{program}/assign', [Coach\ProgramController::class, 'assign'])->name('programs.assign.store');
 
+        Route::get('clients/{client}/nutrition', [Coach\NutritionController::class, 'show'])->name('clients.nutrition');
+        Route::post('clients/{client}/macro-goals', [Coach\MacroGoalController::class, 'store'])->name('clients.macro-goals.store');
+        Route::delete('macro-goals/{macroGoal}', [Coach\MacroGoalController::class, 'destroy'])->name('macro-goals.destroy');
+
         Route::resource('exercises', Coach\ExerciseController::class);
         Route::resource('meals', Coach\MealController::class)->except(['show']);
 

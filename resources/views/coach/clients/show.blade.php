@@ -246,6 +246,48 @@
                         </div>
                     @endif
                 </div>
+                <!-- Nutrition Summary -->
+                <div class="bg-white rounded-lg shadow p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <h2 class="text-lg font-medium text-gray-900">Nutrition</h2>
+                        <a href="{{ route('coach.clients.nutrition', $client) }}" class="text-sm text-blue-600 hover:text-blue-800">View Details</a>
+                    </div>
+                    @if($currentMacroGoal)
+                        <div class="grid grid-cols-4 gap-4">
+                            <div class="text-center">
+                                <p class="text-xs text-gray-500 uppercase">Calories</p>
+                                <p class="text-lg font-bold text-gray-900">{{ number_format($todayMealTotals->calories) }}</p>
+                                <p class="text-xs text-gray-400">/ {{ number_format($currentMacroGoal->calories) }}</p>
+                            </div>
+                            <div class="text-center">
+                                <p class="text-xs text-gray-500 uppercase">Protein</p>
+                                <p class="text-lg font-bold text-gray-900">{{ number_format($todayMealTotals->protein, 1) }}g</p>
+                                <p class="text-xs text-gray-400">/ {{ $currentMacroGoal->protein }}g</p>
+                            </div>
+                            <div class="text-center">
+                                <p class="text-xs text-gray-500 uppercase">Carbs</p>
+                                <p class="text-lg font-bold text-gray-900">{{ number_format($todayMealTotals->carbs, 1) }}g</p>
+                                <p class="text-xs text-gray-400">/ {{ $currentMacroGoal->carbs }}g</p>
+                            </div>
+                            <div class="text-center">
+                                <p class="text-xs text-gray-500 uppercase">Fat</p>
+                                <p class="text-lg font-bold text-gray-900">{{ number_format($todayMealTotals->fat, 1) }}g</p>
+                                <p class="text-xs text-gray-400">/ {{ $currentMacroGoal->fat }}g</p>
+                            </div>
+                        </div>
+                    @else
+                        <div class="text-center py-4">
+                            <p class="text-sm text-gray-500">No macro goals set</p>
+                            <a href="{{ route('coach.clients.nutrition', $client) }}" class="mt-2 inline-flex items-center text-sm text-blue-600 hover:text-blue-800">
+                                Set macro goals
+                                <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                                </svg>
+                            </a>
+                        </div>
+                    @endif
+                </div>
+
                 <!-- Daily Check-in Logs (Last 7 Days) -->
                 @if($assignedMetricIds->count() > 0)
                 <div class="bg-white rounded-lg shadow p-6">

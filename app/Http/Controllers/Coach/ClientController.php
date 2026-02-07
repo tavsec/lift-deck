@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreWorkoutLogCommentRequest;
 use App\Models\ClientInvitation;
 use App\Models\ClientTrackingMetric;
+use App\Models\MacroGoal;
 use App\Models\User;
 use App\Models\WorkoutLog;
 use App\Models\WorkoutLogComment;
@@ -122,6 +123,12 @@ class ClientController extends Controller
             ->get()
             ->groupBy(fn ($log) => $log->date->format('Y-m-d'));
 
+        $currentMacroGoal = MacroGoal::activeForClient($client->id, now()->format('Y-m-d'));
+        $todayMealTotals = $client->mealLogs()
+            ->whereDate('date', now())
+            ->selectRaw('COALESCE(SUM(calories), 0) as calories, COALESCE(SUM(protein), 0) as protein, COALESCE(SUM(carbs), 0) as carbs, COALESCE(SUM(fat), 0) as fat')
+            ->first();
+
         return view('coach.clients.show', compact(
             'client',
             'activeProgram',
@@ -130,6 +137,8 @@ class ClientController extends Controller
             'coachMetrics',
             'assignedMetricIds',
             'recentDailyLogs',
+            'currentMacroGoal',
+            'todayMealTotals',
         ));
     }
 
