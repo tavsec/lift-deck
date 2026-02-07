@@ -44,6 +44,7 @@ Route::middleware(['auth', 'verified', 'role:coach'])
         Route::post('programs/{program}/assign', [Coach\ProgramController::class, 'assign'])->name('programs.assign.store');
 
         Route::resource('exercises', Coach\ExerciseController::class);
+        Route::resource('meals', Coach\MealController::class)->except(['show']);
 
         // Tracking metrics
         Route::get('tracking-metrics', [Coach\TrackingMetricController::class, 'index'])->name('tracking-metrics.index');
