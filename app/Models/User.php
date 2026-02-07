@@ -160,4 +160,28 @@ class User extends Authenticatable
     {
         return $this->receivedMessages()->unread()->count();
     }
+
+    /**
+     * Get tracking metrics defined by this coach.
+     */
+    public function trackingMetrics(): HasMany
+    {
+        return $this->hasMany(TrackingMetric::class, 'coach_id')->orderBy('order');
+    }
+
+    /**
+     * Get tracking metric assignments for this client.
+     */
+    public function assignedTrackingMetrics(): HasMany
+    {
+        return $this->hasMany(ClientTrackingMetric::class, 'client_id')->orderBy('order');
+    }
+
+    /**
+     * Get daily log entries for this client.
+     */
+    public function dailyLogs(): HasMany
+    {
+        return $this->hasMany(DailyLog::class, 'client_id');
+    }
 }

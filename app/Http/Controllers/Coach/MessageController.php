@@ -84,7 +84,7 @@ class MessageController extends Controller
     /**
      * Send a message to a client.
      */
-    public function store(Request $request, User $user): RedirectResponse
+    public function store(Request $request, User $user): JsonResponse|RedirectResponse
     {
         $coach = auth()->user();
 
@@ -96,11 +96,22 @@ class MessageController extends Controller
             'body' => ['required', 'string', 'max:5000'],
         ]);
 
-        Message::create([
+        $message = Message::create([
             'sender_id' => $coach->id,
             'receiver_id' => $user->id,
             'body' => $validated['body'],
         ]);
+
+        if ($request->wantsJson()) {
+            return response()->json([
+                'message' => [
+                    'id' => $message->id,
+                    'body' => $message->body,
+                    'is_mine' => true,
+                    'created_at' => $message->created_at->format('M d, g:i A'),
+                ],
+            ]);
+        }
 
         return redirect()->route('coach.messages.show', $user);
     }

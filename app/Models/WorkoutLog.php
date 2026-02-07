@@ -16,9 +16,18 @@ class WorkoutLog extends Model
         'client_id',
         'client_program_id',
         'program_workout_id',
+        'custom_name',
         'completed_at',
         'notes',
     ];
+
+    /**
+     * Get the display name for this workout log.
+     */
+    public function displayName(): string
+    {
+        return $this->custom_name ?? $this->programWorkout?->name ?? 'Workout';
+    }
 
     protected function casts(): array
     {

@@ -18,7 +18,7 @@
                             <div class="flex items-center justify-between">
                                 <div>
                                     <div class="flex items-center gap-2">
-                                        <h3 class="text-base font-semibold text-gray-900">{{ $log->programWorkout->name }}</h3>
+                                        <h3 class="text-base font-semibold text-gray-900">{{ $log->displayName() }}</h3>
                                         @if($unreadWorkoutLogIds->contains($log->id))
                                             <span class="flex h-2 w-2 rounded-full bg-blue-500" title="Unread comments"></span>
                                         @endif

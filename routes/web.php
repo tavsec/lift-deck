@@ -24,6 +24,7 @@ Route::middleware(['auth', 'verified', 'role:coach'])
         Route::resource('clients', Coach\ClientController::class);
         Route::get('clients/{client}/workout-log/{workoutLog}', [Coach\ClientController::class, 'workoutLog'])->name('clients.workout-log');
         Route::post('clients/{client}/workout-log/{workoutLog}/comment', [Coach\ClientController::class, 'workoutLogComment'])->name('clients.workout-log.comment');
+        Route::post('clients/{client}/toggle-metric', [Coach\ClientController::class, 'toggleMetric'])->name('clients.toggle-metric');
         Route::resource('programs', Coach\ProgramController::class);
 
         // Program workout routes
@@ -43,6 +44,15 @@ Route::middleware(['auth', 'verified', 'role:coach'])
         Route::post('programs/{program}/assign', [Coach\ProgramController::class, 'assign'])->name('programs.assign.store');
 
         Route::resource('exercises', Coach\ExerciseController::class);
+
+        // Tracking metrics
+        Route::get('tracking-metrics', [Coach\TrackingMetricController::class, 'index'])->name('tracking-metrics.index');
+        Route::post('tracking-metrics', [Coach\TrackingMetricController::class, 'store'])->name('tracking-metrics.store');
+        Route::put('tracking-metrics/{trackingMetric}', [Coach\TrackingMetricController::class, 'update'])->name('tracking-metrics.update');
+        Route::delete('tracking-metrics/{trackingMetric}', [Coach\TrackingMetricController::class, 'destroy'])->name('tracking-metrics.destroy');
+        Route::post('tracking-metrics/{trackingMetric}/restore', [Coach\TrackingMetricController::class, 'restore'])->name('tracking-metrics.restore');
+        Route::post('tracking-metrics/{trackingMetric}/move-up', [Coach\TrackingMetricController::class, 'moveUp'])->name('tracking-metrics.move-up');
+        Route::post('tracking-metrics/{trackingMetric}/move-down', [Coach\TrackingMetricController::class, 'moveDown'])->name('tracking-metrics.move-down');
         Route::get('messages', [Coach\MessageController::class, 'index'])->name('messages.index');
         Route::get('messages/{user}', [Coach\MessageController::class, 'show'])->name('messages.show');
         Route::post('messages/{user}', [Coach\MessageController::class, 'store'])->name('messages.store');
@@ -59,8 +69,12 @@ Route::middleware(['auth', 'verified', 'role:client'])
         Route::get('onboarding', [Client\OnboardingController::class, 'show'])->name('onboarding');
         Route::post('onboarding', [Client\OnboardingController::class, 'store'])->name('onboarding.store');
         Route::post('onboarding/skip', [Client\OnboardingController::class, 'skip'])->name('onboarding.skip');
+        Route::get('check-in', [Client\CheckInController::class, 'index'])->name('check-in');
+        Route::post('check-in', [Client\CheckInController::class, 'store'])->name('check-in.store');
         Route::get('program', [Client\ProgramController::class, 'index'])->name('program');
         Route::get('log', [Client\LogController::class, 'index'])->name('log');
+        Route::get('log/custom', [Client\LogController::class, 'createCustom'])->name('log.custom');
+        Route::get('log/exercises', [Client\LogController::class, 'exercises'])->name('log.exercises');
         Route::get('log/{workout}', [Client\LogController::class, 'create'])->name('log.create');
         Route::post('log', [Client\LogController::class, 'store'])->name('log.store');
         Route::get('history', [Client\HistoryController::class, 'index'])->name('history');

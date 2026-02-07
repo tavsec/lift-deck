@@ -56,7 +56,7 @@
                     </div>
                     <div class="ml-4">
                         <p class="text-sm font-medium text-gray-500">Unread Messages</p>
-                        <p class="text-2xl font-semibold text-gray-900">0</p>
+                        <p class="text-2xl font-semibold text-gray-900">{{ $stats['unread_messages'] }}</p>
                     </div>
                 </div>
             </div>
@@ -73,7 +73,7 @@
                     </div>
                     <div class="ml-4">
                         <p class="text-sm font-medium text-gray-500">Programs</p>
-                        <p class="text-2xl font-semibold text-gray-900">0</p>
+                        <p class="text-2xl font-semibold text-gray-900">{{ $stats['programs'] }}</p>
                     </div>
                 </div>
             </div>
@@ -92,14 +92,70 @@
             </div>
         </div>
 
-        <!-- Recent Activity -->
-        <div class="bg-white rounded-lg shadow p-6">
-            <h2 class="text-lg font-semibold text-gray-900 mb-4">Recent Activity</h2>
-            <div class="text-center py-8">
-                <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-                <p class="mt-2 text-sm text-gray-500">No recent activity yet</p>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <!-- Recent Workout Logs -->
+            <div class="bg-white rounded-lg shadow p-6">
+                <h2 class="text-lg font-semibold text-gray-900 mb-4">Recent Workout Logs</h2>
+                @if($recentWorkoutLogs->isNotEmpty())
+                    <div class="divide-y divide-gray-100">
+                        @foreach($recentWorkoutLogs as $log)
+                            <a href="{{ route('coach.clients.workout-log', [$log->client, $log]) }}" class="flex items-center gap-3 py-3 hover:bg-gray-50 -mx-2 px-2 rounded transition-colors">
+                                <div class="flex-shrink-0 h-8 w-8 rounded-full bg-green-100 flex items-center justify-center">
+                                    <svg class="h-4 w-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                    </svg>
+                                </div>
+                                <div class="flex-1 min-w-0">
+                                    <p class="text-sm font-medium text-gray-900 truncate">
+                                        {{ $log->client->name }}
+                                        <span class="font-normal text-gray-500">completed</span>
+                                        {{ $log->displayName() }}
+                                    </p>
+                                    <p class="text-xs text-gray-500">{{ $log->completed_at->diffForHumans() }}</p>
+                                </div>
+                            </a>
+                        @endforeach
+                    </div>
+                @else
+                    <div class="text-center py-6">
+                        <svg class="mx-auto h-10 w-10 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
+                        </svg>
+                        <p class="mt-2 text-sm text-gray-500">No workout logs yet</p>
+                    </div>
+                @endif
+            </div>
+
+            <!-- Recent Comments -->
+            <div class="bg-white rounded-lg shadow p-6">
+                <h2 class="text-lg font-semibold text-gray-900 mb-4">Recent Comments</h2>
+                @if($recentComments->isNotEmpty())
+                    <div class="divide-y divide-gray-100">
+                        @foreach($recentComments as $comment)
+                            <a href="{{ route('coach.clients.workout-log', [$comment->workoutLog->client, $comment->workoutLog]) }}" class="flex items-start gap-3 py-3 hover:bg-gray-50 -mx-2 px-2 rounded transition-colors">
+                                <div class="flex-shrink-0 h-8 w-8 rounded-full bg-blue-100 flex items-center justify-center">
+                                    <span class="text-xs font-medium text-blue-700">{{ strtoupper(substr($comment->user->name, 0, 1)) }}</span>
+                                </div>
+                                <div class="flex-1 min-w-0">
+                                    <p class="text-sm text-gray-900">
+                                        <span class="font-medium">{{ $comment->user->name }}</span>
+                                        <span class="text-gray-500">on</span>
+                                        <span class="font-medium">{{ $comment->workoutLog->displayName() }}</span>
+                                    </p>
+                                    <p class="text-sm text-gray-600 truncate">{{ $comment->body }}</p>
+                                    <p class="text-xs text-gray-500 mt-0.5">{{ $comment->created_at->diffForHumans() }}</p>
+                                </div>
+                            </a>
+                        @endforeach
+                    </div>
+                @else
+                    <div class="text-center py-6">
+                        <svg class="mx-auto h-10 w-10 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
+                        </svg>
+                        <p class="mt-2 text-sm text-gray-500">No comments yet</p>
+                    </div>
+                @endif
             </div>
         </div>
     </div>

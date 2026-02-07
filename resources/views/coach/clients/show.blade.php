@@ -137,6 +137,34 @@
                 @endif
             </div>
 
+                <!-- Tracking Metrics Assignment -->
+                @if($coachMetrics->count() > 0)
+                <div class="bg-white rounded-lg shadow p-6">
+                    <h2 class="text-lg font-medium text-gray-900 mb-4">Tracking Metrics</h2>
+                    <div class="space-y-2">
+                        @foreach($coachMetrics as $metric)
+                            <form method="POST" action="{{ route('coach.clients.toggle-metric', $client) }}">
+                                @csrf
+                                <input type="hidden" name="tracking_metric_id" value="{{ $metric->id }}">
+                                <button type="submit" class="w-full flex items-center justify-between px-3 py-2 rounded-md hover:bg-gray-50 text-left transition-colors">
+                                    <span class="text-sm text-gray-700">{{ $metric->name }}</span>
+                                    @if($assignedMetricIds->contains($metric->id))
+                                        <span class="flex-shrink-0 w-8 h-5 bg-blue-600 rounded-full relative">
+                                            <span class="absolute right-0.5 top-0.5 w-4 h-4 bg-white rounded-full shadow"></span>
+                                        </span>
+                                    @else
+                                        <span class="flex-shrink-0 w-8 h-5 bg-gray-300 rounded-full relative">
+                                            <span class="absolute left-0.5 top-0.5 w-4 h-4 bg-white rounded-full shadow"></span>
+                                        </span>
+                                    @endif
+                                </button>
+                            </form>
+                        @endforeach
+                    </div>
+                </div>
+                @endif
+            </div>
+
             <!-- Main Content -->
             <div class="lg:col-span-2 space-y-6">
                 <!-- Active Program -->
@@ -186,7 +214,7 @@
                                 <a href="{{ route('coach.clients.workout-log', [$client, $log]) }}" class="flex items-center justify-between py-3 hover:bg-gray-50 -mx-2 px-2 rounded transition-colors">
                                     <div>
                                         <div class="flex items-center gap-2">
-                                            <p class="text-sm font-medium text-gray-900">{{ $log->programWorkout->name }}</p>
+                                            <p class="text-sm font-medium text-gray-900">{{ $log->displayName() }}</p>
                                             @if($unreadWorkoutLogIds->contains($log->id))
                                                 <span class="flex h-2 w-2 rounded-full bg-blue-500" title="Unread comments"></span>
                                             @endif
@@ -218,6 +246,71 @@
                         </div>
                     @endif
                 </div>
+                <!-- Daily Check-in Logs (Last 7 Days) -->
+                @if($assignedMetricIds->count() > 0)
+                <div class="bg-white rounded-lg shadow p-6">
+                    <h2 class="text-lg font-medium text-gray-900 mb-4">Daily Check-ins (Last 7 Days)</h2>
+
+                    @php
+                        $assignedMetrics = $coachMetrics->whereIn('id', $assignedMetricIds);
+                        $dates = collect();
+                        for ($i = 6; $i >= 0; $i--) {
+                            $dates->push(now()->subDays($i)->format('Y-m-d'));
+                        }
+                    @endphp
+
+                    <div class="overflow-x-auto -mx-6 px-6">
+                        <table class="min-w-full text-sm">
+                            <thead>
+                                <tr class="border-b border-gray-200">
+                                    <th class="text-left py-2 pr-4 font-medium text-gray-500 text-xs uppercase">Metric</th>
+                                    @foreach($dates as $date)
+                                        <th class="text-center py-2 px-2 font-medium text-gray-500 text-xs">
+                                            {{ \Carbon\Carbon::parse($date)->format('D') }}<br>
+                                            <span class="text-gray-400">{{ \Carbon\Carbon::parse($date)->format('j') }}</span>
+                                        </th>
+                                    @endforeach
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-100">
+                                @foreach($assignedMetrics as $metric)
+                                    <tr>
+                                        <td class="py-2 pr-4 text-gray-700 whitespace-nowrap">{{ $metric->name }}</td>
+                                        @foreach($dates as $date)
+                                            @php
+                                                $log = $recentDailyLogs->get($date)?->firstWhere('tracking_metric_id', $metric->id);
+                                            @endphp
+                                            <td class="text-center py-2 px-2">
+                                                @if($log)
+                                                    @if($metric->type === 'boolean')
+                                                        @if($log->value === '1' || $log->value === 'true')
+                                                            <span class="text-green-600">
+                                                                <svg class="w-4 h-4 inline" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                                                            </span>
+                                                        @else
+                                                            <span class="text-red-400">
+                                                                <svg class="w-4 h-4 inline" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+                                                            </span>
+                                                        @endif
+                                                    @elseif($metric->type === 'text')
+                                                        <span class="text-blue-600 cursor-help" title="{{ $log->value }}">
+                                                            <svg class="w-4 h-4 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                                                        </span>
+                                                    @else
+                                                        <span class="text-gray-900 font-medium">{{ $log->value }}</span>
+                                                    @endif
+                                                @else
+                                                    <span class="text-gray-300">&mdash;</span>
+                                                @endif
+                                            </td>
+                                        @endforeach
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                @endif
             </div>
         </div>
     </div>

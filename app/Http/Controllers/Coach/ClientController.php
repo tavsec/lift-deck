@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Coach;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreWorkoutLogCommentRequest;
 use App\Models\ClientInvitation;
+use App\Models\ClientTrackingMetric;
 use App\Models\User;
 use App\Models\WorkoutLog;
 use App\Models\WorkoutLogComment;
@@ -109,7 +110,27 @@ class ClientController extends Controller
             ->filter()
             ->unique();
 
-        return view('coach.clients.show', compact('client', 'activeProgram', 'recentWorkoutLogs', 'unreadWorkoutLogIds'));
+        // Tracking metrics
+        $coachMetrics = auth()->user()->trackingMetrics()->where('is_active', true)->get();
+        $assignedMetricIds = $client->assignedTrackingMetrics()->pluck('tracking_metric_id');
+
+        // Last 7 days of daily logs
+        $recentDailyLogs = $client->dailyLogs()
+            ->with('trackingMetric')
+            ->whereDate('date', '>=', now()->subDays(6)->toDateString())
+            ->orderBy('date')
+            ->get()
+            ->groupBy(fn ($log) => $log->date->format('Y-m-d'));
+
+        return view('coach.clients.show', compact(
+            'client',
+            'activeProgram',
+            'recentWorkoutLogs',
+            'unreadWorkoutLogIds',
+            'coachMetrics',
+            'assignedMetricIds',
+            'recentDailyLogs',
+        ));
     }
 
     /**
@@ -167,6 +188,40 @@ class ClientController extends Controller
 
         return redirect()->route('coach.clients.workout-log', [$client, $workoutLog])
             ->with('success', 'Comment added.');
+    }
+
+    /**
+     * Toggle a tracking metric assignment for a client.
+     */
+    public function toggleMetric(Request $request, User $client): RedirectResponse
+    {
+        if ($client->coach_id !== auth()->id()) {
+            abort(403);
+        }
+
+        $validated = $request->validate([
+            'tracking_metric_id' => ['required', 'exists:tracking_metrics,id'],
+        ]);
+
+        $metric = auth()->user()->trackingMetrics()->findOrFail($validated['tracking_metric_id']);
+
+        $existing = ClientTrackingMetric::where('client_id', $client->id)
+            ->where('tracking_metric_id', $metric->id)
+            ->first();
+
+        if ($existing) {
+            $existing->delete();
+        } else {
+            $maxOrder = $client->assignedTrackingMetrics()->max('order') ?? 0;
+            ClientTrackingMetric::create([
+                'client_id' => $client->id,
+                'tracking_metric_id' => $metric->id,
+                'order' => $maxOrder + 1,
+            ]);
+        }
+
+        return redirect()->route('coach.clients.show', $client)
+            ->with('success', $existing ? 'Metric removed from client.' : 'Metric assigned to client.');
     }
 
     /**
