@@ -285,7 +285,7 @@ Create `resources/views/layouts/coach.blade.php`:
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ $title ?? 'Coach Dashboard' }} - {{ config('app.name', 'GymCoach') }}</title>
+    <title>{{ $title ?? 'Coach Dashboard' }} - {{ config('app.name', 'LiftDeck') }}</title>
 
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600,700" rel="stylesheet" />
@@ -303,7 +303,7 @@ Create `resources/views/layouts/coach.blade.php`:
                 <!-- Logo / Brand -->
                 <div class="flex items-center flex-shrink-0 px-4 mb-6">
                     <span class="text-xl font-bold text-gray-900">
-                        {{ auth()->user()->gym_name ?? 'GymCoach' }}
+                        {{ auth()->user()->gym_name ?? 'LiftDeck' }}
                     </span>
                 </div>
 
@@ -376,7 +376,7 @@ Create `resources/views/layouts/coach.blade.php`:
         <div class="md:hidden fixed top-0 left-0 right-0 z-10 bg-white border-b border-gray-200 px-4 py-3">
             <div class="flex items-center justify-between">
                 <span class="text-lg font-bold text-gray-900">
-                    {{ auth()->user()->gym_name ?? 'GymCoach' }}
+                    {{ auth()->user()->gym_name ?? 'LiftDeck' }}
                 </span>
                 <button type="button" onclick="toggleMobileMenu()" class="text-gray-500 hover:text-gray-700">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -458,7 +458,7 @@ Create `resources/views/layouts/client.blade.php`:
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ $title ?? 'My Training' }} - {{ config('app.name', 'GymCoach') }}</title>
+    <title>{{ $title ?? 'My Training' }} - {{ config('app.name', 'LiftDeck') }}</title>
 
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600,700" rel="stylesheet" />
