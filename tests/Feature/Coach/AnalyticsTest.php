@@ -87,3 +87,50 @@ it('displays boolean and text metrics in a table', function () {
         ->assertOk()
         ->assertSee('Took Supplements');
 });
+
+it('displays nutrition chart data', function () {
+    \App\Models\MacroGoal::factory()->create([
+        'client_id' => $this->client->id,
+        'coach_id' => $this->coach->id,
+        'effective_date' => now()->subDays(10),
+        'calories' => 2200,
+    ]);
+
+    \App\Models\MealLog::factory()->create([
+        'client_id' => $this->client->id,
+        'date' => now()->format('Y-m-d'),
+        'calories' => 500,
+        'protein' => 40,
+        'carbs' => 50,
+        'fat' => 15,
+    ]);
+
+    $this->actingAs($this->coach)
+        ->get(route('coach.clients.analytics', $this->client))
+        ->assertOk()
+        ->assertSee('Calories')
+        ->assertSee('Avg. Daily Calories');
+});
+
+it('calculates nutrition adherence rate', function () {
+    \App\Models\MacroGoal::factory()->create([
+        'client_id' => $this->client->id,
+        'coach_id' => $this->coach->id,
+        'effective_date' => now()->subDays(10),
+        'calories' => 2000,
+    ]);
+
+    \App\Models\MealLog::factory()->create([
+        'client_id' => $this->client->id,
+        'date' => now()->format('Y-m-d'),
+        'calories' => 1950,
+        'protein' => 40,
+        'carbs' => 50,
+        'fat' => 15,
+    ]);
+
+    $this->actingAs($this->coach)
+        ->get(route('coach.clients.analytics', [$this->client, 'range' => '7']))
+        ->assertOk()
+        ->assertSee('Adherence');
+});
