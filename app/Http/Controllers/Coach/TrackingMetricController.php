@@ -22,7 +22,7 @@ class TrackingMetricController extends Controller
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'description' => ['nullable', 'string', 'max:500'],
-            'type' => ['required', 'string', 'in:number,scale,boolean,text'],
+            'type' => ['required', 'string', 'in:number,scale,boolean,text,image'],
             'unit' => ['nullable', 'string', 'max:50'],
             'scale_min' => ['nullable', 'integer', 'min:0'],
             'scale_max' => ['nullable', 'integer', 'min:1'],
@@ -47,7 +47,7 @@ class TrackingMetricController extends Controller
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'description' => ['nullable', 'string', 'max:500'],
-            'type' => ['required', 'string', 'in:number,scale,boolean,text'],
+            'type' => ['required', 'string', 'in:number,scale,boolean,text,image'],
             'unit' => ['nullable', 'string', 'max:50'],
             'scale_min' => ['nullable', 'integer', 'min:0'],
             'scale_max' => ['nullable', 'integer', 'min:1'],

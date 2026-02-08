@@ -60,6 +60,13 @@ class TrackingMetricFactory extends Factory
         ]);
     }
 
+    public function image(): static
+    {
+        return $this->state(fn () => [
+            'type' => 'image',
+        ]);
+    }
+
     public function inactive(): static
     {
         return $this->state(fn () => [
