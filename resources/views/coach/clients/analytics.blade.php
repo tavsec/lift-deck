@@ -192,7 +192,56 @@
                 @endif
             </div>
         </div>
-        <!-- Exercise Progression Section (Task 4) -->
+        <!-- Exercise Progression -->
+        <div x-data="{ open: true }" class="bg-white rounded-lg shadow">
+            <button @click="open = !open" class="w-full flex items-center justify-between px-4 py-3 text-left">
+                <h2 class="text-lg font-semibold text-gray-900">Exercise Progression</h2>
+                <svg :class="{ 'rotate-180': open }" class="w-5 h-5 text-gray-500 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                </svg>
+            </button>
+
+            <div x-show="open" x-collapse class="px-4 pb-4">
+                @if(count($exerciseProgressionData) > 0)
+                    <div x-data="exerciseProgression({{ json_encode($exerciseProgressionData) }}, {{ json_encode($exercisesByMuscleGroup) }})" x-init="init()">
+                        <div class="mb-4">
+                            <label class="block text-xs font-medium text-gray-500 mb-1">Exercise</label>
+                            <select x-model="selectedExercise" @change="updateChart()" class="block w-full sm:w-64 rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm">
+                                <template x-for="(exercises, group) in exerciseGroups" :key="group">
+                                    <optgroup :label="group">
+                                        <template x-for="ex in exercises" :key="ex.id">
+                                            <option :value="ex.id" x-text="ex.name"></option>
+                                        </template>
+                                    </optgroup>
+                                </template>
+                            </select>
+                        </div>
+
+                        <div class="h-56 mb-4">
+                            <canvas x-ref="canvas"></canvas>
+                        </div>
+
+                        <div x-show="summary" class="grid grid-cols-3 gap-4 p-4 bg-gray-50 rounded-lg">
+                            <div class="text-center">
+                                <p class="text-xs text-gray-500 uppercase">Start &rarr; End</p>
+                                <p class="text-sm font-bold text-gray-900" x-text="summary?.startWeight + 'kg &rarr; ' + summary?.endWeight + 'kg'"></p>
+                            </div>
+                            <div class="text-center">
+                                <p class="text-xs text-gray-500 uppercase">Change</p>
+                                <p class="text-sm font-bold" :class="summary?.change >= 0 ? 'text-green-600' : 'text-red-600'"
+                                   x-text="(summary?.change >= 0 ? '+' : '') + summary?.change + 'kg (' + (summary?.change >= 0 ? '+' : '') + summary?.changePercent + '%)'"></p>
+                            </div>
+                            <div class="text-center">
+                                <p class="text-xs text-gray-500 uppercase">Sessions</p>
+                                <p class="text-sm font-bold text-gray-900" x-text="summary?.sessions"></p>
+                            </div>
+                        </div>
+                    </div>
+                @else
+                    <p class="text-sm text-gray-500 text-center py-8">No workouts logged for this period.</p>
+                @endif
+            </div>
+        </div>
     </div>
 
     @push('scripts')
@@ -315,6 +364,89 @@
                                 scales: {
                                     x: { stacked: true, ticks: { maxTicksLimit: 10 } },
                                     y: { stacked: true, beginAtZero: true }
+                                }
+                            }
+                        });
+                    }
+                };
+            }
+
+            function exerciseProgression(allData, exerciseGroups) {
+                return {
+                    selectedExercise: '',
+                    exerciseGroups,
+                    chart: null,
+                    summary: null,
+
+                    init() {
+                        const firstGroup = Object.values(exerciseGroups)[0];
+                        if (firstGroup && firstGroup.length > 0) {
+                            this.selectedExercise = String(firstGroup[0].id);
+                        }
+                        this.$nextTick(() => {
+                            if (this.selectedExercise) this.updateChart();
+                        });
+                    },
+
+                    updateChart() {
+                        const data = allData[this.selectedExercise] || [];
+                        if (this.chart) this.chart.destroy();
+
+                        if (data.length === 0) {
+                            this.summary = null;
+                            return;
+                        }
+
+                        const startW = data[0].weight;
+                        const endW = data[data.length - 1].weight;
+                        const change = Math.round((endW - startW) * 100) / 100;
+                        const changePercent = startW > 0 ? Math.round((change / startW) * 1000) / 10 : 0;
+
+                        this.summary = {
+                            startWeight: startW,
+                            endWeight: endW,
+                            change,
+                            changePercent,
+                            sessions: data.length,
+                        };
+
+                        const ctx = this.$refs.canvas.getContext('2d');
+                        const labels = data.map(d => {
+                            const date = new Date(d.date + 'T00:00:00');
+                            return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+                        });
+
+                        this.chart = new Chart(ctx, {
+                            type: 'line',
+                            data: {
+                                labels,
+                                datasets: [{
+                                    label: 'Top Set Weight (kg)',
+                                    data: data.map(d => d.weight),
+                                    borderColor: '#8B5CF6',
+                                    backgroundColor: 'rgba(139, 92, 246, 0.1)',
+                                    fill: true,
+                                    tension: 0.3,
+                                    pointRadius: 4,
+                                }]
+                            },
+                            options: {
+                                responsive: true,
+                                maintainAspectRatio: false,
+                                plugins: {
+                                    legend: { display: false },
+                                    tooltip: {
+                                        callbacks: {
+                                            label: function(ctx) {
+                                                const d = data[ctx.dataIndex];
+                                                return d.weight + 'kg x ' + d.reps + ' reps';
+                                            }
+                                        }
+                                    }
+                                },
+                                scales: {
+                                    x: { ticks: { maxTicksLimit: 10 } },
+                                    y: { beginAtZero: false }
                                 }
                             }
                         });

@@ -134,3 +134,37 @@ it('calculates nutrition adherence rate', function () {
         ->assertOk()
         ->assertSee('Adherence');
 });
+
+it('displays exercise progression data', function () {
+    $exercise = \App\Models\Exercise::create([
+        'name' => 'Bench Press',
+        'muscle_group' => 'Chest',
+        'is_active' => true,
+    ]);
+
+    $workoutLog = \App\Models\WorkoutLog::create([
+        'client_id' => $this->client->id,
+        'completed_at' => now(),
+        'custom_name' => 'Push Day',
+    ]);
+
+    \App\Models\ExerciseLog::create([
+        'workout_log_id' => $workoutLog->id,
+        'exercise_id' => $exercise->id,
+        'set_number' => 1,
+        'weight' => 80.00,
+        'reps' => 8,
+    ]);
+
+    $this->actingAs($this->coach)
+        ->get(route('coach.clients.analytics', $this->client))
+        ->assertOk()
+        ->assertSee('Bench Press');
+});
+
+it('shows empty state when no workouts exist', function () {
+    $this->actingAs($this->coach)
+        ->get(route('coach.clients.analytics', $this->client))
+        ->assertOk()
+        ->assertSee('No workouts logged for this period');
+});

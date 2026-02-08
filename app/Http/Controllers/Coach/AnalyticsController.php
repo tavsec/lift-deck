@@ -154,6 +154,54 @@ class AnalyticsController extends Controller
             'daysLogged' => $daysWithMeals,
         ];
 
+        // --- Exercise Progression ---
+        $workoutLogs = $client->workoutLogs()
+            ->whereDate('completed_at', '>=', $from)
+            ->whereDate('completed_at', '<=', $to)
+            ->with(['exerciseLogs.exercise'])
+            ->orderBy('completed_at')
+            ->get();
+
+        $exerciseProgressionData = [];
+        $exerciseList = [];
+
+        foreach ($workoutLogs as $workoutLog) {
+            foreach ($workoutLog->exerciseLogs as $exerciseLog) {
+                $exId = $exerciseLog->exercise_id;
+                $exercise = $exerciseLog->exercise;
+
+                if (! isset($exerciseList[$exId])) {
+                    $exerciseList[$exId] = [
+                        'id' => $exId,
+                        'name' => $exercise->name,
+                        'muscleGroup' => $exercise->muscle_group,
+                    ];
+                }
+
+                if (! isset($exerciseProgressionData[$exId])) {
+                    $exerciseProgressionData[$exId] = [];
+                }
+
+                $dateKey = $workoutLog->completed_at->format('Y-m-d');
+
+                if (! isset($exerciseProgressionData[$exId][$dateKey])
+                    || $exerciseLog->weight > $exerciseProgressionData[$exId][$dateKey]['weight']) {
+                    $exerciseProgressionData[$exId][$dateKey] = [
+                        'date' => $dateKey,
+                        'weight' => (float) $exerciseLog->weight,
+                        'reps' => $exerciseLog->reps,
+                    ];
+                }
+            }
+        }
+
+        foreach ($exerciseProgressionData as $exId => $sessions) {
+            ksort($sessions);
+            $exerciseProgressionData[$exId] = array_values($sessions);
+        }
+
+        $exercisesByMuscleGroup = collect($exerciseList)->groupBy('muscleGroup')->sortKeys();
+
         return view('coach.clients.analytics', compact(
             'client',
             'range',
@@ -166,6 +214,8 @@ class AnalyticsController extends Controller
             'checkInTableData',
             'nutritionData',
             'nutritionStats',
+            'exerciseProgressionData',
+            'exercisesByMuscleGroup',
         ));
     }
 }
