@@ -47,7 +47,7 @@ class MacroGoal extends Model
     public static function activeForClient(int $clientId, string $date): ?self
     {
         return static::where('client_id', $clientId)
-            ->where('effective_date', '<=', $date)
+            ->whereDate('effective_date', '<=', $date)
             ->orderByDesc('effective_date')
             ->first();
     }

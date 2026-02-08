@@ -160,7 +160,37 @@
             <!-- Right: Meal Logs -->
             <div class="lg:col-span-2 space-y-6">
                 <div class="bg-white rounded-lg shadow p-6">
-                    <h2 class="text-lg font-medium text-gray-900 mb-4">Meal Logs (Last 7 Days)</h2>
+                    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-4">
+                        <h2 class="text-lg font-medium text-gray-900">Meal Logs</h2>
+
+                        <form method="GET" action="{{ route('coach.clients.nutrition', $client) }}" x-data="{ range: '{{ $range }}' }" class="flex flex-wrap items-end gap-2">
+                            <div>
+                                <select name="range" x-model="range" @change="if (range !== 'custom') $el.closest('form').submit()"
+                                    class="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm">
+                                    <option value="7">Last 7 days</option>
+                                    <option value="14">Last 14 days</option>
+                                    <option value="30">Last 30 days</option>
+                                    <option value="custom">Custom range</option>
+                                </select>
+                            </div>
+
+                            <template x-if="range === 'custom'">
+                                <div class="flex items-end gap-2">
+                                    <div>
+                                        <label class="block text-xs text-gray-500">From</label>
+                                        <input type="date" name="from" value="{{ $from }}" class="block rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm">
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs text-gray-500">To</label>
+                                        <input type="date" name="to" value="{{ $to }}" class="block rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm">
+                                    </div>
+                                    <button type="submit" class="inline-flex items-center px-3 py-2 bg-blue-600 border border-transparent rounded-md text-xs font-semibold text-white uppercase tracking-widest hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+                                        Apply
+                                    </button>
+                                </div>
+                            </template>
+                        </form>
+                    </div>
 
                     <div class="space-y-4">
                         @foreach($dates->reverse() as $date)

@@ -19,7 +19,9 @@
       "mcp__laravel-boost__database-query",
       "mcp__laravel-boost__tinker",
       "Bash(grep:*)",
-      "Bash(npm run build:*)"
+      "Bash(npm run build:*)",
+      "Bash(php -l:*)",
+      "Bash(php:*)"
     ]
   },
   "enableAllProjectMcpServers": true,
