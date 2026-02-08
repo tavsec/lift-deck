@@ -39,3 +39,51 @@ it('accepts custom date range parameters', function () {
         ]))
         ->assertOk();
 });
+
+it('displays daily check-in chart data for numeric metrics', function () {
+    $metric = \App\Models\TrackingMetric::factory()->number('kg')->create([
+        'coach_id' => $this->coach->id,
+        'name' => 'Body Weight',
+    ]);
+
+    \App\Models\ClientTrackingMetric::factory()->create([
+        'client_id' => $this->client->id,
+        'tracking_metric_id' => $metric->id,
+    ]);
+
+    \App\Models\DailyLog::factory()->create([
+        'client_id' => $this->client->id,
+        'tracking_metric_id' => $metric->id,
+        'date' => now()->format('Y-m-d'),
+        'value' => '82.5',
+    ]);
+
+    $this->actingAs($this->coach)
+        ->get(route('coach.clients.analytics', $this->client))
+        ->assertOk()
+        ->assertSee('Body Weight');
+});
+
+it('displays boolean and text metrics in a table', function () {
+    $boolMetric = \App\Models\TrackingMetric::factory()->boolean()->create([
+        'coach_id' => $this->coach->id,
+        'name' => 'Took Supplements',
+    ]);
+
+    \App\Models\ClientTrackingMetric::factory()->create([
+        'client_id' => $this->client->id,
+        'tracking_metric_id' => $boolMetric->id,
+    ]);
+
+    \App\Models\DailyLog::factory()->create([
+        'client_id' => $this->client->id,
+        'tracking_metric_id' => $boolMetric->id,
+        'date' => now()->format('Y-m-d'),
+        'value' => '1',
+    ]);
+
+    $this->actingAs($this->coach)
+        ->get(route('coach.clients.analytics', $this->client))
+        ->assertOk()
+        ->assertSee('Took Supplements');
+});
