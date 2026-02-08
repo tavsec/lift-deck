@@ -44,6 +44,7 @@ Route::middleware(['auth', 'verified', 'role:coach'])
         Route::post('programs/{program}/assign', [Coach\ProgramController::class, 'assign'])->name('programs.assign.store');
 
         Route::get('clients/{client}/nutrition', [Coach\NutritionController::class, 'show'])->name('clients.nutrition');
+        Route::get('clients/{client}/analytics', [Coach\AnalyticsController::class, 'show'])->name('clients.analytics');
         Route::post('clients/{client}/macro-goals', [Coach\MacroGoalController::class, 'store'])->name('clients.macro-goals.store');
         Route::delete('macro-goals/{macroGoal}', [Coach\MacroGoalController::class, 'destroy'])->name('macro-goals.destroy');
 
