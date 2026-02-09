@@ -9,11 +9,11 @@
     </title>
     <link
         rel="shortcut icon"
-        href="storage/images/favicon.png"
+        href="images/favicon.png"
         type="image/x-icon"
     />
-    <link rel="stylesheet" href="storage/css/swiper-bundle.min.css" />
-    <link rel="stylesheet" href="storage/css/animate.css" />
+    <link rel="stylesheet" href="css/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="css/animate.css" />
     @if (file_exists(public_path('build/manifest.json')) || file_exists(public_path('hot')))
         @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/js/animate.css', 'resources/js/input.css'])
     @else
@@ -22,7 +22,7 @@
         </style>
     @endif
     <!-- ==== WOW JS ==== -->
-    <script src="storage/js/wow.min.js"></script>
+    <script src="js/wow.min.js"></script>
     <script>
         new WOW().init();
     </script>
@@ -38,7 +38,7 @@
             <div class="max-w-full px-4 w-60">
                 <a href="/" class="block w-full py-5 navbar-logo">
                     <img
-                        src="storage/images/logo/logo-white.png"
+                        src="images/logo/logo-white.png"
                         alt="logo"
                         class="w-full header-logo"
                     />
@@ -121,7 +121,7 @@
                 >
                     <div class="mt-16">
                         <img
-                            src="storage/images/hero/hero-image.png"
+                            src="images/hero/hero-image.png"
                             alt="hero"
                             class="max-w-full mx-auto rounded-t-xl rounded-tr-xl"
                         />
