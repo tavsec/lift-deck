@@ -26,11 +26,12 @@ beforeEach(function () {
     ]);
 });
 
-it('displays image metric on check-in page', function () {
+it('displays image upload field for image metrics', function () {
     $this->actingAs($this->client)
         ->get(route('client.check-in'))
         ->assertOk()
-        ->assertSee($this->imageMetric->name);
+        ->assertSee($this->imageMetric->name)
+        ->assertSee('type="file"', false);
 });
 
 it('can upload an image for an image metric', function () {
