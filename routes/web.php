@@ -95,4 +95,9 @@ Route::middleware(['auth', 'verified', 'role:client'])
         Route::get('messages/poll', [Client\MessageController::class, 'poll'])->name('messages.poll');
     });
 
+// Media serving (private, authorized)
+Route::middleware('auth')->group(function () {
+    Route::get('media/daily-log/{dailyLog}/{conversion?}', [\App\Http\Controllers\MediaController::class, 'dailyLog'])->name('media.daily-log');
+});
+
 require __DIR__.'/auth.php';
