@@ -62,6 +62,7 @@
                                 <option value="scale">Scale (e.g., 1-5 rating)</option>
                                 <option value="boolean">Yes / No</option>
                                 <option value="text">Text (free-form notes)</option>
+                                <option value="image">Image (progress photo)</option>
                             </select>
                         </div>
                     </div>
@@ -138,6 +139,8 @@
                                                 Yes / No
                                             @elseif($metric->type === 'text')
                                                 Text
+                                            @elseif($metric->type === 'image')
+                                                Image (progress photo)
                                             @endif
                                         </p>
                                     </div>
@@ -208,6 +211,7 @@
                                                 <option value="scale">Scale</option>
                                                 <option value="boolean">Yes / No</option>
                                                 <option value="text">Text</option>
+                                                <option value="image">Image</option>
                                             </select>
                                         </div>
                                     </div>
@@ -286,6 +290,8 @@
                                             Yes / No
                                         @elseif($metric->type === 'text')
                                             Text
+                                        @elseif($metric->type === 'image')
+                                            Image (progress photo)
                                         @endif
                                     </p>
                                 </div>
