@@ -83,14 +83,21 @@ class CheckInController extends Controller
                 continue;
             }
 
-            DailyLog::updateOrCreate(
-                [
+            $log = DailyLog::where('client_id', $user->id)
+                ->where('tracking_metric_id', $metricId)
+                ->whereDate('date', $validated['date'])
+                ->first();
+
+            if ($log) {
+                $log->update(['value' => $value]);
+            } else {
+                DailyLog::create([
                     'client_id' => $user->id,
                     'tracking_metric_id' => $metricId,
                     'date' => $validated['date'],
-                ],
-                ['value' => $value],
-            );
+                    'value' => $value,
+                ]);
+            }
         }
 
         // Handle image removals
