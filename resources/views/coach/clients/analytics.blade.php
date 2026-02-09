@@ -300,6 +300,8 @@
             function checkInChart(chartData) {
                 return {
                     init() {
+                        const existing = Chart.getChart(this.$refs.canvas);
+                        if (existing) existing.destroy();
                         const ctx = this.$refs.canvas.getContext('2d');
                         const labels = chartData.data.map(d => {
                             const date = new Date(d.date + 'T00:00:00');
@@ -349,6 +351,8 @@
             function caloriesChart(nutritionData) {
                 return {
                     renderChart() {
+                        const existing = Chart.getChart(this.$refs.canvas);
+                        if (existing) existing.destroy();
                         const ctx = this.$refs.canvas.getContext('2d');
                         const labels = nutritionData.map(d => {
                             const date = new Date(d.date + 'T00:00:00');
@@ -391,6 +395,8 @@
             function macrosChart(nutritionData) {
                 return {
                     renderChart() {
+                        const existing = Chart.getChart(this.$refs.canvas);
+                        if (existing) existing.destroy();
                         const ctx = this.$refs.canvas.getContext('2d');
                         const labels = nutritionData.map(d => {
                             const date = new Date(d.date + 'T00:00:00');
@@ -425,7 +431,6 @@
                 return {
                     selectedExercise: '',
                     exerciseGroups,
-                    chart: null,
                     summary: null,
 
                     init() {
@@ -440,7 +445,8 @@
 
                     updateChart() {
                         const data = allData[this.selectedExercise] || [];
-                        if (this.chart) this.chart.destroy();
+                        const existing = Chart.getChart(this.$refs.canvas);
+                        if (existing) existing.destroy();
 
                         if (data.length === 0) {
                             this.summary = null;
@@ -466,7 +472,7 @@
                             return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
                         });
 
-                        this.chart = new Chart(ctx, {
+                        new Chart(ctx, {
                             type: 'line',
                             data: {
                                 labels,
