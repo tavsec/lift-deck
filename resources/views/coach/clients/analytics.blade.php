@@ -192,6 +192,56 @@
                 @endif
             </div>
         </div>
+        @if($imageMetrics->isNotEmpty())
+        <!-- Progress Photos -->
+            <div x-data="{ open: true }" class="bg-white rounded-lg shadow">
+                <button @click="open = !open" class="w-full flex items-center justify-between px-4 py-3 text-left">
+                    <h2 class="text-lg font-semibold text-gray-900">Progress Photos</h2>
+                    <svg :class="{ 'rotate-180': open }" class="w-5 h-5 text-gray-500 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                    </svg>
+                </button>
+
+                <div x-show="open" x-collapse class="px-4 pb-4 space-y-6">
+                    @php $hasAnyPhotos = collect($imageMetricData)->contains(fn ($m) => count($m['photos']) > 0); @endphp
+
+                    @if($hasAnyPhotos)
+                        @foreach($imageMetricData as $metricData)
+                            @if(count($metricData['photos']) > 0)
+                                <div>
+                                    <h3 class="text-sm font-medium text-gray-700 mb-2">{{ $metricData['name'] }}</h3>
+                                    <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-2">
+                                        @foreach($metricData['photos'] as $photo)
+                                            <div x-data="{ showLightbox: false }" class="relative">
+                                                <button @click="showLightbox = true" class="block w-full aspect-square rounded-lg overflow-hidden border border-gray-200 hover:border-blue-400 transition-colors">
+                                                    <img src="{{ $photo['thumbUrl'] }}" alt="{{ $metricData['name'] }} - {{ $photo['date'] }}" class="w-full h-full object-cover">
+                                                </button>
+                                                <p class="text-xs text-gray-500 text-center mt-1">{{ \Carbon\Carbon::parse($photo['date'])->format('M j') }}</p>
+
+                                                {{-- Lightbox --}}
+                                                <div x-show="showLightbox" x-cloak @click.self="showLightbox = false" @keydown.escape.window="showLightbox = false"
+                                                    class="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4">
+                                                    <div class="relative max-w-4xl max-h-full">
+                                                        <img src="{{ $photo['fullUrl'] }}" alt="{{ $metricData['name'] }} - {{ $photo['date'] }}" class="max-w-full max-h-[90vh] rounded-lg">
+                                                        <button @click="showLightbox = false" class="absolute top-2 right-2 bg-black/50 text-white rounded-full w-8 h-8 flex items-center justify-center hover:bg-black/70">
+                                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                                                        </button>
+                                                        <p class="text-white text-center mt-2 text-sm">{{ \Carbon\Carbon::parse($photo['date'])->format('M j, Y') }}</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                </div>
+                            @endif
+                        @endforeach
+                    @else
+                        <p class="text-sm text-gray-500 text-center py-8">No progress photos for this period.</p>
+                    @endif
+                </div>
+            </div>
+        @endif
+
         <!-- Exercise Progression -->
         <div x-data="{ open: true }" class="bg-white rounded-lg shadow">
             <button @click="open = !open" class="w-full flex items-center justify-between px-4 py-3 text-left">

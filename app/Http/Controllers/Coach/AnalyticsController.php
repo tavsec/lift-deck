@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Coach;
 
 use App\Http\Controllers\Controller;
+use App\Models\DailyLog;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -52,6 +53,7 @@ class AnalyticsController extends Controller
 
         $chartMetrics = $assignedMetrics->whereIn('type', ['number', 'scale']);
         $tableMetrics = $assignedMetrics->whereIn('type', ['boolean', 'text']);
+        $imageMetrics = $assignedMetrics->where('type', 'image');
 
         $checkInCharts = [];
         foreach ($chartMetrics as $metric) {
@@ -154,6 +156,39 @@ class AnalyticsController extends Controller
             'daysLogged' => $daysWithMeals,
         ];
 
+        // --- Progress Photos ---
+        $imageMetricData = [];
+        if ($imageMetrics->isNotEmpty()) {
+            $imageLogs = DailyLog::where('client_id', $client->id)
+                ->whereIn('tracking_metric_id', $imageMetrics->pluck('id'))
+                ->where('value', 'uploaded')
+                ->whereDate('date', '>=', $from)
+                ->whereDate('date', '<=', $to)
+                ->with('media')
+                ->orderByDesc('date')
+                ->get();
+
+            foreach ($imageMetrics as $metric) {
+                $metricLogs = $imageLogs->where('tracking_metric_id', $metric->id);
+                $photos = [];
+                foreach ($metricLogs as $log) {
+                    $media = $log->getFirstMedia('check-in-image');
+                    if ($media) {
+                        $photos[] = [
+                            'date' => $log->date->format('Y-m-d'),
+                            'thumbUrl' => route('media.daily-log', [$log, 'thumb']),
+                            'fullUrl' => route('media.daily-log', [$log, 'full']),
+                        ];
+                    }
+                }
+                $imageMetricData[] = [
+                    'id' => $metric->id,
+                    'name' => $metric->name,
+                    'photos' => $photos,
+                ];
+            }
+        }
+
         // --- Exercise Progression ---
         $workoutLogs = $client->workoutLogs()
             ->whereDate('completed_at', '>=', $from)
@@ -212,6 +247,8 @@ class AnalyticsController extends Controller
             'chartMetrics',
             'tableMetrics',
             'checkInTableData',
+            'imageMetrics',
+            'imageMetricData',
             'nutritionData',
             'nutritionStats',
             'exerciseProgressionData',
