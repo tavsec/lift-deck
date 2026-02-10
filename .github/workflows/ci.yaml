@@ -12,8 +12,8 @@ env:
   IMAGE_NAME: ${{ github.repository }}
 
 jobs:
-  push-to-acr:
-    name: Build and Push to Azure Container Registry
+  push:
+    name: Build and Push
     runs-on: ubuntu-latest
 
     steps:
