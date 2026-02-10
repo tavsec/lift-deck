@@ -19,7 +19,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libonig-dev \
     libcurl4-openssl-dev \
     libmagickwand-dev \
-    libmagickwand-dev \
+    libmagickcore-dev \
+    imagemagick \
     && docker-php-ext-install \
         pdo_mysql \
         pdo_pgsql \
@@ -29,8 +30,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         pcntl \
         opcache \
         soap \
-        imagick \
-    && pecl install redis \
+        exif \
+    && pecl install redis imagick \
     && docker-php-ext-enable redis imagick \
     # Clean up build dependencies to minimize image size
     && apt-get purge -y --auto-remove \
@@ -81,6 +82,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libxml2 \
     libonig5 \
     libcurl4 \
+    imagemagick \
     libmagickwand-dev \
     libmagickcore-dev \
     && docker-php-ext-install \
@@ -92,8 +94,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         pcntl \
         opcache \
         soap \
-        imagick \
-    && pecl install redis \
+        exif \
+    && pecl install redis imagick \
     && docker-php-ext-enable redis imagick \
     && apt-get purge -y --auto-remove \
         autoconf \
