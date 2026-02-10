@@ -1,0 +1,52 @@
+#!/usr/bin/env sh
+set -e
+
+echo "Starting Laravel Octane production container..."
+
+echo "Setting up storage directories..."
+mkdir -p \
+    storage/framework/cache/data \
+    storage/framework/sessions \
+    storage/framework/views \
+    storage/framework/testing \
+    storage/logs \
+    storage/app/public
+echo "Storage directories created!"
+
+echo "Caching Laravel configurations..."
+php artisan config:cache
+php artisan route:cache
+php artisan view:cache
+php artisan event:cache
+echo "Configuration caching completed!"
+
+mkdir -p /tmp/opcache
+
+# Note: Running as non-root user (octane), so only fix what we own
+echo "Setting correct permissions..."
+chmod -R 775 storage bootstrap/cache 2>/dev/null || true
+echo "Permissions set!"
+
+echo ""
+echo "=========================================="
+echo "Laravel Octane Production Server"
+echo "=========================================="
+echo "Server: Swoole"
+echo "Port: 8080"
+echo "Workers: Auto-detected (based on CPU cores)"
+echo "Task Workers: Auto-detected"
+echo "Max Requests per Worker: 500"
+echo "Environment: ${APP_ENV:-production}"
+echo "=========================================="
+echo ""
+
+# Start Octane directly (as PID 1)
+# Docker/Kubernetes will handle process restarts
+echo "Starting Laravel Octane..."
+exec php -d variables_order=EGPCS artisan octane:start \
+    --server=swoole \
+    --host=0.0.0.0 \
+    --port=8080 \
+    --workers=auto \
+    --task-workers=auto \
+    --max-requests=500

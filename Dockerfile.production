@@ -1,0 +1,143 @@
+# Production Dockerfile for PHP 8.4 + Swoole + Octane
+# Multi-stage build for minimal image size and maximum performance
+
+# Stage 1: Install PHP dependencies
+FROM openswoole/swoole:25.2-php8.4 AS dependencies
+
+# Install system dependencies and PHP extensions
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    bash \
+    # Development dependencies for building extensions
+    autoconf \
+    g++ \
+    make \
+    # Libraries for PHP extensions
+    libpq-dev \
+    libzip-dev \
+    libicu-dev \
+    libxml2-dev \
+    libonig-dev \
+    libcurl4-openssl-dev \
+    && docker-php-ext-install \
+        pdo_mysql \
+        pdo_pgsql \
+        zip \
+        intl \
+        bcmath \
+        pcntl \
+        opcache \
+        soap \
+    && pecl install redis \
+    && docker-php-ext-enable redis \
+    # Clean up build dependencies to minimize image size
+    && apt-get purge -y --auto-remove \
+        autoconf \
+        g++ \
+        make \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+# Install Composer
+COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
+
+# Set working directory
+WORKDIR /var/www/html
+
+# Copy composer files
+COPY composer.json composer.lock ./
+
+# Install PHP dependencies (production only, optimized)
+RUN composer install \
+    --no-dev \
+    --no-interaction \
+    --no-progress \
+    --no-scripts \
+    --prefer-dist \
+    --optimize-autoloader \
+    && composer clear-cache
+
+
+# Stage 3: Production runtime
+FROM openswoole/swoole:25.2-php8.4
+
+# Install runtime dependencies and build PHP extensions
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    bash \
+    autoconf \
+    g++ \
+    make \
+    libpq-dev \
+    libzip-dev \
+    libicu-dev \
+    libxml2-dev \
+    libonig-dev \
+    libcurl4-openssl-dev \
+    libpq5 \
+    libzip4 \
+    libicu72 \
+    libxml2 \
+    libonig5 \
+    libcurl4 \
+    && docker-php-ext-install \
+        pdo_mysql \
+        pdo_pgsql \
+        zip \
+        intl \
+        bcmath \
+        pcntl \
+        opcache \
+        soap \
+        imagick \
+    && pecl install redis \
+    && docker-php-ext-enable redis \
+    && apt-get purge -y --auto-remove \
+        autoconf \
+        g++ \
+        make \
+        libpq-dev \
+        libzip-dev \
+        libicu-dev \
+        libxml2-dev \
+        libonig-dev \
+        libcurl4-openssl-dev \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+# Create non-root user
+RUN groupadd -g 1000 octane \
+    && useradd -u 1000 -g octane -s /bin/bash -m octane
+
+# Set working directory
+WORKDIR /var/www/html
+
+# Copy application files
+COPY --chown=octane:octane . .
+
+# Copy vendor from dependencies stage
+COPY --from=dependencies --chown=octane:octane /var/www/html/vendor ./vendor
+
+# Copy production configuration files
+COPY --chown=octane:octane docker/production/php.ini /usr/local/etc/php/conf.d/99-production.ini
+COPY --chown=octane:octane docker/production/octane.conf /usr/local/etc/php/conf.d/99-octane.ini
+COPY --chown=octane:octane docker/production/start-container /usr/local/bin/start-container
+
+# Make entrypoint executable
+RUN chmod +x /usr/local/bin/start-container
+
+# Create storage directories and set permissions
+RUN mkdir -p \
+    storage/framework/cache \
+    storage/framework/sessions \
+    storage/framework/views \
+    storage/logs \
+    bootstrap/cache \
+    && chown -R octane:octane storage bootstrap/cache
+
+EXPOSE 8080
+
+HEALTHCHECK --interval=30s --timeout=3s --start-period=40s --retries=3 \
+    CMD php artisan octane:status || exit 1
+
+USER octane
+
+ENTRYPOINT ["/usr/local/bin/start-container"]
