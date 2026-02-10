@@ -78,6 +78,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libxml2 \
     libonig5 \
     libcurl4 \
+    libmagickwand-dev \
+    libmagickcore-dev \
     && docker-php-ext-install \
         pdo_mysql \
         pdo_pgsql \
