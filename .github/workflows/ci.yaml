@@ -13,6 +13,10 @@ env:
 
 jobs:
   push:
+    permissions:
+      id-token: write
+      contents: read
+      packages: write
     name: Build and Push
     runs-on: ubuntu-latest
 
