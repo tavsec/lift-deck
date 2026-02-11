@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\DailyLog;
-use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Http\RedirectResponse;
 
 class MediaController extends Controller
 {
-    public function dailyLog(DailyLog $dailyLog, ?string $conversion = null): Response
+    public function dailyLog(DailyLog $dailyLog, ?string $conversion = null): RedirectResponse
     {
         $user = auth()->user();
         $isOwner = $dailyLog->client_id === $user->id;
@@ -24,18 +24,10 @@ class MediaController extends Controller
         }
 
         $validConversions = ['thumb', 'full'];
-        if ($conversion && in_array($conversion, $validConversions)) {
-            $path = $media->getPath($conversion);
-        } else {
-            $path = $media->getPath();
-        }
+        $conversionName = ($conversion && in_array($conversion, $validConversions)) ? $conversion : '';
 
-        if (! file_exists($path)) {
-            abort(404);
-        }
+        $temporaryUrl = $media->getTemporaryUrl(now()->addMinutes(5), $conversionName);
 
-        return response()->file($path, [
-            'Content-Type' => $media->mime_type,
-        ]);
+        return redirect($temporaryUrl);
     }
 }

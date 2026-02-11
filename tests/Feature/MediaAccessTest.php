@@ -8,7 +8,7 @@ use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 
 beforeEach(function () {
-    Storage::fake('local');
+    Storage::fake(config('filesystems.default'));
 
     $this->coach = User::factory()->create(['role' => 'coach']);
     $this->client = User::factory()->create(['role' => 'client', 'coach_id' => $this->coach->id]);
@@ -33,14 +33,13 @@ beforeEach(function () {
 it('allows the client to view their own image', function () {
     $this->actingAs($this->client)
         ->get(route('media.daily-log', $this->log))
-        ->assertOk()
-        ->assertHeader('content-type', 'image/jpeg');
+        ->assertRedirect();
 });
 
 it('allows the coach to view their clients image', function () {
     $this->actingAs($this->coach)
         ->get(route('media.daily-log', $this->log))
-        ->assertOk();
+        ->assertRedirect();
 });
 
 it('denies access to unrelated users', function () {
@@ -54,7 +53,7 @@ it('denies access to unrelated users', function () {
 it('returns the thumb conversion when requested', function () {
     $this->actingAs($this->client)
         ->get(route('media.daily-log', [$this->log, 'thumb']))
-        ->assertOk();
+        ->assertRedirect();
 });
 
 it('returns 404 for log without media', function () {
