@@ -61,6 +61,27 @@ RUN composer install \
     && composer clear-cache
 
 
+# Stage 2: Build frontend assets with Node
+FROM node:22-alpine AS frontend
+
+WORKDIR /var/www/html
+
+# Copy only package files first for better caching
+COPY package.json package-lock.json* pnpm-lock.yaml* yarn.lock* ./
+
+# Install dependencies (prefer ci if lockfile exists)
+RUN if [ -f package-lock.json ]; then npm ci; else npm install; fi
+
+# Copy only what Vite/Mix needs (usually resources + config + vite.config.js)
+COPY resources ./resources
+COPY vite.config.* ./
+# If you import from other paths in JS/CSS, copy as needed:
+# COPY postcss.config.* tailwind.config.* ./
+
+# Build assets
+RUN npm run build
+
+
 # Stage 3: Production runtime
 FROM openswoole/swoole:25.2-php8.4
 
@@ -122,6 +143,10 @@ COPY --chown=octane:octane . .
 
 # Copy vendor from dependencies stage
 COPY --from=dependencies --chown=octane:octane /var/www/html/vendor ./vendor
+
+# Copy built frontend assets from frontend stage
+# For Vite (default): public/build
+COPY --from=frontend --chown=octane:octane /var/www/html/public/build ./public/build
 
 # Copy production configuration files
 COPY --chown=octane:octane docker/production/php.ini /usr/local/etc/php/conf.d/99-production.ini
