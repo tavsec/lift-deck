@@ -75,8 +75,7 @@ RUN if [ -f package-lock.json ]; then npm ci; else npm install; fi
 # Copy only what Vite/Mix needs (usually resources + config + vite.config.js)
 COPY resources ./resources
 COPY vite.config.* ./
-# If you import from other paths in JS/CSS, copy as needed:
-# COPY postcss.config.* tailwind.config.* ./
+COPY postcss.config.* tailwind.config.* ./
 
 # Build assets
 RUN npm run build
