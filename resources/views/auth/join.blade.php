@@ -27,12 +27,7 @@
             </x-primary-button>
         </div>
 
-        <div class="mt-4 text-center">
-            <p class="text-sm text-gray-600">
-                Are you a coach?
-                <a href="{{ route('register') }}" class="text-blue-600 hover:text-blue-500">Register here</a>
-            </p>
-        </div>
+
     </form>
 
     <script>

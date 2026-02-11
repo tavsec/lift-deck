@@ -100,8 +100,8 @@
                     @foreach($pendingInvitations as $invitation)
                         <div class="flex items-center justify-between bg-white rounded-md p-3 border border-yellow-200">
                             <div class="flex items-center gap-4">
-                                <span class="font-mono font-bold text-gray-900 bg-gray-100 px-2 py-1 rounded">{{ $invitation->token }}</span>
-                                <button onclick="navigator.clipboard.writeText('{{ $invitation->token }}')" class="text-gray-400 hover:text-gray-600" title="Copy code">
+                                <span class="font-mono font-bold text-gray-900 bg-gray-100 px-2 py-1 rounded">{{ route("join.code", ["code" => $invitation->token ])}}</span>
+                                <button onclick="navigator.clipboard.writeText('{{ route("join.code", ["code" => $invitation->token ])}}')" class="text-gray-400 hover:text-gray-600" title="Copy code">
                                     <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
                                     </svg>
