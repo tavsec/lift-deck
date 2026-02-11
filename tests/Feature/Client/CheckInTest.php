@@ -60,6 +60,33 @@ it('can update an existing check-in value', function () {
     expect($logs->first()->value)->toBe('76.0');
 });
 
+it('can save a check-in for a past date and redirects to that date', function () {
+    $pastDate = now()->subDays(3)->format('Y-m-d');
+
+    $this->actingAs($this->client)
+        ->post(route('client.check-in.store'), [
+            'date' => $pastDate,
+            'metrics' => [
+                $this->metric->id => '80.0',
+            ],
+        ])
+        ->assertRedirect(route('client.check-in', ['date' => $pastDate]));
+
+    $log = DailyLog::where('client_id', $this->client->id)
+        ->where('tracking_metric_id', $this->metric->id)
+        ->whereDate('date', $pastDate)
+        ->first();
+
+    expect($log)->not->toBeNull();
+    expect($log->value)->toBe('80.0');
+
+    // Verify the index page loads the saved value
+    $this->actingAs($this->client)
+        ->get(route('client.check-in', ['date' => $pastDate]))
+        ->assertOk()
+        ->assertSee('80.0');
+});
+
 it('can clear an existing check-in value', function () {
     DailyLog::factory()->create([
         'client_id' => $this->client->id,

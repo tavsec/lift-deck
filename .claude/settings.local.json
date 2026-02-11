@@ -23,7 +23,9 @@
       "Bash(php -l:*)",
       "Bash(php:*)",
       "Bash(npm install:*)",
-      "Bash(docker build:*)"
+      "Bash(docker build:*)",
+      "mcp__laravel-boost__browser-logs",
+      "mcp__laravel-boost__last-error"
     ]
   },
   "enableAllProjectMcpServers": true,
