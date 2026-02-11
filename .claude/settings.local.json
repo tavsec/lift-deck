@@ -22,7 +22,8 @@
       "Bash(npm run build:*)",
       "Bash(php -l:*)",
       "Bash(php:*)",
-      "Bash(npm install:*)"
+      "Bash(npm install:*)",
+      "Bash(docker build:*)"
     ]
   },
   "enableAllProjectMcpServers": true,
