@@ -45,8 +45,8 @@ class LogController extends Controller
             'prescribed_sets' => $we->sets,
             'prescribed_reps' => $we->reps,
             'sets' => collect(range(1, $we->sets))->map(fn ($i) => [
-                'weight' => '',
-                'reps' => '',
+                'weight' => 0,
+                'reps' => 0,
             ])->values()->all(),
         ])->values()->all();
 
@@ -133,6 +133,7 @@ class LogController extends Controller
 
         foreach ($validated['exercises'] as $exerciseData) {
             foreach ($exerciseData['sets'] as $setIndex => $setData) {
+                if($setData['weight'] == 0 || $setData['reps'] == 0) continue;
                 ExerciseLog::create([
                     'workout_log_id' => $workoutLog->id,
                     'workout_exercise_id' => $exerciseData['workout_exercise_id'] ?? null,

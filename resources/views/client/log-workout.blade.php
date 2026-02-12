@@ -322,7 +322,7 @@
                 },
 
                 addSet(exerciseIndex) {
-                    this.exercises[exerciseIndex].sets.push({ weight: '', reps: '' });
+                    this.exercises[exerciseIndex].sets.push({ weight: 0, reps: 0 });
                 },
 
                 removeSet(exerciseIndex, setIndex) {

@@ -29,7 +29,7 @@ class StoreWorkoutLogRequest extends FormRequest
             'exercises' => ['required', 'array', 'min:1'],
             'exercises.*.workout_exercise_id' => ['nullable', 'exists:workout_exercises,id'],
             'exercises.*.exercise_id' => ['required', 'exists:exercises,id'],
-            'exercises.*.sets' => ['required', 'array', 'min:1'],
+            'exercises.*.sets' => ['required', 'array', 'min:0'],
             'exercises.*.sets.*.weight' => ['nullable', 'numeric', 'min:0', 'max:9999.99'],
             'exercises.*.sets.*.reps' => ['required', 'integer', 'min:0', 'max:999'],
         ];
