@@ -182,6 +182,14 @@ class User extends Authenticatable
     }
 
     /**
+     * Get onboarding responses for this client.
+     */
+    public function onboardingResponses(): HasMany
+    {
+        return $this->hasMany(OnboardingResponse::class, 'client_id');
+    }
+
+    /**
      * Get tracking metric assignments for this client.
      */
     public function assignedTrackingMetrics(): HasMany
