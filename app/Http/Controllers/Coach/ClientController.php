@@ -91,7 +91,7 @@ class ClientController extends Controller
             abort(403);
         }
 
-        $client->load(['clientProfile', 'clientPrograms' => function ($query) {
+        $client->load(['clientProfile', 'onboardingResponses.onboardingField', 'clientPrograms' => function ($query) {
             $query->active()->with('program');
         }]);
 
