@@ -174,6 +174,14 @@ class User extends Authenticatable
     }
 
     /**
+     * Get onboarding fields defined by this coach.
+     */
+    public function onboardingFields(): HasMany
+    {
+        return $this->hasMany(OnboardingField::class, 'coach_id')->orderBy('order');
+    }
+
+    /**
      * Get tracking metric assignments for this client.
      */
     public function assignedTrackingMetrics(): HasMany
