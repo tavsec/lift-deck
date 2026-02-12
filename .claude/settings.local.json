@@ -38,7 +38,12 @@
       "Bash(git -C /home/timotej/Documents/projects/lift-deck commit -m \"$\\(cat <<''EOF''\nfeat: seed default onboarding fields for existing coaches\n\nCo-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>\nEOF\n\\)\")",
       "Bash(git stash:*)",
       "Bash(git -C /home/timotej/Documents/projects/lift-deck add resources/views/coach/branding.blade.php)",
-      "Bash(git -C /home/timotej/Documents/projects/lift-deck commit -m \"$\\(cat <<''EOF''\nfeat: add coach branding view with field builder\n\nCo-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>\nEOF\n\\)\")"
+      "Bash(git -C /home/timotej/Documents/projects/lift-deck commit -m \"$\\(cat <<''EOF''\nfeat: add coach branding view with field builder\n\nCo-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>\nEOF\n\\)\")",
+      "Bash(git -C /home/timotej/Documents/projects/lift-deck diff app/Http/Controllers/Coach/ClientController.php)",
+      "Bash(git -C /home/timotej/Documents/projects/lift-deck diff resources/views/coach/clients/show.blade.php)",
+      "Bash(git -C /home/timotej/Documents/projects/lift-deck add app/Http/Controllers/Coach/ClientController.php resources/views/coach/clients/show.blade.php)",
+      "Bash(git -C /home/timotej/Documents/projects/lift-deck commit -m \"$\\(cat <<''EOF''\nfeat: show dynamic onboarding responses on coach client detail\n\nCo-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>\nEOF\n\\)\")",
+      "Bash(git -C /home/timotej/Documents/projects/lift-deck log --oneline -15)"
     ]
   },
   "enableAllProjectMcpServers": true,

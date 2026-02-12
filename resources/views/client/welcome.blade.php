@@ -18,7 +18,11 @@
         @endif
 
         <p class="text-sm text-gray-500 mb-8">
-            Let's set up your profile so your coach can create the perfect program for you.
+            @if($coach->onboarding_welcome_text)
+                {{ $coach->onboarding_welcome_text }}
+            @else
+                Let's set up your profile so your coach can create the perfect program for you.
+            @endif
         </p>
 
         <a href="{{ route('client.onboarding') }}" class="inline-flex items-center px-6 py-3 bg-blue-600 border border-transparent rounded-md font-semibold text-sm text-white uppercase tracking-widest hover:bg-blue-700 focus:bg-blue-700 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition ease-in-out duration-150">

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
 use App\Models\ClientProfile;
+use App\Models\OnboardingResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -21,33 +22,61 @@ class OnboardingController extends Controller
     }
 
     /**
-     * Show the onboarding form.
+     * Show the onboarding form with dynamic fields.
      */
     public function show(): View
     {
-        return view('client.onboarding');
+        $coach = auth()->user()->coach;
+        $fields = $coach->onboardingFields()->orderBy('order')->get();
+
+        return view('client.onboarding', compact('fields'));
     }
 
     /**
-     * Store the onboarding data.
+     * Store the onboarding responses.
      */
     public function store(Request $request): RedirectResponse
     {
-        $validated = $request->validate([
-            'goal' => ['required', 'in:fat_loss,strength,general_fitness'],
-            'experience_level' => ['required', 'in:beginner,intermediate,advanced'],
-            'injuries' => ['nullable', 'string', 'max:1000'],
-            'equipment_access' => ['nullable', 'string', 'max:1000'],
-        ]);
-
         $user = auth()->user();
+        $coach = $user->coach;
+        $fields = $coach->onboardingFields()->get();
 
+        // Build validation rules dynamically
+        $rules = [];
+        foreach ($fields as $field) {
+            $fieldRules = [];
+            if ($field->is_required) {
+                $fieldRules[] = 'required';
+            } else {
+                $fieldRules[] = 'nullable';
+            }
+            $fieldRules[] = 'string';
+            $fieldRules[] = 'max:2000';
+
+            if ($field->type === 'select' && $field->options) {
+                $fieldRules[] = 'in:'.implode(',', $field->options);
+            }
+
+            $rules["fields.{$field->id}"] = $fieldRules;
+        }
+
+        $validated = $request->validate($rules);
+
+        // Save responses
+        foreach ($fields as $field) {
+            $value = $validated['fields'][$field->id] ?? null;
+            if ($value !== null && $value !== '') {
+                OnboardingResponse::updateOrCreate(
+                    ['client_id' => $user->id, 'onboarding_field_id' => $field->id],
+                    ['value' => $value]
+                );
+            }
+        }
+
+        // Mark onboarding complete
         ClientProfile::updateOrCreate(
             ['user_id' => $user->id],
-            [
-                ...$validated,
-                'onboarding_completed_at' => now(),
-            ]
+            ['onboarding_completed_at' => now()]
         );
 
         return redirect()->route('client.dashboard')
