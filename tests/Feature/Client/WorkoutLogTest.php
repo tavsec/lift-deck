@@ -104,8 +104,8 @@ it('returns empty previous_sets when there is no history', function () {
         ->get(route('client.log.create', $this->workout));
 
     $response->assertOk();
-    // No previous data markers should appear
-    $response->assertDontSee('Last session');
+    // previous_sets is an empty array in the Alpine.js JSON (inside a <script> tag, so not escaped)
+    $response->assertSee('"previous_sets":[]', false);
 });
 
 it('returns exercises with previous set data from the JSON endpoint', function () {

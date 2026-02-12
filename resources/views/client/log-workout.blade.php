@@ -61,24 +61,44 @@
                 @endif
 
                 <!-- Exercises -->
-                <template x-for="(exercise, exerciseIndex) in exercises" :key="exerciseIndex">
+                <div x-ref="exerciseList" x-init="initSortable()" class="space-y-4">
+                <template x-for="(exercise, exerciseIndex) in exercises" :key="exercise.exercise_id">
                     <x-bladewind::card class="!p-4">
                         <div class="space-y-3">
                             <div class="flex items-center justify-between">
-                                <div>
-                                    <h3 class="text-base font-semibold text-gray-900" x-text="exercise.name"></h3>
-                                    <p class="text-xs text-gray-500" x-show="exercise.prescribed_sets">
-                                        Prescribed: <span x-text="exercise.prescribed_sets"></span> sets &times; <span x-text="exercise.prescribed_reps"></span> reps
-                                    </p>
-                                </div>
                                 <div class="flex items-center gap-2">
+                                    <!-- Drag Handle -->
+                                    <div class="drag-handle cursor-grab active:cursor-grabbing text-gray-400 hover:text-gray-600 touch-none">
+                                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                            <path d="M7 2a2 2 0 1 0 0 4 2 2 0 0 0 0-4zM13 2a2 2 0 1 0 0 4 2 2 0 0 0 0-4zM7 8a2 2 0 1 0 0 4 2 2 0 0 0 0-4zM13 8a2 2 0 1 0 0 4 2 2 0 0 0 0-4zM7 14a2 2 0 1 0 0 4 2 2 0 0 0 0-4zM13 14a2 2 0 1 0 0 4 2 2 0 0 0 0-4z"/>
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <h3 class="text-base font-semibold text-gray-900" x-text="exercise.name"></h3>
+                                        <p class="text-xs text-gray-500" x-show="exercise.prescribed_sets">
+                                            Prescribed: <span x-text="exercise.prescribed_sets"></span> sets &times; <span x-text="exercise.prescribed_reps"></span> reps
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-1">
                                     <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-gray-100 text-gray-600" x-text="exercise.muscle_group.replace('_', ' ')"></span>
-                                    <button
-                                        type="button"
-                                        @click="removeExercise(exerciseIndex)"
-                                        class="p-1 text-red-400 hover:text-red-600 rounded hover:bg-red-50 transition-colors"
-                                        title="Remove exercise"
-                                    >
+                                    <!-- Move Up -->
+                                    <button type="button" @click="moveExerciseUp(exerciseIndex)" :disabled="exerciseIndex === 0"
+                                        class="p-1 text-gray-400 hover:text-gray-600 rounded hover:bg-gray-50 transition-colors disabled:opacity-30 disabled:cursor-not-allowed" title="Move up">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"/>
+                                        </svg>
+                                    </button>
+                                    <!-- Move Down -->
+                                    <button type="button" @click="moveExerciseDown(exerciseIndex)" :disabled="exerciseIndex === exercises.length - 1"
+                                        class="p-1 text-gray-400 hover:text-gray-600 rounded hover:bg-gray-50 transition-colors disabled:opacity-30 disabled:cursor-not-allowed" title="Move down">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                                        </svg>
+                                    </button>
+                                    <!-- Remove -->
+                                    <button type="button" @click="removeExercise(exerciseIndex)"
+                                        class="p-1 text-red-400 hover:text-red-600 rounded hover:bg-red-50 transition-colors" title="Remove exercise">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
                                         </svg>
@@ -89,6 +109,16 @@
                             <!-- Hidden fields -->
                             <input type="hidden" :name="`exercises[${exerciseIndex}][workout_exercise_id]`" :value="exercise.workout_exercise_id || ''">
                             <input type="hidden" :name="`exercises[${exerciseIndex}][exercise_id]`" :value="exercise.exercise_id">
+
+                            <!-- Previous Session Data -->
+                            <div x-show="exercise.previous_sets && exercise.previous_sets.length > 0" class="text-xs text-gray-500">
+                                <span class="font-medium">Last session:</span>
+                                <template x-for="(prev, prevIndex) in (exercise.previous_sets || [])" :key="prevIndex">
+                                    <span>
+                                        <span x-text="`${prev.weight}kg × ${prev.reps}`"></span><span x-show="prevIndex < exercise.previous_sets.length - 1">, </span>
+                                    </span>
+                                </template>
+                            </div>
 
                             <!-- Sets Table -->
                             <div class="overflow-x-auto">
@@ -159,6 +189,7 @@
                         </div>
                     </x-bladewind::card>
                 </template>
+                </div>
 
                 <!-- Empty State -->
                 <div x-show="exercises.length === 0" class="text-center py-8">
@@ -275,6 +306,35 @@
                 showExercisePicker: false,
                 exercisesLoaded: false,
 
+                initSortable() {
+                    this.$nextTick(() => {
+                        const container = this.$refs.exerciseList;
+                        if (!container) return;
+                        Sortable.create(container, {
+                            handle: '.drag-handle',
+                            animation: 150,
+                            onEnd: (evt) => {
+                                const item = this.exercises.splice(evt.oldIndex, 1)[0];
+                                this.exercises.splice(evt.newIndex, 0, item);
+                            },
+                        });
+                    });
+                },
+
+                moveExerciseUp(index) {
+                    if (index <= 0) return;
+                    const temp = this.exercises[index];
+                    this.exercises.splice(index, 1);
+                    this.exercises.splice(index - 1, 0, temp);
+                },
+
+                moveExerciseDown(index) {
+                    if (index >= this.exercises.length - 1) return;
+                    const temp = this.exercises[index];
+                    this.exercises.splice(index, 1);
+                    this.exercises.splice(index + 1, 0, temp);
+                },
+
                 get filteredExercises() {
                     const search = this.exerciseSearch.toLowerCase();
                     const usedIds = this.exercises.map(e => e.exercise_id);
@@ -311,6 +371,7 @@
                         muscle_group: exercise.muscle_group,
                         prescribed_sets: null,
                         prescribed_reps: null,
+                        previous_sets: exercise.previous_sets || [],
                         sets: [{ weight: '', reps: '' }],
                     });
                     this.showExercisePicker = false;
