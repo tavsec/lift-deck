@@ -107,3 +107,88 @@ it('returns empty previous_sets when there is no history', function () {
     // No previous data markers should appear
     $response->assertDontSee('Last session');
 });
+
+it('returns exercises with previous set data from the JSON endpoint', function () {
+    $log = WorkoutLog::factory()->create([
+        'client_id' => $this->client->id,
+        'client_program_id' => $this->clientProgram->id,
+        'program_workout_id' => $this->workout->id,
+        'completed_at' => now()->subDay(),
+    ]);
+
+    ExerciseLog::factory()->create([
+        'workout_log_id' => $log->id,
+        'exercise_id' => $this->exercise->id,
+        'set_number' => 1,
+        'weight' => 60.00,
+        'reps' => 12,
+    ]);
+
+    $response = $this->actingAs($this->client)
+        ->getJson(route('client.log.exercises'));
+
+    $response->assertOk();
+
+    $exerciseData = collect($response->json())->firstWhere('id', $this->exercise->id);
+    expect($exerciseData)->not->toBeNull();
+    expect($exerciseData['previous_sets'])->toHaveCount(1);
+    expect($exerciseData['previous_sets'][0]['weight'])->toBe('60.00');
+    expect($exerciseData['previous_sets'][0]['reps'])->toBe(12);
+});
+
+it('returns empty previous_sets for exercises with no history', function () {
+    $newExercise = Exercise::factory()->create(['coach_id' => $this->coach->id]);
+
+    $response = $this->actingAs($this->client)
+        ->getJson(route('client.log.exercises'));
+
+    $response->assertOk();
+
+    $exerciseData = collect($response->json())->firstWhere('id', $newExercise->id);
+    expect($exerciseData)->not->toBeNull();
+    expect($exerciseData['previous_sets'])->toBe([]);
+});
+
+it('returns previous set data from the most recent log when multiple logs exist', function () {
+    // Older log
+    $olderLog = WorkoutLog::factory()->create([
+        'client_id' => $this->client->id,
+        'client_program_id' => $this->clientProgram->id,
+        'program_workout_id' => $this->workout->id,
+        'completed_at' => now()->subDays(5),
+    ]);
+
+    ExerciseLog::factory()->create([
+        'workout_log_id' => $olderLog->id,
+        'exercise_id' => $this->exercise->id,
+        'set_number' => 1,
+        'weight' => 50.00,
+        'reps' => 15,
+    ]);
+
+    // Newer log (should be returned)
+    $newerLog = WorkoutLog::factory()->create([
+        'client_id' => $this->client->id,
+        'client_program_id' => $this->clientProgram->id,
+        'program_workout_id' => $this->workout->id,
+        'completed_at' => now()->subDay(),
+    ]);
+
+    ExerciseLog::factory()->create([
+        'workout_log_id' => $newerLog->id,
+        'exercise_id' => $this->exercise->id,
+        'set_number' => 1,
+        'weight' => 75.00,
+        'reps' => 8,
+    ]);
+
+    $response = $this->actingAs($this->client)
+        ->getJson(route('client.log.exercises'));
+
+    $response->assertOk();
+
+    $exerciseData = collect($response->json())->firstWhere('id', $this->exercise->id);
+    expect($exerciseData['previous_sets'])->toHaveCount(1);
+    expect($exerciseData['previous_sets'][0]['weight'])->toBe('75.00');
+    expect($exerciseData['previous_sets'][0]['reps'])->toBe(8);
+});

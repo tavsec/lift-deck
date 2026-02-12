@@ -133,7 +133,44 @@ class LogController extends Controller
             ->orderBy('name')
             ->get(['id', 'name', 'muscle_group']);
 
-        return response()->json($exercises);
+        // Get the most recent workout_log_id per exercise for this client
+        $lastLogIds = ExerciseLog::query()
+            ->selectRaw('exercise_id, MAX(workout_log_id) as last_log_id')
+            ->whereHas('workoutLog', fn ($q) => $q->where('client_id', $user->id))
+            ->whereIn('exercise_id', $exercises->pluck('id'))
+            ->groupBy('exercise_id')
+            ->pluck('last_log_id', 'exercise_id');
+
+        $previousSets = collect();
+        if ($lastLogIds->isNotEmpty()) {
+            $previousSets = ExerciseLog::query()
+                ->whereIn('workout_log_id', $lastLogIds->values())
+                ->whereIn('exercise_id', $lastLogIds->keys())
+                ->where(function ($q) use ($lastLogIds) {
+                    foreach ($lastLogIds as $exerciseId => $logId) {
+                        $q->orWhere(function ($q2) use ($exerciseId, $logId) {
+                            $q2->where('exercise_id', $exerciseId)
+                                ->where('workout_log_id', $logId);
+                        });
+                    }
+                })
+                ->orderBy('set_number')
+                ->get()
+                ->groupBy('exercise_id')
+                ->map(fn ($logs) => $logs->map(fn ($log) => [
+                    'weight' => $log->weight,
+                    'reps' => $log->reps,
+                ])->values()->all());
+        }
+
+        $result = $exercises->map(fn ($exercise) => [
+            'id' => $exercise->id,
+            'name' => $exercise->name,
+            'muscle_group' => $exercise->muscle_group,
+            'previous_sets' => $previousSets->get($exercise->id, []),
+        ]);
+
+        return response()->json($result);
     }
 
     public function store(StoreWorkoutLogRequest $request): RedirectResponse
