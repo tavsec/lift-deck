@@ -63,6 +63,10 @@ Route::middleware(['auth', 'verified', 'role:coach'])
         Route::get('messages/{user}', [Coach\MessageController::class, 'show'])->name('messages.show');
         Route::post('messages/{user}', [Coach\MessageController::class, 'store'])->name('messages.store');
         Route::get('messages/{user}/poll', [Coach\MessageController::class, 'poll'])->name('messages.poll');
+
+        // Branding
+        Route::get('branding', [Coach\BrandingController::class, 'edit'])->name('branding.edit');
+        Route::put('branding', [Coach\BrandingController::class, 'update'])->name('branding.update');
     });
 
 // Client routes
