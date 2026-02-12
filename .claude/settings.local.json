@@ -25,7 +25,10 @@
       "Bash(npm install:*)",
       "Bash(docker build:*)",
       "mcp__laravel-boost__browser-logs",
-      "mcp__laravel-boost__last-error"
+      "mcp__laravel-boost__last-error",
+      "Bash(find:*)",
+      "Bash(git -C /home/timotej/Documents/projects/lift-deck add -A)",
+      "Bash(git -C /home/timotej/Documents/projects/lift-deck commit -m \"$\\(cat <<''EOF''\nfeat: add branding columns to users table\n\nCo-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>\nEOF\n\\)\")"
     ]
   },
   "enableAllProjectMcpServers": true,

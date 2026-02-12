@@ -28,10 +28,14 @@ class User extends Authenticatable
         'coach_id',
         'phone',
         'bio',
+        'description',
+        'welcome_email_text',
+        'onboarding_welcome_text',
         'avatar',
         'gym_name',
         'logo',
         'primary_color',
+        'secondary_color',
     ];
 
     /**
