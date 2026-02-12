@@ -17,6 +17,14 @@
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+        <!-- Branding -->
+        <style>
+            :root {
+                --color-primary: {{ auth()->user()->primary_color ?? '#2563EB' }};
+                --color-secondary: {{ auth()->user()->secondary_color ?? '#1E40AF' }};
+            }
+        </style>
     </head>
     <body class="font-sans antialiased bg-gray-50">
         <!-- Mobile Header -->
@@ -27,9 +35,11 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
                     </svg>
                 </button>
-                <span class="text-lg font-semibold text-gray-900">
-                    {{ auth()->user()->gym_name ?? 'LiftDeck' }}
-                </span>
+                @if(auth()->user()->logo)
+                    <img src="{{ Storage::url(auth()->user()->logo) }}" alt="{{ auth()->user()->gym_name ?? 'LiftDeck' }}" class="h-6">
+                @else
+                    <span class="text-lg font-semibold text-gray-900">{{ auth()->user()->gym_name ?? 'LiftDeck' }}</span>
+                @endif
                 <div class="w-10"></div>
             </div>
         </div>
@@ -39,25 +49,27 @@
             <div class="flex flex-col flex-1 min-h-0">
                 <!-- Brand -->
                 <div class="flex items-center h-16 px-6 border-b border-gray-200">
-                    <span class="text-xl font-bold text-gray-900">
-                        {{ auth()->user()->gym_name ?? 'LiftDeck' }}
-                    </span>
+                    @if(auth()->user()->logo)
+                        <img src="{{ Storage::url(auth()->user()->logo) }}" alt="{{ auth()->user()->gym_name ?? 'LiftDeck' }}" class="h-8">
+                    @else
+                        <span class="text-xl font-bold text-gray-900">{{ auth()->user()->gym_name ?? 'LiftDeck' }}</span>
+                    @endif
                 </div>
 
                 @php $unreadNotificationCount = auth()->user()->unreadNotifications()->count(); @endphp
 
                 <!-- Navigation -->
                 <nav class="flex-1 px-3 py-4 space-y-1 overflow-y-auto">
-                    <a href="{{ route('coach.dashboard') }}" class="flex items-center px-3 py-2 text-sm font-medium rounded-md {{ request()->routeIs('coach.dashboard') ? 'bg-blue-50 text-blue-700' : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900' }}">
-                        <svg class="w-5 h-5 mr-3 {{ request()->routeIs('coach.dashboard') ? 'text-blue-700' : 'text-gray-400' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <a href="{{ route('coach.dashboard') }}" class="flex items-center px-3 py-2 text-sm font-medium rounded-md {{ request()->routeIs('coach.dashboard') ? 'bg-blue-50' : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900' }}" {!! request()->routeIs('coach.dashboard') ? 'style="color: var(--color-primary)"' : '' !!}>
+                        <svg class="w-5 h-5 mr-3 {{ request()->routeIs('coach.dashboard') ? '' : 'text-gray-400' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
                         </svg>
                         Dashboard
                     </a>
 
-                    <a href="{{ route('coach.clients.index') }}" class="flex items-center justify-between px-3 py-2 text-sm font-medium rounded-md {{ request()->routeIs('coach.clients.*') ? 'bg-blue-50 text-blue-700' : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900' }}">
+                    <a href="{{ route('coach.clients.index') }}" class="flex items-center justify-between px-3 py-2 text-sm font-medium rounded-md {{ request()->routeIs('coach.clients.*') ? 'bg-blue-50' : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900' }}" {!! request()->routeIs('coach.clients.*') ? 'style="color: var(--color-primary)"' : '' !!}>
                         <span class="flex items-center">
-                            <svg class="w-5 h-5 mr-3 {{ request()->routeIs('coach.clients.*') ? 'text-blue-700' : 'text-gray-400' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg class="w-5 h-5 mr-3 {{ request()->routeIs('coach.clients.*') ? '' : 'text-gray-400' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
                             </svg>
                             Clients
@@ -67,43 +79,43 @@
                         @endif
                     </a>
 
-                    <a href="{{ route('coach.programs.index') }}" class="flex items-center px-3 py-2 text-sm font-medium rounded-md {{ request()->routeIs('coach.programs.*') ? 'bg-blue-50 text-blue-700' : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900' }}">
-                        <svg class="w-5 h-5 mr-3 {{ request()->routeIs('coach.programs.*') ? 'text-blue-700' : 'text-gray-400' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <a href="{{ route('coach.programs.index') }}" class="flex items-center px-3 py-2 text-sm font-medium rounded-md {{ request()->routeIs('coach.programs.*') ? 'bg-blue-50' : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900' }}" {!! request()->routeIs('coach.programs.*') ? 'style="color: var(--color-primary)"' : '' !!}>
+                        <svg class="w-5 h-5 mr-3 {{ request()->routeIs('coach.programs.*') ? '' : 'text-gray-400' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
                         </svg>
                         Programs
                     </a>
 
-                    <a href="{{ route('coach.exercises.index') }}" class="flex items-center px-3 py-2 text-sm font-medium rounded-md {{ request()->routeIs('coach.exercises.*') ? 'bg-blue-50 text-blue-700' : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900' }}">
-                        <svg class="w-5 h-5 mr-3 {{ request()->routeIs('coach.exercises.*') ? 'text-blue-700' : 'text-gray-400' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <a href="{{ route('coach.exercises.index') }}" class="flex items-center px-3 py-2 text-sm font-medium rounded-md {{ request()->routeIs('coach.exercises.*') ? 'bg-blue-50' : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900' }}" {!! request()->routeIs('coach.exercises.*') ? 'style="color: var(--color-primary)"' : '' !!}>
+                        <svg class="w-5 h-5 mr-3 {{ request()->routeIs('coach.exercises.*') ? '' : 'text-gray-400' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
                         </svg>
                         Exercises
                     </a>
 
-                    <a href="{{ route('coach.meals.index') }}" class="flex items-center px-3 py-2 text-sm font-medium rounded-md {{ request()->routeIs('coach.meals.*') ? 'bg-blue-50 text-blue-700' : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900' }}">
-                        <svg class="w-5 h-5 mr-3 {{ request()->routeIs('coach.meals.*') ? 'text-blue-700' : 'text-gray-400' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <a href="{{ route('coach.meals.index') }}" class="flex items-center px-3 py-2 text-sm font-medium rounded-md {{ request()->routeIs('coach.meals.*') ? 'bg-blue-50' : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900' }}" {!! request()->routeIs('coach.meals.*') ? 'style="color: var(--color-primary)"' : '' !!}>
+                        <svg class="w-5 h-5 mr-3 {{ request()->routeIs('coach.meals.*') ? '' : 'text-gray-400' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
                         </svg>
                         Meals
                     </a>
 
-                    <a href="{{ route('coach.tracking-metrics.index') }}" class="flex items-center px-3 py-2 text-sm font-medium rounded-md {{ request()->routeIs('coach.tracking-metrics.*') ? 'bg-blue-50 text-blue-700' : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900' }}">
-                        <svg class="w-5 h-5 mr-3 {{ request()->routeIs('coach.tracking-metrics.*') ? 'text-blue-700' : 'text-gray-400' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <a href="{{ route('coach.tracking-metrics.index') }}" class="flex items-center px-3 py-2 text-sm font-medium rounded-md {{ request()->routeIs('coach.tracking-metrics.*') ? 'bg-blue-50' : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900' }}" {!! request()->routeIs('coach.tracking-metrics.*') ? 'style="color: var(--color-primary)"' : '' !!}>
+                        <svg class="w-5 h-5 mr-3 {{ request()->routeIs('coach.tracking-metrics.*') ? '' : 'text-gray-400' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
                         </svg>
                         Tracking
                     </a>
 
-                    <a href="{{ route('coach.messages.index') }}" class="flex items-center px-3 py-2 text-sm font-medium rounded-md {{ request()->routeIs('coach.messages.*') ? 'bg-blue-50 text-blue-700' : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900' }}">
-                        <svg class="w-5 h-5 mr-3 {{ request()->routeIs('coach.messages.*') ? 'text-blue-700' : 'text-gray-400' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <a href="{{ route('coach.messages.index') }}" class="flex items-center px-3 py-2 text-sm font-medium rounded-md {{ request()->routeIs('coach.messages.*') ? 'bg-blue-50' : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900' }}" {!! request()->routeIs('coach.messages.*') ? 'style="color: var(--color-primary)"' : '' !!}>
+                        <svg class="w-5 h-5 mr-3 {{ request()->routeIs('coach.messages.*') ? '' : 'text-gray-400' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path>
                         </svg>
                         Messages
                     </a>
 
-                    <a href="{{ route('coach.branding.edit') }}" class="flex items-center px-3 py-2 text-sm font-medium rounded-md {{ request()->routeIs('coach.branding.*') ? 'bg-blue-50 text-blue-700' : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900' }}">
-                        <svg class="w-5 h-5 mr-3 {{ request()->routeIs('coach.branding.*') ? 'text-blue-700' : 'text-gray-400' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <a href="{{ route('coach.branding.edit') }}" class="flex items-center px-3 py-2 text-sm font-medium rounded-md {{ request()->routeIs('coach.branding.*') ? 'bg-blue-50' : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900' }}" {!! request()->routeIs('coach.branding.*') ? 'style="color: var(--color-primary)"' : '' !!}>
+                        <svg class="w-5 h-5 mr-3 {{ request()->routeIs('coach.branding.*') ? '' : 'text-gray-400' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"/>
                         </svg>
                         Branding
@@ -114,7 +126,7 @@
                 <div class="flex-shrink-0 border-t border-gray-200">
                     <div class="flex items-center px-4 py-4">
                         <div class="flex-shrink-0">
-                            <div class="w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center text-white font-semibold">
+                            <div class="w-10 h-10 rounded-full flex items-center justify-center text-white font-semibold" style="background-color: var(--color-primary)">
                                 {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
                             </div>
                         </div>
@@ -141,9 +153,11 @@
                 <div class="flex flex-col h-full">
                     <!-- Mobile Menu Header -->
                     <div class="flex items-center justify-between h-14 px-4 border-b border-gray-200">
-                        <span class="text-lg font-bold text-gray-900">
-                            {{ auth()->user()->gym_name ?? 'LiftDeck' }}
-                        </span>
+                        @if(auth()->user()->logo)
+                            <img src="{{ Storage::url(auth()->user()->logo) }}" alt="{{ auth()->user()->gym_name ?? 'LiftDeck' }}" class="h-6">
+                        @else
+                            <span class="text-lg font-bold text-gray-900">{{ auth()->user()->gym_name ?? 'LiftDeck' }}</span>
+                        @endif
                         <button onclick="toggleMobileMenu()" class="p-2 rounded-md text-gray-600 hover:text-gray-900 hover:bg-gray-100">
                             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
@@ -153,16 +167,16 @@
 
                     <!-- Mobile Navigation -->
                     <nav class="flex-1 px-3 py-4 space-y-1 overflow-y-auto">
-                        <a href="{{ route('coach.dashboard') }}" class="flex items-center px-3 py-2 text-sm font-medium rounded-md {{ request()->routeIs('coach.dashboard') ? 'bg-blue-50 text-blue-700' : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900' }}">
-                            <svg class="w-5 h-5 mr-3 {{ request()->routeIs('coach.dashboard') ? 'text-blue-700' : 'text-gray-400' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <a href="{{ route('coach.dashboard') }}" class="flex items-center px-3 py-2 text-sm font-medium rounded-md {{ request()->routeIs('coach.dashboard') ? 'bg-blue-50' : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900' }}" {!! request()->routeIs('coach.dashboard') ? 'style="color: var(--color-primary)"' : '' !!}>
+                            <svg class="w-5 h-5 mr-3 {{ request()->routeIs('coach.dashboard') ? '' : 'text-gray-400' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
                             </svg>
                             Dashboard
                         </a>
 
-                        <a href="{{ route('coach.clients.index') }}" class="flex items-center justify-between px-3 py-2 text-sm font-medium rounded-md {{ request()->routeIs('coach.clients.*') ? 'bg-blue-50 text-blue-700' : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900' }}">
+                        <a href="{{ route('coach.clients.index') }}" class="flex items-center justify-between px-3 py-2 text-sm font-medium rounded-md {{ request()->routeIs('coach.clients.*') ? 'bg-blue-50' : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900' }}" {!! request()->routeIs('coach.clients.*') ? 'style="color: var(--color-primary)"' : '' !!}>
                             <span class="flex items-center">
-                                <svg class="w-5 h-5 mr-3 {{ request()->routeIs('coach.clients.*') ? 'text-blue-700' : 'text-gray-400' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <svg class="w-5 h-5 mr-3 {{ request()->routeIs('coach.clients.*') ? '' : 'text-gray-400' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
                                 </svg>
                                 Clients
@@ -172,43 +186,43 @@
                             @endif
                         </a>
 
-                        <a href="{{ route('coach.programs.index') }}" class="flex items-center px-3 py-2 text-sm font-medium rounded-md {{ request()->routeIs('coach.programs.*') ? 'bg-blue-50 text-blue-700' : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900' }}">
-                            <svg class="w-5 h-5 mr-3 {{ request()->routeIs('coach.programs.*') ? 'text-blue-700' : 'text-gray-400' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <a href="{{ route('coach.programs.index') }}" class="flex items-center px-3 py-2 text-sm font-medium rounded-md {{ request()->routeIs('coach.programs.*') ? 'bg-blue-50' : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900' }}" {!! request()->routeIs('coach.programs.*') ? 'style="color: var(--color-primary)"' : '' !!}>
+                            <svg class="w-5 h-5 mr-3 {{ request()->routeIs('coach.programs.*') ? '' : 'text-gray-400' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
                             </svg>
                             Programs
                         </a>
 
-                        <a href="{{ route('coach.exercises.index') }}" class="flex items-center px-3 py-2 text-sm font-medium rounded-md {{ request()->routeIs('coach.exercises.*') ? 'bg-blue-50 text-blue-700' : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900' }}">
-                            <svg class="w-5 h-5 mr-3 {{ request()->routeIs('coach.exercises.*') ? 'text-blue-700' : 'text-gray-400' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <a href="{{ route('coach.exercises.index') }}" class="flex items-center px-3 py-2 text-sm font-medium rounded-md {{ request()->routeIs('coach.exercises.*') ? 'bg-blue-50' : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900' }}" {!! request()->routeIs('coach.exercises.*') ? 'style="color: var(--color-primary)"' : '' !!}>
+                            <svg class="w-5 h-5 mr-3 {{ request()->routeIs('coach.exercises.*') ? '' : 'text-gray-400' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
                             </svg>
                             Exercises
                         </a>
 
-                        <a href="{{ route('coach.meals.index') }}" class="flex items-center px-3 py-2 text-sm font-medium rounded-md {{ request()->routeIs('coach.meals.*') ? 'bg-blue-50 text-blue-700' : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900' }}">
-                            <svg class="w-5 h-5 mr-3 {{ request()->routeIs('coach.meals.*') ? 'text-blue-700' : 'text-gray-400' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <a href="{{ route('coach.meals.index') }}" class="flex items-center px-3 py-2 text-sm font-medium rounded-md {{ request()->routeIs('coach.meals.*') ? 'bg-blue-50' : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900' }}" {!! request()->routeIs('coach.meals.*') ? 'style="color: var(--color-primary)"' : '' !!}>
+                            <svg class="w-5 h-5 mr-3 {{ request()->routeIs('coach.meals.*') ? '' : 'text-gray-400' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
                             </svg>
                             Meals
                         </a>
 
-                        <a href="{{ route('coach.tracking-metrics.index') }}" class="flex items-center px-3 py-2 text-sm font-medium rounded-md {{ request()->routeIs('coach.tracking-metrics.*') ? 'bg-blue-50 text-blue-700' : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900' }}">
-                            <svg class="w-5 h-5 mr-3 {{ request()->routeIs('coach.tracking-metrics.*') ? 'text-blue-700' : 'text-gray-400' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <a href="{{ route('coach.tracking-metrics.index') }}" class="flex items-center px-3 py-2 text-sm font-medium rounded-md {{ request()->routeIs('coach.tracking-metrics.*') ? 'bg-blue-50' : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900' }}" {!! request()->routeIs('coach.tracking-metrics.*') ? 'style="color: var(--color-primary)"' : '' !!}>
+                            <svg class="w-5 h-5 mr-3 {{ request()->routeIs('coach.tracking-metrics.*') ? '' : 'text-gray-400' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
                             </svg>
                             Tracking
                         </a>
 
-                        <a href="{{ route('coach.messages.index') }}" class="flex items-center px-3 py-2 text-sm font-medium rounded-md {{ request()->routeIs('coach.messages.*') ? 'bg-blue-50 text-blue-700' : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900' }}">
-                            <svg class="w-5 h-5 mr-3 {{ request()->routeIs('coach.messages.*') ? 'text-blue-700' : 'text-gray-400' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <a href="{{ route('coach.messages.index') }}" class="flex items-center px-3 py-2 text-sm font-medium rounded-md {{ request()->routeIs('coach.messages.*') ? 'bg-blue-50' : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900' }}" {!! request()->routeIs('coach.messages.*') ? 'style="color: var(--color-primary)"' : '' !!}>
+                            <svg class="w-5 h-5 mr-3 {{ request()->routeIs('coach.messages.*') ? '' : 'text-gray-400' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path>
                             </svg>
                             Messages
                         </a>
 
-                        <a href="{{ route('coach.branding.edit') }}" class="flex items-center px-3 py-2 text-sm font-medium rounded-md {{ request()->routeIs('coach.branding.*') ? 'bg-blue-50 text-blue-700' : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900' }}">
-                            <svg class="w-5 h-5 mr-3 {{ request()->routeIs('coach.branding.*') ? 'text-blue-700' : 'text-gray-400' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <a href="{{ route('coach.branding.edit') }}" class="flex items-center px-3 py-2 text-sm font-medium rounded-md {{ request()->routeIs('coach.branding.*') ? 'bg-blue-50' : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900' }}" {!! request()->routeIs('coach.branding.*') ? 'style="color: var(--color-primary)"' : '' !!}>
+                            <svg class="w-5 h-5 mr-3 {{ request()->routeIs('coach.branding.*') ? '' : 'text-gray-400' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"/>
                             </svg>
                             Branding
@@ -219,7 +233,7 @@
                     <div class="flex-shrink-0 border-t border-gray-200">
                         <div class="flex items-center px-4 py-4">
                             <div class="flex-shrink-0">
-                                <div class="w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center text-white font-semibold">
+                                <div class="w-10 h-10 rounded-full flex items-center justify-center text-white font-semibold" style="background-color: var(--color-primary)">
                                     {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
                                 </div>
                             </div>
