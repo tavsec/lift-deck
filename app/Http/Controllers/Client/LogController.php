@@ -36,6 +36,49 @@ class LogController extends Controller
 
         $workout->load('exercises.exercise');
 
+        // Find the most recent log for this same workout
+        $previousLog = WorkoutLog::where('client_id', $user->id)
+            ->where('program_workout_id', $workout->id)
+            ->latest('completed_at')
+            ->first();
+
+        $previousSets = collect();
+        if ($previousLog) {
+            $previousSets = $previousLog->exerciseLogs
+                ->groupBy('exercise_id')
+                ->map(fn ($logs) => $logs->sortBy('set_number')->values()->map(fn ($log) => [
+                    'weight' => $log->weight,
+                    'reps' => $log->reps,
+                ])->all());
+        }
+
+        // Batch fallback: for exercises missing from the same-workout log,
+        // find their most recent log from ANY workout in one query
+        $allExerciseIds = $workout->exercises->pluck('exercise_id');
+        $missingExerciseIds = $allExerciseIds->diff($previousSets->keys());
+
+        if ($missingExerciseIds->isNotEmpty()) {
+            $fallbackLogs = ExerciseLog::whereIn('exercise_id', $missingExerciseIds)
+                ->whereHas('workoutLog', fn ($q) => $q->where('client_id', $user->id))
+                ->orderByDesc('created_at')
+                ->get()
+                ->groupBy('exercise_id')
+                ->map(function ($logs) {
+                    // Take only the sets from the most recent workout log
+                    $latestLogId = $logs->first()->workout_log_id;
+
+                    return $logs->where('workout_log_id', $latestLogId)
+                        ->sortBy('set_number')
+                        ->values()
+                        ->map(fn ($log) => [
+                            'weight' => $log->weight,
+                            'reps' => $log->reps,
+                        ])->all();
+                });
+
+            $previousSets = $previousSets->merge($fallbackLogs);
+        }
+
         // Pre-build exercise data for Alpine.js
         $exercisesData = $workout->exercises->map(fn ($we) => [
             'workout_exercise_id' => $we->id,
@@ -44,6 +87,7 @@ class LogController extends Controller
             'muscle_group' => $we->exercise->muscle_group,
             'prescribed_sets' => $we->sets,
             'prescribed_reps' => $we->reps,
+            'previous_sets' => $previousSets->get($we->exercise_id, []),
             'sets' => collect(range(1, $we->sets))->map(fn ($i) => [
                 'weight' => 0,
                 'reps' => 0,
@@ -133,7 +177,9 @@ class LogController extends Controller
 
         foreach ($validated['exercises'] as $exerciseData) {
             foreach ($exerciseData['sets'] as $setIndex => $setData) {
-                if($setData['weight'] == 0 || $setData['reps'] == 0) continue;
+                if ($setData['weight'] == 0 || $setData['reps'] == 0) {
+                    continue;
+                }
                 ExerciseLog::create([
                     'workout_log_id' => $workoutLog->id,
                     'workout_exercise_id' => $exerciseData['workout_exercise_id'] ?? null,
