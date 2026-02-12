@@ -28,7 +28,17 @@
       "mcp__laravel-boost__last-error",
       "Bash(find:*)",
       "Bash(git -C /home/timotej/Documents/projects/lift-deck add -A)",
-      "Bash(git -C /home/timotej/Documents/projects/lift-deck commit -m \"$\\(cat <<''EOF''\nfeat: add branding columns to users table\n\nCo-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>\nEOF\n\\)\")"
+      "Bash(git -C /home/timotej/Documents/projects/lift-deck commit -m \"$\\(cat <<''EOF''\nfeat: add branding columns to users table\n\nCo-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>\nEOF\n\\)\")",
+      "Bash(git -C /home/timotej/Documents/projects/lift-deck status)",
+      "Bash(git -C /home/timotej/Documents/projects/lift-deck diff)",
+      "Bash(git -C /home/timotej/Documents/projects/lift-deck log --oneline -5)",
+      "Bash(git -C /home/timotej/Documents/projects/lift-deck add app/Models/OnboardingField.php database/migrations/2026_02_12_151913_create_onboarding_fields_table.php app/Models/User.php tests/Feature/OnboardingFieldTest.php)",
+      "Bash(git -C /home/timotej/Documents/projects/lift-deck commit -m \"$\\(cat <<''EOF''\nfeat: create onboarding_fields table and model\n\nCo-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>\nEOF\n\\)\")",
+      "Bash(git -C /home/timotej/Documents/projects/lift-deck add database/migrations/2026_02_12_153554_seed_default_onboarding_fields.php)",
+      "Bash(git -C /home/timotej/Documents/projects/lift-deck commit -m \"$\\(cat <<''EOF''\nfeat: seed default onboarding fields for existing coaches\n\nCo-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>\nEOF\n\\)\")",
+      "Bash(git stash:*)",
+      "Bash(git -C /home/timotej/Documents/projects/lift-deck add resources/views/coach/branding.blade.php)",
+      "Bash(git -C /home/timotej/Documents/projects/lift-deck commit -m \"$\\(cat <<''EOF''\nfeat: add coach branding view with field builder\n\nCo-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>\nEOF\n\\)\")"
     ]
   },
   "enableAllProjectMcpServers": true,
