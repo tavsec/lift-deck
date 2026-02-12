@@ -28,10 +28,14 @@ class User extends Authenticatable
         'coach_id',
         'phone',
         'bio',
+        'description',
+        'welcome_email_text',
+        'onboarding_welcome_text',
         'avatar',
         'gym_name',
         'logo',
         'primary_color',
+        'secondary_color',
     ];
 
     /**
@@ -167,6 +171,22 @@ class User extends Authenticatable
     public function trackingMetrics(): HasMany
     {
         return $this->hasMany(TrackingMetric::class, 'coach_id')->orderBy('order');
+    }
+
+    /**
+     * Get onboarding fields defined by this coach.
+     */
+    public function onboardingFields(): HasMany
+    {
+        return $this->hasMany(OnboardingField::class, 'coach_id')->orderBy('order');
+    }
+
+    /**
+     * Get onboarding responses for this client.
+     */
+    public function onboardingResponses(): HasMany
+    {
+        return $this->hasMany(OnboardingResponse::class, 'client_id');
     }
 
     /**

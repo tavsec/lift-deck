@@ -102,8 +102,25 @@
                     </div>
                 </div>
 
-                <!-- Profile Card -->
-                @if($client->clientProfile)
+                <!-- Onboarding Info -->
+                @if($client->onboardingResponses->isNotEmpty())
+                <div class="bg-white rounded-lg shadow">
+                    <div class="px-6 py-4 border-b border-gray-200">
+                        <h2 class="text-lg font-medium text-gray-900">Onboarding Info</h2>
+                    </div>
+                    <dl class="divide-y divide-gray-200">
+                        @foreach($client->onboardingResponses->sortBy('onboardingField.order') as $response)
+                            @if($response->onboardingField)
+                            <div class="px-6 py-3">
+                                <dt class="text-sm font-medium text-gray-500">{{ $response->onboardingField->label }}</dt>
+                                <dd class="mt-1 text-sm text-gray-900">{{ $response->value }}</dd>
+                            </div>
+                            @endif
+                        @endforeach
+                    </dl>
+                </div>
+                @elseif($client->clientProfile)
+                <!-- Fallback: Legacy Profile Card -->
                 <div class="bg-white rounded-lg shadow p-6">
                     <h2 class="text-lg font-medium text-gray-900 mb-4">Profile</h2>
                     <div class="space-y-4">
