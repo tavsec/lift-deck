@@ -10,6 +10,7 @@ use App\Models\ProgramWorkout;
 use App\Models\WorkoutLog;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Log;
 use Illuminate\View\View;
 
 class LogController extends Controller
@@ -43,41 +44,46 @@ class LogController extends Controller
             ->first();
 
         $previousSets = collect();
-        if ($previousLog) {
-            $previousSets = $previousLog->exerciseLogs
-                ->groupBy('exercise_id')
-                ->map(fn ($logs) => $logs->sortBy('set_number')->values()->map(fn ($log) => [
-                    'weight' => $log->weight,
-                    'reps' => $log->reps,
-                ])->all());
+        try {
+            if ($previousLog) {
+                $previousSets = $previousLog->exerciseLogs
+                    ->groupBy('exercise_id')
+                    ->map(fn ($logs) => $logs->sortBy('set_number')->values()->map(fn ($log) => [
+                        'weight' => $log->weight,
+                        'reps' => $log->reps,
+                    ])->all());
+            }
+
+            // Batch fallback: for exercises missing from the same-workout log,
+            // find their most recent log from ANY workout in one query
+            $allExerciseIds = $workout->exercises->pluck('exercise_id');
+            $missingExerciseIds = $allExerciseIds->diff($previousSets->keys());
+
+            if ($missingExerciseIds->isNotEmpty()) {
+                $fallbackLogs = ExerciseLog::whereIn('exercise_id', $missingExerciseIds)
+                    ->whereHas('workoutLog', fn ($q) => $q->where('client_id', $user->id))
+                    ->orderByDesc('created_at')
+                    ->get()
+                    ->groupBy('exercise_id')
+                    ->map(function ($logs) {
+                        // Take only the sets from the most recent workout log
+                        $latestLogId = $logs->first()->workout_log_id;
+
+                        return $logs->where('workout_log_id', $latestLogId)
+                            ->sortBy('set_number')
+                            ->values()
+                            ->map(fn ($log) => [
+                                'weight' => $log->weight,
+                                'reps' => $log->reps,
+                            ])->all();
+                    });
+
+                $previousSets = $previousSets->merge($fallbackLogs);
+            }
+        }catch (\Exception $exception){
+            Log::error($exception->getMessage());
         }
 
-        // Batch fallback: for exercises missing from the same-workout log,
-        // find their most recent log from ANY workout in one query
-        $allExerciseIds = $workout->exercises->pluck('exercise_id');
-        $missingExerciseIds = $allExerciseIds->diff($previousSets->keys());
-
-        if ($missingExerciseIds->isNotEmpty()) {
-            $fallbackLogs = ExerciseLog::whereIn('exercise_id', $missingExerciseIds)
-                ->whereHas('workoutLog', fn ($q) => $q->where('client_id', $user->id))
-                ->orderByDesc('created_at')
-                ->get()
-                ->groupBy('exercise_id')
-                ->map(function ($logs) {
-                    // Take only the sets from the most recent workout log
-                    $latestLogId = $logs->first()->workout_log_id;
-
-                    return $logs->where('workout_log_id', $latestLogId)
-                        ->sortBy('set_number')
-                        ->values()
-                        ->map(fn ($log) => [
-                            'weight' => $log->weight,
-                            'reps' => $log->reps,
-                        ])->all();
-                });
-
-            $previousSets = $previousSets->merge($fallbackLogs);
-        }
 
         // Pre-build exercise data for Alpine.js
         $exercisesData = $workout->exercises->map(fn ($we) => [

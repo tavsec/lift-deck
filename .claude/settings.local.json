@@ -43,7 +43,8 @@
       "Bash(git -C /home/timotej/Documents/projects/lift-deck diff resources/views/coach/clients/show.blade.php)",
       "Bash(git -C /home/timotej/Documents/projects/lift-deck add app/Http/Controllers/Coach/ClientController.php resources/views/coach/clients/show.blade.php)",
       "Bash(git -C /home/timotej/Documents/projects/lift-deck commit -m \"$\\(cat <<''EOF''\nfeat: show dynamic onboarding responses on coach client detail\n\nCo-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>\nEOF\n\\)\")",
-      "Bash(git -C /home/timotej/Documents/projects/lift-deck log --oneline -15)"
+      "Bash(git -C /home/timotej/Documents/projects/lift-deck log --oneline -15)",
+      "Bash(git checkout:*)"
     ]
   },
   "enableAllProjectMcpServers": true,
