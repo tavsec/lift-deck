@@ -60,7 +60,7 @@ class LogController extends Controller
             $missingExerciseIds = $allExerciseIds->diff($previousSets->keys());
 
             if ($missingExerciseIds->isNotEmpty()) {
-                $fallbackLogs = ExerciseLog::whereIn('exercise_id', $missingExerciseIds)
+                $fallbackLogs = ExerciseLog::query()->whereIn('exercise_id', $missingExerciseIds)
                     ->whereHas('workoutLog', fn ($q) => $q->where('client_id', $user->id))
                     ->orderByDesc('created_at')
                     ->get()
@@ -76,11 +76,11 @@ class LogController extends Controller
                                 'weight' => $log->weight,
                                 'reps' => $log->reps,
                             ])->all();
-                    });
+                    })->collect();
 
                 $previousSets = $previousSets->merge($fallbackLogs);
             }
-        }catch (\Exception $exception){
+        }catch (\Throwable $exception){
             Log::error($exception->getMessage());
         }
 
