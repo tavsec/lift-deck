@@ -45,6 +45,7 @@ Route::middleware(['auth', 'verified', 'role:coach'])
 
         Route::get('clients/{client}/nutrition', [Coach\NutritionController::class, 'show'])->name('clients.nutrition');
         Route::get('clients/{client}/analytics', [Coach\AnalyticsController::class, 'show'])->name('clients.analytics');
+        Route::get('clients/{client}/analytics/export', [Coach\AnalyticsController::class, 'exportToExcel'])->name('clients.analytics.export');
         Route::post('clients/{client}/macro-goals', [Coach\MacroGoalController::class, 'store'])->name('clients.macro-goals.store');
         Route::delete('macro-goals/{macroGoal}', [Coach\MacroGoalController::class, 'destroy'])->name('macro-goals.destroy');
 

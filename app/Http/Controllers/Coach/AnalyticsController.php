@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers\Coach;
 
+use App\Exports\CoachAnalyticsExport;
 use App\Http\Controllers\Controller;
 use App\Models\DailyLog;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
+use Maatwebsite\Excel\Facades\Excel;
 
 class AnalyticsController extends Controller
 {
@@ -254,5 +256,14 @@ class AnalyticsController extends Controller
             'exerciseProgressionData',
             'exercisesByMuscleGroup',
         ));
+    }
+
+    public function exportToExcel(Request $request, User $client){
+        if ($client->coach_id !== auth()->id()) {
+            abort(403);
+        }
+
+
+        return Excel::download(new CoachAnalyticsExport($client), "analytics.xlsx");
     }
 }
