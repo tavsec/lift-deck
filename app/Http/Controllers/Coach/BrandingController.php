@@ -37,12 +37,12 @@ class BrandingController extends Controller
         // Handle logo upload
         if ($request->hasFile('logo')) {
             if ($coach->logo) {
-                Storage::disk('public')->delete($coach->logo);
+                Storage::delete($coach->logo);
             }
-            $path = $request->file('logo')->store('logos', 'public');
+            $path = $request->file('logo')->store('logos');
             $coach->update(['logo' => $path]);
         } elseif ($request->boolean('remove_logo') && $coach->logo) {
-            Storage::disk('public')->delete($coach->logo);
+            Storage::delete($coach->logo);
             $coach->update(['logo' => null]);
         }
 

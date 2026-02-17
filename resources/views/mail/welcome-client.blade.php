@@ -13,7 +13,7 @@
                     <tr>
                         <td style="background-color: {{ $coach->primary_color ?? '#2563EB' }}; padding: 24px 32px; border-radius: 8px 8px 0 0; text-align: center;">
                             @if($coach->logo)
-                                <img src="{{ url(\Illuminate\Support\Facades\Storage::url($coach->logo)) }}" alt="{{ $coach->gym_name ?? $coach->name }}" style="max-height: 48px; margin-bottom: 8px;">
+                                <img src="{{ $coach->logo }}" alt="{{ $coach->gym_name ?? $coach->name }}" style="max-height: 48px; margin-bottom: 8px;">
                             @endif
                             <h1 style="margin: 0; color: #ffffff; font-size: 24px; font-weight: bold;">
                                 {{ $coach->gym_name ?? $coach->name }}
