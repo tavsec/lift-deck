@@ -2,7 +2,9 @@
 
 namespace App\Filament\Resources\Users\Schemas;
 
+use Filament\Forms\Components\ColorPicker;
 use Filament\Forms\Components\DateTimePicker;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
@@ -19,24 +21,19 @@ class UserForm
                 TextInput::make('email')
                     ->label('Email address')
                     ->email()
-                    ->required(),
-                DateTimePicker::make('email_verified_at'),
-                TextInput::make('password')
-                    ->password()
-                    ->required(),
+                    ->required()
+                    ->disabled(),
                 TextInput::make('role')
+                    ->default("coach")
+                    ->disabled()
                     ->required(),
-                Select::make('coach_id')
-                    ->relationship('coach', 'name'),
                 TextInput::make('phone')
                     ->tel(),
                 Textarea::make('bio')
                     ->columnSpanFull(),
-                TextInput::make('avatar'),
                 TextInput::make('gym_name'),
-                TextInput::make('logo'),
-                TextInput::make('primary_color'),
-                TextInput::make('secondary_color'),
+                ColorPicker::make('primary_color'),
+                ColorPicker::make('secondary_color'),
                 Textarea::make('description')
                     ->columnSpanFull(),
                 Textarea::make('welcome_email_text')

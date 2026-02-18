@@ -7,6 +7,7 @@ use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
+use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\ColorColumn;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\SpatieMediaLibraryImageColumn;
@@ -20,27 +21,24 @@ class UsersTable
         return $table
             ->columns([
                 TextColumn::make('name')
-                    ->searchable(),
+                    ->searchable()
+                    ->description(fn(User $record): string => $record->description)
+                    ->sortable(),
                 TextColumn::make('email')
                     ->label('Email address')
                     ->copyable()
+                    ->icon(Heroicon::Envelope)
                     ->searchable(),
-                TextColumn::make('email_verified_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('updated_at')
-                    ->dateTime()
+                TextColumn::make("clients_count")
+                    ->label("Number of clients")
                     ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->counts("clients"),
                 TextColumn::make('phone')
                     ->searchable(),
-                ImageColumn::make('avatar')
-                    ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('gym_name')
                     ->searchable(),
                 ImageColumn::make('logo'),

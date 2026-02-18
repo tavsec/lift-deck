@@ -2,6 +2,8 @@
 
 namespace App\Filament\Resources\Users\Schemas;
 
+use Filament\Infolists\Components\ColorEntry;
+use Filament\Infolists\Components\ImageEntry;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Schemas\Schema;
 
@@ -13,34 +15,24 @@ class UserInfolist
             ->components([
                 TextEntry::make('name'),
                 TextEntry::make('email')
-                    ->label('Email address'),
-                TextEntry::make('email_verified_at')
-                    ->dateTime()
-                    ->placeholder('-'),
+                    ->label('Email address')
+                    ->copyable(),
                 TextEntry::make('created_at')
                     ->dateTime()
-                    ->placeholder('-'),
-                TextEntry::make('updated_at')
-                    ->dateTime()
-                    ->placeholder('-'),
-                TextEntry::make('role'),
-                TextEntry::make('coach.name')
-                    ->label('Coach')
                     ->placeholder('-'),
                 TextEntry::make('phone')
                     ->placeholder('-'),
                 TextEntry::make('bio')
                     ->placeholder('-')
                     ->columnSpanFull(),
-                TextEntry::make('avatar')
-                    ->placeholder('-'),
                 TextEntry::make('gym_name')
+                    ->placeholder('-')
+                    ->columnSpanFull(),
+                ColorEntry::make('primary_color')
                     ->placeholder('-'),
-                TextEntry::make('logo')
+                ColorEntry::make('secondary_color')
                     ->placeholder('-'),
-                TextEntry::make('primary_color')
-                    ->placeholder('-'),
-                TextEntry::make('secondary_color')
+                ImageEntry::make('logo')
                     ->placeholder('-'),
                 TextEntry::make('description')
                     ->placeholder('-')
