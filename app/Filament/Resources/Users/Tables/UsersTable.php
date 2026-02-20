@@ -36,7 +36,8 @@ class UsersTable
                 TextColumn::make("clients_count")
                     ->label("Number of clients")
                     ->sortable()
-                    ->counts("clients"),
+                    ->counts("clients")
+                ->badge(),
                 TextColumn::make('phone')
                     ->searchable(),
                 TextColumn::make('gym_name')

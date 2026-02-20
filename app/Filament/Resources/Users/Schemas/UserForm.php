@@ -22,7 +22,12 @@ class UserForm
                     ->label('Email address')
                     ->email()
                     ->required()
-                    ->disabled(),
+                    ->disabledOn('edit'),
+                TextInput::make('password')
+                    ->label('Password')
+                    ->password()
+                    ->required()
+                    ->disabledOn('edit'),
                 TextInput::make('role')
                     ->default("coach")
                     ->disabled()
