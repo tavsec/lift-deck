@@ -63,9 +63,10 @@ class User extends Authenticatable
         ];
     }
 
-    public function logo(): Attribute{
+    public function logo(): Attribute
+    {
         return Attribute::make(
-            get: fn(string $value) => Storage::temporaryUrl($value, now()->addDay())
+            get: fn (string $value) => Storage::temporaryUrl($value, now()->addDay())
         );
     }
 
@@ -243,5 +244,21 @@ class User extends Authenticatable
     public function mealLogs(): HasMany
     {
         return $this->hasMany(MealLog::class, 'client_id');
+    }
+
+    /**
+     * Get the XP summary for this user.
+     */
+    public function xpSummary(): HasOne
+    {
+        return $this->hasOne(UserXpSummary::class);
+    }
+
+    /**
+     * Get all XP transactions for this user.
+     */
+    public function xpTransactions(): HasMany
+    {
+        return $this->hasMany(XpTransaction::class);
     }
 }
