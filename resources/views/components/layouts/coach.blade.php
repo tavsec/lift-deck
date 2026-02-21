@@ -36,7 +36,7 @@
                     </svg>
                 </button>
                 @if(auth()->user()->logo)
-                    <img src="{{ Storage::url(auth()->user()->logo) }}" alt="{{ auth()->user()->gym_name ?? 'LiftDeck' }}" class="h-6">
+                    <img src="{{ auth()->user()->logo }}" alt="{{ auth()->user()->gym_name ?? 'LiftDeck' }}" class="h-6">
                 @else
                     <span class="text-lg font-semibold text-gray-900">{{ auth()->user()->gym_name ?? 'LiftDeck' }}</span>
                 @endif
@@ -50,7 +50,7 @@
                 <!-- Brand -->
                 <div class="flex items-center h-16 px-6 border-b border-gray-200">
                     @if(auth()->user()->logo)
-                        <img src="{{ Storage::url(auth()->user()->logo) }}" alt="{{ auth()->user()->gym_name ?? 'LiftDeck' }}" class="h-8">
+                        <img src="{{ auth()->user()->logo }}" alt="{{ auth()->user()->gym_name ?? 'LiftDeck' }}" class="h-8">
                     @else
                         <span class="text-xl font-bold text-gray-900">{{ auth()->user()->gym_name ?? 'LiftDeck' }}</span>
                     @endif
@@ -154,7 +154,7 @@
                     <!-- Mobile Menu Header -->
                     <div class="flex items-center justify-between h-14 px-4 border-b border-gray-200">
                         @if(auth()->user()->logo)
-                            <img src="{{ Storage::url(auth()->user()->logo) }}" alt="{{ auth()->user()->gym_name ?? 'LiftDeck' }}" class="h-6">
+                            <img src="{{ auth()->user()->logo }}" alt="{{ auth()->user()->gym_name ?? 'LiftDeck' }}" class="h-6">
                         @else
                             <span class="text-lg font-bold text-gray-900">{{ auth()->user()->gym_name ?? 'LiftDeck' }}</span>
                         @endif

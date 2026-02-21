@@ -82,7 +82,7 @@
                         <label class="block text-sm font-medium text-gray-700">Logo</label>
                         @if($coach->logo)
                             <div class="mt-2 flex items-center gap-4">
-                                <img src="{{ Storage::url($coach->logo) }}" alt="Current logo" class="h-16 w-16 rounded-md object-cover">
+                                <img src="{{ $coach->logo }}" alt="Current logo" class="h-16 w-16 rounded-md object-cover">
                                 <label class="flex items-center gap-2 text-sm text-gray-600">
                                     <input type="checkbox" name="remove_logo" value="1" class="rounded border-gray-300 text-blue-600 focus:ring-blue-500">
                                     Remove logo

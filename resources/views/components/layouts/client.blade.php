@@ -32,7 +32,7 @@
         <div class="fixed top-0 left-0 right-0 bg-white shadow-sm z-40">
             <div class="flex items-center justify-between px-4 h-16">
                 @if($brandingCoach?->logo)
-                    <img src="{{ Storage::url($brandingCoach->logo) }}" alt="{{ $brandingCoach->gym_name ?? 'My Training' }}" class="h-8">
+                    <img src="{{ $brandingCoach->logo }}" alt="{{ $brandingCoach->gym_name ?? 'My Training' }}" class="h-8">
                 @else
                     <span class="text-lg font-semibold text-gray-900">{{ $brandingCoach?->gym_name ?? 'My Training' }}</span>
                 @endif
