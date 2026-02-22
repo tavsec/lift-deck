@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
+use App\Jobs\ProcessXpEvent;
 use App\Models\DailyLog;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -146,6 +147,10 @@ class CheckInController extends Controller
             $log->addMedia($file)
                 ->toMediaCollection('check-in-image');
         }
+
+        ProcessXpEvent::dispatch(auth()->id(), 'daily_checkin');
+        ProcessXpEvent::dispatch(auth()->id(), 'streak_7_day');
+        ProcessXpEvent::dispatch(auth()->id(), 'streak_30_day');
 
         return redirect()->route('client.check-in', ['date' => $validated['date']])
             ->with('success', 'Check-in saved!');

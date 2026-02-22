@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreWorkoutLogRequest;
+use App\Jobs\ProcessXpEvent;
 use App\Models\Exercise;
 use App\Models\ExerciseLog;
 use App\Models\ProgramWorkout;
@@ -80,10 +81,9 @@ class LogController extends Controller
 
                 $previousSets = $previousSets->merge($fallbackLogs);
             }
-        }catch (\Throwable $exception){
+        } catch (\Throwable $exception) {
             Log::error($exception->getMessage());
         }
-
 
         // Pre-build exercise data for Alpine.js
         $exercisesData = $workout->exercises->map(fn ($we) => [
@@ -233,6 +233,8 @@ class LogController extends Controller
                 ]);
             }
         }
+
+        ProcessXpEvent::dispatch(auth()->id(), 'workout_logged', ['workout_log_id' => $workoutLog->id]);
 
         return redirect()->route('client.history')
             ->with('success', 'Workout logged!');
