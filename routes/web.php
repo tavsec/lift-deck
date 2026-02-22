@@ -52,6 +52,8 @@ Route::middleware(['auth', 'verified', 'role:coach'])
         Route::resource('exercises', Coach\ExerciseController::class);
         Route::resource('meals', Coach\MealController::class)->except(['show']);
         Route::resource('rewards', Coach\RewardController::class)->except(['show']);
+        Route::resource('achievements', Coach\AchievementController::class)->except(['show']);
+        Route::post('clients/{client}/achievements/{achievement}/award', [Coach\AchievementController::class, 'award'])->name('clients.achievements.award');
 
         Route::get('redemptions', [Coach\RedemptionController::class, 'index'])->name('redemptions.index');
         Route::patch('redemptions/{redemption}', [Coach\RedemptionController::class, 'update'])->name('redemptions.update');
