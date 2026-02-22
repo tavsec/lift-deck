@@ -105,6 +105,8 @@ Route::middleware(['auth', 'verified', 'role:client'])
         Route::post('messages', [Client\MessageController::class, 'store'])->name('messages.store');
         Route::get('messages/poll', [Client\MessageController::class, 'poll'])->name('messages.poll');
         Route::get('achievements', [Client\AchievementController::class, 'index'])->name('achievements');
+        Route::get('rewards', [Client\RewardController::class, 'index'])->name('rewards');
+        Route::post('rewards/{reward}/redeem', [Client\RewardController::class, 'redeem'])->name('rewards.redeem');
     });
 
 // Media serving (private, authorized)
