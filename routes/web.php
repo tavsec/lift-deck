@@ -4,9 +4,16 @@ use App\Http\Controllers\Client;
 use App\Http\Controllers\Coach;
 use Illuminate\Support\Facades\Route;
 
+Route::domain("beta.liftdeck.io")->group(function () {
+    Route::get('/', function () {
+        return view('beta');
+    });
+});
+
 Route::get('/', function () {
     return view('welcome');
 });
+
 
 // Client registration via invitation code
 Route::middleware('guest')->group(function () {

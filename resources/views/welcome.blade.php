@@ -77,17 +77,19 @@
                     <p
                         class="mx-auto mb-9 max-w-[600px] text-base font-medium text-white sm:text-lg sm:leading-[1.44]"
                     >
-                        Elevate your coaching experience to next level
+                        Elevate your coaching experience to next level!
+                        <br>
+                        <i class="text-sm">Currently in closed beta</i>
                     </p>
                     <ul
                         class="flex flex-wrap items-center justify-center gap-5 mb-10"
                     >
                         <li>
                             <a
-                                href="mailto:beta@liftdeck.io"
+                                href="https://beta.liftdeck.io"
                                 class="inline-flex items-center justify-center rounded-md bg-white px-7 py-[14px] text-center text-base font-medium text-dark shadow-1 transition duration-300 ease-in-out hover:bg-gray-2 hover:text-body-color"
                             >
-                                Contact us
+                                Join beta testing
                             </a>
                         </li>
                     </ul>
@@ -1491,10 +1493,10 @@
                             LiftDeck is currently in closed beta. Join our select group of trainers testing the platform.
                         </p>
                         <a
-                            href="mailto:beta@liftdeck.io"
+                            href="https://beta.liftdeck.io"
                             class="inline-block rounded-md border border-transparent bg-secondary px-7 py-3 text-base font-medium text-white transition hover:bg-[#0BB489]"
                         >
-                            Contact us to join closed testing
+                            Join beta testing
                         </a>
                     </div>
                 </div>
@@ -1786,8 +1788,8 @@
                             How do I get started?
                         </h3>
                         <p class="text-base text-body-color dark:text-dark-6">
-                            Apply for closed beta! Send us an email to <a
-                                href="mailto:beta@liftdeck.io" class="text-blue-500">beta@liftdeck.io</a> and our team will contact you within 24 hours to set up your account and walk you through onboarding.                    </div>
+                            Apply for closed beta! Fill out this <a
+                                href="https://beta.liftdeck.io" class="text-blue-500">short form</a> and our team will contact you within 24 hours to set up your account and walk you through onboarding.                    </div>
                 </div>
             </div>
         </div>
