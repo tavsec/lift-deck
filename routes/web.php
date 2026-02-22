@@ -53,6 +53,9 @@ Route::middleware(['auth', 'verified', 'role:coach'])
         Route::resource('meals', Coach\MealController::class)->except(['show']);
         Route::resource('rewards', Coach\RewardController::class)->except(['show']);
 
+        Route::get('redemptions', [Coach\RedemptionController::class, 'index'])->name('redemptions.index');
+        Route::patch('redemptions/{redemption}', [Coach\RedemptionController::class, 'update'])->name('redemptions.update');
+
         // Tracking metrics
         Route::get('tracking-metrics', [Coach\TrackingMetricController::class, 'index'])->name('tracking-metrics.index');
         Route::post('tracking-metrics', [Coach\TrackingMetricController::class, 'store'])->name('tracking-metrics.store');
