@@ -376,6 +376,106 @@
                     </div>
                 </div>
                 @endif
+
+                <!-- Loyalty Section -->
+                <div class="bg-white rounded-lg shadow p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <h2 class="text-lg font-medium text-gray-900">Loyalty</h2>
+                        @if($manualAchievements->isNotEmpty())
+                            <div x-data="{ open: false }" class="relative">
+                                <button @click="open = !open" type="button" class="inline-flex items-center px-3 py-1.5 border border-blue-300 rounded-md text-sm font-medium text-blue-700 bg-white hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-blue-500 transition ease-in-out duration-150">
+                                    <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+                                    </svg>
+                                    Award Achievement
+                                </button>
+                                <div x-show="open" @click.outside="open = false" x-cloak
+                                    class="absolute right-0 mt-2 w-72 bg-white border border-gray-200 rounded-lg shadow-lg z-10">
+                                    <div class="px-4 py-3 border-b border-gray-100">
+                                        <p class="text-sm font-medium text-gray-900">Award a Manual Achievement</p>
+                                    </div>
+                                    <ul class="max-h-64 overflow-y-auto divide-y divide-gray-100">
+                                        @foreach($manualAchievements as $achievement)
+                                            <li class="flex items-center justify-between px-4 py-3">
+                                                <div>
+                                                    <p class="text-sm font-medium text-gray-800">{{ $achievement->name }}</p>
+                                                    @if($achievement->xp_reward || $achievement->points_reward)
+                                                        <p class="text-xs text-gray-500">
+                                                            @if($achievement->xp_reward) {{ $achievement->xp_reward }} XP @endif
+                                                            @if($achievement->xp_reward && $achievement->points_reward) &middot; @endif
+                                                            @if($achievement->points_reward) {{ $achievement->points_reward }} pts @endif
+                                                        </p>
+                                                    @endif
+                                                </div>
+                                                <form method="POST" action="{{ route('coach.clients.achievements.award', [$client, $achievement]) }}">
+                                                    @csrf
+                                                    <button type="submit" class="ml-3 inline-flex items-center px-2.5 py-1 border border-green-300 rounded text-xs font-medium text-green-700 bg-white hover:bg-green-50 transition ease-in-out duration-150">
+                                                        Award
+                                                    </button>
+                                                </form>
+                                            </li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            </div>
+                        @endif
+                    </div>
+
+                    <!-- XP Summary -->
+                    @if($xpSummary)
+                        <div class="space-y-3 mb-4">
+                            <div class="flex items-center gap-3">
+                                @if($xpSummary->currentLevel)
+                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-yellow-100 text-yellow-800">
+                                        {{ $xpSummary->currentLevel->name }}
+                                    </span>
+                                @endif
+                                <span class="text-sm text-gray-600">{{ number_format($xpSummary->total_xp) }} total XP</span>
+                                <span class="text-sm font-semibold text-blue-600">{{ number_format($xpSummary->available_points) }} pts available</span>
+                            </div>
+                        </div>
+                    @else
+                        <p class="text-sm text-gray-400 mb-4">No XP activity yet.</p>
+                    @endif
+
+                    <!-- Earned Achievements -->
+                    @if($clientAchievements->isNotEmpty())
+                        <div class="mb-4">
+                            <h3 class="text-sm font-medium text-gray-700 mb-2">Earned Achievements</h3>
+                            <div class="flex flex-wrap gap-2">
+                                @foreach($clientAchievements as $achievement)
+                                    <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800" title="{{ $achievement->description }}">
+                                        🏆 {{ $achievement->name }}
+                                    </span>
+                                @endforeach
+                            </div>
+                        </div>
+                    @endif
+
+                    <!-- Recent Redemptions -->
+                    @if($recentRedemptions->isNotEmpty())
+                        <div>
+                            <h3 class="text-sm font-medium text-gray-700 mb-2">Recent Redemptions</h3>
+                            <ul class="divide-y divide-gray-100">
+                                @foreach($recentRedemptions as $redemption)
+                                    <li class="py-2 flex items-center justify-between">
+                                        <div>
+                                            <p class="text-sm text-gray-800">{{ $redemption->reward?->name ?? 'Deleted reward' }}</p>
+                                            <p class="text-xs text-gray-400">{{ $redemption->created_at->format('M j, Y') }} &middot; {{ $redemption->points_spent }} pts</p>
+                                        </div>
+                                        @php
+                                            $statusColors = ['pending' => 'yellow', 'fulfilled' => 'green', 'rejected' => 'red'];
+                                            $color = $statusColors[$redemption->status] ?? 'gray';
+                                        @endphp
+                                        <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-{{ $color }}-100 text-{{ $color }}-800">
+                                            {{ ucfirst($redemption->status) }}
+                                        </span>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+                </div>
             </div>
         </div>
     </div>

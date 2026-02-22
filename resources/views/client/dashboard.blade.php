@@ -71,6 +71,58 @@
             </x-bladewind::card>
         </div>
 
+        <!-- XP & Loyalty -->
+        @if($xpSummary || $nextLevel)
+        <x-bladewind::card>
+            <div class="space-y-3">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-2">
+                        @if($xpSummary?->currentLevel)
+                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-yellow-100 text-yellow-800">
+                                {{ $xpSummary->currentLevel->name }}
+                            </span>
+                        @endif
+                        <span class="text-sm font-medium text-gray-700">{{ number_format($xpSummary?->total_xp ?? 0) }} XP</span>
+                    </div>
+                    <span class="text-sm font-semibold text-blue-600">{{ number_format($xpSummary?->available_points ?? 0) }} pts</span>
+                </div>
+
+                @php
+                    $currentXp = $xpSummary?->total_xp ?? 0;
+                    $currentLevelXp = $xpSummary?->currentLevel?->xp_required ?? 0;
+                    $nextLevelXp = $nextLevel?->xp_required ?? null;
+                    $progress = $nextLevelXp && $nextLevelXp > $currentLevelXp
+                        ? min(100, round(($currentXp - $currentLevelXp) / ($nextLevelXp - $currentLevelXp) * 100))
+                        : 100;
+                @endphp
+
+                <div>
+                    <div class="flex justify-between text-xs text-gray-500 mb-1">
+                        <span>Progress to {{ $nextLevel?->name ?? 'Max Level' }}</span>
+                        <span>{{ $progress }}%</span>
+                    </div>
+                    <div class="w-full bg-gray-200 rounded-full h-2">
+                        <div class="bg-blue-500 h-2 rounded-full transition-all" style="width: {{ $progress }}%"></div>
+                    </div>
+                    @if($nextLevel)
+                        <p class="text-xs text-gray-400 mt-1">{{ number_format($nextLevelXp - $currentXp) }} XP to go</p>
+                    @endif
+                </div>
+
+                @if($recentAchievements->isNotEmpty())
+                    <div class="flex items-center gap-2 pt-1">
+                        <span class="text-xs text-gray-500">Recent:</span>
+                        @foreach($recentAchievements as $achievement)
+                            <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800" title="{{ $achievement->name }}">
+                                🏆 {{ Str::limit($achievement->name, 20) }}
+                            </span>
+                        @endforeach
+                    </div>
+                @endif
+            </div>
+        </x-bladewind::card>
+        @endif
+
         <!-- Daily Check-in Widget -->
         @if($assignedMetricCount > 0)
             <a href="{{ route('client.check-in') }}" class="block">
