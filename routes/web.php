@@ -51,6 +51,7 @@ Route::middleware(['auth', 'verified', 'role:coach'])
 
         Route::resource('exercises', Coach\ExerciseController::class);
         Route::resource('meals', Coach\MealController::class)->except(['show']);
+        Route::resource('rewards', Coach\RewardController::class)->except(['show']);
 
         // Tracking metrics
         Route::get('tracking-metrics', [Coach\TrackingMetricController::class, 'index'])->name('tracking-metrics.index');
