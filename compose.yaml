@@ -6,6 +6,16 @@ services:
             - '${FORWARD_MAILPIT_DASHBOARD_PORT:-8025}:8025'
         networks:
             - sail
+    rustfs:
+        image: rustfs/rustfs:latest
+        volumes:
+            - data:/data
+        ports:
+            - "9900:9000"
+            - "9901:9001"
+
+volumes:
+    data:
 networks:
     sail:
         driver: bridge
