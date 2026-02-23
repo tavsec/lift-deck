@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\RewardRedemption;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 
 class RedemptionController extends Controller
@@ -28,6 +29,8 @@ class RedemptionController extends Controller
      */
     public function update(Request $request, RewardRedemption $redemption): RedirectResponse
     {
+        $redemption->load(['user.xpSummary', 'reward']);
+
         if ($redemption->user->coach_id !== auth()->id()) {
             abort(403);
         }
@@ -37,7 +40,20 @@ class RedemptionController extends Controller
             'coach_notes' => ['nullable', 'string', 'max:1000'],
         ]);
 
-        $redemption->update($validated);
+        DB::transaction(function () use ($redemption, $validated) {
+            if ($validated['status'] === 'rejected' && $redemption->status === 'pending') {
+                $redemption->user->xpSummary?->increment('available_points', $redemption->points_spent);
+
+                if ($redemption->reward->stock !== null) {
+                    $redemption->reward->increment('stock');
+                }
+            }
+
+            $redemption->update([
+                'status' => $validated['status'],
+                'coach_notes' => $validated['coach_notes'] ?? null,
+            ]);
+        });
 
         return redirect()->route('coach.redemptions.index')
             ->with('success', 'Redemption updated.');

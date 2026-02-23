@@ -119,6 +119,12 @@
                         @endforeach
                     </div>
                 @endif
+
+                <div class="flex items-center gap-4 pt-2 border-t border-gray-100">
+                    <a href="{{ route('client.rewards') }}" class="text-sm text-blue-600 hover:text-blue-800">Rewards Shop &rarr;</a>
+                    <a href="{{ route('client.achievements') }}" class="text-sm text-blue-600 hover:text-blue-800">Achievements &rarr;</a>
+                    <a href="{{ route('client.loyalty') }}" class="text-sm text-blue-600 hover:text-blue-800">Points History &rarr;</a>
+                </div>
             </div>
         </x-bladewind::card>
         @endif

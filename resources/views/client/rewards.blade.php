@@ -50,6 +50,10 @@
             </div>
         </x-bladewind::card>
 
+        <div class="text-right -mt-2 mb-2">
+            <a href="{{ route('client.loyalty') }}" class="text-sm text-blue-600 hover:text-blue-800">View Points History &rarr;</a>
+        </div>
+
         <!-- Rewards Grid -->
         @if($rewards->isEmpty())
             <x-bladewind::card>

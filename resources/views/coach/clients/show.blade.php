@@ -380,7 +380,10 @@
                 <!-- Loyalty Section -->
                 <div class="bg-white rounded-lg shadow p-6">
                     <div class="flex items-center justify-between mb-4">
-                        <h2 class="text-lg font-medium text-gray-900">Loyalty</h2>
+                        <div class="flex items-center gap-3">
+                            <h2 class="text-lg font-medium text-gray-900">Loyalty</h2>
+                            <a href="{{ route('coach.clients.loyalty', $client) }}" class="text-sm text-blue-600 hover:text-blue-800">View Full History &rarr;</a>
+                        </div>
                         @if($manualAchievements->isNotEmpty())
                             <div x-data="{ open: false }" class="relative">
                                 <button @click="open = !open" type="button" class="inline-flex items-center px-3 py-1.5 border border-blue-300 rounded-md text-sm font-medium text-blue-700 bg-white hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-blue-500 transition ease-in-out duration-150">

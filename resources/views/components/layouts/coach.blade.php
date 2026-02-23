@@ -100,6 +100,29 @@
                         Meals
                     </a>
 
+
+                    <a href="{{ route('coach.tracking-metrics.index') }}" class="flex items-center px-3 py-2 text-sm font-medium rounded-md {{ request()->routeIs('coach.tracking-metrics.*') ? 'bg-blue-50' : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900' }}" {!! request()->routeIs('coach.tracking-metrics.*') ? 'style="color: var(--color-primary)"' : '' !!}>
+                        <svg class="w-5 h-5 mr-3 {{ request()->routeIs('coach.tracking-metrics.*') ? '' : 'text-gray-400' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                        </svg>
+                        Tracking
+                    </a>
+
+                    <a href="{{ route('coach.messages.index') }}" class="flex items-center px-3 py-2 text-sm font-medium rounded-md {{ request()->routeIs('coach.messages.*') ? 'bg-blue-50' : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900' }}" {!! request()->routeIs('coach.messages.*') ? 'style="color: var(--color-primary)"' : '' !!}>
+                        <svg class="w-5 h-5 mr-3 {{ request()->routeIs('coach.messages.*') ? '' : 'text-gray-400' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path>
+                        </svg>
+                        Messages
+                    </a>
+
+                    <a href="{{ route('coach.branding.edit') }}" class="flex items-center px-3 py-2 text-sm font-medium rounded-md {{ request()->routeIs('coach.branding.*') ? 'bg-blue-50' : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900' }}" {!! request()->routeIs('coach.branding.*') ? 'style="color: var(--color-primary)"' : '' !!}>
+                        <svg class="w-5 h-5 mr-3 {{ request()->routeIs('coach.branding.*') ? '' : 'text-gray-400' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"/>
+                        </svg>
+                        Branding
+                    </a>
+
+
                     <div class="pt-2 pb-1">
                         <p class="px-3 text-xs font-semibold text-gray-400 uppercase tracking-wider">Loyalty</p>
                     </div>
@@ -124,28 +147,7 @@
                         </svg>
                         Redemptions
                     </a>
-
-                    <a href="{{ route('coach.tracking-metrics.index') }}" class="flex items-center px-3 py-2 text-sm font-medium rounded-md {{ request()->routeIs('coach.tracking-metrics.*') ? 'bg-blue-50' : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900' }}" {!! request()->routeIs('coach.tracking-metrics.*') ? 'style="color: var(--color-primary)"' : '' !!}>
-                        <svg class="w-5 h-5 mr-3 {{ request()->routeIs('coach.tracking-metrics.*') ? '' : 'text-gray-400' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
-                        </svg>
-                        Tracking
-                    </a>
-
-                    <a href="{{ route('coach.messages.index') }}" class="flex items-center px-3 py-2 text-sm font-medium rounded-md {{ request()->routeIs('coach.messages.*') ? 'bg-blue-50' : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900' }}" {!! request()->routeIs('coach.messages.*') ? 'style="color: var(--color-primary)"' : '' !!}>
-                        <svg class="w-5 h-5 mr-3 {{ request()->routeIs('coach.messages.*') ? '' : 'text-gray-400' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path>
-                        </svg>
-                        Messages
-                    </a>
-
-                    <a href="{{ route('coach.branding.edit') }}" class="flex items-center px-3 py-2 text-sm font-medium rounded-md {{ request()->routeIs('coach.branding.*') ? 'bg-blue-50' : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900' }}" {!! request()->routeIs('coach.branding.*') ? 'style="color: var(--color-primary)"' : '' !!}>
-                        <svg class="w-5 h-5 mr-3 {{ request()->routeIs('coach.branding.*') ? '' : 'text-gray-400' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"/>
-                        </svg>
-                        Branding
-                    </a>
-                </nav>
+  </nav>
 
                 <!-- User Info -->
                 <div class="flex-shrink-0 border-t border-gray-200">

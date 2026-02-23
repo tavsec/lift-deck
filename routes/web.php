@@ -57,6 +57,7 @@ Route::middleware(['auth', 'verified', 'role:coach'])
 
         Route::get('redemptions', [Coach\RedemptionController::class, 'index'])->name('redemptions.index');
         Route::patch('redemptions/{redemption}', [Coach\RedemptionController::class, 'update'])->name('redemptions.update');
+        Route::get('clients/{client}/loyalty', [Coach\LoyaltyController::class, 'show'])->name('clients.loyalty');
 
         // Tracking metrics
         Route::get('tracking-metrics', [Coach\TrackingMetricController::class, 'index'])->name('tracking-metrics.index');
@@ -107,6 +108,7 @@ Route::middleware(['auth', 'verified', 'role:client'])
         Route::get('achievements', [Client\AchievementController::class, 'index'])->name('achievements');
         Route::get('rewards', [Client\RewardController::class, 'index'])->name('rewards');
         Route::post('rewards/{reward}/redeem', [Client\RewardController::class, 'redeem'])->name('rewards.redeem');
+        Route::get('loyalty', [Client\LoyaltyController::class, 'index'])->name('loyalty');
     });
 
 // Media serving (private, authorized)
