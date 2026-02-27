@@ -51,6 +51,7 @@
                         </p>
                     @endif
                 </div>
+                <div class="overflow-x-auto">
                 <div class="px-6 py-3">
                     <table class="w-full text-sm">
                         <thead>
@@ -70,6 +71,7 @@
                             @endforeach
                         </tbody>
                     </table>
+                </div>
                 </div>
             </div>
         @endforeach

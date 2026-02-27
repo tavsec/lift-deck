@@ -119,6 +119,7 @@
         <!-- Clients List -->
         <div class="bg-white rounded-lg shadow overflow-hidden">
             @if($clients->count() > 0)
+                <div class="overflow-x-auto">
                 <table class="min-w-full divide-y divide-gray-200">
                     <thead class="bg-gray-50">
                         <tr>
@@ -133,7 +134,7 @@
                         @foreach($clients as $client)
                             <tr class="hover:bg-gray-50">
                                 <td class="px-6 py-4 whitespace-nowrap">
-                                    <div class="flex items-center">
+                                    <a href="{{ route('coach.clients.show', $client) }}" class="flex items-center group">
                                         <div class="flex-shrink-0 h-10 w-10">
                                             <div class="h-10 w-10 rounded-full bg-blue-100 flex items-center justify-center">
                                                 <span class="text-sm font-medium text-blue-700">{{ strtoupper(substr($client->name, 0, 1)) }}</span>
@@ -141,14 +142,14 @@
                                         </div>
                                         <div class="ml-4">
                                             <div class="flex items-center gap-2">
-                                                <span class="text-sm font-medium text-gray-900">{{ $client->name }}</span>
+                                                <span class="text-sm font-medium text-gray-900 group-hover:text-blue-600">{{ $client->name }}</span>
                                                 @if($clientIdsWithUnread->contains($client->id))
                                                     <span class="flex h-2 w-2 rounded-full bg-blue-500" title="Unread comments"></span>
                                                 @endif
                                             </div>
                                             <div class="text-sm text-gray-500">{{ $client->email }}</div>
                                         </div>
-                                    </div>
+                                    </a>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     @if($client->clientProfile?->goal)
@@ -179,6 +180,7 @@
                         @endforeach
                     </tbody>
                 </table>
+                </div>
 
                 @if($clients->hasPages())
                     <div class="px-6 py-4 border-t border-gray-200">
