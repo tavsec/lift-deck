@@ -15,3 +15,28 @@ test('user dark_mode can be set to true', function () {
 
     expect($user->fresh()->dark_mode)->toBeTrue();
 });
+
+test('authenticated user can toggle dark mode on', function () {
+    $user = User::factory()->create(['dark_mode' => false]);
+
+    $this->actingAs($user)
+        ->patch(route('user.dark-mode.toggle'))
+        ->assertRedirect();
+
+    expect($user->fresh()->dark_mode)->toBeTrue();
+});
+
+test('authenticated user can toggle dark mode off', function () {
+    $user = User::factory()->create(['dark_mode' => true]);
+
+    $this->actingAs($user)
+        ->patch(route('user.dark-mode.toggle'))
+        ->assertRedirect();
+
+    expect($user->fresh()->dark_mode)->toBeFalse();
+});
+
+test('unauthenticated user cannot toggle dark mode', function () {
+    $this->patch(route('user.dark-mode.toggle'))
+        ->assertRedirect(route('login'));
+});

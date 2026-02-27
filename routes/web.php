@@ -4,7 +4,7 @@ use App\Http\Controllers\Client;
 use App\Http\Controllers\Coach;
 use Illuminate\Support\Facades\Route;
 
-Route::domain("beta.liftdeck.io")->group(function () {
+Route::domain('beta.liftdeck.io')->group(function () {
     Route::get('/', function () {
         return view('beta');
     });
@@ -13,7 +13,6 @@ Route::domain("beta.liftdeck.io")->group(function () {
 Route::get('/', function () {
     return view('welcome');
 });
-
 
 // Client registration via invitation code
 Route::middleware('guest')->group(function () {
@@ -110,6 +109,7 @@ Route::middleware(['auth', 'verified', 'role:client'])
 // Media serving (private, authorized)
 Route::middleware('auth')->group(function () {
     Route::get('media/daily-log/{dailyLog}/{conversion?}', [\App\Http\Controllers\MediaController::class, 'dailyLog'])->name('media.daily-log');
+    Route::patch('user/dark-mode', [\App\Http\Controllers\UserPreferencesController::class, 'toggleDarkMode'])->name('user.dark-mode.toggle');
 });
 
 require __DIR__.'/auth.php';
