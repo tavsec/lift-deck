@@ -88,3 +88,20 @@
 .common-carousel .swiper-button-prev svg {
     @apply w-auto h-auto;
 }
+
+/* Dark mode overrides for BladewindUI components */
+/* BladewindUI uses dark:bg-dark-800/25 etc., but dark-800/dark-600 are not defined
+   in this project's Tailwind config and vendor files are not scanned for classes.
+   These overrides use the project's existing dark color palette. */
+.dark .bw-card {
+    @apply bg-dark-2 border-dark-3 text-dark-7;
+}
+
+.dark .bw-card .border-b,
+.dark .bw-card .border-t {
+    @apply border-dark-3;
+}
+
+.dark .bw-contact-card {
+    @apply bg-dark-2 border-dark-3 text-dark-7;
+}
