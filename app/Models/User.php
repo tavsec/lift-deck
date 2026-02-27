@@ -38,6 +38,7 @@ class User extends Authenticatable
         'logo',
         'primary_color',
         'secondary_color',
+        'dark_mode',
     ];
 
     /**
@@ -60,12 +61,14 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'dark_mode' => 'boolean',
         ];
     }
 
-    public function logo(): Attribute{
+    public function logo(): Attribute
+    {
         return Attribute::make(
-            get: fn(?string $value) => $value ? Storage::temporaryUrl($value, now()->addDay()) : ""
+            get: fn (?string $value) => $value ? Storage::temporaryUrl($value, now()->addDay()) : ''
         );
     }
 
