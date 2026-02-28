@@ -52,7 +52,7 @@
                             value="{{ old('custom_name') }}"
                             placeholder="e.g. Morning Cardio, Extra Arms Day"
                             required
-                            class="w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 shadow-sm text-sm focus:border-blue-500 focus:ring-blue-500 @error('custom_name') border-red-300 @enderror"
+                            class="w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm text-sm focus:border-blue-500 focus:ring-blue-500 @error('custom_name') border-red-300 @enderror"
                         >
                         @error('custom_name')
                             <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
@@ -81,17 +81,17 @@
                                     </div>
                                 </div>
                                 <div class="flex items-center gap-1">
-                                    <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-gray-100 text-gray-600 dark:bg-gray-700 dark:text-gray-300" x-text="exercise.muscle_group.replace('_', ' ')"></span>
+                                    <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-300" x-text="exercise.muscle_group.replace('_', ' ')"></span>
                                     <!-- Move Up -->
                                     <button type="button" @click="moveExerciseUp(exerciseIndex)" :disabled="exerciseIndex === 0"
-                                        class="p-1 text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 rounded hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors disabled:opacity-30 disabled:cursor-not-allowed" title="Move up">
+                                        class="p-1 text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 rounded hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors disabled:opacity-30 disabled:cursor-not-allowed" title="Move up">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"/>
                                         </svg>
                                     </button>
                                     <!-- Move Down -->
                                     <button type="button" @click="moveExerciseDown(exerciseIndex)" :disabled="exerciseIndex === exercises.length - 1"
-                                        class="p-1 text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 rounded hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors disabled:opacity-30 disabled:cursor-not-allowed" title="Move down">
+                                        class="p-1 text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 rounded hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors disabled:opacity-30 disabled:cursor-not-allowed" title="Move down">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
                                         </svg>
@@ -124,7 +124,7 @@
                             <div class="overflow-x-auto">
                                 <table class="w-full text-sm">
                                     <thead>
-                                        <tr class="text-left text-xs text-gray-500 dark:text-gray-400 border-b border-gray-200 dark:border-gray-700">
+                                        <tr class="text-left text-xs text-gray-500 dark:text-gray-400 border-b border-gray-200 dark:border-gray-800">
                                             <th class="pb-2 pr-3 w-12">Set</th>
                                             <th class="pb-2 pr-3">Weight (kg)</th>
                                             <th class="pb-2 pr-2">Reps</th>
@@ -143,7 +143,7 @@
                                                         :name="`exercises[${exerciseIndex}][sets][${setIndex}][weight]`"
                                                         x-model="set.weight"
                                                         placeholder="0"
-                                                        class="w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 shadow-sm text-sm focus:border-blue-500 focus:ring-blue-500"
+                                                        class="w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm text-sm focus:border-blue-500 focus:ring-blue-500"
                                                     >
                                                 </td>
                                                 <td class="py-1.5 pr-2">
@@ -153,7 +153,7 @@
                                                         :name="`exercises[${exerciseIndex}][sets][${setIndex}][reps]`"
                                                         x-model="set.reps"
                                                         :placeholder="exercise.prescribed_reps || '0'"
-                                                        class="w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 shadow-sm text-sm focus:border-blue-500 focus:ring-blue-500"
+                                                        class="w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm text-sm focus:border-blue-500 focus:ring-blue-500"
                                                     >
                                                 </td>
                                                 <td class="py-1.5">
@@ -205,7 +205,7 @@
                         <button
                             type="button"
                             @click="openExercisePicker()"
-                            class="w-full inline-flex justify-center items-center gap-2 px-4 py-2.5 border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg text-sm font-medium text-gray-600 dark:text-gray-400 hover:border-blue-400 hover:text-blue-600 transition-colors"
+                            class="w-full inline-flex justify-center items-center gap-2 px-4 py-2.5 border-2 border-dashed border-gray-300 dark:border-gray-700 rounded-lg text-sm font-medium text-gray-600 dark:text-gray-400 hover:border-blue-400 hover:text-blue-600 transition-colors"
                         >
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
@@ -228,15 +228,15 @@
                                 type="text"
                                 x-model="exerciseSearch"
                                 placeholder="Search exercises..."
-                                class="w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 shadow-sm text-sm focus:border-blue-500 focus:ring-blue-500"
+                                class="w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm text-sm focus:border-blue-500 focus:ring-blue-500"
                                 x-ref="exerciseSearchInput"
                             >
-                            <div class="max-h-48 overflow-y-auto border border-gray-200 dark:border-gray-700 rounded-md divide-y divide-gray-100 dark:divide-gray-700">
+                            <div class="max-h-48 overflow-y-auto border border-gray-200 dark:border-gray-800 rounded-md divide-y divide-gray-100 dark:divide-gray-800">
                                 <template x-for="exercise in filteredExercises" :key="exercise.id">
                                     <button
                                         type="button"
                                         @click="addExercise(exercise)"
-                                        class="w-full text-left px-3 py-2 hover:bg-blue-50 dark:hover:bg-gray-700 transition-colors flex items-center justify-between"
+                                        class="w-full text-left px-3 py-2 hover:bg-blue-50 dark:hover:bg-gray-800 transition-colors flex items-center justify-between"
                                     >
                                         <div>
                                             <span class="text-sm font-medium text-gray-900 dark:text-gray-100" x-text="exercise.name"></span>
@@ -264,7 +264,7 @@
                         name="completed_at"
                         value="{{ old('completed_at', now()->format('Y-m-d\TH:i')) }}"
                         max="{{ now()->format('Y-m-d\TH:i') }}"
-                        class="w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 shadow-sm text-sm focus:border-blue-500 focus:ring-blue-500 @error('completed_at') border-red-300 @enderror"
+                        class="w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm text-sm focus:border-blue-500 focus:ring-blue-500 @error('completed_at') border-red-300 @enderror"
                     >
                     @error('completed_at')
                         <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
@@ -280,7 +280,7 @@
                         name="notes"
                         rows="2"
                         placeholder="How did the workout feel?"
-                        class="w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 shadow-sm text-sm focus:border-blue-500 focus:ring-blue-500"
+                        class="w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm text-sm focus:border-blue-500 focus:ring-blue-500"
                     >{{ old('notes') }}</textarea>
                 </x-bladewind::card>
 

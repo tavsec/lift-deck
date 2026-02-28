@@ -32,7 +32,7 @@
             <!-- Left: Set Goals -->
             <div class="lg:col-span-1 space-y-6">
                 <!-- Set Macro Goal Form -->
-                <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+                <div class="bg-white dark:bg-gray-900 rounded-lg shadow p-6">
                     <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100 mb-4">Set Macro Goal</h2>
                     <form method="POST" action="{{ route('coach.clients.macro-goals.store', $client) }}" class="space-y-4">
                         @csrf
@@ -40,7 +40,7 @@
                         <div>
                             <label for="calories" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Calories (kcal) <span class="text-red-500">*</span></label>
                             <input type="number" name="calories" id="calories" value="{{ old('calories', $currentGoal?->calories) }}" required min="0"
-                                class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm @error('calories') border-red-300 @enderror">
+                                class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm @error('calories') border-red-300 @enderror">
                             @error('calories')
                                 <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                             @enderror
@@ -50,7 +50,7 @@
                             <div>
                                 <label for="protein" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Protein (g) <span class="text-red-500">*</span></label>
                                 <input type="number" name="protein" id="protein" value="{{ old('protein', $currentGoal?->protein) }}" required min="0" step="0.1"
-                                    class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm @error('protein') border-red-300 @enderror">
+                                    class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm @error('protein') border-red-300 @enderror">
                                 @error('protein')
                                     <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                 @enderror
@@ -58,7 +58,7 @@
                             <div>
                                 <label for="carbs" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Carbs (g) <span class="text-red-500">*</span></label>
                                 <input type="number" name="carbs" id="carbs" value="{{ old('carbs', $currentGoal?->carbs) }}" required min="0" step="0.1"
-                                    class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm @error('carbs') border-red-300 @enderror">
+                                    class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm @error('carbs') border-red-300 @enderror">
                                 @error('carbs')
                                     <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                 @enderror
@@ -66,7 +66,7 @@
                             <div>
                                 <label for="fat" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Fat (g) <span class="text-red-500">*</span></label>
                                 <input type="number" name="fat" id="fat" value="{{ old('fat', $currentGoal?->fat) }}" required min="0" step="0.1"
-                                    class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm @error('fat') border-red-300 @enderror">
+                                    class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm @error('fat') border-red-300 @enderror">
                                 @error('fat')
                                     <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                 @enderror
@@ -76,7 +76,7 @@
                         <div>
                             <label for="effective_date" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Effective Date <span class="text-red-500">*</span></label>
                             <input type="date" name="effective_date" id="effective_date" value="{{ old('effective_date', now()->format('Y-m-d')) }}" required
-                                class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm @error('effective_date') border-red-300 @enderror">
+                                class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm @error('effective_date') border-red-300 @enderror">
                             @error('effective_date')
                                 <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                             @enderror
@@ -85,7 +85,7 @@
                         <div>
                             <label for="notes" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Notes</label>
                             <textarea name="notes" id="notes" rows="2"
-                                class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                                class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
                                 placeholder="Why the change?">{{ old('notes') }}</textarea>
                         </div>
 
@@ -97,7 +97,7 @@
 
                 <!-- Current Goal -->
                 @if($currentGoal)
-                <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+                <div class="bg-white dark:bg-gray-900 rounded-lg shadow p-6">
                     <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100 mb-4">Current Goal</h2>
                     <div class="space-y-2">
                         <div class="flex justify-between text-sm">
@@ -116,7 +116,7 @@
                             <span class="text-gray-500 dark:text-gray-400">Fat</span>
                             <span class="font-medium text-gray-900 dark:text-gray-100">{{ $currentGoal->fat }}g</span>
                         </div>
-                        <div class="pt-2 border-t border-gray-100 dark:border-gray-700">
+                        <div class="pt-2 border-t border-gray-100 dark:border-gray-800">
                             <span class="text-xs text-gray-400 dark:text-gray-500">Since {{ $currentGoal->effective_date->format('M d, Y') }}</span>
                             @if($currentGoal->notes)
                                 <p class="mt-1 text-xs text-gray-500 dark:text-gray-400 italic">{{ $currentGoal->notes }}</p>
@@ -128,11 +128,11 @@
 
                 <!-- Goal History -->
                 @if($macroGoals->count() > 0)
-                <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+                <div class="bg-white dark:bg-gray-900 rounded-lg shadow p-6">
                     <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100 mb-4">Goal History</h2>
                     <div class="space-y-3">
                         @foreach($macroGoals as $goal)
-                            <div class="flex items-start justify-between p-3 rounded-md {{ $currentGoal && $goal->id === $currentGoal->id ? 'bg-blue-50 dark:bg-blue-900/30' : 'bg-gray-50 dark:bg-gray-900' }}">
+                            <div class="flex items-start justify-between p-3 rounded-md {{ $currentGoal && $goal->id === $currentGoal->id ? 'bg-blue-50 dark:bg-blue-900/30' : 'bg-gray-50 dark:bg-gray-950' }}">
                                 <div>
                                     <p class="text-sm font-medium text-gray-900 dark:text-gray-100">{{ number_format($goal->calories) }} kcal</p>
                                     <p class="text-xs text-gray-500 dark:text-gray-400">P {{ $goal->protein }}g / C {{ $goal->carbs }}g / F {{ $goal->fat }}g</p>
@@ -159,14 +159,14 @@
 
             <!-- Right: Meal Logs -->
             <div class="lg:col-span-2 space-y-6">
-                <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+                <div class="bg-white dark:bg-gray-900 rounded-lg shadow p-6">
                     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-4">
                         <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">Meal Logs</h2>
 
                         <form method="GET" action="{{ route('coach.clients.nutrition', $client) }}" x-data="{ range: '{{ $range }}' }" class="flex flex-wrap items-end gap-2">
                             <div>
                                 <select name="range" x-model="range" @change="if (range !== 'custom') $el.closest('form').submit()"
-                                    class="block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm">
+                                    class="block w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm">
                                     <option value="7">Last 7 days</option>
                                     <option value="14">Last 14 days</option>
                                     <option value="30">Last 30 days</option>
@@ -178,11 +178,11 @@
                                 <div class="flex items-end gap-2">
                                     <div>
                                         <label class="block text-xs text-gray-500 dark:text-gray-400">From</label>
-                                        <input type="date" name="from" value="{{ $from }}" class="block rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm">
+                                        <input type="date" name="from" value="{{ $from }}" class="block rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm">
                                     </div>
                                     <div>
                                         <label class="block text-xs text-gray-500 dark:text-gray-400">To</label>
-                                        <input type="date" name="to" value="{{ $to }}" class="block rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm">
+                                        <input type="date" name="to" value="{{ $to }}" class="block rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm">
                                     </div>
                                     <button type="submit" class="inline-flex items-center px-3 py-2 bg-blue-600 border border-transparent rounded-md text-xs font-semibold text-white uppercase tracking-widest hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
                                         Apply
@@ -199,8 +199,8 @@
                                 $dayMeals = $totals['meals'];
                                 $hasGoal = $currentGoal !== null;
                             @endphp
-                            <div x-data="{ open: false }" class="border border-gray-200 dark:border-gray-700 rounded-lg">
-                                <button @click="open = !open" class="w-full flex items-center justify-between p-4 text-left hover:bg-gray-50 dark:hover:bg-gray-700">
+                            <div x-data="{ open: false }" class="border border-gray-200 dark:border-gray-800 rounded-lg">
+                                <button @click="open = !open" class="w-full flex items-center justify-between p-4 text-left hover:bg-gray-50 dark:hover:bg-gray-800">
                                     <div>
                                         <p class="text-sm font-medium text-gray-900 dark:text-gray-100">{{ \Carbon\Carbon::parse($date)->format('l, M j') }}</p>
                                         <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">
@@ -224,12 +224,12 @@
 
                                 <div x-show="open" x-collapse>
                                     @if($dayMeals->count() > 0)
-                                        <div class="border-t border-gray-200 dark:border-gray-700 divide-y divide-gray-100 dark:divide-gray-700">
+                                        <div class="border-t border-gray-200 dark:border-gray-800 divide-y divide-gray-100 dark:divide-gray-800">
                                             @foreach($dayMeals as $log)
                                                 <div class="px-4 py-3">
                                                     <div class="flex items-center justify-between">
                                                         <div>
-                                                            <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300">{{ $log->meal_type }}</span>
+                                                            <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">{{ $log->meal_type }}</span>
                                                             <span class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-100">{{ $log->name }}</span>
                                                         </div>
                                                         <span class="text-sm text-gray-500 dark:text-gray-400">{{ $log->calories }} kcal</span>
@@ -241,7 +241,7 @@
                                             @endforeach
                                         </div>
                                     @else
-                                        <div class="border-t border-gray-200 dark:border-gray-700 p-4 text-center">
+                                        <div class="border-t border-gray-200 dark:border-gray-800 p-4 text-center">
                                             <p class="text-sm text-gray-400 dark:text-gray-500">No meals logged</p>
                                         </div>
                                     @endif

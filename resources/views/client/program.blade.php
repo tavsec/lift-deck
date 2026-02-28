@@ -17,12 +17,12 @@
                     @endif
                     <div class="flex flex-wrap gap-2 text-sm text-gray-500 dark:text-gray-400">
                         @if($activeProgram->program->type)
-                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200">{{ ucfirst(str_replace('_', ' ', $activeProgram->program->type)) }}</span>
+                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-200">{{ ucfirst(str_replace('_', ' ', $activeProgram->program->type)) }}</span>
                         @endif
                         @if($activeProgram->program->duration_weeks)
                             <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300">{{ $activeProgram->program->duration_weeks }} weeks</span>
                         @endif
-                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200">{{ $activeProgram->program->workouts->count() }} workouts</span>
+                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-200">{{ $activeProgram->program->workouts->count() }} workouts</span>
                     </div>
                     <p class="text-xs text-gray-400 dark:text-gray-500">Started {{ $activeProgram->started_at->format('M d, Y') }}</p>
                 </div>
@@ -32,7 +32,7 @@
             @if($activeProgram->program->workouts->count() > 0)
                 @foreach($activeProgram->program->workouts as $workout)
                     <x-bladewind::card class="!p-0 overflow-hidden">
-                        <div class="px-6 py-4 bg-gray-50 dark:bg-gray-700 border-b border-gray-200 dark:border-gray-700">
+                        <div class="px-6 py-4 bg-gray-50 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-800">
                             <h3 class="text-base font-medium text-gray-900 dark:text-gray-100">{{ $workout->name }}</h3>
                             <p class="text-sm text-gray-500 dark:text-gray-400">Day {{ $workout->day_number }} &middot; {{ $workout->exercises->count() }} exercises</p>
                             @if($workout->notes)
@@ -41,7 +41,7 @@
                         </div>
 
                         @if($workout->exercises->count() > 0)
-                            <div class="divide-y divide-gray-200 dark:divide-gray-700">
+                            <div class="divide-y divide-gray-200 dark:divide-gray-800">
                                 @foreach($workout->exercises as $workoutExercise)
                                     <div class="px-6 py-4 flex items-center justify-between">
                                         <div class="flex-1">
@@ -56,7 +56,7 @@
                                                 <p class="text-xs text-gray-400 dark:text-gray-500 mt-1">{{ $workoutExercise->notes }}</p>
                                             @endif
                                         </div>
-                                        <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-gray-100 text-gray-600 dark:bg-gray-700 dark:text-gray-300">
+                                        <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-300">
                                             {{ ucfirst(str_replace('_', ' ', $workoutExercise->exercise->muscle_group)) }}
                                         </span>
                                     </div>

@@ -18,20 +18,20 @@
                             Custom
                         </span>
                     @else
-                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">
+                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200">
                             Global
                         </span>
                     @endif
                 </div>
                 <p class="mt-1">
-                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">
+                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200">
                         {{ ucfirst(str_replace('_', ' ', $exercise->muscle_group)) }}
                     </span>
                 </p>
             </div>
             @if($exercise->isCustom())
                 <div class="flex gap-2">
-                    <a href="{{ route('coach.exercises.edit', $exercise) }}" class="inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md font-medium text-sm text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition ease-in-out duration-150">
+                    <a href="{{ route('coach.exercises.edit', $exercise) }}" class="inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-md font-medium text-sm text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition ease-in-out duration-150">
                         <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
                         </svg>
@@ -40,7 +40,7 @@
                     <form method="POST" action="{{ route('coach.exercises.destroy', $exercise) }}" onsubmit="return confirm('Are you sure you want to delete this exercise?');">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" class="inline-flex items-center px-4 py-2 border border-red-300 rounded-md font-medium text-sm text-red-700 bg-white hover:bg-red-50 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition ease-in-out duration-150">
+                        <button type="submit" class="inline-flex items-center px-4 py-2 border border-red-300 dark:border-red-800 rounded-md font-medium text-sm text-red-700 dark:text-red-400 bg-white dark:bg-gray-900 hover:bg-red-50 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition ease-in-out duration-150">
                             <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
                             </svg>
@@ -70,7 +70,7 @@
             <!-- Video -->
             <div class="lg:col-span-2">
                 @if($exercise->getYoutubeEmbedUrl())
-                    <div class="bg-white dark:bg-gray-800 rounded-lg shadow overflow-hidden">
+                    <div class="bg-white dark:bg-gray-900 rounded-lg shadow overflow-hidden">
                         <div class="aspect-video">
                             <iframe
                                 src="{{ $exercise->getYoutubeEmbedUrl() }}"
@@ -83,8 +83,8 @@
                         </div>
                     </div>
                 @else
-                    <div class="bg-white dark:bg-gray-800 rounded-lg shadow">
-                        <div class="aspect-video flex items-center justify-center bg-gray-100 dark:bg-gray-700">
+                    <div class="bg-white dark:bg-gray-900 rounded-lg shadow">
+                        <div class="aspect-video flex items-center justify-center bg-gray-100 dark:bg-gray-800">
                             <div class="text-center">
                                 <svg class="mx-auto h-12 w-12 text-gray-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/>
@@ -98,7 +98,7 @@
 
             <!-- Details -->
             <div class="space-y-6">
-                <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+                <div class="bg-white dark:bg-gray-900 rounded-lg shadow p-6">
                     <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100 mb-4">Details</h2>
                     <dl class="space-y-4">
                         <div>
@@ -123,7 +123,7 @@
                 </div>
 
                 @if($exercise->description)
-                    <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+                    <div class="bg-white dark:bg-gray-900 rounded-lg shadow p-6">
                         <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100 mb-4">Description</h2>
                         <p class="text-sm text-gray-700 dark:text-gray-300 whitespace-pre-wrap">{{ $exercise->description }}</p>
                     </div>

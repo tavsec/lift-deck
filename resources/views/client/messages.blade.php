@@ -3,7 +3,7 @@
 
     <div class="flex flex-col h-[calc(100vh-10rem)]">
         <!-- Header -->
-        <div class="flex items-center pb-4 border-b border-gray-200 dark:border-gray-700">
+        <div class="flex items-center pb-4 border-b border-gray-200 dark:border-gray-800">
             <div class="h-10 w-10 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center">
                 <span class="text-lg font-medium text-blue-700 dark:text-blue-300">{{ strtoupper(substr($coach->name, 0, 1)) }}</span>
             </div>
@@ -17,7 +17,7 @@
         <div id="messages-container" class="flex-1 overflow-y-auto py-4 space-y-4">
             @forelse($messages as $message)
                 <div class="flex {{ $message->sender_id === auth()->id() ? 'justify-end' : 'justify-start' }}">
-                    <div class="max-w-xs lg:max-w-md px-4 py-2 rounded-lg {{ $message->sender_id === auth()->id() ? 'bg-blue-600 dark:bg-blue-700 text-white' : 'bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-100' }}">
+                    <div class="max-w-xs lg:max-w-md px-4 py-2 rounded-lg {{ $message->sender_id === auth()->id() ? 'bg-blue-600 dark:bg-blue-700 text-white' : 'bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100' }}">
                         <p class="text-sm whitespace-pre-wrap">{{ $message->body }}</p>
                         <p class="text-xs mt-1 {{ $message->sender_id === auth()->id() ? 'text-blue-200' : 'text-gray-500 dark:text-gray-400' }}">
                             {{ $message->created_at->format('M d, g:i A') }}
@@ -35,10 +35,10 @@
         </div>
 
         <!-- Message Input -->
-        <div class="pt-4 border-t border-gray-200 dark:border-gray-700">
+        <div class="pt-4 border-t border-gray-200 dark:border-gray-800">
             <form id="message-form" class="flex gap-2">
                 <input type="text" id="message-input" required placeholder="Type your message..." autocomplete="off"
-                    class="flex-1 rounded-lg border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                    class="flex-1 rounded-lg border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500">
                 <button type="submit" class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-lg font-semibold text-sm text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition ease-in-out duration-150">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/>
@@ -69,7 +69,7 @@
             const div = document.createElement('div');
             div.className = `flex ${msg.is_mine ? 'justify-end' : 'justify-start'}`;
             div.innerHTML = `
-                <div class="max-w-xs lg:max-w-md px-4 py-2 rounded-lg ${msg.is_mine ? 'bg-blue-600 dark:bg-blue-700 text-white' : 'bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-100'}">
+                <div class="max-w-xs lg:max-w-md px-4 py-2 rounded-lg ${msg.is_mine ? 'bg-blue-600 dark:bg-blue-700 text-white' : 'bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100'}">
                     <p class="text-sm whitespace-pre-wrap">${msg.body}</p>
                     <p class="text-xs mt-1 ${msg.is_mine ? 'text-blue-200' : 'text-gray-500 dark:text-gray-400'}">${msg.created_at}</p>
                 </div>

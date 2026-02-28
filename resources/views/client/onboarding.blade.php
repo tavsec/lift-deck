@@ -14,7 +14,7 @@
                 @if($field->type === 'select')
                     <div class="mt-2 space-y-2">
                         @foreach($field->options ?? [] as $option)
-                            <label class="flex items-center p-3 border rounded-lg cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700 {{ old('fields.' . $field->id) === $option ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20' : 'border-gray-200 dark:border-gray-700' }}">
+                            <label class="flex items-center p-3 border rounded-lg cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800 {{ old('fields.' . $field->id) === $option ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20' : 'border-gray-200 dark:border-gray-800' }}">
                                 <input type="radio" name="fields[{{ $field->id }}]" value="{{ $option }}"
                                     class="text-blue-600 focus:ring-blue-500"
                                     {{ old('fields.' . $field->id) === $option ? 'checked' : '' }}>
@@ -24,7 +24,7 @@
                     </div>
                 @elseif($field->type === 'textarea')
                     <textarea id="field_{{ $field->id }}" name="fields[{{ $field->id }}]" rows="3"
-                        class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500">{{ old('fields.' . $field->id) }}</textarea>
+                        class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500">{{ old('fields.' . $field->id) }}</textarea>
                 @else
                     <x-text-input :id="'field_' . $field->id" name="fields[{{ $field->id }}]"
                         class="block mt-1 w-full" type="text" :value="old('fields.' . $field->id)" />

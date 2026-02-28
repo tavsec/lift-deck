@@ -32,16 +32,16 @@
             </div>
 
             <div class="relative flex items-center py-2">
-                <div class="flex-grow border-t border-gray-200 dark:border-gray-700"></div>
+                <div class="flex-grow border-t border-gray-200 dark:border-gray-800"></div>
                 <span class="mx-4 text-sm text-gray-400 dark:text-gray-500">or</span>
-                <div class="flex-grow border-t border-gray-200 dark:border-gray-700"></div>
+                <div class="flex-grow border-t border-gray-200 dark:border-gray-800"></div>
             </div>
 
             <a href="{{ route('client.log.custom') }}" class="block">
                 <x-bladewind::card class="!p-4 hover:shadow-md transition-shadow border-dashed">
                     <div class="flex items-center justify-between">
                         <div class="flex items-center gap-3">
-                            <div class="flex-shrink-0 h-8 w-8 rounded-full bg-gray-100 dark:bg-gray-700 flex items-center justify-center">
+                            <div class="flex-shrink-0 h-8 w-8 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
                                 <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
                                 </svg>
@@ -72,7 +72,7 @@
                 <x-bladewind::card class="!p-4 hover:shadow-md transition-shadow border-dashed">
                     <div class="flex items-center justify-between">
                         <div class="flex items-center gap-3">
-                            <div class="flex-shrink-0 h-8 w-8 rounded-full bg-gray-100 dark:bg-gray-700 flex items-center justify-center">
+                            <div class="flex-shrink-0 h-8 w-8 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
                                 <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
                                 </svg>

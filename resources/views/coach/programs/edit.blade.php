@@ -32,7 +32,7 @@
         @endif
 
         <!-- Program Details Form -->
-        <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+        <div class="bg-white dark:bg-gray-900 rounded-lg shadow p-6">
             <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100 mb-4">Program Details</h2>
             <form method="POST" action="{{ route('coach.programs.update', $program) }}" class="space-y-4">
                 @csrf
@@ -42,12 +42,12 @@
                     <div>
                         <label for="name" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Name <span class="text-red-500">*</span></label>
                         <input type="text" name="name" id="name" value="{{ old('name', $program->name) }}" required
-                            class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
+                            class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
                     </div>
                     <div>
                         <label for="type" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Type <span class="text-red-500">*</span></label>
                         <select name="type" id="type" required
-                            class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
+                            class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
                             @foreach($typeOptions as $value => $label)
                                 <option value="{{ $value }}" {{ old('type', $program->type) === $value ? 'selected' : '' }}>{{ $label }}</option>
                             @endforeach
@@ -59,12 +59,12 @@
                     <div>
                         <label for="duration_weeks" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Duration (weeks)</label>
                         <input type="number" name="duration_weeks" id="duration_weeks" value="{{ old('duration_weeks', $program->duration_weeks) }}" min="1" max="52"
-                            class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
+                            class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
                     </div>
                     <div class="flex items-end">
                         <label class="inline-flex items-center">
                             <input type="checkbox" name="is_template" value="1" {{ old('is_template', $program->is_template) ? 'checked' : '' }}
-                                class="h-4 w-4 rounded border-gray-300 dark:border-gray-600 text-blue-600 focus:ring-blue-500">
+                                class="h-4 w-4 rounded border-gray-300 dark:border-gray-700 text-blue-600 focus:ring-blue-500">
                             <span class="ml-2 text-sm text-gray-700 dark:text-gray-300">Save as template</span>
                         </label>
                     </div>
@@ -73,7 +73,7 @@
                 <div>
                     <label for="description" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Description</label>
                     <textarea name="description" id="description" rows="2"
-                        class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">{{ old('description', $program->description) }}</textarea>
+                        class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">{{ old('description', $program->description) }}</textarea>
                 </div>
 
                 <div class="flex justify-end">
@@ -91,16 +91,16 @@
             </div>
 
             <!-- Add Workout Form -->
-            <div class="bg-gray-50 dark:bg-gray-900 rounded-lg p-4 border border-dashed border-gray-300 dark:border-gray-600">
+            <div class="bg-gray-50 dark:bg-gray-950 rounded-lg p-4 border border-dashed border-gray-300 dark:border-gray-700">
                 <form method="POST" action="{{ route('coach.programs.workouts.store', $program) }}" class="flex flex-col sm:flex-row gap-3">
                     @csrf
                     <div class="flex-1">
                         <input type="text" name="name" required placeholder="Workout name (e.g., Push Day)"
-                            class="w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm">
+                            class="w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm">
                     </div>
                     <div class="w-24">
                         <input type="number" name="day_number" required placeholder="Day #" min="1"
-                            class="w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm">
+                            class="w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm">
                     </div>
                     <button type="submit" class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-700">
                         <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -113,9 +113,9 @@
 
             <!-- Workout List -->
             @foreach($program->workouts as $workout)
-                <div class="bg-white dark:bg-gray-800 rounded-lg shadow overflow-hidden">
+                <div class="bg-white dark:bg-gray-900 rounded-lg shadow overflow-hidden">
                     <!-- Workout Header -->
-                    <div class="px-6 py-4 bg-gray-50 dark:bg-gray-700 border-b border-gray-200 dark:border-gray-700">
+                    <div class="px-6 py-4 bg-gray-50 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-800">
                         <div class="flex items-center justify-between">
                             <div>
                                 <h3 class="text-md font-medium text-gray-900 dark:text-gray-100">{{ $workout->name }}</h3>
@@ -132,9 +132,9 @@
                     </div>
 
                     <!-- Exercises in Workout -->
-                    <div class="divide-y divide-gray-200 dark:divide-gray-700">
+                    <div class="divide-y divide-gray-200 dark:divide-gray-800">
                         @foreach($workout->exercises as $workoutExercise)
-                            <div class="px-6 py-3 flex items-center justify-between hover:bg-gray-50 dark:hover:bg-gray-700">
+                            <div class="px-6 py-3 flex items-center justify-between hover:bg-gray-50 dark:hover:bg-gray-800">
                                 <div class="flex-1">
                                     <p class="text-sm font-medium text-gray-900 dark:text-gray-100">{{ $workoutExercise->exercise->name }}</p>
                                     <p class="text-sm text-gray-500 dark:text-gray-400">
@@ -182,11 +182,11 @@
                     </div>
 
                     <!-- Add Exercise Form -->
-                    <div class="px-6 py-4 bg-gray-50 dark:bg-gray-700 border-t border-gray-200 dark:border-gray-700">
+                    <div class="px-6 py-4 bg-gray-50 dark:bg-gray-800 border-t border-gray-200 dark:border-gray-800">
                         <form method="POST" action="{{ route('coach.programs.exercises.store', [$program, $workout]) }}" class="flex flex-col sm:flex-row gap-2">
                             @csrf
                             <div class="flex-1">
-                                <select name="exercise_id" required class="w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm">
+                                <select name="exercise_id" required class="w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm">
                                     <option value="">Select exercise...</option>
                                     @foreach($exercises->groupBy('muscle_group') as $muscleGroup => $groupExercises)
                                         <optgroup label="{{ ucfirst(str_replace('_', ' ', $muscleGroup)) }}">
@@ -199,15 +199,15 @@
                             </div>
                             <div class="w-20">
                                 <input type="number" name="sets" required placeholder="Sets" min="1" max="20" value="3"
-                                    class="w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm">
+                                    class="w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm">
                             </div>
                             <div class="w-24">
                                 <input type="text" name="reps" required placeholder="Reps" value="8-12"
-                                    class="w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm">
+                                    class="w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm">
                             </div>
                             <div class="w-24">
                                 <input type="number" name="rest_seconds" placeholder="Rest (s)" min="0" max="600" value="90"
-                                    class="w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm">
+                                    class="w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm">
                             </div>
                             <button type="submit" class="inline-flex items-center px-3 py-2 bg-green-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-green-700">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -220,7 +220,7 @@
             @endforeach
 
             @if($program->workouts->count() === 0)
-                <div class="bg-white dark:bg-gray-800 rounded-lg shadow">
+                <div class="bg-white dark:bg-gray-900 rounded-lg shadow">
                     <div class="text-center py-8 text-sm text-gray-500 dark:text-gray-400">
                         <p>No workouts yet. Add your first workout above.</p>
                     </div>

@@ -6,7 +6,7 @@
         <div>
             <h1 class="text-2xl font-bold text-gray-900 dark:text-gray-100">Daily Check-in</h1>
             <div class="mt-3 flex items-center justify-between">
-                <a :href="prevUrl" class="p-2 rounded-md text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-700">
+                <a :href="prevUrl" class="p-2 rounded-md text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-800">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
                     </svg>
@@ -14,7 +14,7 @@
 
                 <div class="flex items-center space-x-2">
                     <input type="date" x-model="currentDate" @change="navigateToDate()" max="{{ now()->format('Y-m-d') }}"
-                        class="rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm">
+                        class="rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm">
                     <button @click="goToToday()" x-show="currentDate !== today"
                         class="text-xs text-blue-600 hover:text-blue-800 font-medium">
                         Today
@@ -22,7 +22,7 @@
                 </div>
 
                 <template x-if="currentDate < today">
-                    <a :href="nextUrl" class="p-2 rounded-md text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-700">
+                    <a :href="nextUrl" class="p-2 rounded-md text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-800">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
                         </svg>
@@ -55,7 +55,7 @@
                 <input type="hidden" name="date" value="{{ $date }}">
 
                 @foreach($assignedMetrics as $metric)
-                    <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-4">
+                    <div class="bg-white dark:bg-gray-900 rounded-lg shadow p-4">
                         <label class="block text-sm font-medium text-gray-900 dark:text-gray-100 mb-1">
                             {{ $metric->name }}
                             @if($metric->unit)
@@ -69,7 +69,7 @@
                         @if($metric->type === 'number')
                             <input type="number" step="any" name="metrics[{{ $metric->id }}]"
                                 value="{{ $existingLogs->get($metric->id)?->value }}"
-                                class="block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                                class="block w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
                                 placeholder="Enter value...">
 
                         @elseif($metric->type === 'scale')
@@ -79,7 +79,7 @@
                                 <div class="flex items-center justify-between gap-1">
                                     @for($i = $metric->scale_min; $i <= $metric->scale_max; $i++)
                                         <button type="button" @click="value = value === '{{ $i }}' ? '' : '{{ $i }}'"
-                                            :class="value === '{{ $i }}' ? 'bg-blue-600 text-white border-blue-600' : 'bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-600'"
+                                            :class="value === '{{ $i }}' ? 'bg-blue-600 text-white border-blue-600' : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700'"
                                             class="flex-1 py-2 text-sm font-medium border rounded-md transition-colors">
                                             {{ $i }}
                                         </button>
@@ -96,12 +96,12 @@
                             <div x-data="{ value: '{{ $currentVal ?? '' }}' }" class="flex gap-3">
                                 <input type="hidden" name="metrics[{{ $metric->id }}]" :value="value">
                                 <button type="button" @click="value = value === '1' ? '' : '1'"
-                                    :class="value === '1' ? 'bg-green-600 text-white border-green-600' : 'bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-600'"
+                                    :class="value === '1' ? 'bg-green-600 text-white border-green-600' : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700'"
                                     class="flex-1 py-2 text-sm font-medium border rounded-md transition-colors">
                                     Yes
                                 </button>
                                 <button type="button" @click="value = value === '0' ? '' : '0'"
-                                    :class="value === '0' ? 'bg-red-500 text-white border-red-500' : 'bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-600'"
+                                    :class="value === '0' ? 'bg-red-500 text-white border-red-500' : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700'"
                                     class="flex-1 py-2 text-sm font-medium border rounded-md transition-colors">
                                     No
                                 </button>
@@ -109,7 +109,7 @@
 
                         @elseif($metric->type === 'text')
                             <textarea name="metrics[{{ $metric->id }}]" rows="2"
-                                class="block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                                class="block w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
                                 placeholder="Write notes...">{{ $existingLogs->get($metric->id)?->value }}</textarea>
 
                         @elseif($metric->type === 'image')
@@ -122,7 +122,7 @@
                                 {{-- Existing image preview --}}
                                 <template x-if="hasExisting && !removed && !previewUrl">
                                     <div class="relative inline-block">
-                                        <img :src="existingThumbUrl" alt="Current photo" class="w-32 h-32 object-cover rounded-lg border border-gray-200 dark:border-gray-700">
+                                        <img :src="existingThumbUrl" alt="Current photo" class="w-32 h-32 object-cover rounded-lg border border-gray-200 dark:border-gray-800">
                                         <button type="button" @click="removeImage()" class="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs shadow hover:bg-red-600">
                                             <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
                                         </button>
@@ -141,7 +141,7 @@
 
                                 {{-- Upload area --}}
                                 <template x-if="!previewUrl && (!hasExisting || removed)">
-                                    <label class="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 dark:border-gray-600 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:bg-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors">
+                                    <label class="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 dark:border-gray-700 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
                                         <div class="flex flex-col items-center justify-center pt-5 pb-6">
                                             <svg class="w-8 h-8 mb-2 text-gray-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/>
@@ -173,7 +173,7 @@
                 </button>
             </form>
         @else
-            <div class="bg-white dark:bg-gray-800 rounded-lg shadow">
+            <div class="bg-white dark:bg-gray-900 rounded-lg shadow">
                 <div class="text-center py-12">
                     <svg class="mx-auto h-12 w-12 text-gray-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>

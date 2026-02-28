@@ -20,7 +20,7 @@
                     @endif
                 </div>
                 <div class="flex flex-wrap gap-2 mt-2">
-                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">
+                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200">
                         {{ ucfirst(str_replace('_', ' ', $program->type)) }}
                     </span>
                     @if($program->duration_weeks)
@@ -40,7 +40,7 @@
                     </svg>
                     Assign to Client
                 </a>
-                <a href="{{ route('coach.programs.edit', $program) }}" class="inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md font-medium text-sm text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition ease-in-out duration-150">
+                <a href="{{ route('coach.programs.edit', $program) }}" class="inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-md font-medium text-sm text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition ease-in-out duration-150">
                     <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
                     </svg>
@@ -49,7 +49,7 @@
                 <form method="POST" action="{{ route('coach.programs.destroy', $program) }}" onsubmit="return confirm('Are you sure you want to delete this program?');">
                     @csrf
                     @method('DELETE')
-                    <button type="submit" class="inline-flex items-center px-4 py-2 border border-red-300 rounded-md font-medium text-sm text-red-700 bg-white dark:bg-gray-700 hover:bg-red-50 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition ease-in-out duration-150">
+                    <button type="submit" class="inline-flex items-center px-4 py-2 border border-red-300 rounded-md font-medium text-sm text-red-700 bg-white dark:bg-gray-800 hover:bg-red-50 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition ease-in-out duration-150">
                         <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
                         </svg>
@@ -75,7 +75,7 @@
         @endif
 
         @if($program->description)
-            <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+            <div class="bg-white dark:bg-gray-900 rounded-lg shadow p-6">
                 <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100 mb-2">Description</h2>
                 <p class="text-gray-700 dark:text-gray-300">{{ $program->description }}</p>
             </div>
@@ -83,11 +83,11 @@
 
         <!-- Assigned Clients -->
         @if($assignedClients->count() > 0)
-            <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+            <div class="bg-white dark:bg-gray-900 rounded-lg shadow p-6">
                 <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100 mb-4">Assigned Clients ({{ $assignedClients->count() }})</h2>
                 <div class="flex flex-wrap gap-3">
                     @foreach($assignedClients as $assignment)
-                        <a href="{{ route('coach.clients.show', $assignment->client) }}" class="inline-flex items-center px-3 py-2 rounded-lg bg-gray-50 dark:bg-gray-900 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+                        <a href="{{ route('coach.clients.show', $assignment->client) }}" class="inline-flex items-center px-3 py-2 rounded-lg bg-gray-50 dark:bg-gray-950 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
                             <div class="h-8 w-8 rounded-full bg-blue-100 flex items-center justify-center mr-2">
                                 <span class="text-sm font-medium text-blue-700">{{ strtoupper(substr($assignment->client->name, 0, 1)) }}</span>
                             </div>
@@ -116,8 +116,8 @@
 
             @if($program->workouts->count() > 0)
                 @foreach($program->workouts as $workout)
-                    <div class="bg-white dark:bg-gray-800 rounded-lg shadow overflow-hidden">
-                        <div class="px-6 py-4 bg-gray-50 dark:bg-gray-700 border-b border-gray-200 dark:border-gray-700">
+                    <div class="bg-white dark:bg-gray-900 rounded-lg shadow overflow-hidden">
+                        <div class="px-6 py-4 bg-gray-50 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-800">
                             <div class="flex items-center justify-between">
                                 <div>
                                     <h3 class="text-md font-medium text-gray-900 dark:text-gray-100">{{ $workout->name }}</h3>
@@ -130,7 +130,7 @@
                         </div>
 
                         @if($workout->exercises->count() > 0)
-                            <div class="divide-y divide-gray-200 dark:divide-gray-700">
+                            <div class="divide-y divide-gray-200 dark:divide-gray-800">
                                 @foreach($workout->exercises as $workoutExercise)
                                     <div class="px-6 py-4 flex items-center justify-between">
                                         <div class="flex-1">
@@ -145,7 +145,7 @@
                                                 <p class="text-xs text-gray-400 dark:text-gray-500 mt-1">{{ $workoutExercise->notes }}</p>
                                             @endif
                                         </div>
-                                        <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400">
+                                        <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400">
                                             {{ ucfirst(str_replace('_', ' ', $workoutExercise->exercise->muscle_group)) }}
                                         </span>
                                     </div>
@@ -159,7 +159,7 @@
                     </div>
                 @endforeach
             @else
-                <div class="bg-white dark:bg-gray-800 rounded-lg shadow">
+                <div class="bg-white dark:bg-gray-900 rounded-lg shadow">
                     <div class="text-center py-12">
                         <svg class="mx-auto h-12 w-12 text-gray-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>

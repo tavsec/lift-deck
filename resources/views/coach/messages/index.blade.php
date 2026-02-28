@@ -14,9 +14,9 @@
                 <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">Conversations</h2>
 
                 @if($conversations->count() > 0)
-                    <div class="bg-white dark:bg-gray-800 rounded-lg shadow divide-y divide-gray-200 dark:divide-gray-700">
+                    <div class="bg-white dark:bg-gray-900 rounded-lg shadow divide-y divide-gray-200 dark:divide-gray-800">
                         @foreach($conversations as $conversation)
-                            <a href="{{ route('coach.messages.show', $conversation['client']) }}" class="block hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                            <a href="{{ route('coach.messages.show', $conversation['client']) }}" class="block hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
                                 <div class="px-4 py-4 flex items-center">
                                     <div class="flex-shrink-0">
                                         <div class="h-12 w-12 rounded-full bg-blue-100 flex items-center justify-center">
@@ -51,7 +51,7 @@
                         @endforeach
                     </div>
                 @else
-                    <div class="bg-white dark:bg-gray-800 rounded-lg shadow">
+                    <div class="bg-white dark:bg-gray-900 rounded-lg shadow">
                         <div class="text-center py-12">
                             <svg class="mx-auto h-12 w-12 text-gray-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
@@ -68,11 +68,11 @@
                 <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">Start New Conversation</h2>
 
                 @if($clientsWithoutMessages->count() > 0)
-                    <div class="bg-white dark:bg-gray-800 rounded-lg shadow divide-y divide-gray-200 dark:divide-gray-700">
+                    <div class="bg-white dark:bg-gray-900 rounded-lg shadow divide-y divide-gray-200 dark:divide-gray-800">
                         @foreach($clientsWithoutMessages as $client)
-                            <a href="{{ route('coach.messages.show', $client) }}" class="block px-4 py-3 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                            <a href="{{ route('coach.messages.show', $client) }}" class="block px-4 py-3 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
                                 <div class="flex items-center">
-                                    <div class="h-10 w-10 rounded-full bg-gray-100 dark:bg-gray-700 flex items-center justify-center">
+                                    <div class="h-10 w-10 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
                                         <span class="text-sm font-medium text-gray-700 dark:text-gray-300">{{ strtoupper(substr($client->name, 0, 1)) }}</span>
                                     </div>
                                     <div class="ml-3">
@@ -84,7 +84,7 @@
                         @endforeach
                     </div>
                 @else
-                    <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-4">
+                    <div class="bg-white dark:bg-gray-900 rounded-lg shadow p-4">
                         <p class="text-sm text-gray-500 dark:text-gray-400 text-center">All clients have active conversations.</p>
                     </div>
                 @endif

@@ -15,7 +15,7 @@
         </div>
 
         <!-- Generate Card -->
-        <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+        <div class="bg-white dark:bg-gray-900 rounded-lg shadow p-6">
             <div class="text-center">
                 <div class="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-blue-100 mb-4">
                     <svg class="h-8 w-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -37,7 +37,7 @@
                 </form>
             </div>
 
-            <div class="mt-8 pt-6 border-t border-gray-200 dark:border-gray-700">
+            <div class="mt-8 pt-6 border-t border-gray-200 dark:border-gray-800">
                 <div class="bg-blue-50 rounded-md p-4">
                     <div class="flex">
                         <div class="flex-shrink-0">

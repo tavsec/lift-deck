@@ -22,13 +22,13 @@
                 </div>
             </div>
             <div class="flex gap-2">
-                <a href="{{ route('coach.clients.analytics', $client) }}" class="inline-flex items-center px-4 py-2 border border-blue-300 rounded-md font-medium text-sm text-blue-700 bg-white hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition ease-in-out duration-150">
+                <a href="{{ route('coach.clients.analytics', $client) }}" class="inline-flex items-center px-4 py-2 border border-blue-300 dark:border-blue-700 rounded-md font-medium text-sm text-blue-700 dark:text-blue-400 bg-white dark:bg-gray-900 hover:bg-blue-50 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition ease-in-out duration-150">
                     <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
                     </svg>
                     Analytics
                 </a>
-                <a href="{{ route('coach.clients.edit', $client) }}" class="inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md font-medium text-sm text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition ease-in-out duration-150">
+                <a href="{{ route('coach.clients.edit', $client) }}" class="inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-md font-medium text-sm text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition ease-in-out duration-150">
                     <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
                     </svg>
@@ -37,7 +37,7 @@
                 <form method="POST" action="{{ route('coach.clients.destroy', $client) }}" onsubmit="return confirm('Are you sure you want to remove this client?');">
                     @csrf
                     @method('DELETE')
-                    <button type="submit" class="inline-flex items-center px-4 py-2 border border-red-300 rounded-md font-medium text-sm text-red-700 bg-white hover:bg-red-50 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition ease-in-out duration-150">
+                    <button type="submit" class="inline-flex items-center px-4 py-2 border border-red-300 dark:border-red-800 rounded-md font-medium text-sm text-red-700 dark:text-red-400 bg-white dark:bg-gray-900 hover:bg-red-50 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition ease-in-out duration-150">
                         <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
                         </svg>
@@ -66,7 +66,7 @@
             <!-- Client Info -->
             <div class="lg:col-span-1 space-y-6">
                 <!-- Status Card -->
-                <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+                <div class="bg-white dark:bg-gray-900 rounded-lg shadow p-6">
                     <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100 mb-4">Status</h2>
                     <div class="space-y-4">
                         <div>
@@ -104,11 +104,11 @@
 
                 <!-- Onboarding Info -->
                 @if($client->onboardingResponses->isNotEmpty())
-                <div class="bg-white dark:bg-gray-800 rounded-lg shadow">
-                    <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-700">
+                <div class="bg-white dark:bg-gray-900 rounded-lg shadow">
+                    <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-800">
                         <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">Onboarding Info</h2>
                     </div>
-                    <dl class="divide-y divide-gray-200 dark:divide-gray-700">
+                    <dl class="divide-y divide-gray-200 dark:divide-gray-800">
                         @foreach($client->onboardingResponses->sortBy('onboardingField.order') as $response)
                             @if($response->onboardingField)
                             <div class="px-6 py-3">
@@ -121,7 +121,7 @@
                 </div>
                 @elseif($client->clientProfile)
                 <!-- Fallback: Legacy Profile Card -->
-                <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+                <div class="bg-white dark:bg-gray-900 rounded-lg shadow p-6">
                     <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100 mb-4">Profile</h2>
                     <div class="space-y-4">
                         @if($client->clientProfile->goal)
@@ -162,14 +162,14 @@
 
                 <!-- Tracking Metrics Assignment -->
                 @if($coachMetrics->count() > 0)
-                <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+                <div class="bg-white dark:bg-gray-900 rounded-lg shadow p-6">
                     <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100 mb-4">Tracking Metrics</h2>
                     <div class="space-y-2">
                         @foreach($coachMetrics as $metric)
                             <form method="POST" action="{{ route('coach.clients.toggle-metric', $client) }}">
                                 @csrf
                                 <input type="hidden" name="tracking_metric_id" value="{{ $metric->id }}">
-                                <button type="submit" class="w-full flex items-center justify-between px-3 py-2 rounded-md hover:bg-gray-50 dark:hover:bg-gray-700 text-left transition-colors">
+                                <button type="submit" class="w-full flex items-center justify-between px-3 py-2 rounded-md hover:bg-gray-50 dark:hover:bg-gray-800 text-left transition-colors">
                                     <span class="text-sm text-gray-700 dark:text-gray-300">{{ $metric->name }}</span>
                                     @if($assignedMetricIds->contains($metric->id))
                                         <span class="flex-shrink-0 w-8 h-5 bg-blue-600 rounded-full relative">
@@ -191,7 +191,7 @@
             <!-- Main Content -->
             <div class="lg:col-span-2 space-y-6">
                 <!-- Active Program -->
-                <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+                <div class="bg-white dark:bg-gray-900 rounded-lg shadow p-6">
                     <div class="flex items-center justify-between mb-4">
                         <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">Active Program</h2>
                         @if($activeProgram)
@@ -229,12 +229,12 @@
                 </div>
 
                 <!-- Recent Workouts -->
-                <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+                <div class="bg-white dark:bg-gray-900 rounded-lg shadow p-6">
                     <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100 mb-4">Recent Workouts</h2>
                     @if($recentWorkoutLogs->count() > 0)
-                        <div class="divide-y divide-gray-200 dark:divide-gray-700">
+                        <div class="divide-y divide-gray-200 dark:divide-gray-800">
                             @foreach($recentWorkoutLogs as $log)
-                                <a href="{{ route('coach.clients.workout-log', [$client, $log]) }}" class="flex items-center justify-between py-3 hover:bg-gray-50 dark:hover:bg-gray-700 -mx-2 px-2 rounded transition-colors">
+                                <a href="{{ route('coach.clients.workout-log', [$client, $log]) }}" class="flex items-center justify-between py-3 hover:bg-gray-50 dark:hover:bg-gray-800 -mx-2 px-2 rounded transition-colors">
                                     <div>
                                         <div class="flex items-center gap-2">
                                             <p class="text-sm font-medium text-gray-900 dark:text-gray-100">{{ $log->displayName() }}</p>
@@ -270,7 +270,7 @@
                     @endif
                 </div>
                 <!-- Nutrition Summary -->
-                <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+                <div class="bg-white dark:bg-gray-900 rounded-lg shadow p-6">
                     <div class="flex items-center justify-between mb-4">
                         <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">Nutrition</h2>
                         <a href="{{ route('coach.clients.nutrition', $client) }}" class="text-sm text-blue-600 hover:text-blue-800">View Details</a>
@@ -313,7 +313,7 @@
 
                 <!-- Daily Check-in Logs (Last 7 Days) -->
                 @if($assignedMetricIds->count() > 0)
-                <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+                <div class="bg-white dark:bg-gray-900 rounded-lg shadow p-6">
                     <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100 mb-4">Daily Check-ins (Last 7 Days)</h2>
 
                     @php
@@ -327,7 +327,7 @@
                     <div class="overflow-x-auto -mx-6 px-6">
                         <table class="min-w-full text-sm">
                             <thead>
-                                <tr class="border-b border-gray-200 dark:border-gray-700">
+                                <tr class="border-b border-gray-200 dark:border-gray-800">
                                     <th class="text-left py-2 pr-4 font-medium text-gray-500 dark:text-gray-400 text-xs uppercase">Metric</th>
                                     @foreach($dates as $date)
                                         <th class="text-center py-2 px-2 font-medium text-gray-500 dark:text-gray-400 text-xs">
@@ -337,7 +337,7 @@
                                     @endforeach
                                 </tr>
                             </thead>
-                            <tbody class="divide-y divide-gray-100 dark:divide-gray-700">
+                            <tbody class="divide-y divide-gray-100 dark:divide-gray-800">
                                 @foreach($assignedMetrics as $metric)
                                     <tr>
                                         <td class="py-2 pr-4 text-gray-700 dark:text-gray-300 whitespace-nowrap">{{ $metric->name }}</td>

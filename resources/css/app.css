@@ -89,19 +89,36 @@
     @apply w-auto h-auto;
 }
 
+/* Dark mode form controls — ensures readable text on dark backgrounds.
+   Inputs lack dark:text- variants; this base rule fills the gap for all form elements.
+   Explicit dark:text-* utility classes on individual elements still take precedence. */
+@layer base {
+    .dark input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):not([type="color"]):not([type="range"]),
+    .dark textarea,
+    .dark select {
+        color: theme('colors.gray.100');
+    }
+
+    .dark input::placeholder,
+    .dark textarea::placeholder {
+        color: theme('colors.gray.400');
+        opacity: 1;
+    }
+}
+
 /* Dark mode overrides for BladewindUI components */
 /* BladewindUI uses dark:bg-dark-800/25 etc., but dark-800/dark-600 are not defined
    in this project's Tailwind config and vendor files are not scanned for classes.
    These overrides use the project's existing dark color palette. */
 .dark .bw-card {
-    @apply bg-dark-2 border-dark-3 text-dark-7;
+    @apply bg-gray-900 border-gray-800 text-dark-7;
 }
 
 .dark .bw-card .border-b,
 .dark .bw-card .border-t {
-    @apply border-dark-3;
+    @apply border-gray-800;
 }
 
 .dark .bw-contact-card {
-    @apply bg-dark-2 border-dark-3 text-dark-7;
+    @apply bg-gray-900 border-gray-800 text-dark-7;
 }

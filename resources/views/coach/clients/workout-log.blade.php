@@ -22,7 +22,7 @@
         </div>
 
         @if($workoutLog->notes)
-            <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+            <div class="bg-white dark:bg-gray-900 rounded-lg shadow p-6">
                 <h2 class="text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">Notes</h2>
                 <p class="text-sm text-gray-900 dark:text-gray-100">{{ $workoutLog->notes }}</p>
             </div>
@@ -37,11 +37,11 @@
             @php
                 $firstSet = $sets->first();
             @endphp
-            <div class="bg-white dark:bg-gray-800 rounded-lg shadow overflow-hidden">
-                <div class="px-6 py-4 bg-gray-50 dark:bg-gray-700 border-b border-gray-200 dark:border-gray-600">
+            <div class="bg-white dark:bg-gray-900 rounded-lg shadow overflow-hidden">
+                <div class="px-6 py-4 bg-gray-50 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
                     <div class="flex items-center justify-between">
                         <h3 class="text-base font-medium text-gray-900 dark:text-gray-100">{{ $firstSet->exercise->name }}</h3>
-                        <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-gray-100 dark:bg-gray-600 text-gray-600 dark:text-gray-300">
+                        <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300">
                             {{ ucfirst(str_replace('_', ' ', $firstSet->exercise->muscle_group)) }}
                         </span>
                     </div>
@@ -55,7 +55,7 @@
                 <div class="px-6 py-3">
                     <table class="w-full text-sm">
                         <thead>
-                            <tr class="text-left text-xs text-gray-500 dark:text-gray-400 border-b border-gray-200 dark:border-gray-700">
+                            <tr class="text-left text-xs text-gray-500 dark:text-gray-400 border-b border-gray-200 dark:border-gray-800">
                                 <th class="pb-2 pr-3 w-16">Set</th>
                                 <th class="pb-2 pr-3">Weight (kg)</th>
                                 <th class="pb-2">Reps</th>

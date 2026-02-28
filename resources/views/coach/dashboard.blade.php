@@ -11,7 +11,7 @@
         <!-- Stats Grid -->
         <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
             <!-- Total Clients -->
-            <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-4">
+            <div class="bg-white dark:bg-gray-900 rounded-lg shadow p-4">
                 <div class="flex items-center">
                     <div class="flex-shrink-0">
                         <div class="flex h-12 w-12 items-center justify-center rounded-lg bg-blue-100">
@@ -28,7 +28,7 @@
             </div>
 
             <!-- Active Clients -->
-            <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-4">
+            <div class="bg-white dark:bg-gray-900 rounded-lg shadow p-4">
                 <div class="flex items-center">
                     <div class="flex-shrink-0">
                         <div class="flex h-12 w-12 items-center justify-center rounded-lg bg-green-100">
@@ -45,7 +45,7 @@
             </div>
 
             <!-- Unread Messages -->
-            <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-4">
+            <div class="bg-white dark:bg-gray-900 rounded-lg shadow p-4">
                 <div class="flex items-center">
                     <div class="flex-shrink-0">
                         <div class="flex h-12 w-12 items-center justify-center rounded-lg bg-yellow-100">
@@ -62,7 +62,7 @@
             </div>
 
             <!-- Programs -->
-            <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-4">
+            <div class="bg-white dark:bg-gray-900 rounded-lg shadow p-4">
                 <div class="flex items-center">
                     <div class="flex-shrink-0">
                         <div class="flex h-12 w-12 items-center justify-center rounded-lg bg-purple-100">
@@ -80,13 +80,13 @@
         </div>
 
         <!-- Quick Actions -->
-        <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+        <div class="bg-white dark:bg-gray-900 rounded-lg shadow p-6">
             <h2 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">Quick Actions</h2>
             <div class="flex flex-wrap gap-3">
                 <a href="{{ route('coach.clients.create') }}" class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-700 focus:bg-blue-700 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition ease-in-out duration-150">
                     Add Client
                 </a>
-                <a href="{{ route('coach.programs.create') }}" class="inline-flex items-center px-4 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md font-semibold text-xs text-gray-700 dark:text-gray-300 uppercase tracking-widest shadow-sm hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition ease-in-out duration-150">
+                <a href="{{ route('coach.programs.create') }}" class="inline-flex items-center px-4 py-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-md font-semibold text-xs text-gray-700 dark:text-gray-300 uppercase tracking-widest shadow-sm hover:bg-gray-50 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition ease-in-out duration-150">
                     Create Program
                 </a>
             </div>
@@ -94,12 +94,12 @@
 
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <!-- Recent Workout Logs -->
-            <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+            <div class="bg-white dark:bg-gray-900 rounded-lg shadow p-6">
                 <h2 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">Recent Workout Logs</h2>
                 @if($recentWorkoutLogs->isNotEmpty())
-                    <div class="divide-y divide-gray-100 dark:divide-gray-700">
+                    <div class="divide-y divide-gray-100 dark:divide-gray-800">
                         @foreach($recentWorkoutLogs as $log)
-                            <a href="{{ route('coach.clients.workout-log', [$log->client, $log]) }}" class="flex items-center gap-3 py-3 hover:bg-gray-50 dark:hover:bg-gray-700 -mx-2 px-2 rounded transition-colors">
+                            <a href="{{ route('coach.clients.workout-log', [$log->client, $log]) }}" class="flex items-center gap-3 py-3 hover:bg-gray-50 dark:hover:bg-gray-800 -mx-2 px-2 rounded transition-colors">
                                 <div class="flex-shrink-0 h-8 w-8 rounded-full bg-green-100 flex items-center justify-center">
                                     <svg class="h-4 w-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
@@ -127,12 +127,12 @@
             </div>
 
             <!-- Recent Comments -->
-            <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+            <div class="bg-white dark:bg-gray-900 rounded-lg shadow p-6">
                 <h2 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">Recent Comments</h2>
                 @if($recentComments->isNotEmpty())
-                    <div class="divide-y divide-gray-100 dark:divide-gray-700">
+                    <div class="divide-y divide-gray-100 dark:divide-gray-800">
                         @foreach($recentComments as $comment)
-                            <a href="{{ route('coach.clients.workout-log', [$comment->workoutLog->client, $comment->workoutLog]) }}" class="flex items-start gap-3 py-3 hover:bg-gray-50 dark:hover:bg-gray-700 -mx-2 px-2 rounded transition-colors">
+                            <a href="{{ route('coach.clients.workout-log', [$comment->workoutLog->client, $comment->workoutLog]) }}" class="flex items-start gap-3 py-3 hover:bg-gray-50 dark:hover:bg-gray-800 -mx-2 px-2 rounded transition-colors">
                                 <div class="flex-shrink-0 h-8 w-8 rounded-full bg-blue-100 flex items-center justify-center">
                                     <span class="text-xs font-medium text-blue-700">{{ strtoupper(substr($comment->user->name, 0, 1)) }}</span>
                                 </div>

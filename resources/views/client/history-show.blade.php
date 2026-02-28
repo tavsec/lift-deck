@@ -33,7 +33,7 @@
                 <div class="space-y-3">
                     <div class="flex items-center justify-between">
                         <h3 class="text-base font-semibold text-gray-900 dark:text-gray-100">{{ $firstSet->exercise->name }}</h3>
-                        <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-gray-100 text-gray-600 dark:bg-gray-700 dark:text-gray-300">
+                        <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-300">
                             {{ ucfirst(str_replace('_', ' ', $firstSet->exercise->muscle_group)) }}
                         </span>
                     </div>
@@ -47,7 +47,7 @@
                     <div class="overflow-x-auto">
                         <table class="w-full text-sm">
                             <thead>
-                                <tr class="text-left text-xs text-gray-500 dark:text-gray-400 border-b border-gray-200 dark:border-gray-700">
+                                <tr class="text-left text-xs text-gray-500 dark:text-gray-400 border-b border-gray-200 dark:border-gray-800">
                                     <th class="pb-2 pr-3 w-12">Set</th>
                                     <th class="pb-2 pr-3">Weight (kg)</th>
                                     <th class="pb-2">Reps</th>

@@ -14,12 +14,12 @@
         </div>
 
         <!-- Date Range Filter -->
-        <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-4 flex justify-between align-middle">
+        <div class="bg-white dark:bg-gray-900 rounded-lg shadow p-4 flex justify-between align-middle">
             <form method="GET" action="{{ route('coach.clients.analytics', $client) }}" x-data="{ range: '{{ $range }}' }" class="flex flex-wrap items-end gap-3">
                 <div>
                     <label class="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">Time Period</label>
                     <select name="range" x-model="range" @change="if (range !== 'custom') $el.closest('form').submit()"
-                        class="block rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm">
+                        class="block rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm">
                         <option value="7">Last 7 days</option>
                         <option value="14">Last 14 days</option>
                         <option value="30">Last 30 days</option>
@@ -32,11 +32,11 @@
                     <div class="flex items-end gap-2">
                         <div>
                             <label class="block text-xs text-gray-500 dark:text-gray-400">From</label>
-                            <input type="date" name="from" value="{{ $from }}" class="block rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm">
+                            <input type="date" name="from" value="{{ $from }}" class="block rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm">
                         </div>
                         <div>
                             <label class="block text-xs text-gray-500 dark:text-gray-400">To</label>
-                            <input type="date" name="to" value="{{ $to }}" class="block rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm">
+                            <input type="date" name="to" value="{{ $to }}" class="block rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm">
                         </div>
                         <button type="submit" class="inline-flex items-center px-3 py-2 bg-blue-600 border border-transparent rounded-md text-xs font-semibold text-white uppercase tracking-widest hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
                             Apply
@@ -48,7 +48,7 @@
         </div>
 
         <!-- Daily Check-ins Section -->
-        <div x-data="{ open: true }" class="bg-white dark:bg-gray-800 rounded-lg shadow">
+        <div x-data="{ open: true }" class="bg-white dark:bg-gray-900 rounded-lg shadow">
             <button @click="open = !open" class="w-full flex items-center justify-between px-4 py-3 text-left">
                 <h2 class="text-lg font-semibold text-gray-900 dark:text-gray-100">Daily Check-ins</h2>
                 <svg :class="{ 'rotate-180': open }" class="w-5 h-5 text-gray-500 dark:text-gray-400 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -60,7 +60,7 @@
                 @if(count($checkInCharts) > 0)
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         @foreach($checkInCharts as $chart)
-                            <div class="border border-gray-200 dark:border-gray-700 rounded-lg p-3">
+                            <div class="border border-gray-200 dark:border-gray-800 rounded-lg p-3">
                                 <h3 class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">{{ $chart['name'] }} @if($chart['unit'])({{ $chart['unit'] }})@endif</h3>
                                 <div x-data="checkInChart({{ json_encode($chart) }})" x-init="init()">
                                     <canvas x-ref="canvas" height="200"></canvas>
@@ -72,8 +72,8 @@
 
                 @if($tableMetrics->count() > 0)
                     <div class="overflow-x-auto">
-                        <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700 text-sm">
-                            <thead class="bg-gray-50 dark:bg-gray-700">
+                        <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-800 text-sm">
+                            <thead class="bg-gray-50 dark:bg-gray-800">
                                 <tr>
                                     <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">Date</th>
                                     @foreach($tableMetrics as $metric)
@@ -81,7 +81,7 @@
                                     @endforeach
                                 </tr>
                             </thead>
-                            <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
+                            <tbody class="divide-y divide-gray-200 dark:divide-gray-800">
                                 @foreach($checkInTableData as $row)
                                     @php
                                         $hasValue = false;
@@ -129,7 +129,7 @@
         </div>
 
         <!-- Nutrition -->
-        <div x-data="{ open: true }" class="bg-white dark:bg-gray-800 rounded-lg shadow">
+        <div x-data="{ open: true }" class="bg-white dark:bg-gray-900 rounded-lg shadow">
             <button @click="open = !open" class="w-full flex items-center justify-between px-4 py-3 text-left">
                 <h2 class="text-lg font-semibold text-gray-900 dark:text-gray-100">Nutrition</h2>
                 <svg :class="{ 'rotate-180': open }" class="w-5 h-5 text-gray-500 dark:text-gray-400 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -162,7 +162,7 @@
                         </div>
                     </div>
 
-                    <div class="grid grid-cols-2 sm:grid-cols-5 gap-4 p-4 bg-gray-50 dark:bg-gray-900 rounded-lg">
+                    <div class="grid grid-cols-2 sm:grid-cols-5 gap-4 p-4 bg-gray-50 dark:bg-gray-950 rounded-lg">
                         <div class="text-center">
                             <p class="text-xs text-gray-500 dark:text-gray-400 uppercase">Avg. Daily Calories</p>
                             <p class="text-lg font-bold text-gray-900 dark:text-gray-100">{{ number_format($nutritionStats['avgCalories']) }}</p>
@@ -195,7 +195,7 @@
         </div>
         @if($imageMetrics->isNotEmpty())
         <!-- Progress Photos -->
-            <div x-data="{ open: true }" class="bg-white dark:bg-gray-800 rounded-lg shadow">
+            <div x-data="{ open: true }" class="bg-white dark:bg-gray-900 rounded-lg shadow">
                 <button @click="open = !open" class="w-full flex items-center justify-between px-4 py-3 text-left">
                     <h2 class="text-lg font-semibold text-gray-900 dark:text-gray-100">Progress Photos</h2>
                     <svg :class="{ 'rotate-180': open }" class="w-5 h-5 text-gray-500 dark:text-gray-400 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -214,7 +214,7 @@
                                     <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-2">
                                         @foreach($metricData['photos'] as $photo)
                                             <div x-data="{ showLightbox: false }" class="relative">
-                                                <button @click="showLightbox = true" class="block w-full aspect-square rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 hover:border-blue-400 transition-colors">
+                                                <button @click="showLightbox = true" class="block w-full aspect-square rounded-lg overflow-hidden border border-gray-200 dark:border-gray-800 hover:border-blue-400 transition-colors">
                                                     <img src="{{ $photo['thumbUrl'] }}" alt="{{ $metricData['name'] }} - {{ $photo['date'] }}" class="w-full h-full object-cover">
                                                 </button>
                                                 <p class="text-xs text-gray-500 dark:text-gray-400 text-center mt-1">{{ \Carbon\Carbon::parse($photo['date'])->format('M j') }}</p>
@@ -244,7 +244,7 @@
         @endif
 
         <!-- Exercise Progression -->
-        <div x-data="{ open: true }" class="bg-white dark:bg-gray-800 rounded-lg shadow">
+        <div x-data="{ open: true }" class="bg-white dark:bg-gray-900 rounded-lg shadow">
             <button @click="open = !open" class="w-full flex items-center justify-between px-4 py-3 text-left">
                 <h2 class="text-lg font-semibold text-gray-900 dark:text-gray-100">Exercise Progression</h2>
                 <svg :class="{ 'rotate-180': open }" class="w-5 h-5 text-gray-500 dark:text-gray-400 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -257,7 +257,7 @@
                     <div x-data="exerciseProgression({{ json_encode($exerciseProgressionData) }}, {{ json_encode($exercisesByMuscleGroup) }})" x-init="init()">
                         <div class="mb-4">
                             <label class="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">Exercise</label>
-                            <select x-model="selectedExercise" @change="updateChart()" class="block w-full sm:w-64 rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm">
+                            <select x-model="selectedExercise" @change="updateChart()" class="block w-full sm:w-64 rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm">
                                 <template x-for="(exercises, group) in exerciseGroups" :key="group">
                                     <optgroup :label="group">
                                         <template x-for="ex in exercises" :key="ex.id">
@@ -272,7 +272,7 @@
                             <canvas x-ref="canvas"></canvas>
                         </div>
 
-                        <div x-show="summary" class="grid grid-cols-3 gap-4 p-4 bg-gray-50 dark:bg-gray-900 rounded-lg">
+                        <div x-show="summary" class="grid grid-cols-3 gap-4 p-4 bg-gray-50 dark:bg-gray-950 rounded-lg">
                             <div class="text-center">
                                 <p class="text-xs text-gray-500 dark:text-gray-400 uppercase">Start &rarr; End</p>
                                 <p class="text-sm font-bold text-gray-900 dark:text-gray-100" x-text="summary?.startWeight + 'kg &rarr; ' + summary?.endWeight + 'kg'"></p>
@@ -298,19 +298,29 @@
     @push('scripts')
         <script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
         <script>
+            function chartTheme() {
+                const dark = document.documentElement.classList.contains('dark');
+                return {
+                    tickColor:  dark ? '#9ca3af' : '#6b7280',
+                    gridColor:  dark ? 'rgba(75, 85, 99, 0.25)' : 'rgba(229, 231, 235, 1)',
+                    legendColor: dark ? '#d1d5db' : '#374151',
+                };
+            }
+
             function checkInChart(chartData) {
                 return {
                     init() {
                         const existing = Chart.getChart(this.$refs.canvas);
                         if (existing) existing.destroy();
                         const ctx = this.$refs.canvas.getContext('2d');
+                        const theme = chartTheme();
                         const labels = chartData.data.map(d => {
                             const date = new Date(d.date + 'T00:00:00');
                             return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
                         });
                         const values = chartData.data.map(d => d.value);
 
-                        const yScale = {};
+                        const yScale = { grid: { color: theme.gridColor }, ticks: { color: theme.tickColor } };
                         if (chartData.type === 'scale') {
                             yScale.min = chartData.scaleMin;
                             yScale.max = chartData.scaleMax;
@@ -340,7 +350,8 @@
                                 scales: {
                                     x: {
                                         type: 'category',
-                                        ticks: { maxTicksLimit: 10 },
+                                        ticks: { maxTicksLimit: 10, color: theme.tickColor },
+                                        grid: { color: theme.gridColor },
                                     },
                                     y: yScale,
                                 },
@@ -349,12 +360,14 @@
                     }
                 };
             }
+
             function caloriesChart(nutritionData) {
                 return {
                     renderChart() {
                         const existing = Chart.getChart(this.$refs.canvas);
                         if (existing) existing.destroy();
                         const ctx = this.$refs.canvas.getContext('2d');
+                        const theme = chartTheme();
                         const labels = nutritionData.map(d => {
                             const date = new Date(d.date + 'T00:00:00');
                             return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
@@ -382,10 +395,10 @@
                             options: {
                                 responsive: true,
                                 maintainAspectRatio: false,
-                                plugins: { legend: { display: true, position: 'bottom', labels: { boxWidth: 12 } } },
+                                plugins: { legend: { display: true, position: 'bottom', labels: { boxWidth: 12, color: theme.legendColor } } },
                                 scales: {
-                                    x: { ticks: { maxTicksLimit: 10 } },
-                                    y: { beginAtZero: true }
+                                    x: { ticks: { maxTicksLimit: 10, color: theme.tickColor }, grid: { color: theme.gridColor } },
+                                    y: { beginAtZero: true, ticks: { color: theme.tickColor }, grid: { color: theme.gridColor } }
                                 }
                             }
                         });
@@ -399,6 +412,7 @@
                         const existing = Chart.getChart(this.$refs.canvas);
                         if (existing) existing.destroy();
                         const ctx = this.$refs.canvas.getContext('2d');
+                        const theme = chartTheme();
                         const labels = nutritionData.map(d => {
                             const date = new Date(d.date + 'T00:00:00');
                             return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
@@ -417,10 +431,10 @@
                             options: {
                                 responsive: true,
                                 maintainAspectRatio: false,
-                                plugins: { legend: { display: true, position: 'bottom', labels: { boxWidth: 12 } } },
+                                plugins: { legend: { display: true, position: 'bottom', labels: { boxWidth: 12, color: theme.legendColor } } },
                                 scales: {
-                                    x: { stacked: true, ticks: { maxTicksLimit: 10 } },
-                                    y: { stacked: true, beginAtZero: true }
+                                    x: { stacked: true, ticks: { maxTicksLimit: 10, color: theme.tickColor }, grid: { color: theme.gridColor } },
+                                    y: { stacked: true, beginAtZero: true, ticks: { color: theme.tickColor }, grid: { color: theme.gridColor } }
                                 }
                             }
                         });
@@ -468,6 +482,7 @@
                         };
 
                         const ctx = this.$refs.canvas.getContext('2d');
+                        const theme = chartTheme();
                         const labels = data.map(d => {
                             const date = new Date(d.date + 'T00:00:00');
                             return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
@@ -502,8 +517,8 @@
                                     }
                                 },
                                 scales: {
-                                    x: { ticks: { maxTicksLimit: 10 } },
-                                    y: { beginAtZero: false }
+                                    x: { ticks: { maxTicksLimit: 10, color: theme.tickColor }, grid: { color: theme.gridColor } },
+                                    y: { beginAtZero: false, ticks: { color: theme.tickColor }, grid: { color: theme.gridColor } }
                                 }
                             }
                         });

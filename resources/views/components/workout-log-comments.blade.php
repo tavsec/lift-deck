@@ -1,7 +1,7 @@
 @props(['workoutLog', 'commentRoute'])
 
 <!-- Comments -->
-<div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+<div class="bg-white dark:bg-gray-900 rounded-lg shadow p-6">
     <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100 mb-4">
         Comments
         @if($workoutLog->comments->count() > 0)
@@ -49,7 +49,7 @@
                 name="body"
                 rows="2"
                 placeholder="Add a comment..."
-                class="w-full rounded-md border-gray-300 shadow-sm text-sm focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 @error('body') border-red-300 @enderror"
+                class="w-full rounded-md border-gray-300 shadow-sm text-sm focus:border-blue-500 focus:ring-blue-500 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 @error('body') border-red-300 @enderror"
             >{{ old('body') }}</textarea>
             @error('body')
                 <p class="text-sm text-red-600">{{ $message }}</p>
