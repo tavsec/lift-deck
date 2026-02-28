@@ -22,7 +22,7 @@ class UsersTable
             ->columns([
                 TextColumn::make('name')
                     ->searchable()
-                    ->description(fn(User $record): string => $record->description)
+                    ->description(fn(User $record): ?string => $record->description)
                     ->sortable(),
                 TextColumn::make('email')
                     ->label('Email address')
