@@ -4,18 +4,18 @@
     <div class="space-y-6">
         <!-- Header -->
         <div>
-            <a href="{{ route('coach.clients.index') }}" class="inline-flex items-center text-sm text-gray-500 hover:text-gray-700 mb-4">
+            <a href="{{ route('coach.clients.index') }}" class="inline-flex items-center text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-100 mb-4">
                 <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
                 </svg>
                 Back to Clients
             </a>
-            <h1 class="text-2xl font-bold text-gray-900">Generate Invitation Code</h1>
-            <p class="mt-1 text-sm text-gray-500">Create a code that your client can use to register and join your coaching program.</p>
+            <h1 class="text-2xl font-bold text-gray-900 dark:text-gray-100">Generate Invitation Code</h1>
+            <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Create a code that your client can use to register and join your coaching program.</p>
         </div>
 
         <!-- Generate Card -->
-        <div class="bg-white rounded-lg shadow p-6">
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
             <div class="text-center">
                 <div class="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-blue-100 mb-4">
                     <svg class="h-8 w-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -23,8 +23,8 @@
                     </svg>
                 </div>
 
-                <h2 class="text-lg font-medium text-gray-900 mb-2">Ready to invite a client?</h2>
-                <p class="text-sm text-gray-500 mb-6">Click the button below to generate a unique invitation code.</p>
+                <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100 mb-2">Ready to invite a client?</h2>
+                <p class="text-sm text-gray-500 dark:text-gray-400 mb-6">Click the button below to generate a unique invitation code.</p>
 
                 <form method="POST" action="{{ route('coach.clients.store') }}">
                     @csrf
@@ -37,7 +37,7 @@
                 </form>
             </div>
 
-            <div class="mt-8 pt-6 border-t border-gray-200">
+            <div class="mt-8 pt-6 border-t border-gray-200 dark:border-gray-700">
                 <div class="bg-blue-50 rounded-md p-4">
                     <div class="flex">
                         <div class="flex-shrink-0">

@@ -5,8 +5,8 @@
         <!-- Header -->
         <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div>
-                <h1 class="text-2xl font-bold text-gray-900">Meal Library</h1>
-                <p class="mt-1 text-sm text-gray-500">Browse and manage meals for your clients</p>
+                <h1 class="text-2xl font-bold text-gray-900 dark:text-gray-100">Meal Library</h1>
+                <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Browse and manage meals for your clients</p>
             </div>
             <a href="{{ route('coach.meals.create') }}" class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-700 focus:bg-blue-700 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition ease-in-out duration-150">
                 <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -32,16 +32,16 @@
         @endif
 
         <!-- Search -->
-        <div class="bg-white rounded-lg shadow p-4">
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-4">
             <form method="GET" action="{{ route('coach.meals.index') }}" class="flex flex-col sm:flex-row gap-4">
                 <div class="flex-1">
-                    <input type="text" name="search" value="{{ request('search') }}" placeholder="Search meals..." class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm">
+                    <input type="text" name="search" value="{{ request('search') }}" placeholder="Search meals..." class="w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm">
                 </div>
-                <button type="submit" class="inline-flex items-center px-4 py-2 bg-gray-100 border border-gray-300 rounded-md font-medium text-xs text-gray-700 uppercase tracking-widest hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition ease-in-out duration-150">
+                <button type="submit" class="inline-flex items-center px-4 py-2 bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md font-medium text-xs text-gray-700 dark:text-gray-300 uppercase tracking-widest hover:bg-gray-200 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition ease-in-out duration-150">
                     Search
                 </button>
                 @if(request('search'))
-                    <a href="{{ route('coach.meals.index') }}" class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md font-medium text-xs text-gray-700 uppercase tracking-widest hover:bg-gray-50 transition ease-in-out duration-150">
+                    <a href="{{ route('coach.meals.index') }}" class="inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md font-medium text-xs text-gray-700 dark:text-gray-300 uppercase tracking-widest hover:bg-gray-50 dark:hover:bg-gray-700 transition ease-in-out duration-150">
                         Clear
                     </a>
                 @endif
@@ -52,16 +52,16 @@
         @if($meals->count() > 0)
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 @foreach($meals as $meal)
-                    <a href="{{ route('coach.meals.edit', $meal) }}" class="bg-white rounded-lg shadow hover:shadow-md transition-shadow duration-200 overflow-hidden">
+                    <a href="{{ route('coach.meals.edit', $meal) }}" class="bg-white dark:bg-gray-800 rounded-lg shadow hover:shadow-md transition-shadow duration-200 overflow-hidden">
                         <div class="p-4">
                             <div class="flex items-start justify-between">
                                 <div class="flex-1 min-w-0">
-                                    <h3 class="text-sm font-medium text-gray-900 truncate">{{ $meal->name }}</h3>
+                                    <h3 class="text-sm font-medium text-gray-900 dark:text-gray-100 truncate">{{ $meal->name }}</h3>
                                 </div>
                             </div>
                             <div class="mt-3 flex items-baseline gap-1">
-                                <span class="text-2xl font-bold text-gray-900">{{ $meal->calories }}</span>
-                                <span class="text-sm text-gray-500">kcal</span>
+                                <span class="text-2xl font-bold text-gray-900 dark:text-gray-100">{{ $meal->calories }}</span>
+                                <span class="text-sm text-gray-500 dark:text-gray-400">kcal</span>
                             </div>
                             <div class="mt-2 flex gap-2">
                                 <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-blue-100 text-blue-800">
@@ -75,7 +75,7 @@
                                 </span>
                             </div>
                             @if($meal->description)
-                                <p class="mt-2 text-sm text-gray-500 line-clamp-2">{{ $meal->description }}</p>
+                                <p class="mt-2 text-sm text-gray-500 dark:text-gray-400 line-clamp-2">{{ $meal->description }}</p>
                             @endif
                         </div>
                     </a>
@@ -88,13 +88,13 @@
                 </div>
             @endif
         @else
-            <div class="bg-white rounded-lg shadow">
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow">
                 <div class="text-center py-12">
-                    <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg class="mx-auto h-12 w-12 text-gray-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
                     </svg>
-                    <h3 class="mt-2 text-sm font-medium text-gray-900">No meals found</h3>
-                    <p class="mt-1 text-sm text-gray-500">
+                    <h3 class="mt-2 text-sm font-medium text-gray-900 dark:text-gray-100">No meals found</h3>
+                    <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">
                         @if(request('search'))
                             Try adjusting your search.
                         @else

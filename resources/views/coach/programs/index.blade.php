@@ -5,8 +5,8 @@
         <!-- Header -->
         <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div>
-                <h1 class="text-2xl font-bold text-gray-900">Training Programs</h1>
-                <p class="mt-1 text-sm text-gray-500">Create and manage training programs for your clients</p>
+                <h1 class="text-2xl font-bold text-gray-900 dark:text-gray-100">Training Programs</h1>
+                <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Create and manage training programs for your clients</p>
             </div>
             <a href="{{ route('coach.programs.create') }}" class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-700 focus:bg-blue-700 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition ease-in-out duration-150">
                 <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -32,13 +32,13 @@
         @endif
 
         <!-- Search & Filter -->
-        <div class="bg-white rounded-lg shadow p-4">
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-4">
             <form method="GET" action="{{ route('coach.programs.index') }}" class="flex flex-col sm:flex-row gap-4">
                 <div class="flex-1">
-                    <input type="text" name="search" value="{{ request('search') }}" placeholder="Search programs..." class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm">
+                    <input type="text" name="search" value="{{ request('search') }}" placeholder="Search programs..." class="w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm">
                 </div>
                 <div class="sm:w-40">
-                    <select name="type" class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm">
+                    <select name="type" class="w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm">
                         <option value="">All Types</option>
                         <option value="strength" {{ request('type') === 'strength' ? 'selected' : '' }}>Strength</option>
                         <option value="hypertrophy" {{ request('type') === 'hypertrophy' ? 'selected' : '' }}>Hypertrophy</option>
@@ -47,10 +47,10 @@
                     </select>
                 </div>
                 <label class="inline-flex items-center">
-                    <input type="checkbox" name="templates_only" value="1" {{ request('templates_only') ? 'checked' : '' }} class="rounded border-gray-300 text-blue-600 focus:ring-blue-500">
-                    <span class="ml-2 text-sm text-gray-600">Templates only</span>
+                    <input type="checkbox" name="templates_only" value="1" {{ request('templates_only') ? 'checked' : '' }} class="rounded border-gray-300 dark:border-gray-600 text-blue-600 focus:ring-blue-500">
+                    <span class="ml-2 text-sm text-gray-600 dark:text-gray-400">Templates only</span>
                 </label>
-                <button type="submit" class="inline-flex items-center px-4 py-2 bg-gray-100 border border-gray-300 rounded-md font-medium text-xs text-gray-700 uppercase tracking-widest hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition ease-in-out duration-150">
+                <button type="submit" class="inline-flex items-center px-4 py-2 bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md font-medium text-xs text-gray-700 dark:text-gray-300 uppercase tracking-widest hover:bg-gray-200 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition ease-in-out duration-150">
                     Filter
                 </button>
             </form>
@@ -60,10 +60,10 @@
         @if($programs->count() > 0)
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 @foreach($programs as $program)
-                    <div class="bg-white rounded-lg shadow hover:shadow-md transition-shadow duration-200 overflow-hidden">
+                    <div class="bg-white dark:bg-gray-800 rounded-lg shadow hover:shadow-md transition-shadow duration-200 overflow-hidden">
                         <div class="p-4">
                             <div class="flex items-start justify-between mb-2">
-                                <h3 class="text-lg font-medium text-gray-900">{{ $program->name }}</h3>
+                                <h3 class="text-lg font-medium text-gray-900 dark:text-gray-100">{{ $program->name }}</h3>
                                 @if($program->is_template)
                                     <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-purple-100 text-purple-800">
                                         Template
@@ -71,7 +71,7 @@
                                 @endif
                             </div>
                             <div class="flex flex-wrap gap-2 mb-3">
-                                <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-gray-100 text-gray-800">
+                                <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">
                                     {{ ucfirst(str_replace('_', ' ', $program->type)) }}
                                 </span>
                                 @if($program->duration_weeks)
@@ -81,19 +81,19 @@
                                 @endif
                             </div>
                             @if($program->description)
-                                <p class="text-sm text-gray-500 line-clamp-2 mb-3">{{ $program->description }}</p>
+                                <p class="text-sm text-gray-500 dark:text-gray-400 line-clamp-2 mb-3">{{ $program->description }}</p>
                             @endif
-                            <div class="flex items-center text-xs text-gray-400 mb-4">
+                            <div class="flex items-center text-xs text-gray-400 dark:text-gray-500 mb-4">
                                 <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
                                 </svg>
                                 {{ $program->workouts->count() }} workouts
                             </div>
                             <div class="flex gap-2">
-                                <a href="{{ route('coach.programs.show', $program) }}" class="flex-1 inline-flex justify-center items-center px-3 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50">
+                                <a href="{{ route('coach.programs.show', $program) }}" class="flex-1 inline-flex justify-center items-center px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700">
                                     View
                                 </a>
-                                <a href="{{ route('coach.programs.edit', $program) }}" class="flex-1 inline-flex justify-center items-center px-3 py-2 border border-blue-300 rounded-md text-sm font-medium text-blue-700 bg-white hover:bg-blue-50">
+                                <a href="{{ route('coach.programs.edit', $program) }}" class="flex-1 inline-flex justify-center items-center px-3 py-2 border border-blue-300 rounded-md text-sm font-medium text-blue-700 bg-white dark:bg-gray-700 hover:bg-blue-50">
                                     Edit
                                 </a>
                             </div>
@@ -108,13 +108,13 @@
                 </div>
             @endif
         @else
-            <div class="bg-white rounded-lg shadow">
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow">
                 <div class="text-center py-12">
-                    <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg class="mx-auto h-12 w-12 text-gray-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
                     </svg>
-                    <h3 class="mt-2 text-sm font-medium text-gray-900">No programs yet</h3>
-                    <p class="mt-1 text-sm text-gray-500">Get started by creating your first training program.</p>
+                    <h3 class="mt-2 text-sm font-medium text-gray-900 dark:text-gray-100">No programs yet</h3>
+                    <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Get started by creating your first training program.</p>
                     <div class="mt-6">
                         <a href="{{ route('coach.programs.create') }}" class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-700">
                             <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">

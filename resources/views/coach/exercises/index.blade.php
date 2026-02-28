@@ -5,8 +5,8 @@
         <!-- Header -->
         <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div>
-                <h1 class="text-2xl font-bold text-gray-900">Exercise Library</h1>
-                <p class="mt-1 text-sm text-gray-500">Browse and manage exercises for your programs</p>
+                <h1 class="text-2xl font-bold text-gray-900 dark:text-gray-100">Exercise Library</h1>
+                <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Browse and manage exercises for your programs</p>
             </div>
             <a href="{{ route('coach.exercises.create') }}" class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-700 focus:bg-blue-700 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition ease-in-out duration-150">
                 <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -32,13 +32,13 @@
         @endif
 
         <!-- Search & Filter -->
-        <div class="bg-white rounded-lg shadow p-4">
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-4">
             <form method="GET" action="{{ route('coach.exercises.index') }}" class="flex flex-col sm:flex-row gap-4">
                 <div class="flex-1">
-                    <input type="text" name="search" value="{{ request('search') }}" placeholder="Search exercises..." class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm">
+                    <input type="text" name="search" value="{{ request('search') }}" placeholder="Search exercises..." class="w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm">
                 </div>
                 <div class="sm:w-48">
-                    <select name="muscle_group" class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm">
+                    <select name="muscle_group" class="w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm">
                         <option value="">All Muscle Groups</option>
                         @foreach($muscleGroups as $group)
                             <option value="{{ $group }}" {{ request('muscle_group') === $group ? 'selected' : '' }}>
@@ -47,11 +47,11 @@
                         @endforeach
                     </select>
                 </div>
-                <button type="submit" class="inline-flex items-center px-4 py-2 bg-gray-100 border border-gray-300 rounded-md font-medium text-xs text-gray-700 uppercase tracking-widest hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition ease-in-out duration-150">
+                <button type="submit" class="inline-flex items-center px-4 py-2 bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md font-medium text-xs text-gray-700 dark:text-gray-300 uppercase tracking-widest hover:bg-gray-200 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition ease-in-out duration-150">
                     Filter
                 </button>
                 @if(request('search') || request('muscle_group'))
-                    <a href="{{ route('coach.exercises.index') }}" class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md font-medium text-xs text-gray-700 uppercase tracking-widest hover:bg-gray-50 transition ease-in-out duration-150">
+                    <a href="{{ route('coach.exercises.index') }}" class="inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md font-medium text-xs text-gray-700 dark:text-gray-300 uppercase tracking-widest hover:bg-gray-50 dark:hover:bg-gray-700 transition ease-in-out duration-150">
                         Clear
                     </a>
                 @endif
@@ -62,13 +62,13 @@
         @if($exercises->count() > 0)
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 @foreach($exercises as $exercise)
-                    <a href="{{ route('coach.exercises.show', $exercise) }}" class="bg-white rounded-lg shadow hover:shadow-md transition-shadow duration-200 overflow-hidden">
+                    <a href="{{ route('coach.exercises.show', $exercise) }}" class="bg-white dark:bg-gray-800 rounded-lg shadow hover:shadow-md transition-shadow duration-200 overflow-hidden">
                         <div class="p-4">
                             <div class="flex items-start justify-between">
                                 <div class="flex-1 min-w-0">
-                                    <h3 class="text-sm font-medium text-gray-900 truncate">{{ $exercise->name }}</h3>
+                                    <h3 class="text-sm font-medium text-gray-900 dark:text-gray-100 truncate">{{ $exercise->name }}</h3>
                                     <p class="mt-1">
-                                        <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-gray-100 text-gray-800">
+                                        <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">
                                             {{ ucfirst(str_replace('_', ' ', $exercise->muscle_group)) }}
                                         </span>
                                     </p>
@@ -80,10 +80,10 @@
                                 @endif
                             </div>
                             @if($exercise->description)
-                                <p class="mt-2 text-sm text-gray-500 line-clamp-2">{{ $exercise->description }}</p>
+                                <p class="mt-2 text-sm text-gray-500 dark:text-gray-400 line-clamp-2">{{ $exercise->description }}</p>
                             @endif
                             @if($exercise->video_url)
-                                <div class="mt-2 flex items-center text-xs text-gray-400">
+                                <div class="mt-2 flex items-center text-xs text-gray-400 dark:text-gray-500">
                                     <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/>
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
@@ -102,13 +102,13 @@
                 </div>
             @endif
         @else
-            <div class="bg-white rounded-lg shadow">
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow">
                 <div class="text-center py-12">
-                    <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg class="mx-auto h-12 w-12 text-gray-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
                     </svg>
-                    <h3 class="mt-2 text-sm font-medium text-gray-900">No exercises found</h3>
-                    <p class="mt-1 text-sm text-gray-500">
+                    <h3 class="mt-2 text-sm font-medium text-gray-900 dark:text-gray-100">No exercises found</h3>
+                    <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">
                         @if(request('search') || request('muscle_group'))
                             Try adjusting your search or filters.
                         @else

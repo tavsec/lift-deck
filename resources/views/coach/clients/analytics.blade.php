@@ -4,22 +4,22 @@
     <div class="space-y-6">
         <!-- Header -->
         <div>
-            <a href="{{ route('coach.clients.show', $client) }}" class="inline-flex items-center text-sm text-gray-500 hover:text-gray-700 mb-4">
+            <a href="{{ route('coach.clients.show', $client) }}" class="inline-flex items-center text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-100 mb-4">
                 <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
                 </svg>
                 Back to {{ $client->name }}
             </a>
-            <h1 class="text-2xl font-bold text-gray-900">{{ $client->name }} — Analytics</h1>
+            <h1 class="text-2xl font-bold text-gray-900 dark:text-gray-100">{{ $client->name }} — Analytics</h1>
         </div>
 
         <!-- Date Range Filter -->
-        <div class="bg-white rounded-lg shadow p-4 flex justify-between align-middle">
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-4 flex justify-between align-middle">
             <form method="GET" action="{{ route('coach.clients.analytics', $client) }}" x-data="{ range: '{{ $range }}' }" class="flex flex-wrap items-end gap-3">
                 <div>
-                    <label class="block text-xs font-medium text-gray-500 mb-1">Time Period</label>
+                    <label class="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">Time Period</label>
                     <select name="range" x-model="range" @change="if (range !== 'custom') $el.closest('form').submit()"
-                        class="block rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm">
+                        class="block rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm">
                         <option value="7">Last 7 days</option>
                         <option value="14">Last 14 days</option>
                         <option value="30">Last 30 days</option>
@@ -31,12 +31,12 @@
                 <template x-if="range === 'custom'">
                     <div class="flex items-end gap-2">
                         <div>
-                            <label class="block text-xs text-gray-500">From</label>
-                            <input type="date" name="from" value="{{ $from }}" class="block rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm">
+                            <label class="block text-xs text-gray-500 dark:text-gray-400">From</label>
+                            <input type="date" name="from" value="{{ $from }}" class="block rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm">
                         </div>
                         <div>
-                            <label class="block text-xs text-gray-500">To</label>
-                            <input type="date" name="to" value="{{ $to }}" class="block rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm">
+                            <label class="block text-xs text-gray-500 dark:text-gray-400">To</label>
+                            <input type="date" name="to" value="{{ $to }}" class="block rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm">
                         </div>
                         <button type="submit" class="inline-flex items-center px-3 py-2 bg-blue-600 border border-transparent rounded-md text-xs font-semibold text-white uppercase tracking-widest hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
                             Apply
@@ -48,10 +48,10 @@
         </div>
 
         <!-- Daily Check-ins Section -->
-        <div x-data="{ open: true }" class="bg-white rounded-lg shadow">
+        <div x-data="{ open: true }" class="bg-white dark:bg-gray-800 rounded-lg shadow">
             <button @click="open = !open" class="w-full flex items-center justify-between px-4 py-3 text-left">
-                <h2 class="text-lg font-semibold text-gray-900">Daily Check-ins</h2>
-                <svg :class="{ 'rotate-180': open }" class="w-5 h-5 text-gray-500 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <h2 class="text-lg font-semibold text-gray-900 dark:text-gray-100">Daily Check-ins</h2>
+                <svg :class="{ 'rotate-180': open }" class="w-5 h-5 text-gray-500 dark:text-gray-400 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
                 </svg>
             </button>
@@ -60,8 +60,8 @@
                 @if(count($checkInCharts) > 0)
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         @foreach($checkInCharts as $chart)
-                            <div class="border border-gray-200 rounded-lg p-3">
-                                <h3 class="text-sm font-medium text-gray-700 mb-2">{{ $chart['name'] }} @if($chart['unit'])({{ $chart['unit'] }})@endif</h3>
+                            <div class="border border-gray-200 dark:border-gray-700 rounded-lg p-3">
+                                <h3 class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">{{ $chart['name'] }} @if($chart['unit'])({{ $chart['unit'] }})@endif</h3>
                                 <div x-data="checkInChart({{ json_encode($chart) }})" x-init="init()">
                                     <canvas x-ref="canvas" height="200"></canvas>
                                 </div>
@@ -72,16 +72,16 @@
 
                 @if($tableMetrics->count() > 0)
                     <div class="overflow-x-auto">
-                        <table class="min-w-full divide-y divide-gray-200 text-sm">
-                            <thead class="bg-gray-50">
+                        <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700 text-sm">
+                            <thead class="bg-gray-50 dark:bg-gray-700">
                                 <tr>
-                                    <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase">Date</th>
+                                    <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">Date</th>
                                     @foreach($tableMetrics as $metric)
-                                        <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase">{{ $metric->name }}</th>
+                                        <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">{{ $metric->name }}</th>
                                     @endforeach
                                 </tr>
                             </thead>
-                            <tbody class="divide-y divide-gray-200">
+                            <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
                                 @foreach($checkInTableData as $row)
                                     @php
                                         $hasValue = false;
@@ -94,11 +94,11 @@
                                     @endphp
                                     @if($hasValue)
                                         <tr>
-                                            <td class="px-3 py-2 text-gray-700 whitespace-nowrap">{{ \Carbon\Carbon::parse($row['date'])->format('M j') }}</td>
+                                            <td class="px-3 py-2 text-gray-700 dark:text-gray-300 whitespace-nowrap">{{ \Carbon\Carbon::parse($row['date'])->format('M j') }}</td>
                                             @foreach($tableMetrics as $metric)
                                                 <td class="px-3 py-2">
                                                     @if($row['metric_' . $metric->id] === null)
-                                                        <span class="text-gray-300">—</span>
+                                                        <span class="text-gray-300 dark:text-gray-600">—</span>
                                                     @elseif($metric->type === 'boolean')
                                                         @if($row['metric_' . $metric->id] === '1')
                                                             <svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -123,16 +123,16 @@
                 @endif
 
                 @if(count($checkInCharts) === 0 && $tableMetrics->count() === 0)
-                    <p class="text-sm text-gray-500">No check-in data for this period.</p>
+                    <p class="text-sm text-gray-500 dark:text-gray-400">No check-in data for this period.</p>
                 @endif
             </div>
         </div>
 
         <!-- Nutrition -->
-        <div x-data="{ open: true }" class="bg-white rounded-lg shadow">
+        <div x-data="{ open: true }" class="bg-white dark:bg-gray-800 rounded-lg shadow">
             <button @click="open = !open" class="w-full flex items-center justify-between px-4 py-3 text-left">
-                <h2 class="text-lg font-semibold text-gray-900">Nutrition</h2>
-                <svg :class="{ 'rotate-180': open }" class="w-5 h-5 text-gray-500 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <h2 class="text-lg font-semibold text-gray-900 dark:text-gray-100">Nutrition</h2>
+                <svg :class="{ 'rotate-180': open }" class="w-5 h-5 text-gray-500 dark:text-gray-400 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
                 </svg>
             </button>
@@ -141,7 +141,7 @@
                 @if($nutritionStats['daysLogged'] > 0)
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                         <div>
-                            <h3 class="text-sm font-medium text-gray-700 mb-2">Calories</h3>
+                            <h3 class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Calories</h3>
                             <div class="h-56">
                                 <canvas
                                     x-data="caloriesChart({{ json_encode($nutritionData) }})"
@@ -151,7 +151,7 @@
                             </div>
                         </div>
                         <div>
-                            <h3 class="text-sm font-medium text-gray-700 mb-2">Macros (g)</h3>
+                            <h3 class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Macros (g)</h3>
                             <div class="h-56">
                                 <canvas
                                     x-data="macrosChart({{ json_encode($nutritionData) }})"
@@ -162,43 +162,43 @@
                         </div>
                     </div>
 
-                    <div class="grid grid-cols-2 sm:grid-cols-5 gap-4 p-4 bg-gray-50 rounded-lg">
+                    <div class="grid grid-cols-2 sm:grid-cols-5 gap-4 p-4 bg-gray-50 dark:bg-gray-900 rounded-lg">
                         <div class="text-center">
-                            <p class="text-xs text-gray-500 uppercase">Avg. Daily Calories</p>
-                            <p class="text-lg font-bold text-gray-900">{{ number_format($nutritionStats['avgCalories']) }}</p>
+                            <p class="text-xs text-gray-500 dark:text-gray-400 uppercase">Avg. Daily Calories</p>
+                            <p class="text-lg font-bold text-gray-900 dark:text-gray-100">{{ number_format($nutritionStats['avgCalories']) }}</p>
                         </div>
                         <div class="text-center">
-                            <p class="text-xs text-gray-500 uppercase">Avg. Protein</p>
-                            <p class="text-lg font-bold text-gray-900">{{ $nutritionStats['avgProtein'] }}g</p>
+                            <p class="text-xs text-gray-500 dark:text-gray-400 uppercase">Avg. Protein</p>
+                            <p class="text-lg font-bold text-gray-900 dark:text-gray-100">{{ $nutritionStats['avgProtein'] }}g</p>
                         </div>
                         <div class="text-center">
-                            <p class="text-xs text-gray-500 uppercase">Avg. Carbs</p>
-                            <p class="text-lg font-bold text-gray-900">{{ $nutritionStats['avgCarbs'] }}g</p>
+                            <p class="text-xs text-gray-500 dark:text-gray-400 uppercase">Avg. Carbs</p>
+                            <p class="text-lg font-bold text-gray-900 dark:text-gray-100">{{ $nutritionStats['avgCarbs'] }}g</p>
                         </div>
                         <div class="text-center">
-                            <p class="text-xs text-gray-500 uppercase">Avg. Fat</p>
-                            <p class="text-lg font-bold text-gray-900">{{ $nutritionStats['avgFat'] }}g</p>
+                            <p class="text-xs text-gray-500 dark:text-gray-400 uppercase">Avg. Fat</p>
+                            <p class="text-lg font-bold text-gray-900 dark:text-gray-100">{{ $nutritionStats['avgFat'] }}g</p>
                         </div>
                         <div class="text-center">
-                            <p class="text-xs text-gray-500 uppercase">Adherence</p>
+                            <p class="text-xs text-gray-500 dark:text-gray-400 uppercase">Adherence</p>
                             @if($nutritionStats['adherenceRate'] !== null)
                                 <p class="text-lg font-bold {{ $nutritionStats['adherenceRate'] >= 80 ? 'text-green-600' : ($nutritionStats['adherenceRate'] >= 50 ? 'text-yellow-600' : 'text-red-600') }}">{{ $nutritionStats['adherenceRate'] }}%</p>
                             @else
-                                <p class="text-lg font-bold text-gray-400">—</p>
+                                <p class="text-lg font-bold text-gray-400 dark:text-gray-500">—</p>
                             @endif
                         </div>
                     </div>
                 @else
-                    <p class="text-sm text-gray-500 text-center py-8">No nutrition data for this period.</p>
+                    <p class="text-sm text-gray-500 dark:text-gray-400 text-center py-8">No nutrition data for this period.</p>
                 @endif
             </div>
         </div>
         @if($imageMetrics->isNotEmpty())
         <!-- Progress Photos -->
-            <div x-data="{ open: true }" class="bg-white rounded-lg shadow">
+            <div x-data="{ open: true }" class="bg-white dark:bg-gray-800 rounded-lg shadow">
                 <button @click="open = !open" class="w-full flex items-center justify-between px-4 py-3 text-left">
-                    <h2 class="text-lg font-semibold text-gray-900">Progress Photos</h2>
-                    <svg :class="{ 'rotate-180': open }" class="w-5 h-5 text-gray-500 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <h2 class="text-lg font-semibold text-gray-900 dark:text-gray-100">Progress Photos</h2>
+                    <svg :class="{ 'rotate-180': open }" class="w-5 h-5 text-gray-500 dark:text-gray-400 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
                     </svg>
                 </button>
@@ -210,14 +210,14 @@
                         @foreach($imageMetricData as $metricData)
                             @if(count($metricData['photos']) > 0)
                                 <div>
-                                    <h3 class="text-sm font-medium text-gray-700 mb-2">{{ $metricData['name'] }}</h3>
+                                    <h3 class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">{{ $metricData['name'] }}</h3>
                                     <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-2">
                                         @foreach($metricData['photos'] as $photo)
                                             <div x-data="{ showLightbox: false }" class="relative">
-                                                <button @click="showLightbox = true" class="block w-full aspect-square rounded-lg overflow-hidden border border-gray-200 hover:border-blue-400 transition-colors">
+                                                <button @click="showLightbox = true" class="block w-full aspect-square rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 hover:border-blue-400 transition-colors">
                                                     <img src="{{ $photo['thumbUrl'] }}" alt="{{ $metricData['name'] }} - {{ $photo['date'] }}" class="w-full h-full object-cover">
                                                 </button>
-                                                <p class="text-xs text-gray-500 text-center mt-1">{{ \Carbon\Carbon::parse($photo['date'])->format('M j') }}</p>
+                                                <p class="text-xs text-gray-500 dark:text-gray-400 text-center mt-1">{{ \Carbon\Carbon::parse($photo['date'])->format('M j') }}</p>
 
                                                 {{-- Lightbox --}}
                                                 <div x-show="showLightbox" x-cloak @click.self="showLightbox = false" @keydown.escape.window="showLightbox = false"
@@ -237,17 +237,17 @@
                             @endif
                         @endforeach
                     @else
-                        <p class="text-sm text-gray-500 text-center py-8">No progress photos for this period.</p>
+                        <p class="text-sm text-gray-500 dark:text-gray-400 text-center py-8">No progress photos for this period.</p>
                     @endif
                 </div>
             </div>
         @endif
 
         <!-- Exercise Progression -->
-        <div x-data="{ open: true }" class="bg-white rounded-lg shadow">
+        <div x-data="{ open: true }" class="bg-white dark:bg-gray-800 rounded-lg shadow">
             <button @click="open = !open" class="w-full flex items-center justify-between px-4 py-3 text-left">
-                <h2 class="text-lg font-semibold text-gray-900">Exercise Progression</h2>
-                <svg :class="{ 'rotate-180': open }" class="w-5 h-5 text-gray-500 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <h2 class="text-lg font-semibold text-gray-900 dark:text-gray-100">Exercise Progression</h2>
+                <svg :class="{ 'rotate-180': open }" class="w-5 h-5 text-gray-500 dark:text-gray-400 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
                 </svg>
             </button>
@@ -256,8 +256,8 @@
                 @if(count($exerciseProgressionData) > 0)
                     <div x-data="exerciseProgression({{ json_encode($exerciseProgressionData) }}, {{ json_encode($exercisesByMuscleGroup) }})" x-init="init()">
                         <div class="mb-4">
-                            <label class="block text-xs font-medium text-gray-500 mb-1">Exercise</label>
-                            <select x-model="selectedExercise" @change="updateChart()" class="block w-full sm:w-64 rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm">
+                            <label class="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">Exercise</label>
+                            <select x-model="selectedExercise" @change="updateChart()" class="block w-full sm:w-64 rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm">
                                 <template x-for="(exercises, group) in exerciseGroups" :key="group">
                                     <optgroup :label="group">
                                         <template x-for="ex in exercises" :key="ex.id">
@@ -272,24 +272,24 @@
                             <canvas x-ref="canvas"></canvas>
                         </div>
 
-                        <div x-show="summary" class="grid grid-cols-3 gap-4 p-4 bg-gray-50 rounded-lg">
+                        <div x-show="summary" class="grid grid-cols-3 gap-4 p-4 bg-gray-50 dark:bg-gray-900 rounded-lg">
                             <div class="text-center">
-                                <p class="text-xs text-gray-500 uppercase">Start &rarr; End</p>
-                                <p class="text-sm font-bold text-gray-900" x-text="summary?.startWeight + 'kg &rarr; ' + summary?.endWeight + 'kg'"></p>
+                                <p class="text-xs text-gray-500 dark:text-gray-400 uppercase">Start &rarr; End</p>
+                                <p class="text-sm font-bold text-gray-900 dark:text-gray-100" x-text="summary?.startWeight + 'kg &rarr; ' + summary?.endWeight + 'kg'"></p>
                             </div>
                             <div class="text-center">
-                                <p class="text-xs text-gray-500 uppercase">Change</p>
+                                <p class="text-xs text-gray-500 dark:text-gray-400 uppercase">Change</p>
                                 <p class="text-sm font-bold" :class="summary?.change >= 0 ? 'text-green-600' : 'text-red-600'"
                                    x-text="(summary?.change >= 0 ? '+' : '') + summary?.change + 'kg (' + (summary?.change >= 0 ? '+' : '') + summary?.changePercent + '%)'"></p>
                             </div>
                             <div class="text-center">
-                                <p class="text-xs text-gray-500 uppercase">Sessions</p>
-                                <p class="text-sm font-bold text-gray-900" x-text="summary?.sessions"></p>
+                                <p class="text-xs text-gray-500 dark:text-gray-400 uppercase">Sessions</p>
+                                <p class="text-sm font-bold text-gray-900 dark:text-gray-100" x-text="summary?.sessions"></p>
                             </div>
                         </div>
                     </div>
                 @else
-                    <p class="text-sm text-gray-500 text-center py-8">No workouts logged for this period.</p>
+                    <p class="text-sm text-gray-500 dark:text-gray-400 text-center py-8">No workouts logged for this period.</p>
                 @endif
             </div>
         </div>

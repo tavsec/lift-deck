@@ -3,9 +3,9 @@
 
     <div class="flex flex-col h-[calc(100vh-8rem)]">
         <!-- Header -->
-        <div class="flex items-center justify-between pb-4 border-b border-gray-200">
+        <div class="flex items-center justify-between pb-4 border-b border-gray-200 dark:border-gray-700">
             <div class="flex items-center">
-                <a href="{{ route('coach.messages.index') }}" class="mr-4 text-gray-500 hover:text-gray-700">
+                <a href="{{ route('coach.messages.index') }}" class="mr-4 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-100">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
                     </svg>
@@ -14,8 +14,8 @@
                     <span class="text-lg font-medium text-blue-700">{{ strtoupper(substr($client->name, 0, 1)) }}</span>
                 </div>
                 <div class="ml-3">
-                    <h1 class="text-lg font-medium text-gray-900">{{ $client->name }}</h1>
-                    <p class="text-sm text-gray-500">{{ $client->email }}</p>
+                    <h1 class="text-lg font-medium text-gray-900 dark:text-gray-100">{{ $client->name }}</h1>
+                    <p class="text-sm text-gray-500 dark:text-gray-400">{{ $client->email }}</p>
                 </div>
             </div>
             <a href="{{ route('coach.clients.show', $client) }}" class="text-sm text-blue-600 hover:text-blue-800">
@@ -27,28 +27,28 @@
         <div id="messages-container" class="flex-1 overflow-y-auto py-4 space-y-4">
             @forelse($messages as $message)
                 <div class="flex {{ $message->sender_id === auth()->id() ? 'justify-end' : 'justify-start' }}">
-                    <div class="max-w-xs lg:max-w-md px-4 py-2 rounded-lg {{ $message->sender_id === auth()->id() ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-900' }}">
+                    <div class="max-w-xs lg:max-w-md px-4 py-2 rounded-lg {{ $message->sender_id === auth()->id() ? 'bg-blue-600 text-white' : 'bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-100' }}">
                         <p class="text-sm whitespace-pre-wrap">{{ $message->body }}</p>
-                        <p class="text-xs mt-1 {{ $message->sender_id === auth()->id() ? 'text-blue-200' : 'text-gray-500' }}">
+                        <p class="text-xs mt-1 {{ $message->sender_id === auth()->id() ? 'text-blue-200' : 'text-gray-500 dark:text-gray-400' }}">
                             {{ $message->created_at->format('M d, g:i A') }}
                         </p>
                     </div>
                 </div>
             @empty
                 <div class="text-center py-12">
-                    <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg class="mx-auto h-12 w-12 text-gray-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
                     </svg>
-                    <p class="mt-2 text-sm text-gray-500">No messages yet. Start the conversation!</p>
+                    <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">No messages yet. Start the conversation!</p>
                 </div>
             @endforelse
         </div>
 
         <!-- Message Input -->
-        <div class="pt-4 border-t border-gray-200">
+        <div class="pt-4 border-t border-gray-200 dark:border-gray-700">
             <form id="message-form" class="flex gap-2">
                 <input type="text" id="message-input" required placeholder="Type your message..." autocomplete="off"
-                    class="flex-1 rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                    class="flex-1 rounded-lg border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500">
                 <button type="submit" class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-lg font-semibold text-sm text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition ease-in-out duration-150">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/>
