@@ -7,18 +7,18 @@
     >
         <!-- Header -->
         <div>
-            <a href="{{ route('client.log') }}" class="inline-flex items-center text-sm text-gray-500 hover:text-gray-700 mb-3">
+            <a href="{{ route('client.log') }}" class="inline-flex items-center text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 mb-3">
                 <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
                 </svg>
                 Back
             </a>
             @if($isCustom)
-                <h1 class="text-2xl font-bold text-gray-900">Custom Workout</h1>
-                <p class="text-sm text-gray-500">Build your workout from scratch</p>
+                <h1 class="text-2xl font-bold text-gray-900 dark:text-gray-100">Custom Workout</h1>
+                <p class="text-sm text-gray-500 dark:text-gray-400">Build your workout from scratch</p>
             @else
-                <h1 class="text-2xl font-bold text-gray-900">{{ $workout->name }}</h1>
-                <p class="text-sm text-gray-500">Day {{ $workout->day_number }} &middot; <span x-text="exercises.length"></span> exercises</p>
+                <h1 class="text-2xl font-bold text-gray-900 dark:text-gray-100">{{ $workout->name }}</h1>
+                <p class="text-sm text-gray-500 dark:text-gray-400">Day {{ $workout->day_number }} &middot; <span x-text="exercises.length"></span> exercises</p>
             @endif
         </div>
 
@@ -44,7 +44,7 @@
                 <!-- Custom Workout Name -->
                 @if($isCustom)
                     <x-bladewind::card class="!p-4">
-                        <label for="custom_name" class="block text-sm font-medium text-gray-700 mb-1">Workout Name</label>
+                        <label for="custom_name" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Workout Name</label>
                         <input
                             type="text"
                             id="custom_name"
@@ -52,7 +52,7 @@
                             value="{{ old('custom_name') }}"
                             placeholder="e.g. Morning Cardio, Extra Arms Day"
                             required
-                            class="w-full rounded-md border-gray-300 shadow-sm text-sm focus:border-blue-500 focus:ring-blue-500 @error('custom_name') border-red-300 @enderror"
+                            class="w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 shadow-sm text-sm focus:border-blue-500 focus:ring-blue-500 @error('custom_name') border-red-300 @enderror"
                         >
                         @error('custom_name')
                             <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
@@ -68,30 +68,30 @@
                             <div class="flex items-center justify-between">
                                 <div class="flex items-center gap-2">
                                     <!-- Drag Handle -->
-                                    <div class="drag-handle cursor-grab active:cursor-grabbing text-gray-400 hover:text-gray-600 touch-none">
+                                    <div class="drag-handle cursor-grab active:cursor-grabbing text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 touch-none">
                                         <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                                             <path d="M7 2a2 2 0 1 0 0 4 2 2 0 0 0 0-4zM13 2a2 2 0 1 0 0 4 2 2 0 0 0 0-4zM7 8a2 2 0 1 0 0 4 2 2 0 0 0 0-4zM13 8a2 2 0 1 0 0 4 2 2 0 0 0 0-4zM7 14a2 2 0 1 0 0 4 2 2 0 0 0 0-4zM13 14a2 2 0 1 0 0 4 2 2 0 0 0 0-4z"/>
                                         </svg>
                                     </div>
                                     <div>
-                                        <h3 class="text-base font-semibold text-gray-900" x-text="exercise.name"></h3>
-                                        <p class="text-xs text-gray-500" x-show="exercise.prescribed_sets">
+                                        <h3 class="text-base font-semibold text-gray-900 dark:text-gray-100" x-text="exercise.name"></h3>
+                                        <p class="text-xs text-gray-500 dark:text-gray-400" x-show="exercise.prescribed_sets">
                                             Prescribed: <span x-text="exercise.prescribed_sets"></span> sets &times; <span x-text="exercise.prescribed_reps"></span> reps
                                         </p>
                                     </div>
                                 </div>
                                 <div class="flex items-center gap-1">
-                                    <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-gray-100 text-gray-600" x-text="exercise.muscle_group.replace('_', ' ')"></span>
+                                    <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-gray-100 text-gray-600 dark:bg-gray-700 dark:text-gray-300" x-text="exercise.muscle_group.replace('_', ' ')"></span>
                                     <!-- Move Up -->
                                     <button type="button" @click="moveExerciseUp(exerciseIndex)" :disabled="exerciseIndex === 0"
-                                        class="p-1 text-gray-400 hover:text-gray-600 rounded hover:bg-gray-50 transition-colors disabled:opacity-30 disabled:cursor-not-allowed" title="Move up">
+                                        class="p-1 text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 rounded hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors disabled:opacity-30 disabled:cursor-not-allowed" title="Move up">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"/>
                                         </svg>
                                     </button>
                                     <!-- Move Down -->
                                     <button type="button" @click="moveExerciseDown(exerciseIndex)" :disabled="exerciseIndex === exercises.length - 1"
-                                        class="p-1 text-gray-400 hover:text-gray-600 rounded hover:bg-gray-50 transition-colors disabled:opacity-30 disabled:cursor-not-allowed" title="Move down">
+                                        class="p-1 text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 rounded hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors disabled:opacity-30 disabled:cursor-not-allowed" title="Move down">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
                                         </svg>
@@ -111,7 +111,7 @@
                             <input type="hidden" :name="`exercises[${exerciseIndex}][exercise_id]`" :value="exercise.exercise_id">
 
                             <!-- Previous Session Data -->
-                            <div x-show="exercise.previous_sets && exercise.previous_sets.length > 0" class="text-xs text-gray-500">
+                            <div x-show="exercise.previous_sets && exercise.previous_sets.length > 0" class="text-xs text-gray-500 dark:text-gray-400">
                                 <span class="font-medium">Last session:</span>
                                 <template x-for="(prev, prevIndex) in (exercise.previous_sets || [])" :key="prevIndex">
                                     <span>
@@ -124,7 +124,7 @@
                             <div class="overflow-x-auto">
                                 <table class="w-full text-sm">
                                     <thead>
-                                        <tr class="text-left text-xs text-gray-500 border-b border-gray-200">
+                                        <tr class="text-left text-xs text-gray-500 dark:text-gray-400 border-b border-gray-200 dark:border-gray-700">
                                             <th class="pb-2 pr-3 w-12">Set</th>
                                             <th class="pb-2 pr-3">Weight (kg)</th>
                                             <th class="pb-2 pr-2">Reps</th>
@@ -134,7 +134,7 @@
                                     <tbody>
                                         <template x-for="(set, setIndex) in exercise.sets" :key="setIndex">
                                             <tr>
-                                                <td class="py-1.5 pr-3 text-gray-600 font-medium" x-text="setIndex + 1"></td>
+                                                <td class="py-1.5 pr-3 text-gray-600 dark:text-gray-400 font-medium" x-text="setIndex + 1"></td>
                                                 <td class="py-1.5 pr-3">
                                                     <input
                                                         type="number"
@@ -143,7 +143,7 @@
                                                         :name="`exercises[${exerciseIndex}][sets][${setIndex}][weight]`"
                                                         x-model="set.weight"
                                                         placeholder="0"
-                                                        class="w-full rounded-md border-gray-300 shadow-sm text-sm focus:border-blue-500 focus:ring-blue-500"
+                                                        class="w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 shadow-sm text-sm focus:border-blue-500 focus:ring-blue-500"
                                                     >
                                                 </td>
                                                 <td class="py-1.5 pr-2">
@@ -153,7 +153,7 @@
                                                         :name="`exercises[${exerciseIndex}][sets][${setIndex}][reps]`"
                                                         x-model="set.reps"
                                                         :placeholder="exercise.prescribed_reps || '0'"
-                                                        class="w-full rounded-md border-gray-300 shadow-sm text-sm focus:border-blue-500 focus:ring-blue-500"
+                                                        class="w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 shadow-sm text-sm focus:border-blue-500 focus:ring-blue-500"
                                                     >
                                                 </td>
                                                 <td class="py-1.5">
@@ -161,7 +161,7 @@
                                                         type="button"
                                                         @click="removeSet(exerciseIndex, setIndex)"
                                                         x-show="exercise.sets.length > 1"
-                                                        class="p-1 text-gray-400 hover:text-red-500 transition-colors"
+                                                        class="p-1 text-gray-400 dark:text-gray-500 hover:text-red-500 transition-colors"
                                                         title="Remove set"
                                                     >
                                                         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -193,10 +193,10 @@
 
                 <!-- Empty State -->
                 <div x-show="exercises.length === 0" class="text-center py-8">
-                    <svg class="mx-auto h-10 w-10 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg class="mx-auto h-10 w-10 text-gray-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
                     </svg>
-                    <p class="mt-2 text-sm text-gray-500">No exercises yet. Add one below.</p>
+                    <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">No exercises yet. Add one below.</p>
                 </div>
 
                 <!-- Add Exercise -->
@@ -205,7 +205,7 @@
                         <button
                             type="button"
                             @click="openExercisePicker()"
-                            class="w-full inline-flex justify-center items-center gap-2 px-4 py-2.5 border-2 border-dashed border-gray-300 rounded-lg text-sm font-medium text-gray-600 hover:border-blue-400 hover:text-blue-600 transition-colors"
+                            class="w-full inline-flex justify-center items-center gap-2 px-4 py-2.5 border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg text-sm font-medium text-gray-600 dark:text-gray-400 hover:border-blue-400 hover:text-blue-600 transition-colors"
                         >
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
@@ -217,8 +217,8 @@
                     <div x-show="showExercisePicker" x-cloak>
                         <div class="space-y-3">
                             <div class="flex items-center justify-between">
-                                <label class="block text-sm font-medium text-gray-700">Select Exercise</label>
-                                <button type="button" @click="showExercisePicker = false" class="text-gray-400 hover:text-gray-600">
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Select Exercise</label>
+                                <button type="button" @click="showExercisePicker = false" class="text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300">
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
                                     </svg>
@@ -228,26 +228,26 @@
                                 type="text"
                                 x-model="exerciseSearch"
                                 placeholder="Search exercises..."
-                                class="w-full rounded-md border-gray-300 shadow-sm text-sm focus:border-blue-500 focus:ring-blue-500"
+                                class="w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 shadow-sm text-sm focus:border-blue-500 focus:ring-blue-500"
                                 x-ref="exerciseSearchInput"
                             >
-                            <div class="max-h-48 overflow-y-auto border border-gray-200 rounded-md divide-y divide-gray-100">
+                            <div class="max-h-48 overflow-y-auto border border-gray-200 dark:border-gray-700 rounded-md divide-y divide-gray-100 dark:divide-gray-700">
                                 <template x-for="exercise in filteredExercises" :key="exercise.id">
                                     <button
                                         type="button"
                                         @click="addExercise(exercise)"
-                                        class="w-full text-left px-3 py-2 hover:bg-blue-50 transition-colors flex items-center justify-between"
+                                        class="w-full text-left px-3 py-2 hover:bg-blue-50 dark:hover:bg-gray-700 transition-colors flex items-center justify-between"
                                     >
                                         <div>
-                                            <span class="text-sm font-medium text-gray-900" x-text="exercise.name"></span>
-                                            <span class="text-xs text-gray-500 ml-2" x-text="exercise.muscle_group.replace('_', ' ')"></span>
+                                            <span class="text-sm font-medium text-gray-900 dark:text-gray-100" x-text="exercise.name"></span>
+                                            <span class="text-xs text-gray-500 dark:text-gray-400 ml-2" x-text="exercise.muscle_group.replace('_', ' ')"></span>
                                         </div>
-                                        <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <svg class="w-4 h-4 text-gray-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
                                         </svg>
                                     </button>
                                 </template>
-                                <div x-show="filteredExercises.length === 0" class="px-3 py-4 text-center text-sm text-gray-500">
+                                <div x-show="filteredExercises.length === 0" class="px-3 py-4 text-center text-sm text-gray-500 dark:text-gray-400">
                                     No exercises found
                                 </div>
                             </div>
@@ -257,30 +257,30 @@
 
                 <!-- Date & Time -->
                 <x-bladewind::card class="!p-4">
-                    <label for="completed_at" class="block text-sm font-medium text-gray-700 mb-1">Date & Time</label>
+                    <label for="completed_at" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Date & Time</label>
                     <input
                         type="datetime-local"
                         id="completed_at"
                         name="completed_at"
                         value="{{ old('completed_at', now()->format('Y-m-d\TH:i')) }}"
                         max="{{ now()->format('Y-m-d\TH:i') }}"
-                        class="w-full rounded-md border-gray-300 shadow-sm text-sm focus:border-blue-500 focus:ring-blue-500 @error('completed_at') border-red-300 @enderror"
+                        class="w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 shadow-sm text-sm focus:border-blue-500 focus:ring-blue-500 @error('completed_at') border-red-300 @enderror"
                     >
                     @error('completed_at')
                         <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
                     @enderror
-                    <p class="mt-1 text-xs text-gray-500">Defaults to now. Change if logging a past workout.</p>
+                    <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">Defaults to now. Change if logging a past workout.</p>
                 </x-bladewind::card>
 
                 <!-- Notes -->
                 <x-bladewind::card class="!p-4">
-                    <label for="notes" class="block text-sm font-medium text-gray-700 mb-1">Notes (optional)</label>
+                    <label for="notes" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Notes (optional)</label>
                     <textarea
                         id="notes"
                         name="notes"
                         rows="2"
                         placeholder="How did the workout feel?"
-                        class="w-full rounded-md border-gray-300 shadow-sm text-sm focus:border-blue-500 focus:ring-blue-500"
+                        class="w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 shadow-sm text-sm focus:border-blue-500 focus:ring-blue-500"
                     >{{ old('notes') }}</textarea>
                 </x-bladewind::card>
 

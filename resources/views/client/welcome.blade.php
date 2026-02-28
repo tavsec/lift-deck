@@ -1,23 +1,23 @@
 <x-guest-layout>
     <div class="text-center">
-        <div class="mx-auto flex items-center justify-center h-20 w-20 rounded-full bg-green-100 mb-6">
-            <svg class="h-10 w-10 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div class="mx-auto flex items-center justify-center h-20 w-20 rounded-full bg-green-100 dark:bg-green-900/30 mb-6">
+            <svg class="h-10 w-10 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
             </svg>
         </div>
 
-        <h1 class="text-3xl font-bold text-gray-900 mb-2">Welcome!</h1>
+        <h1 class="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-2">Welcome!</h1>
 
-        <p class="text-lg text-gray-600 mb-8">
+        <p class="text-lg text-gray-600 dark:text-gray-400 mb-8">
             You're now connected with<br>
-            <span class="font-semibold text-gray-900">{{ $coach->gym_name ?? $coach->name }}</span>
+            <span class="font-semibold text-gray-900 dark:text-gray-100">{{ $coach->gym_name ?? $coach->name }}</span>
         </p>
 
         @if($coach->avatar)
             <img src="{{ $coach->avatar }}" alt="{{ $coach->name }}" class="mx-auto h-24 w-24 rounded-full object-cover mb-8">
         @endif
 
-        <p class="text-sm text-gray-500 mb-8">
+        <p class="text-sm text-gray-500 dark:text-gray-400 mb-8">
             @if($coach->onboarding_welcome_text)
                 {{ $coach->onboarding_welcome_text }}
             @else
