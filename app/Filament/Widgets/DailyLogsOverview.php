@@ -29,7 +29,7 @@ class DailyLogsOverview extends StatsOverviewWidget
             $dates[$date] = $users[$date] ?? 0;
         }
         return [
-            Stat::make("Days logged", DailyLog::query()->where("role", "client")->count())
+            Stat::make("Days logged", DailyLog::query()->count())
                 ->chart($dates->values()),
         ];
     }
