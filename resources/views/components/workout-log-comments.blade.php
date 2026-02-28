@@ -1,11 +1,11 @@
 @props(['workoutLog', 'commentRoute'])
 
 <!-- Comments -->
-<div class="bg-white rounded-lg shadow p-6">
-    <h2 class="text-lg font-medium text-gray-900 mb-4">
+<div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+    <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100 mb-4">
         Comments
         @if($workoutLog->comments->count() > 0)
-            <span class="text-sm font-normal text-gray-500">({{ $workoutLog->comments->count() }})</span>
+            <span class="text-sm font-normal text-gray-500 dark:text-gray-400">({{ $workoutLog->comments->count() }})</span>
         @endif
     </h2>
 
@@ -27,14 +27,14 @@
                     </div>
                     <div class="flex-1 min-w-0">
                         <div class="flex items-center gap-2">
-                            <span class="text-sm font-medium text-gray-900">{{ $comment->user->name }}</span>
+                            <span class="text-sm font-medium text-gray-900 dark:text-gray-100">{{ $comment->user->name }}</span>
                             <span class="inline-flex items-center px-1.5 py-0.5 rounded text-xs font-medium
                                 {{ $comment->user->isCoach() ? 'bg-blue-50 text-blue-700' : 'bg-green-50 text-green-700' }}">
                                 {{ $comment->user->isCoach() ? 'Coach' : 'Client' }}
                             </span>
-                            <span class="text-xs text-gray-400">{{ $comment->created_at->diffForHumans() }}</span>
+                            <span class="text-xs text-gray-400 dark:text-gray-500">{{ $comment->created_at->diffForHumans() }}</span>
                         </div>
-                        <p class="mt-1 text-sm text-gray-700">{{ $comment->body }}</p>
+                        <p class="mt-1 text-sm text-gray-700 dark:text-gray-300">{{ $comment->body }}</p>
                     </div>
                 </div>
             @endforeach
@@ -49,7 +49,7 @@
                 name="body"
                 rows="2"
                 placeholder="Add a comment..."
-                class="w-full rounded-md border-gray-300 shadow-sm text-sm focus:border-blue-500 focus:ring-blue-500 @error('body') border-red-300 @enderror"
+                class="w-full rounded-md border-gray-300 shadow-sm text-sm focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 @error('body') border-red-300 @enderror"
             >{{ old('body') }}</textarea>
             @error('body')
                 <p class="text-sm text-red-600">{{ $message }}</p>
