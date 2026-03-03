@@ -1,7 +1,11 @@
 <x-layouts.client>
     <x-slot:title>My Program</x-slot:title>
 
-    <div class="space-y-6">
+    <div
+    class="space-y-6"
+    x-data="{ selectedExercise: null }"
+    @keydown.escape.window="selectedExercise = null"
+>
         <h1 class="text-3xl font-bold text-gray-900 dark:text-gray-100">My Program</h1>
 
         @if($activeProgram)
@@ -45,7 +49,19 @@
                                 @foreach($workout->exercises as $workoutExercise)
                                     <div class="px-6 py-4 flex items-center justify-between">
                                         <div class="flex-1">
-                                            <p class="text-sm font-medium text-gray-900 dark:text-gray-100">{{ $workoutExercise->exercise->name }}</p>
+                                            <button
+                                                type="button"
+                                                class="text-sm font-medium text-gray-900 dark:text-gray-100 text-left hover:underline focus:outline-none"
+                                                @click="selectedExercise = {
+                                                    name: @js($workoutExercise->exercise->name),
+                                                    muscleGroup: @js(ucfirst(str_replace('_', ' ', $workoutExercise->exercise->muscle_group))),
+                                                    description: @js($workoutExercise->exercise->description),
+                                                    {{-- Uses {{ }} not @js() — @js escapes slashes (\/) which breaks URL assertions in tests --}}
+                                                    embedUrl: "{{ $workoutExercise->exercise->getYoutubeEmbedUrl() ?? '' }}",
+                                                }"
+                                            >
+                                                {{ $workoutExercise->exercise->name }}
+                                            </button>
                                             <p class="text-sm text-gray-500 dark:text-gray-400">
                                                 {{ $workoutExercise->sets }} sets &times; {{ $workoutExercise->reps }} reps
                                                 @if($workoutExercise->formatted_rest)
@@ -80,5 +96,73 @@
                 </div>
             </x-bladewind::card>
         @endif
+        <!-- Exercise Detail Modal -->
+        <div x-show="selectedExercise" x-cloak class="fixed inset-0 z-50 flex items-end justify-center">
+            <!-- Backdrop -->
+            <div
+                class="absolute inset-0 bg-black/50"
+                @click="selectedExercise = null"
+            ></div>
+
+            <!-- Bottom sheet -->
+            <div class="relative w-full max-w-2xl bg-white dark:bg-gray-900 rounded-t-2xl shadow-xl overflow-y-auto max-h-[85vh]">
+                <!-- Handle bar -->
+                <div class="flex justify-center pt-3 pb-1">
+                    <div class="w-10 h-1 rounded-full bg-gray-300 dark:bg-gray-700"></div>
+                </div>
+
+                <!-- Header -->
+                <div class="flex items-start justify-between px-5 pt-3 pb-4">
+                    <div>
+                        <h2 class="text-lg font-semibold text-gray-900 dark:text-gray-100" x-text="selectedExercise ? selectedExercise.name : ''"></h2>
+                        <span
+                            class="inline-flex items-center mt-1 px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-300"
+                            x-text="selectedExercise ? selectedExercise.muscleGroup : ''"
+                        ></span>
+                    </div>
+                    <button
+                        type="button"
+                        @click="selectedExercise = null"
+                        class="p-2 -mr-1 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 rounded-md"
+                        aria-label="Close"
+                    >
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Video -->
+                <div class="px-5 pb-4">
+                    <template x-if="selectedExercise && selectedExercise.embedUrl">
+                        <div class="aspect-video rounded-lg overflow-hidden bg-black">
+                            <iframe
+                                :src="selectedExercise.embedUrl"
+                                class="w-full h-full"
+                                :title="selectedExercise.name"
+                                frameborder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowfullscreen
+                            ></iframe>
+                        </div>
+                    </template>
+                    <div x-show="!selectedExercise || !selectedExercise.embedUrl" class="aspect-video rounded-lg bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
+                        <div class="text-center">
+                            <svg class="mx-auto h-10 w-10 text-gray-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                            </svg>
+                            <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">No video available</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Description -->
+                <div class="px-5 pb-8">
+                    <h3 class="text-sm font-medium text-gray-500 dark:text-gray-400 mb-2">Description</h3>
+                    <p x-show="selectedExercise && selectedExercise.description" class="text-sm text-gray-700 dark:text-gray-300 whitespace-pre-wrap" x-text="selectedExercise ? selectedExercise.description : ''"></p>
+                    <p x-show="!selectedExercise || !selectedExercise.description" class="text-sm text-gray-400 dark:text-gray-500 italic">No description provided</p>
+                </div>
+            </div>
+        </div>
     </div>
 </x-layouts.client>
