@@ -297,13 +297,10 @@
         </form>
 
         <!-- Exercise Detail Modal -->
-        <div x-show="selectedExercise" x-cloak class="fixed inset-0 z-50 flex items-end justify-center">
+        <div x-show="selectedExercise" x-cloak class="fixed inset-0 z-50 flex items-center justify-center p-4">
             <div class="absolute inset-0 bg-black/50" @click="selectedExercise = null"></div>
-            <div class="relative w-full max-w-2xl bg-white dark:bg-gray-900 rounded-t-2xl shadow-xl overflow-y-auto max-h-[85vh]">
-                <div class="flex justify-center pt-3 pb-1">
-                    <div class="w-10 h-1 rounded-full bg-gray-300 dark:bg-gray-700"></div>
-                </div>
-                <div class="flex items-start justify-between px-5 pt-3 pb-4">
+            <div class="relative w-full max-w-2xl bg-white dark:bg-gray-900 rounded-2xl shadow-xl overflow-y-auto max-h-[85vh]">
+                <div class="flex items-start justify-between px-5 pt-5 pb-4">
                     <div>
                         <h2 class="text-lg font-semibold text-gray-900 dark:text-gray-100" x-text="selectedExercise ? selectedExercise.name : ''"></h2>
                         <span class="inline-flex items-center mt-1 px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-300" x-text="selectedExercise ? selectedExercise.muscle_group.replace('_', ' ') : ''"></span>
