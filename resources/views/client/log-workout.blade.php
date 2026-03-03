@@ -4,6 +4,7 @@
     <div
         x-data="workoutLogger()"
         class="space-y-6"
+        @keydown.escape.window="selectedExercise = null"
     >
         <!-- Header -->
         <div>
@@ -74,7 +75,7 @@
                                         </svg>
                                     </div>
                                     <div>
-                                        <h3 class="text-base font-semibold text-gray-900 dark:text-gray-100" x-text="exercise.name"></h3>
+                                        <button type="button" class="text-base font-semibold text-gray-900 dark:text-gray-100 text-left hover:underline focus:outline-none" @click="selectedExercise = exercise" x-text="exercise.name"></button>
                                         <p class="text-xs text-gray-500 dark:text-gray-400" x-show="exercise.prescribed_sets">
                                             Prescribed: <span x-text="exercise.prescribed_sets"></span> sets &times; <span x-text="exercise.prescribed_reps"></span> reps
                                         </p>
@@ -294,6 +295,47 @@
                 </button>
             </div>
         </form>
+
+        <!-- Exercise Detail Modal -->
+        <div x-show="selectedExercise" x-cloak class="fixed inset-0 z-50 flex items-end justify-center">
+            <div class="absolute inset-0 bg-black/50" @click="selectedExercise = null"></div>
+            <div class="relative w-full max-w-2xl bg-white dark:bg-gray-900 rounded-t-2xl shadow-xl overflow-y-auto max-h-[85vh]">
+                <div class="flex justify-center pt-3 pb-1">
+                    <div class="w-10 h-1 rounded-full bg-gray-300 dark:bg-gray-700"></div>
+                </div>
+                <div class="flex items-start justify-between px-5 pt-3 pb-4">
+                    <div>
+                        <h2 class="text-lg font-semibold text-gray-900 dark:text-gray-100" x-text="selectedExercise ? selectedExercise.name : ''"></h2>
+                        <span class="inline-flex items-center mt-1 px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-300" x-text="selectedExercise ? selectedExercise.muscle_group.replace('_', ' ') : ''"></span>
+                    </div>
+                    <button type="button" @click="selectedExercise = null" class="p-2 -mr-1 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 rounded-md" aria-label="Close">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                        </svg>
+                    </button>
+                </div>
+                <div class="px-5 pb-4">
+                    <template x-if="selectedExercise && selectedExercise.embed_url">
+                        <div class="aspect-video rounded-lg overflow-hidden bg-black">
+                            <iframe :src="selectedExercise.embed_url" class="w-full h-full" :title="selectedExercise.name" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        </div>
+                    </template>
+                    <div x-show="!selectedExercise || !selectedExercise.embed_url" class="aspect-video rounded-lg bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
+                        <div class="text-center">
+                            <svg class="mx-auto h-10 w-10 text-gray-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                            </svg>
+                            <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">No video available</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="px-5 pb-8">
+                    <h3 class="text-sm font-medium text-gray-500 dark:text-gray-400 mb-2">Description</h3>
+                    <p x-show="selectedExercise && selectedExercise.description" class="text-sm text-gray-700 dark:text-gray-300 whitespace-pre-wrap" x-text="selectedExercise ? selectedExercise.description : ''"></p>
+                    <p x-show="!selectedExercise || !selectedExercise.description" class="text-sm text-gray-400 dark:text-gray-500 italic">No description provided</p>
+                </div>
+            </div>
+        </div>
     </div>
 
     @push('scripts')
@@ -305,6 +347,7 @@
                 exerciseSearch: '',
                 showExercisePicker: false,
                 exercisesLoaded: false,
+                selectedExercise: null,
 
                 initSortable() {
                     this.$nextTick(() => {
@@ -369,6 +412,8 @@
                         exercise_id: exercise.id,
                         name: exercise.name,
                         muscle_group: exercise.muscle_group,
+                        description: exercise.description || null,
+                        embed_url: exercise.embed_url || null,
                         prescribed_sets: null,
                         prescribed_reps: null,
                         previous_sets: exercise.previous_sets || [],
