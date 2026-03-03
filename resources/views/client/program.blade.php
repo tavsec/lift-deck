@@ -56,8 +56,8 @@
                                                     name: @js($workoutExercise->exercise->name),
                                                     muscleGroup: @js(ucfirst(str_replace('_', ' ', $workoutExercise->exercise->muscle_group))),
                                                     description: @js($workoutExercise->exercise->description),
-                                                    {{-- Uses {{ }} not @js() — @js escapes slashes (\/) which breaks URL assertions in tests --}}
-                                                    embedUrl: "{{ $workoutExercise->exercise->getYoutubeEmbedUrl() ?? '' }}",
+                                                    {{-- Uses {{ }} not @js() — single quotes safe in double-quoted HTML attribute; outputs unescaped slashes for test assertions --}}
+                                                    embedUrl: '{{ $workoutExercise->exercise->getYoutubeEmbedUrl() ?? '' }}',
                                                 }"
                                             >
                                                 {{ $workoutExercise->exercise->name }}
