@@ -91,6 +91,8 @@ class LogController extends Controller
             'exercise_id' => $we->exercise_id,
             'name' => $we->exercise->name,
             'muscle_group' => $we->exercise->muscle_group,
+            'description' => $we->exercise->description,
+            'embed_url' => $we->exercise->getYoutubeEmbedUrl(),
             'prescribed_sets' => $we->sets,
             'prescribed_reps' => $we->reps,
             'previous_sets' => $previousSets->get($we->exercise_id, []),
@@ -137,7 +139,7 @@ class LogController extends Controller
             })
             ->orderBy('muscle_group')
             ->orderBy('name')
-            ->get(['id', 'name', 'muscle_group']);
+            ->get(['id', 'name', 'muscle_group', 'description', 'video_url']);
 
         // Get the most recent workout_log_id per exercise for this client
         $lastLogIds = ExerciseLog::query()
@@ -173,6 +175,8 @@ class LogController extends Controller
             'id' => $exercise->id,
             'name' => $exercise->name,
             'muscle_group' => $exercise->muscle_group,
+            'description' => $exercise->description,
+            'embed_url' => $exercise->getYoutubeEmbedUrl(),
             'previous_sets' => $previousSets->get($exercise->id, []),
         ]);
 
