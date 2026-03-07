@@ -1,10 +1,13 @@
 <?php
 
+use App\Features\Loyalty;
 use App\Models\User;
+use Laravel\Pennant\Feature;
 
 beforeEach(function () {
     $this->coach = User::factory()->coach()->create();
     $this->client = User::factory()->client()->create(['coach_id' => $this->coach->id]);
+    Feature::for($this->coach)->activate(Loyalty::class);
 });
 
 it('client can view their own loyalty page', function () {

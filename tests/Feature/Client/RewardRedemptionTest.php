@@ -1,16 +1,19 @@
 <?php
 
+use App\Features\Loyalty;
 use App\Jobs\NotifyCoachOfRedemption;
 use App\Models\Reward;
 use App\Models\RewardRedemption;
 use App\Models\User;
 use App\Models\UserXpSummary;
 use Illuminate\Support\Facades\Queue;
+use Laravel\Pennant\Feature;
 
 beforeEach(function () {
     Queue::fake([NotifyCoachOfRedemption::class]);
     $this->coach = User::factory()->coach()->create();
     $this->client = User::factory()->client()->create(['coach_id' => $this->coach->id]);
+    Feature::for($this->coach)->activate(Loyalty::class);
 });
 
 it('shows the rewards shop', function () {

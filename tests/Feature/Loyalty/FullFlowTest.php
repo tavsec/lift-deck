@@ -1,5 +1,6 @@
 <?php
 
+use App\Features\Loyalty;
 use App\Jobs\CheckLevelUp;
 use App\Jobs\EvaluateAchievements;
 use App\Jobs\NotifyCoachOfRedemption;
@@ -16,6 +17,7 @@ use App\Models\XpTransaction;
 use Database\Seeders\LevelSeeder;
 use Database\Seeders\XpEventTypeSeeder;
 use Illuminate\Support\Facades\Queue;
+use Laravel\Pennant\Feature;
 
 beforeEach(function () {
     Queue::fake([NotifyCoachOfRedemption::class]);
@@ -25,6 +27,7 @@ beforeEach(function () {
 
     $this->coach = User::factory()->coach()->create();
     $this->client = User::factory()->client()->create(['coach_id' => $this->coach->id]);
+    Feature::for($this->coach)->activate(Loyalty::class);
 });
 
 it('creates XP transaction and updates summary when workout event is processed', function () {

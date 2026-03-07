@@ -1,11 +1,14 @@
 <?php
 
+use App\Features\Loyalty;
 use App\Models\Achievement;
 use App\Models\User;
 use App\Models\UserXpSummary;
+use Laravel\Pennant\Feature;
 
 beforeEach(function () {
     $this->coach = User::factory()->coach()->create();
+    Feature::for($this->coach)->activate(Loyalty::class);
 });
 
 it('shows the achievements index', function () {

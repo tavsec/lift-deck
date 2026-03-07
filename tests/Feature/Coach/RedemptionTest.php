@@ -1,13 +1,16 @@
 <?php
 
+use App\Features\Loyalty;
 use App\Models\Reward;
 use App\Models\RewardRedemption;
 use App\Models\User;
+use Laravel\Pennant\Feature;
 
 beforeEach(function () {
     $this->coach = User::factory()->coach()->create();
     $this->client = User::factory()->client()->create(['coach_id' => $this->coach->id]);
     $this->reward = Reward::factory()->create(['coach_id' => $this->coach->id]);
+    Feature::for($this->coach)->activate(Loyalty::class);
 });
 
 it('shows the redemptions index for the coach', function () {
