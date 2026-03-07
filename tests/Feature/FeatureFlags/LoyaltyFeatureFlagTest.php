@@ -62,5 +62,7 @@ test('coach nav shows loyalty section when flag is on', function (): void {
 
     $this->actingAs($coach)
         ->get(route('coach.dashboard'))
-        ->assertSee(route('coach.rewards.index'), false);
+        ->assertSee(route('coach.rewards.index'), false)
+        ->assertSee(route('coach.achievements.index'), false)
+        ->assertSee(route('coach.redemptions.index'), false);
 });
