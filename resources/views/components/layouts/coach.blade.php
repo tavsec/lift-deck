@@ -138,6 +138,7 @@
                     </a>
 
 
+                    @feature(\App\Features\Loyalty::class)
                     <div class="pt-2 pb-1">
                         <p class="px-3 text-xs font-semibold text-gray-400 uppercase tracking-wider">Loyalty</p>
                     </div>
@@ -162,6 +163,7 @@
                         </svg>
                         Redemptions
                     </a>
+                    @endfeature
   </nav>
 
                 <!-- User Info -->
@@ -266,6 +268,7 @@
                             Meals
                         </a>
 
+                        @feature(\App\Features\Loyalty::class)
                         <div class="pt-2 pb-1">
                             <p class="px-3 text-xs font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wider">Loyalty</p>
                         </div>
@@ -290,6 +293,7 @@
                             </svg>
                             Redemptions
                         </a>
+                        @endfeature
 
                         <a href="{{ route('coach.tracking-metrics.index') }}" class="flex items-center px-3 py-2 text-sm font-medium rounded-md {{ request()->routeIs('coach.tracking-metrics.*') ? 'bg-blue-50 dark:bg-blue-900/30' : 'text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-100' }}" {!! request()->routeIs('coach.tracking-metrics.*') ? 'style="color: var(--color-primary)"' : '' !!}>
                             <svg class="w-5 h-5 mr-3 {{ request()->routeIs('coach.tracking-metrics.*') ? '' : 'text-gray-400 dark:text-gray-500' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">

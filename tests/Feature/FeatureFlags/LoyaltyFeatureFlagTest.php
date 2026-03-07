@@ -45,3 +45,22 @@ test('client with coach loyalty on can access loyalty routes', function (): void
         ->get(route('client.rewards'))
         ->assertOk();
 });
+
+test('coach nav hides loyalty section when flag is off', function (): void {
+    $coach = User::factory()->create(['role' => 'coach']);
+
+    $this->actingAs($coach)
+        ->get(route('coach.dashboard'))
+        ->assertDontSee(route('coach.rewards.index'), false)
+        ->assertDontSee(route('coach.achievements.index'), false)
+        ->assertDontSee(route('coach.redemptions.index'), false);
+});
+
+test('coach nav shows loyalty section when flag is on', function (): void {
+    $coach = User::factory()->create(['role' => 'coach']);
+    Feature::for($coach)->activate(Loyalty::class);
+
+    $this->actingAs($coach)
+        ->get(route('coach.dashboard'))
+        ->assertSee(route('coach.rewards.index'), false);
+});
