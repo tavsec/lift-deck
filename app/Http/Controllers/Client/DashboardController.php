@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Client;
 
+use App\Features\Loyalty;
 use App\Http\Controllers\Controller;
 use App\Models\Level;
 use Illuminate\View\View;
+use Laravel\Pennant\Feature;
 
 class DashboardController extends Controller
 {
@@ -31,14 +33,20 @@ class DashboardController extends Controller
             ? $user->dailyLogs()->whereDate('date', now()->toDateString())->count()
             : 0;
 
-        $xpSummary = $user->xpSummary()->with('currentLevel')->first();
-        $nextLevel = $xpSummary
+        $coach = $user->coach;
+        $loyaltyEnabled = $coach && Feature::for($coach)->active(Loyalty::class);
+
+        $xpSummary = $loyaltyEnabled ? $user->xpSummary()->with('currentLevel')->first() : null;
+        $nextLevel = $loyaltyEnabled && $xpSummary
             ? Level::where('xp_required', '>', $xpSummary->total_xp)->orderBy('xp_required')->first()
-            : Level::orderBy('xp_required')->first();
-        $recentAchievements = $user->achievements()->latest('user_achievements.earned_at')->limit(3)->get();
+            : ($loyaltyEnabled ? Level::orderBy('xp_required')->first() : null);
+        $recentAchievements = $loyaltyEnabled
+            ? $user->achievements()->latest('user_achievements.earned_at')->limit(3)->get()
+            : collect();
 
         return view('client.dashboard', [
-            'coach' => $user->coach,
+            'coach' => $coach,
+            'loyaltyEnabled' => $loyaltyEnabled,
             'activeProgram' => $activeProgram,
             'weeklyWorkoutCount' => $weeklyWorkoutCount,
             'weeklyWorkoutTarget' => $weeklyWorkoutTarget,

@@ -71,8 +71,8 @@
             </x-bladewind::card>
         </div>
 
+        @if($loyaltyEnabled)
         <!-- XP & Loyalty -->
-        @if($xpSummary || $nextLevel)
         <x-bladewind::card>
             <div class="space-y-3">
                 <div class="flex items-center justify-between">
