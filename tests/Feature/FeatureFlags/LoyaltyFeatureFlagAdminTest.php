@@ -6,7 +6,7 @@ use App\Models\User;
 use Laravel\Pennant\Feature;
 use Livewire\Livewire;
 
-test('admin can enable loyalty for a coach via view page', function (): void {
+test('admin can enable loyalty for a coach from the view page', function (): void {
     $admin = User::factory()->create(['role' => 'admin']);
     $coach = User::factory()->create(['role' => 'coach']);
 
@@ -15,12 +15,12 @@ test('admin can enable loyalty for a coach via view page', function (): void {
     expect(Feature::for($coach)->active(Loyalty::class))->toBeFalse();
 
     Livewire::test(ViewUser::class, ['record' => $coach->getRouteKey()])
-        ->callAction('toggle_loyalty');
+        ->callInfolistAction('loyalty_feature_status', 'toggle_loyalty');
 
     expect(Feature::for($coach->fresh())->active(Loyalty::class))->toBeTrue();
 });
 
-test('admin can disable loyalty for a coach via view page', function (): void {
+test('admin can disable loyalty for a coach from the view page', function (): void {
     $admin = User::factory()->create(['role' => 'admin']);
     $coach = User::factory()->create(['role' => 'coach']);
     Feature::for($coach)->activate(Loyalty::class);
@@ -28,7 +28,7 @@ test('admin can disable loyalty for a coach via view page', function (): void {
     $this->actingAs($admin);
 
     Livewire::test(ViewUser::class, ['record' => $coach->getRouteKey()])
-        ->callAction('toggle_loyalty');
+        ->callInfolistAction('loyalty_feature_status', 'toggle_loyalty');
 
     expect(Feature::for($coach->fresh())->active(Loyalty::class))->toBeFalse();
 });
