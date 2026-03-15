@@ -169,9 +169,11 @@ COPY --from=frontend --chown=octane:octane /var/www/html/public/build ./public/b
 COPY --chown=octane:octane docker/production/php.ini /usr/local/etc/php/conf.d/99-production.ini
 COPY --chown=octane:octane docker/production/octane.conf /usr/local/etc/php/conf.d/99-octane.ini
 COPY --chown=octane:octane docker/production/start-container /usr/local/bin/start-container
+COPY --chown=octane:octane docker/production/start-queue-loyalty /usr/local/bin/start-queue-loyalty
 
 # Make entrypoint executable
 RUN chmod +x /usr/local/bin/start-container
+RUN chmod +x /usr/local/bin/start-queue-loyalty
 
 # Create storage directories and set permissions
 RUN mkdir -p \
