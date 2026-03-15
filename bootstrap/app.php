@@ -13,8 +13,9 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->alias([
             'role' => \App\Http\Middleware\EnsureUserHasRole::class,
+            'feature' => \App\Http\Middleware\EnsureFeatureActive::class,
         ]);
-        $middleware->trustProxies("*");
+        $middleware->trustProxies('*');
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //

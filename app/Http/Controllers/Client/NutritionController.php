@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreMealLogRequest;
+use App\Jobs\ProcessXpEvent;
 use App\Models\MacroGoal;
 use App\Models\Meal;
 use App\Models\MealLog;
@@ -48,10 +49,12 @@ class NutritionController extends Controller
             }
         }
 
-        MealLog::create([
+        $mealLog = MealLog::create([
             ...$validated,
             'client_id' => $user->id,
         ]);
+
+        ProcessXpEvent::dispatch(auth()->id(), 'meal_logged', ['meal_log_id' => $mealLog->id]);
 
         return redirect()->route('client.nutrition', ['date' => $validated['date']])
             ->with('success', 'Meal logged!');

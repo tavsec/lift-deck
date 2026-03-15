@@ -1,0 +1,28 @@
+<?php
+
+namespace App\Filament\Resources\Levels\Schemas;
+
+use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
+use Filament\Forms\Components\TextInput;
+use Filament\Schemas\Schema;
+
+class LevelForm
+{
+    public static function configure(Schema $schema): Schema
+    {
+        return $schema
+            ->components([
+                TextInput::make('name')
+                    ->required(),
+                TextInput::make('level_number')
+                    ->numeric()
+                    ->required()
+                    ->unique(ignoreRecord: true),
+                TextInput::make('xp_required')
+                    ->numeric()
+                    ->required(),
+                SpatieMediaLibraryFileUpload::make('icon')
+                    ->collection('icon'),
+            ]);
+    }
+}
