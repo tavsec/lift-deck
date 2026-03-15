@@ -10,7 +10,6 @@ use Filament\Actions\ViewAction;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\ColorColumn;
 use Filament\Tables\Columns\ImageColumn;
-use Filament\Tables\Columns\SpatieMediaLibraryImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
@@ -22,7 +21,7 @@ class UsersTable
             ->columns([
                 TextColumn::make('name')
                     ->searchable()
-                    ->description(fn(User $record): ?string => $record->description)
+                    ->description(fn (User $record): ?string => $record->description)
                     ->sortable(),
                 TextColumn::make('email')
                     ->label('Email address')
@@ -33,11 +32,11 @@ class UsersTable
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make("clients_count")
-                    ->label("Number of clients")
+                TextColumn::make('clients_count')
+                    ->label('Number of clients')
                     ->sortable()
-                    ->counts("clients")
-                ->badge(),
+                    ->counts('clients')
+                    ->badge(),
                 TextColumn::make('phone')
                     ->searchable(),
                 TextColumn::make('gym_name')

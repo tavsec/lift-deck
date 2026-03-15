@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreWorkoutLogRequest;
+use App\Jobs\ProcessXpEvent;
 use App\Models\Exercise;
 use App\Models\ExerciseLog;
 use App\Models\ProgramWorkout;
@@ -236,6 +237,8 @@ class LogController extends Controller
                 ]);
             }
         }
+
+        ProcessXpEvent::dispatch(auth()->id(), 'workout_logged', ['workout_log_id' => $workoutLog->id]);
 
         return redirect()->route('client.history')
             ->with('success', 'Workout logged!');

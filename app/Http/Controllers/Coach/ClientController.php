@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Coach;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreWorkoutLogCommentRequest;
+use App\Models\Achievement;
 use App\Models\ClientInvitation;
 use App\Models\ClientTrackingMetric;
 use App\Models\MacroGoal;
@@ -129,6 +130,21 @@ class ClientController extends Controller
             ->selectRaw('COALESCE(SUM(calories), 0) as calories, COALESCE(SUM(protein), 0) as protein, COALESCE(SUM(carbs), 0) as carbs, COALESCE(SUM(fat), 0) as fat')
             ->first();
 
+        // Loyalty data
+        $xpSummary = $client->xpSummary()->with('currentLevel')->first();
+        $clientAchievements = $client->achievements()->latest('user_achievements.earned_at')->get();
+        $recentRedemptions = $client->rewardRedemptions()->with('reward')->latest()->limit(5)->get();
+
+        $earnedAchievementIds = $clientAchievements->pluck('id');
+        $manualAchievements = Achievement::query()
+            ->where('type', 'manual')
+            ->where('is_active', true)
+            ->where(function ($q) {
+                $q->whereNull('coach_id')->orWhere('coach_id', auth()->id());
+            })
+            ->whereNotIn('id', $earnedAchievementIds)
+            ->get();
+
         return view('coach.clients.show', compact(
             'client',
             'activeProgram',
@@ -139,6 +155,10 @@ class ClientController extends Controller
             'recentDailyLogs',
             'currentMacroGoal',
             'todayMealTotals',
+            'xpSummary',
+            'clientAchievements',
+            'recentRedemptions',
+            'manualAchievements',
         ));
     }
 

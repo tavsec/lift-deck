@@ -58,6 +58,16 @@ Route::middleware(['auth', 'verified', 'role:coach'])
         Route::resource('exercises', Coach\ExerciseController::class);
         Route::resource('meals', Coach\MealController::class)->except(['show']);
 
+        Route::middleware('feature:'.\App\Features\Loyalty::class)->group(function (): void {
+            Route::resource('rewards', Coach\RewardController::class)->except(['show']);
+            Route::resource('achievements', Coach\AchievementController::class)->except(['show']);
+            Route::post('clients/{client}/achievements/{achievement}/award', [Coach\AchievementController::class, 'award'])->name('clients.achievements.award');
+
+            Route::get('redemptions', [Coach\RedemptionController::class, 'index'])->name('redemptions.index');
+            Route::patch('redemptions/{redemption}', [Coach\RedemptionController::class, 'update'])->name('redemptions.update');
+            Route::get('clients/{client}/loyalty', [Coach\LoyaltyController::class, 'show'])->name('clients.loyalty');
+        });
+
         // Tracking metrics
         Route::get('tracking-metrics', [Coach\TrackingMetricController::class, 'index'])->name('tracking-metrics.index');
         Route::post('tracking-metrics', [Coach\TrackingMetricController::class, 'store'])->name('tracking-metrics.store');
@@ -104,6 +114,12 @@ Route::middleware(['auth', 'verified', 'role:client'])
         Route::get('messages', [Client\MessageController::class, 'index'])->name('messages');
         Route::post('messages', [Client\MessageController::class, 'store'])->name('messages.store');
         Route::get('messages/poll', [Client\MessageController::class, 'poll'])->name('messages.poll');
+        Route::middleware('feature:'.\App\Features\Loyalty::class)->group(function (): void {
+            Route::get('achievements', [Client\AchievementController::class, 'index'])->name('achievements');
+            Route::get('rewards', [Client\RewardController::class, 'index'])->name('rewards');
+            Route::post('rewards/{reward}/redeem', [Client\RewardController::class, 'redeem'])->name('rewards.redeem');
+            Route::get('loyalty', [Client\LoyaltyController::class, 'index'])->name('loyalty');
+        });
     });
 
 // Media serving (private, authorized)
