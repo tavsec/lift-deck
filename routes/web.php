@@ -27,6 +27,9 @@ Route::middleware(['auth', 'verified', 'role:coach'])
     ->name('coach.')
     ->group(function () {
         Route::get('/', Coach\DashboardController::class)->name('dashboard');
+        Route::get('clients/create-track-only', [Coach\ClientController::class, 'createTrackOnly'])->name('clients.create-track-only');
+        Route::post('clients/store-track-only', [Coach\ClientController::class, 'storeTrackOnly'])->name('clients.store-track-only');
+        Route::post('clients/{client}/enable-app-access', [Coach\ClientController::class, 'enableAppAccess'])->name('clients.enable-app-access');
         Route::resource('clients', Coach\ClientController::class);
         Route::get('clients/{client}/workout-log/{workoutLog}', [Coach\ClientController::class, 'workoutLog'])->name('clients.workout-log');
         Route::post('clients/{client}/workout-log/{workoutLog}/comment', [Coach\ClientController::class, 'workoutLogComment'])->name('clients.workout-log.comment');

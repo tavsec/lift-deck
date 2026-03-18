@@ -8,12 +8,17 @@
                 <h1 class="text-2xl font-bold text-gray-900 dark:text-gray-100">Clients</h1>
                 <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Manage your coaching clients</p>
             </div>
-            <a href="{{ route('coach.clients.create') }}" class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-700 focus:bg-blue-700 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition ease-in-out duration-150">
-                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
-                </svg>
-                Generate Code
-            </a>
+            <div class="flex gap-2">
+                <a href="{{ route('coach.clients.create-track-only') }}" class="inline-flex items-center px-4 py-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-md font-medium text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition ease-in-out duration-150">
+                    Add Track-Only Client
+                </a>
+                <a href="{{ route('coach.clients.create') }}" class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-700 focus:bg-blue-700 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition ease-in-out duration-150">
+                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+                    </svg>
+                    Generate Code
+                </a>
+            </div>
         </div>
 
         @if(session('success'))
@@ -143,6 +148,9 @@
                                         <div class="ml-4">
                                             <div class="flex items-center gap-2">
                                                 <span class="text-sm font-medium text-gray-900 dark:text-gray-100 group-hover:text-blue-600">{{ $client->name }}</span>
+                                                @if($client->is_track_only)
+                                                    <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400">Track only</span>
+                                                @endif
                                                 @if($clientIdsWithUnread->contains($client->id))
                                                     <span class="flex h-2 w-2 rounded-full bg-blue-500" title="Unread comments"></span>
                                                 @endif
