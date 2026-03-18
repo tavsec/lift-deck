@@ -63,13 +63,23 @@ class ClientRegistrationController extends Controller
                 ->withErrors(['code' => 'Invalid or expired invitation code.']);
         }
 
-        $user = User::create([
-            'name' => $validated['name'],
-            'email' => $validated['email'],
-            'password' => Hash::make($validated['password']),
-            'role' => 'client',
-            'coach_id' => $invitation->coach_id,
-        ]);
+        if ($invitation->track_only_client_id) {
+            $user = User::findOrFail($invitation->track_only_client_id);
+            $user->update([
+                'name' => $validated['name'],
+                'email' => $validated['email'],
+                'password' => Hash::make($validated['password']),
+                'is_track_only' => false,
+            ]);
+        } else {
+            $user = User::create([
+                'name' => $validated['name'],
+                'email' => $validated['email'],
+                'password' => Hash::make($validated['password']),
+                'role' => 'client',
+                'coach_id' => $invitation->coach_id,
+            ]);
+        }
 
         $invitation->update(['accepted_at' => now()]);
 

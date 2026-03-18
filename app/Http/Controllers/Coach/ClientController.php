@@ -330,6 +330,7 @@ class ClientController extends Controller
 
         $invitation = ClientInvitation::create([
             'coach_id' => auth()->id(),
+            'track_only_client_id' => $client->id,
             'token' => ClientInvitation::generateUniqueToken(),
             'expires_at' => now()->addDays(7),
         ]);
