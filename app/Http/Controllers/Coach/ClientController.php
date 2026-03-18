@@ -328,6 +328,12 @@ class ClientController extends Controller
                 ->with('error', 'This client already has app access.');
         }
 
+        // Cancel any existing pending invitations for this client
+        ClientInvitation::where('track_only_client_id', $client->id)
+            ->whereNull('accepted_at')
+            ->where('expires_at', '>', now())
+            ->update(['expires_at' => now()]);
+
         $invitation = ClientInvitation::create([
             'coach_id' => auth()->id(),
             'track_only_client_id' => $client->id,

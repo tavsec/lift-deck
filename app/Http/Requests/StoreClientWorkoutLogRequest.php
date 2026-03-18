@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StoreClientWorkoutLogRequest extends FormRequest
 {
@@ -27,7 +28,15 @@ class StoreClientWorkoutLogRequest extends FormRequest
             'notes' => ['nullable', 'string', 'max:1000'],
             'exercises' => ['nullable', 'array'],
             'exercises.*.workout_exercise_id' => ['nullable', 'exists:workout_exercises,id'],
-            'exercises.*.exercise_id' => ['required_with:exercises', 'exists:exercises,id'],
+            'exercises.*.exercise_id' => [
+                'required_with:exercises',
+                Rule::exists('exercises', 'id')->where(function ($query) {
+                    $query->where(function ($q) {
+                        $q->where('coach_id', $this->user()->id)
+                            ->orWhereNull('coach_id');
+                    })->where('is_active', true);
+                }),
+            ],
             'exercises.*.sets' => ['nullable', 'array'],
             'exercises.*.sets.*.weight' => ['nullable', 'numeric', 'min:0', 'max:9999.99'],
             'exercises.*.sets.*.reps' => ['required_with:exercises.*.sets', 'integer', 'min:0', 'max:999'],

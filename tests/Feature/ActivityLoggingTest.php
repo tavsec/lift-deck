@@ -38,6 +38,28 @@ it('logs activity when a workout log is created', function () {
     expect(Activity::query()->where('subject_type', WorkoutLog::class)->count())->toBe(1);
 });
 
+it('logs activity when a coach creates a meal log for a client', function () {
+    $coach = User::factory()->state(['role' => 'coach'])->create();
+    $client = User::factory()->state(['role' => 'client', 'coach_id' => $coach->id])->create();
+
+    $this->actingAs($coach);
+
+    MealLog::create([
+        'client_id' => $client->id,
+        'date' => now()->format('Y-m-d'),
+        'meal_type' => 'lunch',
+        'name' => 'Chicken',
+        'calories' => 400,
+        'protein' => 40,
+        'carbs' => 20,
+        'fat' => 10,
+    ]);
+
+    $activity = Activity::query()->where('subject_type', MealLog::class)->latest()->first();
+    expect($activity)->not->toBeNull();
+    expect($activity->causer_id)->toBe($coach->id);
+});
+
 it('logs activity when a meal log is deleted', function () {
     $client = User::factory()->state(['role' => 'client'])->create();
     $mealLog = MealLog::factory()->for($client, 'client')->create();

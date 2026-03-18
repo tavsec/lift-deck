@@ -79,11 +79,10 @@ class ClientRegistrationController extends Controller
                 'role' => 'client',
                 'coach_id' => $invitation->coach_id,
             ]);
+            event(new Registered($user));
         }
 
         $invitation->update(['accepted_at' => now()]);
-
-        event(new Registered($user));
 
         Auth::login($user);
 
