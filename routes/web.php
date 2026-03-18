@@ -39,6 +39,8 @@ Route::middleware(['auth', 'verified', 'role:coach'])
         Route::put('clients/{client}/workout-logs/{workoutLog}', [Coach\ClientWorkoutLogController::class, 'update'])->name('clients.workout-logs.update');
         Route::delete('clients/{client}/workout-logs/{workoutLog}', [Coach\ClientWorkoutLogController::class, 'destroy'])->name('clients.workout-logs.destroy');
         Route::post('clients/{client}/toggle-metric', [Coach\ClientController::class, 'toggleMetric'])->name('clients.toggle-metric');
+        Route::get('clients/{client}/check-in', [Coach\ClientCheckInController::class, 'show'])->name('clients.check-in.show');
+        Route::post('clients/{client}/check-in', [Coach\ClientCheckInController::class, 'store'])->name('clients.check-in.store');
         Route::resource('programs', Coach\ProgramController::class);
 
         // Program workout routes

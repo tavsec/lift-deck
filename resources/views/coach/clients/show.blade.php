@@ -340,7 +340,12 @@
                 <!-- Daily Check-in Logs (Last 7 Days) -->
                 @if($assignedMetricIds->count() > 0)
                 <div class="bg-white dark:bg-gray-900 rounded-lg shadow p-6">
-                    <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100 mb-4">Daily Check-ins (Last 7 Days)</h2>
+                    <div class="flex items-center justify-between mb-4">
+                        <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">Daily Check-ins (Last 7 Days)</h2>
+                        <a href="{{ route('coach.clients.check-in.show', $client) }}" class="inline-flex items-center px-3 py-1.5 border border-blue-300 dark:border-blue-700 rounded-md text-sm font-medium text-blue-700 dark:text-blue-400 bg-white dark:bg-gray-900 hover:bg-blue-50 dark:hover:bg-gray-800 transition ease-in-out duration-150">
+                            + Log Check-in
+                        </a>
+                    </div>
 
                     @php
                         $assignedMetrics = $coachMetrics->whereIn('id', $assignedMetricIds);
