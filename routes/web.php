@@ -57,6 +57,8 @@ Route::middleware(['auth', 'verified', 'role:coach'])
         Route::get('programs/{program}/assign', [Coach\ProgramController::class, 'assignForm'])->name('programs.assign');
         Route::post('programs/{program}/assign', [Coach\ProgramController::class, 'assign'])->name('programs.assign.store');
 
+        Route::post('clients/{client}/meal-logs', [Coach\ClientMealLogController::class, 'store'])->name('clients.meal-logs.store');
+        Route::delete('clients/{client}/meal-logs/{mealLog}', [Coach\ClientMealLogController::class, 'destroy'])->name('clients.meal-logs.destroy');
         Route::get('clients/{client}/nutrition', [Coach\NutritionController::class, 'show'])->name('clients.nutrition');
         Route::get('clients/{client}/analytics', [Coach\AnalyticsController::class, 'show'])->name('clients.analytics');
         Route::get('clients/{client}/analytics/export', [Coach\AnalyticsController::class, 'exportToExcel'])->name('clients.analytics.export');
