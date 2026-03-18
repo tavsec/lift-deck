@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
@@ -12,7 +14,7 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 class DailyLog extends Model implements HasMedia
 {
     /** @use HasFactory<\Database\Factories\DailyLogFactory> */
-    use HasFactory;
+    use HasFactory, LogsActivity;
 
     use InteractsWithMedia;
 
@@ -22,6 +24,14 @@ class DailyLog extends Model implements HasMedia
         'date',
         'value',
     ];
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->logFillable()
+            ->logOnlyDirty()
+            ->dontSubmitEmptyLogs();
+    }
 
     protected function casts(): array
     {
