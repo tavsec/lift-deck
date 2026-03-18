@@ -245,7 +245,12 @@
 
                 <!-- Recent Workouts -->
                 <div class="bg-white dark:bg-gray-900 rounded-lg shadow p-6">
-                    <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100 mb-4">Recent Workouts</h2>
+                    <div class="flex items-center justify-between mb-4">
+                        <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">Recent Workouts</h2>
+                        <a href="{{ route('coach.clients.workout-logs.create', $client) }}" class="inline-flex items-center px-3 py-1.5 border border-blue-300 dark:border-blue-700 rounded-md text-sm font-medium text-blue-700 dark:text-blue-400 bg-white dark:bg-gray-900 hover:bg-blue-50 dark:hover:bg-gray-800 transition ease-in-out duration-150">
+                            + Log Workout
+                        </a>
+                    </div>
                     @if($recentWorkoutLogs->count() > 0)
                         <div class="divide-y divide-gray-200 dark:divide-gray-800">
                             @foreach($recentWorkoutLogs as $log)
@@ -268,6 +273,12 @@
                                                 {{ $log->comments_count }}
                                             </span>
                                         @endif
+                                        <a href="{{ route('coach.clients.workout-logs.edit', [$client, $log]) }}" class="text-xs text-blue-600 dark:text-blue-400 hover:underline" onclick="event.stopPropagation()">Edit</a>
+                                        <form method="POST" action="{{ route('coach.clients.workout-logs.destroy', [$client, $log]) }}" onsubmit="return confirm('Delete this workout log?')" onclick="event.stopPropagation()">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="text-xs text-red-500 dark:text-red-400 hover:underline">Delete</button>
+                                        </form>
                                         <svg class="w-4 h-4 text-gray-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
                                         </svg>

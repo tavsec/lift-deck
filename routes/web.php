@@ -33,6 +33,11 @@ Route::middleware(['auth', 'verified', 'role:coach'])
         Route::resource('clients', Coach\ClientController::class);
         Route::get('clients/{client}/workout-log/{workoutLog}', [Coach\ClientController::class, 'workoutLog'])->name('clients.workout-log');
         Route::post('clients/{client}/workout-log/{workoutLog}/comment', [Coach\ClientController::class, 'workoutLogComment'])->name('clients.workout-log.comment');
+        Route::get('clients/{client}/workout-logs/create', [Coach\ClientWorkoutLogController::class, 'create'])->name('clients.workout-logs.create');
+        Route::post('clients/{client}/workout-logs', [Coach\ClientWorkoutLogController::class, 'store'])->name('clients.workout-logs.store');
+        Route::get('clients/{client}/workout-logs/{workoutLog}/edit', [Coach\ClientWorkoutLogController::class, 'edit'])->name('clients.workout-logs.edit');
+        Route::put('clients/{client}/workout-logs/{workoutLog}', [Coach\ClientWorkoutLogController::class, 'update'])->name('clients.workout-logs.update');
+        Route::delete('clients/{client}/workout-logs/{workoutLog}', [Coach\ClientWorkoutLogController::class, 'destroy'])->name('clients.workout-logs.destroy');
         Route::post('clients/{client}/toggle-metric', [Coach\ClientController::class, 'toggleMetric'])->name('clients.toggle-metric');
         Route::resource('programs', Coach\ProgramController::class);
 
