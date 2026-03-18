@@ -42,6 +42,7 @@ class User extends Authenticatable implements FilamentUser
         'primary_color',
         'secondary_color',
         'dark_mode',
+        'is_track_only',
     ];
 
     /**
@@ -65,6 +66,7 @@ class User extends Authenticatable implements FilamentUser
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
             'dark_mode' => 'boolean',
+            'is_track_only' => 'boolean',
         ];
     }
 
@@ -89,6 +91,14 @@ class User extends Authenticatable implements FilamentUser
     public function clients(): HasMany
     {
         return $this->hasMany(User::class, 'coach_id');
+    }
+
+    /**
+     * Check if the user is a track-only client.
+     */
+    public function isTrackOnly(): bool
+    {
+        return (bool) $this->is_track_only;
     }
 
     /**
