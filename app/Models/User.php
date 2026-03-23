@@ -14,11 +14,12 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Storage;
+use Laravel\Cashier\Billable;
 
 class User extends Authenticatable implements FilamentUser
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable;
+    use Billable, HasFactory, Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -43,6 +44,8 @@ class User extends Authenticatable implements FilamentUser
         'secondary_color',
         'dark_mode',
         'is_track_only',
+        'is_free_access',
+        'trial_ends_at',
     ];
 
     /**
@@ -67,6 +70,8 @@ class User extends Authenticatable implements FilamentUser
             'password' => 'hashed',
             'dark_mode' => 'boolean',
             'is_track_only' => 'boolean',
+            'is_free_access' => 'boolean',
+            'trial_ends_at' => 'datetime',
         ];
     }
 

@@ -4,6 +4,8 @@ use App\Http\Controllers\Client;
 use App\Http\Controllers\Coach;
 use Illuminate\Support\Facades\Route;
 
+Route::post('cashier/webhook', '\Laravel\Cashier\Http\Controllers\WebhookController@handleWebhook')->name('cashier.webhook');
+
 Route::domain('beta.liftdeck.io')->group(function () {
     Route::get('/', function () {
         return view('beta');
@@ -24,10 +26,12 @@ Route::middleware('guest')->group(function () {
 });
 
 // Coach routes
-Route::middleware(['auth', 'verified', 'role:coach'])
+Route::middleware(['auth', 'verified', 'role:coach', 'subscribed'])
     ->prefix('coach')
     ->name('coach.')
     ->group(function () {
+        Route::get('subscription', [Coach\SubscriptionController::class, 'index'])->name('subscription');
+        Route::get('subscription/portal', [Coach\SubscriptionController::class, 'portal'])->name('subscription.portal');
         Route::get('/', Coach\DashboardController::class)->name('dashboard');
         Route::get('clients/create-track-only', [Coach\ClientController::class, 'createTrackOnly'])->name('clients.create-track-only');
         Route::post('clients/store-track-only', [Coach\ClientController::class, 'storeTrackOnly'])->name('clients.store-track-only');
@@ -80,8 +84,11 @@ Route::middleware(['auth', 'verified', 'role:coach'])
 
             Route::get('redemptions', [Coach\RedemptionController::class, 'index'])->name('redemptions.index');
             Route::patch('redemptions/{redemption}', [Coach\RedemptionController::class, 'update'])->name('redemptions.update');
-            Route::get('clients/{client}/loyalty', [Coach\LoyaltyController::class, 'show'])->name('clients.loyalty');
         });
+
+        Route::get('clients/{client}/loyalty', [Coach\LoyaltyController::class, 'show'])
+            ->name('clients.loyalty')
+            ->middleware('subscription.feature:loyalty');
 
         // Tracking metrics
         Route::get('tracking-metrics', [Coach\TrackingMetricController::class, 'index'])->name('tracking-metrics.index');
@@ -97,8 +104,10 @@ Route::middleware(['auth', 'verified', 'role:coach'])
         Route::get('messages/{user}/poll', [Coach\MessageController::class, 'poll'])->name('messages.poll');
 
         // Branding
-        Route::get('branding', [Coach\BrandingController::class, 'edit'])->name('branding.edit');
-        Route::put('branding', [Coach\BrandingController::class, 'update'])->name('branding.update');
+        Route::middleware('subscription.feature:custom_branding')->group(function (): void {
+            Route::get('branding', [Coach\BrandingController::class, 'edit'])->name('branding.edit');
+            Route::put('branding', [Coach\BrandingController::class, 'update'])->name('branding.update');
+        });
     });
 
 // Client routes

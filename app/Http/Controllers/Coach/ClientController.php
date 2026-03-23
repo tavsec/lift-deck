@@ -13,12 +13,15 @@ use App\Models\User;
 use App\Models\WorkoutLog;
 use App\Models\WorkoutLogComment;
 use App\Notifications\WorkoutLogCommented;
+use App\Services\SubscriptionService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class ClientController extends Controller
 {
+    public function __construct(private readonly SubscriptionService $subscriptionService) {}
+
     /**
      * Display a listing of clients.
      */
@@ -71,6 +74,11 @@ class ClientController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $coach = auth()->user();
+
+        if (! $this->subscriptionService->canAddClient($coach)) {
+            return redirect()->route('coach.clients.index')
+                ->with('error', 'You have reached your plan\'s client limit. Upgrade your subscription to add more clients.');
+        }
 
         $invitation = ClientInvitation::create([
             'coach_id' => $coach->id,
@@ -303,12 +311,19 @@ class ClientController extends Controller
     {
         $coach = auth()->user();
 
+        if (! $this->subscriptionService->canAddClient($coach)) {
+            return redirect()->route('coach.clients.index')
+                ->with('error', 'You have reached your plan\'s client limit. Upgrade your subscription to add more clients.');
+        }
+
         User::create([
             ...$request->validated(),
             'role' => 'client',
             'coach_id' => $coach->id,
             'is_track_only' => true,
         ]);
+
+        $this->subscriptionService->reportClientUsage($coach);
 
         return redirect()->route('coach.clients.index')
             ->with('success', 'Client added successfully.');
@@ -356,6 +371,8 @@ class ClientController extends Controller
         }
 
         $client->delete();
+
+        $this->subscriptionService->reportClientUsage(auth()->user());
 
         return redirect()->route('coach.clients.index')
             ->with('success', 'Client removed successfully.');
