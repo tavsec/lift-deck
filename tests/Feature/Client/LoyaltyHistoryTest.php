@@ -5,7 +5,7 @@ use App\Models\User;
 use Laravel\Pennant\Feature;
 
 beforeEach(function () {
-    $this->coach = User::factory()->coach()->create();
+    $this->coach = User::factory()->coach()->create(['is_free_access' => true]);
     $this->client = User::factory()->client()->create(['coach_id' => $this->coach->id]);
     Feature::for($this->coach)->activate(Loyalty::class);
 });
