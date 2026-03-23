@@ -399,14 +399,12 @@
                         try {
                             const parsed = JSON.parse(saved);
                             const savedAt = new Date(parsed.savedAt);
-                            const ageHours = (Date.now() - savedAt.getTime()) / (1000 * 60 * 60);
-                            if (ageHours < 24) {
-                                this._pendingRestore = parsed;
-                                this.restoreBanner = true;
-                                this._savedAtFormatted = savedAt.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-                            } else {
-                                localStorage.removeItem(storageKey);
-                            }
+                            const isToday = savedAt.toDateString() === new Date().toDateString();
+                            this._pendingRestore = parsed;
+                            this.restoreBanner = true;
+                            this._savedAtFormatted = isToday
+                                ? savedAt.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+                                : savedAt.toLocaleDateString([], { month: 'short', day: 'numeric' }) + ' at ' + savedAt.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
                         } catch {
                             localStorage.removeItem(storageKey);
                         }
