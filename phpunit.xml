@@ -30,5 +30,13 @@
         <env name="PULSE_ENABLED" value="false"/>
         <env name="TELESCOPE_ENABLED" value="false"/>
         <env name="NIGHTWATCH_ENABLED" value="false"/>
+        <env name="STRIPE_KEY" value="pk_test_placeholder"/>
+        <env name="STRIPE_SECRET" value="sk_test_placeholder"/>
+        <env name="STRIPE_WEBHOOK_SECRET" value="whsec_placeholder"/>
+        <env name="STRIPE_PRICE_BASIC" value="price_basic"/>
+        <env name="STRIPE_PRICE_ADVANCED" value="price_advanced"/>
+        <env name="STRIPE_PRICE_PROFESSIONAL_FLAT" value="price_prof_flat"/>
+        <env name="STRIPE_PRICE_PROFESSIONAL_METERED" value="price_prof_metered"/>
+        <env name="CASHIER_CURRENCY" value="eur"/>
     </php>
 </phpunit>
