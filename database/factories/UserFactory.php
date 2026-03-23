@@ -32,6 +32,7 @@ class UserFactory extends Factory
             'role' => 'coach',
             'dark_mode' => false,
             'is_free_access' => false,
+            'trial_ends_at' => now()->addDays(14),
         ];
     }
 
