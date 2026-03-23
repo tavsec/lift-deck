@@ -16,7 +16,16 @@
       "Bash(do echo:*)",
       "Bash(done)",
       "Bash(grep -n \"Registered\\\\|SendEmailVerificationNotification\\\\|VerifyEmail\" /Users/timotejavsec/Documents/Projects/lift-deck/bootstrap/app.php /Users/timotejavsec/Documents/Projects/lift-deck/app/Providers/*.php)",
-      "Bash(vendor/bin/pint --dirty --format agent)"
+      "Bash(vendor/bin/pint --dirty --format agent)",
+      "Bash(identify /Users/timotejavsec/Documents/Projects/lift-deck/public/images/logo/logo.png)",
+      "Bash(sips -g pixelWidth -g pixelHeight /Users/timotejavsec/Documents/Projects/lift-deck/public/images/logo/logo.png)",
+      "Bash(npm install:*)",
+      "Bash(sips -z 192 192 /Users/timotejavsec/Documents/Projects/lift-deck/public/images/logo/logo.png --out /Users/timotejavsec/Documents/Projects/lift-deck/public/images/pwa-192.png)",
+      "Bash(sips -z 512 512 /Users/timotejavsec/Documents/Projects/lift-deck/public/images/logo/logo.png --out /Users/timotejavsec/Documents/Projects/lift-deck/public/images/pwa-512.png)",
+      "Bash(npm run:*)",
+      "Bash(node -e \"const {getOptions} = require\\(''''/Users/timotejavsec/Documents/Projects/lift-deck/node_modules/workbox-build/build/options/get-manifest-entries-from-compilation.js''''\\); console.log\\(getOptions\\)\")",
+      "Bash(node -e \"const defaults = require\\(''''/Users/timotejavsec/Documents/Projects/lift-deck/node_modules/workbox-build/build/options/defaults.js''''\\); console.log\\(JSON.stringify\\(defaults, null, 2\\)\\)\")",
+      "Bash(ls:*)"
     ]
   },
   "enabledMcpjsonServers": [
