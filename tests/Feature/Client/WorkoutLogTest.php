@@ -221,3 +221,23 @@ it('passes lock_removal as false when workout is not locked', function () {
     $response->assertOk();
     $response->assertSee('"lock_removal":false', false);
 });
+
+it('accepts json submission and returns redirect url', function () {
+    $response = $this->actingAs($this->client)
+        ->postJson(route('client.log.store'), [
+            'program_workout_id' => $this->workout->id,
+            'completed_at' => now()->format('Y-m-d\TH:i'),
+            'exercises' => [
+                [
+                    'workout_exercise_id' => $this->workoutExercise->id,
+                    'exercise_id' => $this->exercise->id,
+                    'sets' => [
+                        ['weight' => '100', 'reps' => '10'],
+                    ],
+                ],
+            ],
+        ]);
+
+    $response->assertOk()
+        ->assertJsonStructure(['redirect']);
+});

@@ -184,7 +184,7 @@ class LogController extends Controller
         return response()->json($result);
     }
 
-    public function store(StoreWorkoutLogRequest $request): RedirectResponse
+    public function store(StoreWorkoutLogRequest $request): RedirectResponse|JsonResponse
     {
         $user = auth()->user();
         $validated = $request->validated();
@@ -240,6 +240,10 @@ class LogController extends Controller
         }
 
         ProcessXpEvent::dispatch(auth()->id(), 'workout_logged', ['workout_log_id' => $workoutLog->id]);
+
+        if ($request->expectsJson()) {
+            return response()->json(['redirect' => route('client.history')]);
+        }
 
         return redirect()->route('client.history')
             ->with('success', 'Workout logged!');

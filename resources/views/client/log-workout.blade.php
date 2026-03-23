@@ -68,7 +68,18 @@
             </p>
         </div>
 
-        <form method="POST" action="{{ route('client.log.store') }}" @submit="clearSavedState()">
+        <!-- Offline submission banner -->
+        <div x-show="showOfflineSubmitBanner" x-cloak
+            class="rounded-lg bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 p-3">
+            <p class="text-sm text-green-700 dark:text-green-400 flex items-center gap-2">
+                <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                </svg>
+                You're offline. Your workout is saved and will submit automatically when you reconnect.
+            </p>
+        </div>
+
+        <form method="POST" action="{{ route('client.log.store') }}" @submit.prevent="submitWorkout($event)">
             @csrf
 
             @if(!$isCustom)
@@ -386,6 +397,7 @@
                 selectedExercise: null,
                 restoreBanner: false,
                 isOffline: false,
+                showOfflineSubmitBanner: false,
                 notes: '',
                 _pendingRestore: null,
                 _savedAtFormatted: '',
@@ -452,6 +464,146 @@
                     this._pendingRestore = null;
                     this.restoreBanner = false;
                     this.clearSavedState();
+                },
+
+                async submitWorkout(event) {
+                    const form = event.target;
+                    const formData = new FormData(form);
+                    const payload = this.formDataToObject(formData);
+
+                    this.clearSavedState();
+
+                    if (!navigator.onLine) {
+                        await this.queueWorkout(payload);
+                        this.showOfflineSubmitBanner = true;
+                        return;
+                    }
+
+                    await this.postWorkout(payload);
+                },
+
+                async postWorkout(payload) {
+                    const token = this.getCsrfToken();
+                    try {
+                        const response = await fetch('{{ route("client.log.store") }}', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Accept': 'application/json',
+                                'X-XSRF-TOKEN': token,
+                            },
+                            body: JSON.stringify(payload),
+                            credentials: 'include',
+                        });
+
+                        if (response.ok) {
+                            const data = await response.json();
+                            window.location.href = data.redirect;
+                        } else {
+                            // Validation error — fall back to native form submit so errors display
+                            const form = document.querySelector('form[action="{{ route("client.log.store") }}"]');
+                            if (form) {
+                                form.removeEventListener('submit', () => {});
+                                form.submit();
+                            }
+                        }
+                    } catch {
+                        await this.queueWorkout(payload);
+                        this.showOfflineSubmitBanner = true;
+                    }
+                },
+
+                getCsrfToken() {
+                    const match = document.cookie.match(/XSRF-TOKEN=([^;]+)/);
+                    return match ? decodeURIComponent(match[1]) : '';
+                },
+
+                formDataToObject(formData) {
+                    const obj = {};
+                    for (const [key, value] of formData.entries()) {
+                        const keys = key.replace(/\]/g, '').split('[');
+                        let current = obj;
+                        for (let i = 0; i < keys.length - 1; i++) {
+                            const k = keys[i];
+                            const nextKey = keys[i + 1];
+                            if (current[k] === undefined) {
+                                current[k] = isNaN(nextKey) ? {} : [];
+                            }
+                            current = current[k];
+                        }
+                        current[keys[keys.length - 1]] = value;
+                    }
+                    return obj;
+                },
+
+                async queueWorkout(payload) {
+                    const db = await this.openDb();
+                    await new Promise((resolve, reject) => {
+                        const tx = db.transaction('pending_workouts', 'readwrite');
+                        tx.objectStore('pending_workouts').add({ payload, queuedAt: new Date().toISOString() });
+                        tx.oncomplete = resolve;
+                        tx.onerror = reject;
+                    });
+                    db.close();
+
+                    if ('serviceWorker' in navigator && 'SyncManager' in window) {
+                        const reg = await navigator.serviceWorker.ready;
+                        await reg.sync.register('sync-workout-logs');
+                    } else {
+                        window.addEventListener('online', async () => {
+                            await this.flushQueuedWorkouts();
+                        }, { once: true });
+                    }
+                },
+
+                async flushQueuedWorkouts() {
+                    const db = await this.openDb();
+                    const all = await new Promise((resolve, reject) => {
+                        const tx = db.transaction('pending_workouts', 'readonly');
+                        const req = tx.objectStore('pending_workouts').getAll();
+                        req.onsuccess = () => resolve(req.result);
+                        req.onerror = reject;
+                    });
+                    db.close();
+
+                    for (const entry of all) {
+                        try {
+                            const token = this.getCsrfToken();
+                            const response = await fetch('{{ route("client.log.store") }}', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'Accept': 'application/json',
+                                    'X-XSRF-TOKEN': token,
+                                },
+                                body: JSON.stringify(entry.payload),
+                                credentials: 'include',
+                            });
+                            if (response.ok) {
+                                const db2 = await this.openDb();
+                                await new Promise((resolve, reject) => {
+                                    const tx2 = db2.transaction('pending_workouts', 'readwrite');
+                                    tx2.objectStore('pending_workouts').delete(entry.id);
+                                    tx2.oncomplete = resolve;
+                                    tx2.onerror = reject;
+                                });
+                                db2.close();
+                                const data = await response.json();
+                                window.location.href = data.redirect;
+                            }
+                        } catch {}
+                    }
+                },
+
+                openDb() {
+                    return new Promise((resolve, reject) => {
+                        const req = indexedDB.open('liftdeck', 1);
+                        req.onupgradeneeded = (e) => {
+                            e.target.result.createObjectStore('pending_workouts', { keyPath: 'id', autoIncrement: true });
+                        };
+                        req.onsuccess = () => resolve(req.result);
+                        req.onerror = reject;
+                    });
                 },
 
                 initSortable() {
