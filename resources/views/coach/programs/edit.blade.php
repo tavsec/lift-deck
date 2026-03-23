@@ -121,7 +121,31 @@
                                 <h3 class="text-md font-medium text-gray-900 dark:text-gray-100">{{ $workout->name }}</h3>
                                 <p class="text-sm text-gray-500 dark:text-gray-400">Day {{ $workout->day_number }}</p>
                             </div>
-                            <div class="flex gap-2">
+                            <div class="flex items-center gap-3">
+                                <!-- Lock toggle -->
+                                <form method="POST" action="{{ route('coach.programs.workouts.toggle-lock-removal', [$program, $workout]) }}">
+                                    @csrf
+                                    @method('PATCH')
+                                    <input type="hidden" name="lock_exercise_removal" value="{{ $workout->lock_exercise_removal ? '0' : '1' }}">
+                                    <button type="submit"
+                                        class="inline-flex items-center gap-1.5 text-xs font-medium px-2 py-1 rounded {{ $workout->lock_exercise_removal ? 'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400' : 'bg-gray-100 text-gray-500 dark:bg-gray-800 dark:text-gray-400' }} hover:opacity-80 transition-opacity"
+                                        title="{{ $workout->lock_exercise_removal ? 'Clients cannot remove exercises — click to unlock' : 'Clients can remove exercises — click to lock' }}"
+                                    >
+                                        @if($workout->lock_exercise_removal)
+                                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+                                            </svg>
+                                            Locked
+                                        @else
+                                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 11V7a4 4 0 118 0m-4 8v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2z"/>
+                                            </svg>
+                                            Unlocked
+                                        @endif
+                                    </button>
+                                </form>
+
+                                <!-- Delete workout -->
                                 <form method="POST" action="{{ route('coach.programs.workouts.destroy', [$program, $workout]) }}" onsubmit="return confirm('Delete this workout and all its exercises?');">
                                     @csrf
                                     @method('DELETE')
