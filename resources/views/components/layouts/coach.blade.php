@@ -27,6 +27,22 @@
         </style>
     </head>
     <body class="font-sans antialiased bg-gray-50 dark:bg-gray-950">
+        {{-- Grace Period Alert --}}
+        @if(session('subscription_grace_days') !== null)
+            <div
+                x-data="{ show: true }"
+                x-show="show"
+                x-transition
+                class="fixed top-0 inset-x-0 z-50 bg-amber-500 text-white px-4 py-3 flex items-center justify-between text-sm"
+            >
+                <span>
+                    Your subscription has ended. You have
+                    <strong>{{ session('subscription_grace_days') }} day(s)</strong> remaining.
+                    <a href="{{ route('coach.subscription.portal') }}" class="underline ml-1 font-medium">Manage subscription →</a>
+                </span>
+                <button @click="show = false" class="ml-4 text-white hover:text-amber-100 flex-shrink-0" aria-label="Dismiss">✕</button>
+            </div>
+        @endif
         <!-- Mobile Header -->
         <div class="md:hidden fixed top-0 left-0 right-0 bg-white dark:bg-gray-900 shadow-sm z-40">
             <div class="flex items-center justify-between px-4 h-14">

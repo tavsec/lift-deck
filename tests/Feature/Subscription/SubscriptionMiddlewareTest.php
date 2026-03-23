@@ -128,3 +128,24 @@ it('allows through when coach plan has the required feature', function (): void 
 
     expect($response->getStatusCode())->toBe(200);
 });
+
+it('shows grace period toast in coach layout during grace period', function (): void {
+    $coach = User::factory()->state(['role' => 'coach'])->create([
+        'trial_ends_at' => now()->subDay(),
+    ]);
+
+    $coach->subscriptions()->create([
+        'type' => 'default',
+        'stripe_id' => 'sub_toast_test',
+        'stripe_status' => 'canceled',
+        'stripe_price' => config('plans.basic.stripe_price_id'),
+        'quantity' => 1,
+        'ends_at' => now()->addDays(5),
+    ]);
+
+    $this->actingAs($coach)
+        ->get(route('coach.dashboard'))
+        ->assertOk()
+        ->assertSee('subscription has ended')
+        ->assertSee('Manage subscription');
+});
