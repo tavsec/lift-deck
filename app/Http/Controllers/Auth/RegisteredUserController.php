@@ -46,6 +46,8 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
+        $user->update(['trial_ends_at' => now()->addDays(config('plans.basic.trial_days', 7))]);
+
         return redirect(route('coach.dashboard', absolute: false));
     }
 }

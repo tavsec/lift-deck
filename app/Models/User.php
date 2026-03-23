@@ -45,6 +45,7 @@ class User extends Authenticatable implements FilamentUser
         'dark_mode',
         'is_track_only',
         'is_free_access',
+        'trial_ends_at',
     ];
 
     /**
@@ -70,6 +71,7 @@ class User extends Authenticatable implements FilamentUser
             'dark_mode' => 'boolean',
             'is_track_only' => 'boolean',
             'is_free_access' => 'boolean',
+            'trial_ends_at' => 'datetime',
         ];
     }
 
