@@ -18,6 +18,8 @@ use Illuminate\View\View;
 
 class ClientRegistrationController extends Controller
 {
+    public function __construct(private readonly SubscriptionService $subscriptionService) {}
+
     /**
      * Show the code entry form.
      */
@@ -82,8 +84,7 @@ class ClientRegistrationController extends Controller
             ]);
             event(new Registered($user));
 
-            $subscriptionService = app(SubscriptionService::class);
-            $subscriptionService->reportClientUsage($invitation->coach);
+            $this->subscriptionService->reportClientUsage($invitation->coach);
         }
 
         $invitation->update(['accepted_at' => now()]);
