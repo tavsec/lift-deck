@@ -96,9 +96,10 @@ class LogController extends Controller
             'prescribed_sets' => $we->sets,
             'prescribed_reps' => $we->reps,
             'previous_sets' => $previousSets->get($we->exercise_id, []),
-            'sets' => collect(range(1, $we->sets))->map(fn ($i) => [
-                'weight' => 0,
-                'reps' => 0,
+            'lock_removal' => $workout->lock_exercise_removal,
+            'sets' => collect(range(1, $we->sets))->map(fn () => [
+                'weight' => '',
+                'reps' => '',
             ])->values()->all(),
         ])->values()->all();
 
@@ -183,7 +184,7 @@ class LogController extends Controller
         return response()->json($result);
     }
 
-    public function store(StoreWorkoutLogRequest $request): RedirectResponse
+    public function store(StoreWorkoutLogRequest $request): RedirectResponse|JsonResponse
     {
         $user = auth()->user();
         $validated = $request->validated();
@@ -239,6 +240,10 @@ class LogController extends Controller
         }
 
         ProcessXpEvent::dispatch(auth()->id(), 'workout_logged', ['workout_log_id' => $workoutLog->id]);
+
+        if ($request->expectsJson()) {
+            return response()->json(['redirect' => route('client.history')]);
+        }
 
         return redirect()->route('client.history')
             ->with('success', 'Workout logged!');

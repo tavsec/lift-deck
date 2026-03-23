@@ -34,7 +34,52 @@
             </div>
         @endif
 
-        <form method="POST" action="{{ route('client.log.store') }}">
+        <!-- Restore banner -->
+        <div x-show="restoreBanner" x-cloak
+            class="rounded-lg bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 p-4">
+            <div class="flex items-start justify-between gap-3">
+                <div>
+                    <p class="text-sm font-medium text-blue-800 dark:text-blue-300">Unfinished workout found</p>
+                    <p class="text-xs text-blue-600 dark:text-blue-400 mt-0.5">
+                        We saved your progress from <span x-text="_savedAtFormatted"></span>. Continue where you left off?
+                    </p>
+                </div>
+                <div class="flex gap-2 shrink-0">
+                    <button type="button" @click="confirmRestore()"
+                        class="text-xs font-semibold px-3 py-1.5 bg-blue-600 text-white rounded-md hover:bg-blue-700">
+                        Restore
+                    </button>
+                    <button type="button" @click="discardRestore()"
+                        class="text-xs font-medium px-3 py-1.5 bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-400 border border-gray-300 dark:border-gray-700 rounded-md hover:bg-gray-50">
+                        Start Fresh
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Offline banner -->
+        <div x-show="isOffline" x-cloak
+            class="rounded-lg bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 p-3">
+            <p class="text-sm text-amber-700 dark:text-amber-400 flex items-center gap-2">
+                <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 5.636a9 9 0 010 12.728M15.536 8.464a5 5 0 010 7.072M12 12h.01M8.464 15.536a5 5 0 01-.068-7.004M5.636 5.636a9 9 0 000 12.728"/>
+                </svg>
+                You're offline — your progress is being saved locally.
+            </p>
+        </div>
+
+        <!-- Offline submission banner -->
+        <div x-show="showOfflineSubmitBanner" x-cloak
+            class="rounded-lg bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 p-3">
+            <p class="text-sm text-green-700 dark:text-green-400 flex items-center gap-2">
+                <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                </svg>
+                You're offline. Your workout is saved and will submit automatically when you reconnect.
+            </p>
+        </div>
+
+        <form method="POST" action="{{ route('client.log.store') }}" @submit.prevent="submitWorkout($event)">
             @csrf
 
             @if(!$isCustom)
@@ -98,7 +143,7 @@
                                         </svg>
                                     </button>
                                     <!-- Remove -->
-                                    <button type="button" @click="removeExercise(exerciseIndex)"
+                                    <button type="button" @click="removeExercise(exerciseIndex)" x-show="!exercise.lock_removal"
                                         class="p-1 text-red-400 hover:text-red-600 rounded hover:bg-red-50 transition-colors" title="Remove exercise">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
@@ -281,6 +326,7 @@
                         name="notes"
                         rows="2"
                         placeholder="How did the workout feel?"
+                        x-model="notes"
                         class="w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm text-sm focus:border-blue-500 focus:ring-blue-500"
                     >{{ old('notes') }}</textarea>
                 </x-bladewind::card>
@@ -338,6 +384,10 @@
     @push('scripts')
     <script>
         function workoutLogger() {
+            const storageKey = '{{ $isCustom ? "workout_logger_custom" : "workout_logger_" . ($workout->id ?? "custom") }}';
+            const resumeUrl = '{{ url()->current() }}';
+            const workoutName = '{{ $isCustom ? "Custom Workout" : $workout->name }}';
+
             return {
                 exercises: @json($exercisesData),
                 availableExercises: [],
@@ -345,6 +395,216 @@
                 showExercisePicker: false,
                 exercisesLoaded: false,
                 selectedExercise: null,
+                restoreBanner: false,
+                isOffline: false,
+                showOfflineSubmitBanner: false,
+                notes: '',
+                _pendingRestore: null,
+                _savedAtFormatted: '',
+                _saveTimer: null,
+
+                init() {
+                    this.isOffline = !navigator.onLine;
+                    window.addEventListener('online', () => { this.isOffline = false; });
+                    window.addEventListener('offline', () => { this.isOffline = true; });
+
+                    const saved = localStorage.getItem(storageKey);
+                    if (saved) {
+                        try {
+                            const parsed = JSON.parse(saved);
+                            // Always refresh workout metadata so the global banner shows the correct name
+                            const refreshed = { ...parsed, workoutName, resumeUrl };
+                            localStorage.setItem(storageKey, JSON.stringify(refreshed));
+                            const savedAt = new Date(parsed.savedAt);
+                            const isToday = savedAt.toDateString() === new Date().toDateString();
+                            this._pendingRestore = refreshed;
+                            this.restoreBanner = true;
+                            this._savedAtFormatted = isToday
+                                ? savedAt.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+                                : savedAt.toLocaleDateString([], { month: 'short', day: 'numeric' }) + ' at ' + savedAt.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                        } catch {
+                            localStorage.removeItem(storageKey);
+                        }
+                    }
+
+                    this.$watch('exercises', () => { this.debouncedSave(); }, { deep: true });
+                    this.$watch('notes', () => { this.debouncedSave(); });
+                },
+
+                debouncedSave() {
+                    clearTimeout(this._saveTimer);
+                    this._saveTimer = setTimeout(() => { this.saveState(); }, 800);
+                },
+
+                saveState() {
+                    const state = {
+                        exercises: this.exercises,
+                        notes: this.notes,
+                        savedAt: new Date().toISOString(),
+                        resumeUrl: resumeUrl,
+                        workoutName: workoutName,
+                    };
+                    localStorage.setItem(storageKey, JSON.stringify(state));
+                },
+
+                clearSavedState() {
+                    localStorage.removeItem(storageKey);
+                },
+
+                confirmRestore() {
+                    if (this._pendingRestore) {
+                        this.exercises = this._pendingRestore.exercises;
+                        this.notes = this._pendingRestore.notes ?? '';
+                    }
+                    this._pendingRestore = null;
+                    this.restoreBanner = false;
+                },
+
+                discardRestore() {
+                    this._pendingRestore = null;
+                    this.restoreBanner = false;
+                    this.clearSavedState();
+                },
+
+                async submitWorkout(event) {
+                    const form = event.target;
+                    const formData = new FormData(form);
+                    const payload = this.formDataToObject(formData);
+
+                    this.clearSavedState();
+
+                    if (!navigator.onLine) {
+                        await this.queueWorkout(payload);
+                        this.showOfflineSubmitBanner = true;
+                        return;
+                    }
+
+                    await this.postWorkout(payload);
+                },
+
+                async postWorkout(payload) {
+                    const token = this.getCsrfToken();
+                    try {
+                        const response = await fetch('{{ route("client.log.store") }}', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Accept': 'application/json',
+                                'X-XSRF-TOKEN': token,
+                            },
+                            body: JSON.stringify(payload),
+                            credentials: 'include',
+                        });
+
+                        if (response.ok) {
+                            const data = await response.json();
+                            window.location.href = data.redirect;
+                        } else {
+                            // Validation error — fall back to native form submit so errors display
+                            const form = document.querySelector('form[action="{{ route("client.log.store") }}"]');
+                            if (form) {
+                                form.removeEventListener('submit', () => {});
+                                form.submit();
+                            }
+                        }
+                    } catch {
+                        await this.queueWorkout(payload);
+                        this.showOfflineSubmitBanner = true;
+                    }
+                },
+
+                getCsrfToken() {
+                    const match = document.cookie.match(/XSRF-TOKEN=([^;]+)/);
+                    return match ? decodeURIComponent(match[1]) : '';
+                },
+
+                formDataToObject(formData) {
+                    const obj = {};
+                    for (const [key, value] of formData.entries()) {
+                        const keys = key.replace(/\]/g, '').split('[');
+                        let current = obj;
+                        for (let i = 0; i < keys.length - 1; i++) {
+                            const k = keys[i];
+                            const nextKey = keys[i + 1];
+                            if (current[k] === undefined) {
+                                current[k] = isNaN(nextKey) ? {} : [];
+                            }
+                            current = current[k];
+                        }
+                        current[keys[keys.length - 1]] = value;
+                    }
+                    return obj;
+                },
+
+                async queueWorkout(payload) {
+                    const db = await this.openDb();
+                    await new Promise((resolve, reject) => {
+                        const tx = db.transaction('pending_workouts', 'readwrite');
+                        tx.objectStore('pending_workouts').add({ payload, queuedAt: new Date().toISOString() });
+                        tx.oncomplete = resolve;
+                        tx.onerror = reject;
+                    });
+                    db.close();
+
+                    if ('serviceWorker' in navigator && 'SyncManager' in window) {
+                        const reg = await navigator.serviceWorker.ready;
+                        await reg.sync.register('sync-workout-logs');
+                    } else {
+                        window.addEventListener('online', async () => {
+                            await this.flushQueuedWorkouts();
+                        }, { once: true });
+                    }
+                },
+
+                async flushQueuedWorkouts() {
+                    const db = await this.openDb();
+                    const all = await new Promise((resolve, reject) => {
+                        const tx = db.transaction('pending_workouts', 'readonly');
+                        const req = tx.objectStore('pending_workouts').getAll();
+                        req.onsuccess = () => resolve(req.result);
+                        req.onerror = reject;
+                    });
+                    db.close();
+
+                    for (const entry of all) {
+                        try {
+                            const token = this.getCsrfToken();
+                            const response = await fetch('{{ route("client.log.store") }}', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'Accept': 'application/json',
+                                    'X-XSRF-TOKEN': token,
+                                },
+                                body: JSON.stringify(entry.payload),
+                                credentials: 'include',
+                            });
+                            if (response.ok) {
+                                const db2 = await this.openDb();
+                                await new Promise((resolve, reject) => {
+                                    const tx2 = db2.transaction('pending_workouts', 'readwrite');
+                                    tx2.objectStore('pending_workouts').delete(entry.id);
+                                    tx2.oncomplete = resolve;
+                                    tx2.onerror = reject;
+                                });
+                                db2.close();
+                                const data = await response.json();
+                                window.location.href = data.redirect;
+                            }
+                        } catch {}
+                    }
+                },
+
+                openDb() {
+                    return new Promise((resolve, reject) => {
+                        const req = indexedDB.open('liftdeck', 1);
+                        req.onupgradeneeded = (e) => {
+                            e.target.result.createObjectStore('pending_workouts', { keyPath: 'id', autoIncrement: true });
+                        };
+                        req.onsuccess = () => resolve(req.result);
+                        req.onerror = reject;
+                    });
+                },
 
                 initSortable() {
                     this.$nextTick(() => {
@@ -414,6 +674,7 @@
                         prescribed_sets: null,
                         prescribed_reps: null,
                         previous_sets: exercise.previous_sets || [],
+                        lock_removal: false,
                         sets: [{ weight: '', reps: '' }],
                     });
                     this.showExercisePicker = false;
@@ -425,7 +686,7 @@
                 },
 
                 addSet(exerciseIndex) {
-                    this.exercises[exerciseIndex].sets.push({ weight: 0, reps: 0 });
+                    this.exercises[exerciseIndex].sets.push({ weight: '', reps: '' });
                 },
 
                 removeSet(exerciseIndex, setIndex) {

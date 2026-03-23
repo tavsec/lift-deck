@@ -17,6 +17,7 @@ class ProgramWorkout extends Model
         'day_number',
         'notes',
         'order',
+        'lock_exercise_removal',
     ];
 
     protected function casts(): array
@@ -24,6 +25,7 @@ class ProgramWorkout extends Model
         return [
             'day_number' => 'integer',
             'order' => 'integer',
+            'lock_exercise_removal' => 'boolean',
         ];
     }
 

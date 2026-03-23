@@ -6,6 +6,14 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
+        <!-- PWA -->
+        <link rel="manifest" href="/build/manifest.webmanifest">
+        <meta name="theme-color" content="#2563EB">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="LiftDeck">
+        <link rel="apple-touch-icon" href="/images/pwa-192.png">
+
         <title>{{ $title ?? 'My Training' }}</title>
 
         <!-- Fonts -->
@@ -74,6 +82,75 @@
 
         <!-- Main Content Area -->
         <main class="pt-16 pb-20 max-w-4xl mx-auto px-4">
+            @unless(request()->routeIs('client.log.create*') || request()->routeIs('client.log.custom'))
+            <div
+                x-data="{
+                    pendingWorkouts: [],
+                    init() {
+                        const pending = [];
+                        for (let i = 0; i < localStorage.length; i++) {
+                            const key = localStorage.key(i);
+                            if (!key || !key.startsWith('workout_logger_')) continue;
+                            try {
+                                const parsed = JSON.parse(localStorage.getItem(key));
+                                if (parsed && parsed.savedAt && parsed.exercises && parsed.exercises.length > 0) {
+                                    const savedAt = new Date(parsed.savedAt);
+                                    const isToday = savedAt.toDateString() === new Date().toDateString();
+                                    pending.push({
+                                        key: key,
+                                        workoutName: parsed.workoutName ?? 'Workout',
+                                        resumeUrl: parsed.resumeUrl ?? '{{ route('client.log') }}',
+                                        savedAtFormatted: isToday
+                                            ? savedAt.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+                                            : savedAt.toLocaleDateString([], { month: 'short', day: 'numeric' }) + ' at ' + savedAt.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+                                    });
+                                }
+                            } catch {}
+                        }
+                        this.pendingWorkouts = pending;
+                    }
+                }"
+            >
+                <template x-for="workout in pendingWorkouts" :key="workout.key">
+                    <div class="mb-4 rounded-lg bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 p-3">
+                        <div class="flex items-center justify-between gap-3">
+                            <div>
+                                <p class="text-sm font-medium text-blue-800 dark:text-blue-300">
+                                    Unfinished workout: <span x-text="workout.workoutName"></span>
+                                </p>
+                                <p class="text-xs text-blue-600 dark:text-blue-400 mt-0.5">
+                                    Last saved at <span x-text="workout.savedAtFormatted"></span>
+                                </p>
+                            </div>
+                            <a :href="workout.resumeUrl"
+                                class="shrink-0 text-xs font-semibold px-3 py-1.5 bg-blue-600 text-white rounded-md hover:bg-blue-700">
+                                Continue
+                            </a>
+                        </div>
+                    </div>
+                </template>
+            </div>
+            @endunless
+
+            <!-- Stale cache banner -->
+            <div
+                x-data="{ show: false }"
+                x-init="
+                    if (window.__servedFromCache) { show = true; }
+                    document.addEventListener('sw:served-from-cache', () => { show = true; });
+                "
+                x-show="show"
+                x-cloak
+                class="mb-4 rounded-lg bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 p-3"
+            >
+                <p class="text-sm text-yellow-700 dark:text-yellow-400 flex items-center gap-2">
+                    <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                    You're viewing cached content. Some data may be outdated.
+                </p>
+            </div>
+
             {{ $slot }}
         </main>
 
@@ -137,6 +214,17 @@
 
         <!-- BladewindUI JS -->
         <script src="{{ asset('vendor/bladewind/js/helpers.js') }}"></script>
+
+        <script>
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.addEventListener('message', (event) => {
+                    if (event.data?.type === 'SERVED_FROM_CACHE') {
+                        window.__servedFromCache = true;
+                        document.dispatchEvent(new CustomEvent('sw:served-from-cache'));
+                    }
+                });
+            }
+        </script>
 
         @stack('scripts')
     </body>

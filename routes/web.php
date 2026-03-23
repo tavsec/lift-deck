@@ -14,6 +14,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/offline', fn () => view('offline'))->name('offline');
+
 // Client registration via invitation code
 Route::middleware('guest')->group(function () {
     Route::get('join', [App\Http\Controllers\Auth\ClientRegistrationController::class, 'showCodeForm'])->name('join');
@@ -47,6 +49,7 @@ Route::middleware(['auth', 'verified', 'role:coach'])
         Route::post('programs/{program}/workouts', [Coach\ProgramController::class, 'addWorkout'])->name('programs.workouts.store');
         Route::put('programs/{program}/workouts/{workout}', [Coach\ProgramController::class, 'updateWorkout'])->name('programs.workouts.update');
         Route::delete('programs/{program}/workouts/{workout}', [Coach\ProgramController::class, 'deleteWorkout'])->name('programs.workouts.destroy');
+        Route::patch('programs/{program}/workouts/{workout}/lock-removal', [Coach\ProgramController::class, 'toggleWorkoutLockRemoval'])->name('programs.workouts.toggle-lock-removal');
 
         // Program exercise routes
         Route::post('programs/{program}/workouts/{workout}/exercises', [Coach\ProgramController::class, 'addExercise'])->name('programs.exercises.store');

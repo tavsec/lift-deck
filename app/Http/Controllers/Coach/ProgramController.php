@@ -374,6 +374,22 @@ class ProgramController extends Controller
     }
 
     /**
+     * Toggle the lock_exercise_removal flag on a workout.
+     */
+    public function toggleWorkoutLockRemoval(Program $program, ProgramWorkout $workout): RedirectResponse
+    {
+        if ($program->coach_id !== auth()->id()) {
+            abort(403);
+        }
+
+        $workout->update([
+            'lock_exercise_removal' => request()->boolean('lock_exercise_removal'),
+        ]);
+
+        return redirect()->back()->with('success', 'Workout updated.');
+    }
+
+    /**
      * Authorize that the coach owns this program.
      */
     private function authorizeProgram(Program $program): void
