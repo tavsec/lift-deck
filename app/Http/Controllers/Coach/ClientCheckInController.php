@@ -43,14 +43,26 @@ class ClientCheckInController extends Controller
             'date' => ['required', 'date'],
             'metrics' => ['nullable', 'array'],
             'metrics.*' => ['nullable', 'string', 'max:1000'],
+            'images' => ['nullable', 'array'],
+            'images.*' => ['nullable', 'image', 'mimes:jpeg,jpg,png,webp', 'max:10240'],
+            'remove_images' => ['nullable', 'array'],
+            'remove_images.*' => ['nullable', 'string'],
         ]);
 
-        $assignedMetricIds = $client->assignedTrackingMetrics()
+        $assignedMetrics = $client->assignedTrackingMetrics()->with('trackingMetric')->get();
+        $assignedMetricIds = $assignedMetrics->pluck('tracking_metric_id')->toArray();
+        $imageMetricIds = $assignedMetrics
+            ->filter(fn ($am) => $am->trackingMetric?->type === 'image')
             ->pluck('tracking_metric_id')
             ->toArray();
 
+        // Handle regular metrics
         foreach ($validated['metrics'] ?? [] as $metricId => $value) {
             if (! in_array((int) $metricId, $assignedMetricIds)) {
+                continue;
+            }
+
+            if (in_array((int) $metricId, $imageMetricIds)) {
                 continue;
             }
 
@@ -78,6 +90,52 @@ class ClientCheckInController extends Controller
                     'value' => $value,
                 ]);
             }
+        }
+
+        // Handle image removals
+        foreach ($validated['remove_images'] ?? [] as $metricId => $flag) {
+            if (! in_array((int) $metricId, $imageMetricIds)) {
+                continue;
+            }
+
+            $log = DailyLog::where('client_id', $client->id)
+                ->where('tracking_metric_id', $metricId)
+                ->whereDate('date', $validated['date'])
+                ->first();
+
+            if ($log) {
+                $log->clearMediaCollection('check-in-image');
+                $log->delete();
+            }
+        }
+
+        // Handle image uploads
+        foreach ($validated['images'] ?? [] as $metricId => $file) {
+            if (! in_array((int) $metricId, $imageMetricIds)) {
+                continue;
+            }
+
+            if (! $file) {
+                continue;
+            }
+
+            $log = DailyLog::where('client_id', $client->id)
+                ->where('tracking_metric_id', $metricId)
+                ->whereDate('date', $validated['date'])
+                ->first();
+
+            if (! $log) {
+                $log = DailyLog::create([
+                    'client_id' => $client->id,
+                    'tracking_metric_id' => $metricId,
+                    'date' => $validated['date'],
+                    'value' => 'uploaded',
+                ]);
+            } else {
+                $log->update(['value' => 'uploaded']);
+            }
+
+            $log->addMedia($file)->toMediaCollection('check-in-image');
         }
 
         return redirect()->route('coach.clients.check-in.show', [

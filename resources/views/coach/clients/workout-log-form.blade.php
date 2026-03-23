@@ -352,12 +352,23 @@
         </div>
     </div>
 
+    @php
+        $availableExercisesJson = $exercises->map(fn ($e) => [
+            'id' => $e->id,
+            'name' => $e->name,
+            'muscle_group' => $e->muscle_group,
+            'description' => $e->description,
+            'embed_url' => $e->getYoutubeEmbedUrl(),
+            'previous_sets' => [],
+        ]);
+    @endphp
+
     @push('scripts')
     <script>
         function workoutLogger() {
             return {
                 exercises: @json($preloadedExercises),
-                availableExercises: @json($exercises->map(fn ($e) => ['id' => $e->id, 'name' => $e->name, 'muscle_group' => $e->muscle_group, 'description' => $e->description, 'embed_url' => $e->getYoutubeEmbedUrl(), 'previous_sets' => []])),
+                availableExercises: @json($availableExercisesJson),
                 exerciseSearch: '',
                 showExercisePicker: false,
                 exercisesLoaded: true,
