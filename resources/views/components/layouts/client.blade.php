@@ -6,6 +6,14 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
+        <!-- PWA -->
+        <link rel="manifest" href="/build/manifest.webmanifest">
+        <meta name="theme-color" content="#2563EB">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="LiftDeck">
+        <link rel="apple-touch-icon" href="/images/pwa-192.png">
+
         <title>{{ $title ?? 'My Training' }}</title>
 
         <!-- Fonts -->
@@ -124,6 +132,25 @@
             </div>
             @endunless
 
+            <!-- Stale cache banner -->
+            <div
+                x-data="{ show: false }"
+                x-init="
+                    if (window.__servedFromCache) { show = true; }
+                    document.addEventListener('sw:served-from-cache', () => { show = true; });
+                "
+                x-show="show"
+                x-cloak
+                class="mb-4 rounded-lg bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 p-3"
+            >
+                <p class="text-sm text-yellow-700 dark:text-yellow-400 flex items-center gap-2">
+                    <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                    You're viewing cached content. Some data may be outdated.
+                </p>
+            </div>
+
             {{ $slot }}
         </main>
 
@@ -187,6 +214,17 @@
 
         <!-- BladewindUI JS -->
         <script src="{{ asset('vendor/bladewind/js/helpers.js') }}"></script>
+
+        <script>
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.addEventListener('message', (event) => {
+                    if (event.data?.type === 'SERVED_FROM_CACHE') {
+                        window.__servedFromCache = true;
+                        document.dispatchEvent(new CustomEvent('sw:served-from-cache'));
+                    }
+                });
+            }
+        </script>
 
         @stack('scripts')
     </body>
