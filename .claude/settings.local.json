@@ -15,7 +15,8 @@
       "Bash(for f:*)",
       "Bash(do echo:*)",
       "Bash(done)",
-      "Bash(grep -n \"Registered\\\\|SendEmailVerificationNotification\\\\|VerifyEmail\" /Users/timotejavsec/Documents/Projects/lift-deck/bootstrap/app.php /Users/timotejavsec/Documents/Projects/lift-deck/app/Providers/*.php)"
+      "Bash(grep -n \"Registered\\\\|SendEmailVerificationNotification\\\\|VerifyEmail\" /Users/timotejavsec/Documents/Projects/lift-deck/bootstrap/app.php /Users/timotejavsec/Documents/Projects/lift-deck/app/Providers/*.php)",
+      "Bash(vendor/bin/pint --dirty --format agent)"
     ]
   },
   "enabledMcpjsonServers": [
