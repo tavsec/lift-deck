@@ -96,9 +96,9 @@ class LogController extends Controller
             'prescribed_sets' => $we->sets,
             'prescribed_reps' => $we->reps,
             'previous_sets' => $previousSets->get($we->exercise_id, []),
-            'sets' => collect(range(1, $we->sets))->map(fn ($i) => [
-                'weight' => 0,
-                'reps' => 0,
+            'sets' => collect(range(1, $we->sets))->map(fn () => [
+                'weight' => '',
+                'reps' => '',
             ])->values()->all(),
         ])->values()->all();
 

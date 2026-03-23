@@ -149,6 +149,17 @@ it('returns empty previous_sets for exercises with no history', function () {
     expect($exerciseData['previous_sets'])->toBe([]);
 });
 
+it('initializes set rows with empty weight and reps', function () {
+    $response = $this->actingAs($this->client)
+        ->get(route('client.log.create', $this->workout));
+
+    $response->assertOk();
+    $response->assertSee('"weight":""', false);
+    $response->assertSee('"reps":""', false);
+    $response->assertDontSee('"weight":0', false);
+    $response->assertDontSee('"reps":0', false);
+});
+
 it('returns previous set data from the most recent log when multiple logs exist', function () {
     // Older log
     $olderLog = WorkoutLog::factory()->create([
