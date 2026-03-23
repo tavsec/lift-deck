@@ -400,9 +400,12 @@
                     if (saved) {
                         try {
                             const parsed = JSON.parse(saved);
+                            // Always refresh workout metadata so the global banner shows the correct name
+                            const refreshed = { ...parsed, workoutName, resumeUrl };
+                            localStorage.setItem(storageKey, JSON.stringify(refreshed));
                             const savedAt = new Date(parsed.savedAt);
                             const isToday = savedAt.toDateString() === new Date().toDateString();
-                            this._pendingRestore = parsed;
+                            this._pendingRestore = refreshed;
                             this.restoreBanner = true;
                             this._savedAtFormatted = isToday
                                 ? savedAt.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
