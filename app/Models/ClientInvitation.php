@@ -4,12 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Support\Str;
 
 class ClientInvitation extends Model
 {
     protected $fillable = [
         'coach_id',
+        'track_only_client_id',
         'email',
         'name',
         'token',
@@ -28,6 +28,11 @@ class ClientInvitation extends Model
     public function coach(): BelongsTo
     {
         return $this->belongsTo(User::class, 'coach_id');
+    }
+
+    public function trackOnlyClient(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'track_only_client_id');
     }
 
     public function isExpired(): bool

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Coach;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreTrackOnlyClientRequest;
 use App\Http\Requests\StoreWorkoutLogCommentRequest;
 use App\Models\Achievement;
 use App\Models\ClientInvitation;
@@ -285,6 +286,64 @@ class ClientController extends Controller
 
         return redirect()->route('coach.clients.show', $client)
             ->with('success', 'Client updated successfully!');
+    }
+
+    /**
+     * Show the form for creating a track-only client.
+     */
+    public function createTrackOnly(): View
+    {
+        return view('coach.clients.create-track-only');
+    }
+
+    /**
+     * Store a new track-only client.
+     */
+    public function storeTrackOnly(StoreTrackOnlyClientRequest $request): RedirectResponse
+    {
+        $coach = auth()->user();
+
+        User::create([
+            ...$request->validated(),
+            'role' => 'client',
+            'coach_id' => $coach->id,
+            'is_track_only' => true,
+        ]);
+
+        return redirect()->route('coach.clients.index')
+            ->with('success', 'Client added successfully.');
+    }
+
+    /**
+     * Generate an app access invitation for a track-only client.
+     */
+    public function enableAppAccess(User $client): RedirectResponse
+    {
+        if ($client->coach_id !== auth()->id()) {
+            abort(403);
+        }
+
+        if (! $client->isTrackOnly()) {
+            return redirect()->route('coach.clients.show', $client)
+                ->with('error', 'This client already has app access.');
+        }
+
+        // Cancel any existing pending invitations for this client
+        ClientInvitation::where('track_only_client_id', $client->id)
+            ->whereNull('accepted_at')
+            ->where('expires_at', '>', now())
+            ->update(['expires_at' => now()]);
+
+        $invitation = ClientInvitation::create([
+            'coach_id' => auth()->id(),
+            'track_only_client_id' => $client->id,
+            'token' => ClientInvitation::generateUniqueToken(),
+            'expires_at' => now()->addDays(7),
+        ]);
+
+        return redirect()->route('coach.clients.show', $client)
+            ->with('success', 'Invitation created! Share this code: '.$invitation->token)
+            ->with('invitation_code', $invitation->token);
     }
 
     /**

@@ -22,6 +22,14 @@
                 </div>
             </div>
             <div class="flex gap-2">
+                @if($client->isTrackOnly())
+                    <form method="POST" action="{{ route('coach.clients.enable-app-access', $client) }}">
+                        @csrf
+                        <button type="submit" class="inline-flex items-center px-4 py-2 border border-green-300 dark:border-green-700 rounded-md font-medium text-sm text-green-700 dark:text-green-400 bg-white dark:bg-gray-900 hover:bg-green-50 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition ease-in-out duration-150">
+                            Enable App Access
+                        </button>
+                    </form>
+                @endif
                 <a href="{{ route('coach.clients.analytics', $client) }}" class="inline-flex items-center px-4 py-2 border border-blue-300 dark:border-blue-700 rounded-md font-medium text-sm text-blue-700 dark:text-blue-400 bg-white dark:bg-gray-900 hover:bg-blue-50 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition ease-in-out duration-150">
                     <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
@@ -59,6 +67,13 @@
                         <p class="text-sm font-medium text-green-800">{{ session('success') }}</p>
                     </div>
                 </div>
+            </div>
+        @endif
+
+        @if(session('invitation_code'))
+            <div class="rounded-md bg-blue-50 dark:bg-blue-900/20 p-4">
+                <p class="text-sm text-blue-800 dark:text-blue-300">Share this invitation code with your client: <strong>{{ session('invitation_code') }}</strong></p>
+                <p class="text-xs text-blue-600 dark:text-blue-400 mt-1">They can join at <code>{{ url('join') }}</code> — expires in 7 days.</p>
             </div>
         @endif
 
@@ -230,7 +245,12 @@
 
                 <!-- Recent Workouts -->
                 <div class="bg-white dark:bg-gray-900 rounded-lg shadow p-6">
-                    <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100 mb-4">Recent Workouts</h2>
+                    <div class="flex items-center justify-between mb-4">
+                        <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">Recent Workouts</h2>
+                        <a href="{{ route('coach.clients.workout-logs.create', $client) }}" class="inline-flex items-center px-3 py-1.5 border border-blue-300 dark:border-blue-700 rounded-md text-sm font-medium text-blue-700 dark:text-blue-400 bg-white dark:bg-gray-900 hover:bg-blue-50 dark:hover:bg-gray-800 transition ease-in-out duration-150">
+                            + Log Workout
+                        </a>
+                    </div>
                     @if($recentWorkoutLogs->count() > 0)
                         <div class="divide-y divide-gray-200 dark:divide-gray-800">
                             @foreach($recentWorkoutLogs as $log)
@@ -253,6 +273,12 @@
                                                 {{ $log->comments_count }}
                                             </span>
                                         @endif
+                                        <a href="{{ route('coach.clients.workout-logs.edit', [$client, $log]) }}" class="text-xs text-blue-600 dark:text-blue-400 hover:underline" onclick="event.stopPropagation()">Edit</a>
+                                        <form method="POST" action="{{ route('coach.clients.workout-logs.destroy', [$client, $log]) }}" onsubmit="return confirm('Delete this workout log?')" onclick="event.stopPropagation()">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="text-xs text-red-500 dark:text-red-400 hover:underline">Delete</button>
+                                        </form>
                                         <svg class="w-4 h-4 text-gray-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
                                         </svg>
@@ -314,7 +340,12 @@
                 <!-- Daily Check-in Logs (Last 7 Days) -->
                 @if($assignedMetricIds->count() > 0)
                 <div class="bg-white dark:bg-gray-900 rounded-lg shadow p-6">
-                    <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100 mb-4">Daily Check-ins (Last 7 Days)</h2>
+                    <div class="flex items-center justify-between mb-4">
+                        <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">Daily Check-ins (Last 7 Days)</h2>
+                        <a href="{{ route('coach.clients.check-in.show', $client) }}" class="inline-flex items-center px-3 py-1.5 border border-blue-300 dark:border-blue-700 rounded-md text-sm font-medium text-blue-700 dark:text-blue-400 bg-white dark:bg-gray-900 hover:bg-blue-50 dark:hover:bg-gray-800 transition ease-in-out duration-150">
+                            + Log Check-in
+                        </a>
+                    </div>
 
                     @php
                         $assignedMetrics = $coachMetrics->whereIn('id', $assignedMetricIds);

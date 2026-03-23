@@ -57,4 +57,14 @@ class UserFactory extends Factory
             'role' => 'client',
         ]);
     }
+
+    public function trackOnly(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'role' => 'client',
+            'email' => null,
+            'password' => null,
+            'is_track_only' => true,
+        ]);
+    }
 }

@@ -159,6 +159,60 @@
 
             <!-- Right: Meal Logs -->
             <div class="lg:col-span-2 space-y-6">
+                <!-- Log Meal for Client -->
+                <div class="bg-white dark:bg-gray-900 rounded-lg shadow p-6" x-data="{ open: false }">
+                    <div class="flex items-center justify-between">
+                        <h3 class="text-base font-medium text-gray-900 dark:text-gray-100">Log a Meal</h3>
+                        <button @click="open = !open" type="button" class="inline-flex items-center px-3 py-1.5 border border-blue-300 dark:border-blue-700 rounded-md text-sm font-medium text-blue-700 dark:text-blue-400 bg-white dark:bg-gray-900 hover:bg-blue-50 dark:hover:bg-gray-800 transition">
+                            <span x-text="open ? 'Cancel' : '+ Log Meal'"></span>
+                        </button>
+                    </div>
+                    <div x-show="open" x-cloak class="mt-4">
+                        <form method="POST" action="{{ route('coach.clients.meal-logs.store', $client) }}" class="space-y-4">
+                            @csrf
+                            <input type="hidden" name="date" value="{{ $from }}">
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Meal Type</label>
+                                    <select name="meal_type" class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
+                                        <option value="breakfast">Breakfast</option>
+                                        <option value="lunch">Lunch</option>
+                                        <option value="dinner">Dinner</option>
+                                        <option value="snack">Snack</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Name</label>
+                                    <input type="text" name="name" required placeholder="e.g. Chicken Breast" class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-4 gap-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Calories</label>
+                                    <input type="number" name="calories" min="0" required value="0" class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Protein (g)</label>
+                                    <input type="number" name="protein" min="0" step="0.1" required value="0" class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Carbs (g)</label>
+                                    <input type="number" name="carbs" min="0" step="0.1" required value="0" class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Fat (g)</label>
+                                    <input type="number" name="fat" min="0" step="0.1" required value="0" class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
+                                </div>
+                            </div>
+                            <div class="flex justify-end">
+                                <button type="submit" class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-medium text-sm text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition ease-in-out duration-150">
+                                    Log Meal
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
                 <div class="bg-white dark:bg-gray-900 rounded-lg shadow p-6">
                     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-4">
                         <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">Meal Logs</h2>
@@ -232,7 +286,14 @@
                                                             <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">{{ $log->meal_type }}</span>
                                                             <span class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-100">{{ $log->name }}</span>
                                                         </div>
-                                                        <span class="text-sm text-gray-500 dark:text-gray-400">{{ $log->calories }} kcal</span>
+                                                        <div class="flex items-center gap-3">
+                                                            <span class="text-sm text-gray-500 dark:text-gray-400">{{ $log->calories }} kcal</span>
+                                                            <form method="POST" action="{{ route('coach.clients.meal-logs.destroy', [$client, $log]) }}" onsubmit="return confirm('Remove this meal?')" class="inline">
+                                                                @csrf
+                                                                @method('DELETE')
+                                                                <button type="submit" class="text-xs text-red-500 dark:text-red-400 hover:underline">Remove</button>
+                                                            </form>
+                                                        </div>
                                                     </div>
                                                     <p class="mt-1 text-xs text-gray-400 dark:text-gray-500">
                                                         P {{ $log->protein }}g / C {{ $log->carbs }}g / F {{ $log->fat }}g

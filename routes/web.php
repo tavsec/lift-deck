@@ -27,10 +27,20 @@ Route::middleware(['auth', 'verified', 'role:coach'])
     ->name('coach.')
     ->group(function () {
         Route::get('/', Coach\DashboardController::class)->name('dashboard');
+        Route::get('clients/create-track-only', [Coach\ClientController::class, 'createTrackOnly'])->name('clients.create-track-only');
+        Route::post('clients/store-track-only', [Coach\ClientController::class, 'storeTrackOnly'])->name('clients.store-track-only');
+        Route::post('clients/{client}/enable-app-access', [Coach\ClientController::class, 'enableAppAccess'])->name('clients.enable-app-access');
         Route::resource('clients', Coach\ClientController::class);
         Route::get('clients/{client}/workout-log/{workoutLog}', [Coach\ClientController::class, 'workoutLog'])->name('clients.workout-log');
         Route::post('clients/{client}/workout-log/{workoutLog}/comment', [Coach\ClientController::class, 'workoutLogComment'])->name('clients.workout-log.comment');
+        Route::get('clients/{client}/workout-logs/create', [Coach\ClientWorkoutLogController::class, 'create'])->name('clients.workout-logs.create');
+        Route::post('clients/{client}/workout-logs', [Coach\ClientWorkoutLogController::class, 'store'])->name('clients.workout-logs.store');
+        Route::get('clients/{client}/workout-logs/{workoutLog}/edit', [Coach\ClientWorkoutLogController::class, 'edit'])->name('clients.workout-logs.edit');
+        Route::put('clients/{client}/workout-logs/{workoutLog}', [Coach\ClientWorkoutLogController::class, 'update'])->name('clients.workout-logs.update');
+        Route::delete('clients/{client}/workout-logs/{workoutLog}', [Coach\ClientWorkoutLogController::class, 'destroy'])->name('clients.workout-logs.destroy');
         Route::post('clients/{client}/toggle-metric', [Coach\ClientController::class, 'toggleMetric'])->name('clients.toggle-metric');
+        Route::get('clients/{client}/check-in', [Coach\ClientCheckInController::class, 'show'])->name('clients.check-in.show');
+        Route::post('clients/{client}/check-in', [Coach\ClientCheckInController::class, 'store'])->name('clients.check-in.store');
         Route::resource('programs', Coach\ProgramController::class);
 
         // Program workout routes
@@ -49,6 +59,8 @@ Route::middleware(['auth', 'verified', 'role:coach'])
         Route::get('programs/{program}/assign', [Coach\ProgramController::class, 'assignForm'])->name('programs.assign');
         Route::post('programs/{program}/assign', [Coach\ProgramController::class, 'assign'])->name('programs.assign.store');
 
+        Route::post('clients/{client}/meal-logs', [Coach\ClientMealLogController::class, 'store'])->name('clients.meal-logs.store');
+        Route::delete('clients/{client}/meal-logs/{mealLog}', [Coach\ClientMealLogController::class, 'destroy'])->name('clients.meal-logs.destroy');
         Route::get('clients/{client}/nutrition', [Coach\NutritionController::class, 'show'])->name('clients.nutrition');
         Route::get('clients/{client}/analytics', [Coach\AnalyticsController::class, 'show'])->name('clients.analytics');
         Route::get('clients/{client}/analytics/export', [Coach\AnalyticsController::class, 'exportToExcel'])->name('clients.analytics.export');
