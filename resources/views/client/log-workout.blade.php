@@ -374,6 +374,8 @@
     <script>
         function workoutLogger() {
             const storageKey = '{{ $isCustom ? "workout_logger_custom" : "workout_logger_" . ($workout->id ?? "custom") }}';
+            const resumeUrl = '{{ url()->current() }}';
+            const workoutName = '{{ $isCustom ? "Custom Workout" : $workout->name }}';
 
             return {
                 exercises: @json($exercisesData),
@@ -424,6 +426,8 @@
                         exercises: this.exercises,
                         notes: this.notes,
                         savedAt: new Date().toISOString(),
+                        resumeUrl: resumeUrl,
+                        workoutName: workoutName,
                     };
                     localStorage.setItem(storageKey, JSON.stringify(state));
                 },

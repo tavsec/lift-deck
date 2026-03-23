@@ -74,6 +74,56 @@
 
         <!-- Main Content Area -->
         <main class="pt-16 pb-20 max-w-4xl mx-auto px-4">
+            @unless(request()->routeIs('client.log.create*') || request()->routeIs('client.log.custom'))
+            <div
+                x-data="{
+                    pendingWorkouts: [],
+                    init() {
+                        const pending = [];
+                        for (let i = 0; i < localStorage.length; i++) {
+                            const key = localStorage.key(i);
+                            if (!key || !key.startsWith('workout_logger_')) continue;
+                            try {
+                                const parsed = JSON.parse(localStorage.getItem(key));
+                                if (parsed && parsed.savedAt && parsed.exercises && parsed.exercises.length > 0) {
+                                    const savedAt = new Date(parsed.savedAt);
+                                    const isToday = savedAt.toDateString() === new Date().toDateString();
+                                    pending.push({
+                                        key: key,
+                                        workoutName: parsed.workoutName ?? 'Workout',
+                                        resumeUrl: parsed.resumeUrl ?? '{{ route('client.log') }}',
+                                        savedAtFormatted: isToday
+                                            ? savedAt.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+                                            : savedAt.toLocaleDateString([], { month: 'short', day: 'numeric' }) + ' at ' + savedAt.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+                                    });
+                                }
+                            } catch {}
+                        }
+                        this.pendingWorkouts = pending;
+                    }
+                }"
+            >
+                <template x-for="workout in pendingWorkouts" :key="workout.key">
+                    <div class="mb-4 rounded-lg bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 p-3">
+                        <div class="flex items-center justify-between gap-3">
+                            <div>
+                                <p class="text-sm font-medium text-blue-800 dark:text-blue-300">
+                                    Unfinished workout: <span x-text="workout.workoutName"></span>
+                                </p>
+                                <p class="text-xs text-blue-600 dark:text-blue-400 mt-0.5">
+                                    Last saved at <span x-text="workout.savedAtFormatted"></span>
+                                </p>
+                            </div>
+                            <a :href="workout.resumeUrl"
+                                class="shrink-0 text-xs font-semibold px-3 py-1.5 bg-blue-600 text-white rounded-md hover:bg-blue-700">
+                                Continue
+                            </a>
+                        </div>
+                    </div>
+                </template>
+            </div>
+            @endunless
+
             {{ $slot }}
         </main>
 
