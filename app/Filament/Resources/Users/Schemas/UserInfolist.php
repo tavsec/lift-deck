@@ -47,6 +47,16 @@ class UserInfolist
                 TextEntry::make('onboarding_welcome_text')
                     ->placeholder('-')
                     ->columnSpanFull(),
+                TextEntry::make('stripe_id')
+                    ->label('Stripe Customer ID')
+                    ->placeholder('Not yet created'),
+                TextEntry::make('trial_ends_at')
+                    ->label('Trial Ends At')
+                    ->dateTime()
+                    ->placeholder('No trial'),
+                TextEntry::make('is_free_access')
+                    ->label('Free Access')
+                    ->formatStateUsing(fn (bool $state): string => $state ? 'Yes' : 'No'),
                 Section::make('Features')
                     ->schema([
                         TextEntry::make('loyalty_feature_status')

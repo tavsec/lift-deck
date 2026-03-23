@@ -5,6 +5,7 @@ namespace App\Filament\Resources\Users\Schemas;
 use Filament\Forms\Components\ColorPicker;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Schema;
 
 class UserForm
@@ -42,6 +43,9 @@ class UserForm
                     ->columnSpanFull(),
                 Textarea::make('onboarding_welcome_text')
                     ->columnSpanFull(),
+                Toggle::make('is_free_access')
+                    ->label('Free Access')
+                    ->helperText('Grant full Professional access without a subscription (for ambassadors, friends, etc.)'),
             ]);
     }
 }
