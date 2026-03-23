@@ -73,16 +73,9 @@ class SubscriptionService
 
         $priceId = $subscription->stripe_price;
 
-        foreach (config('plans') as $plan) {
-            if (isset($plan['stripe_price_id']) && $plan['stripe_price_id'] === $priceId) {
-                return $plan;
-            }
-            if (isset($plan['stripe_price_flat_id']) && $plan['stripe_price_flat_id'] === $priceId) {
-                return $plan;
-            }
-        }
+        $planKey = $this->findPlanKeyByPriceId($priceId);
 
-        return null;
+        return $planKey ? config("plans.{$planKey}") : null;
     }
 
     /**
@@ -101,6 +94,14 @@ class SubscriptionService
 
         $priceId = $subscription->stripe_price;
 
+        return $this->findPlanKeyByPriceId($priceId);
+    }
+
+    /**
+     * Finds the plan key for a given Stripe price ID, or null if not found.
+     */
+    private function findPlanKeyByPriceId(string $priceId): ?string
+    {
         foreach (config('plans') as $key => $plan) {
             if (isset($plan['stripe_price_id']) && $plan['stripe_price_id'] === $priceId) {
                 return $key;

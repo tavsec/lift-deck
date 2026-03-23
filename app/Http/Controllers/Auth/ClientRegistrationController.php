@@ -84,6 +84,8 @@ class ClientRegistrationController extends Controller
             ]);
             event(new Registered($user));
 
+            // Track-only clients are already counted in the coach's client list, so upgrading
+            // them does not add a new client — only genuinely new clients trigger usage reporting.
             $this->subscriptionService->reportClientUsage($invitation->coach);
         }
 

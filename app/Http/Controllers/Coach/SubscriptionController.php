@@ -37,6 +37,12 @@ class SubscriptionController extends Controller
         ));
     }
 
+    /**
+     * Redirects the coach to the Stripe Customer Portal.
+     *
+     * The Stripe Customer Portal must be configured in the Stripe Dashboard to support
+     * subscription management (selecting and subscribing to new plans).
+     */
     public function portal(): RedirectResponse
     {
         $coach = auth()->user();
