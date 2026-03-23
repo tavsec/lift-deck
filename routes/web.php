@@ -28,7 +28,8 @@ Route::middleware(['auth', 'verified', 'role:coach', 'subscribed'])
     ->prefix('coach')
     ->name('coach.')
     ->group(function () {
-        Route::get('subscription', fn () => response('ok'))->name('subscription');
+        Route::get('subscription', [Coach\SubscriptionController::class, 'index'])->name('subscription');
+        Route::get('subscription/portal', [Coach\SubscriptionController::class, 'portal'])->name('subscription.portal');
         Route::get('/', Coach\DashboardController::class)->name('dashboard');
         Route::get('clients/create-track-only', [Coach\ClientController::class, 'createTrackOnly'])->name('clients.create-track-only');
         Route::post('clients/store-track-only', [Coach\ClientController::class, 'storeTrackOnly'])->name('clients.store-track-only');
