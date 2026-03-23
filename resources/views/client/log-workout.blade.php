@@ -98,7 +98,7 @@
                                         </svg>
                                     </button>
                                     <!-- Remove -->
-                                    <button type="button" @click="removeExercise(exerciseIndex)"
+                                    <button type="button" @click="removeExercise(exerciseIndex)" x-show="!exercise.lock_removal"
                                         class="p-1 text-red-400 hover:text-red-600 rounded hover:bg-red-50 transition-colors" title="Remove exercise">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>

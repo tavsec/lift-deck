@@ -203,3 +203,21 @@ it('returns previous set data from the most recent log when multiple logs exist'
     expect($exerciseData['previous_sets'][0]['weight'])->toBe('75.00');
     expect($exerciseData['previous_sets'][0]['reps'])->toBe(8);
 });
+
+it('passes lock_removal flag to exercises when workout has it locked', function () {
+    $this->workout->update(['lock_exercise_removal' => true]);
+
+    $response = $this->actingAs($this->client)
+        ->get(route('client.log.create', $this->workout));
+
+    $response->assertOk();
+    $response->assertSee('"lock_removal":true', false);
+});
+
+it('passes lock_removal as false when workout is not locked', function () {
+    $response = $this->actingAs($this->client)
+        ->get(route('client.log.create', $this->workout));
+
+    $response->assertOk();
+    $response->assertSee('"lock_removal":false', false);
+});
