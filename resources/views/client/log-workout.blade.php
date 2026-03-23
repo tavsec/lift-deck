@@ -34,7 +34,41 @@
             </div>
         @endif
 
-        <form method="POST" action="{{ route('client.log.store') }}">
+        <!-- Restore banner -->
+        <div x-show="restoreBanner" x-cloak
+            class="rounded-lg bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 p-4">
+            <div class="flex items-start justify-between gap-3">
+                <div>
+                    <p class="text-sm font-medium text-blue-800 dark:text-blue-300">Unfinished workout found</p>
+                    <p class="text-xs text-blue-600 dark:text-blue-400 mt-0.5">
+                        We saved your progress from <span x-text="_savedAtFormatted"></span>. Continue where you left off?
+                    </p>
+                </div>
+                <div class="flex gap-2 shrink-0">
+                    <button type="button" @click="confirmRestore()"
+                        class="text-xs font-semibold px-3 py-1.5 bg-blue-600 text-white rounded-md hover:bg-blue-700">
+                        Restore
+                    </button>
+                    <button type="button" @click="discardRestore()"
+                        class="text-xs font-medium px-3 py-1.5 bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-400 border border-gray-300 dark:border-gray-700 rounded-md hover:bg-gray-50">
+                        Start Fresh
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Offline banner -->
+        <div x-show="isOffline" x-cloak
+            class="rounded-lg bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 p-3">
+            <p class="text-sm text-amber-700 dark:text-amber-400 flex items-center gap-2">
+                <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 5.636a9 9 0 010 12.728M15.536 8.464a5 5 0 010 7.072M12 12h.01M8.464 15.536a5 5 0 01-.068-7.004M5.636 5.636a9 9 0 000 12.728"/>
+                </svg>
+                You're offline — your progress is being saved locally.
+            </p>
+        </div>
+
+        <form method="POST" action="{{ route('client.log.store') }}" @submit="clearSavedState()">
             @csrf
 
             @if(!$isCustom)
@@ -281,6 +315,7 @@
                         name="notes"
                         rows="2"
                         placeholder="How did the workout feel?"
+                        x-model="notes"
                         class="w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm text-sm focus:border-blue-500 focus:ring-blue-500"
                     >{{ old('notes') }}</textarea>
                 </x-bladewind::card>
@@ -338,6 +373,8 @@
     @push('scripts')
     <script>
         function workoutLogger() {
+            const storageKey = '{{ $isCustom ? "workout_logger_custom" : "workout_logger_" . ($workout->id ?? "custom") }}';
+
             return {
                 exercises: @json($exercisesData),
                 availableExercises: [],
@@ -345,6 +382,72 @@
                 showExercisePicker: false,
                 exercisesLoaded: false,
                 selectedExercise: null,
+                restoreBanner: false,
+                isOffline: false,
+                notes: '',
+                _pendingRestore: null,
+                _savedAtFormatted: '',
+                _saveTimer: null,
+
+                init() {
+                    this.isOffline = !navigator.onLine;
+                    window.addEventListener('online', () => { this.isOffline = false; });
+                    window.addEventListener('offline', () => { this.isOffline = true; });
+
+                    const saved = localStorage.getItem(storageKey);
+                    if (saved) {
+                        try {
+                            const parsed = JSON.parse(saved);
+                            const savedAt = new Date(parsed.savedAt);
+                            const ageHours = (Date.now() - savedAt.getTime()) / (1000 * 60 * 60);
+                            if (ageHours < 24) {
+                                this._pendingRestore = parsed;
+                                this.restoreBanner = true;
+                                this._savedAtFormatted = savedAt.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                            } else {
+                                localStorage.removeItem(storageKey);
+                            }
+                        } catch {
+                            localStorage.removeItem(storageKey);
+                        }
+                    }
+
+                    this.$watch('exercises', () => { this.debouncedSave(); }, { deep: true });
+                    this.$watch('notes', () => { this.debouncedSave(); });
+                },
+
+                debouncedSave() {
+                    clearTimeout(this._saveTimer);
+                    this._saveTimer = setTimeout(() => { this.saveState(); }, 800);
+                },
+
+                saveState() {
+                    const state = {
+                        exercises: this.exercises,
+                        notes: this.notes,
+                        savedAt: new Date().toISOString(),
+                    };
+                    localStorage.setItem(storageKey, JSON.stringify(state));
+                },
+
+                clearSavedState() {
+                    localStorage.removeItem(storageKey);
+                },
+
+                confirmRestore() {
+                    if (this._pendingRestore) {
+                        this.exercises = this._pendingRestore.exercises;
+                        this.notes = this._pendingRestore.notes ?? '';
+                    }
+                    this._pendingRestore = null;
+                    this.restoreBanner = false;
+                },
+
+                discardRestore() {
+                    this._pendingRestore = null;
+                    this.restoreBanner = false;
+                    this.clearSavedState();
+                },
 
                 initSortable() {
                     this.$nextTick(() => {
@@ -414,6 +517,7 @@
                         prescribed_sets: null,
                         prescribed_reps: null,
                         previous_sets: exercise.previous_sets || [],
+                        lock_removal: false,
                         sets: [{ weight: '', reps: '' }],
                     });
                     this.showExercisePicker = false;
