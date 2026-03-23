@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Mail\WelcomeClientMail;
 use App\Models\ClientInvitation;
 use App\Models\User;
+use App\Services\SubscriptionService;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -80,6 +81,9 @@ class ClientRegistrationController extends Controller
                 'coach_id' => $invitation->coach_id,
             ]);
             event(new Registered($user));
+
+            $subscriptionService = app(SubscriptionService::class);
+            $subscriptionService->reportClientUsage($invitation->coach);
         }
 
         $invitation->update(['accepted_at' => now()]);

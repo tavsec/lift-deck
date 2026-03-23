@@ -323,6 +323,8 @@ class ClientController extends Controller
             'is_track_only' => true,
         ]);
 
+        $this->subscriptionService->reportClientUsage($coach);
+
         return redirect()->route('coach.clients.index')
             ->with('success', 'Client added successfully.');
     }
@@ -369,6 +371,8 @@ class ClientController extends Controller
         }
 
         $client->delete();
+
+        $this->subscriptionService->reportClientUsage(auth()->user());
 
         return redirect()->route('coach.clients.index')
             ->with('success', 'Client removed successfully.');
