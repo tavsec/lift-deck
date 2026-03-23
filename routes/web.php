@@ -4,6 +4,8 @@ use App\Http\Controllers\Client;
 use App\Http\Controllers\Coach;
 use Illuminate\Support\Facades\Route;
 
+Route::post('cashier/webhook', '\Laravel\Cashier\Http\Controllers\WebhookController@handleWebhook')->name('cashier.webhook');
+
 Route::domain('beta.liftdeck.io')->group(function () {
     Route::get('/', function () {
         return view('beta');
