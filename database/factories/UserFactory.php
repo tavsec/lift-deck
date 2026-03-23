@@ -19,6 +19,11 @@ class UserFactory extends Factory
     /**
      * Define the model's default state.
      *
+     * `trial_ends_at` is set to 14 days in the future by default because coach users require
+     * an active trial or subscription to access coach routes (via EnsureCoachSubscribed middleware).
+     * This default ensures factory-created coaches pass the middleware in tests without needing
+     * explicit subscription setup.
+     *
      * @return array<string, mixed>
      */
     public function definition(): array
