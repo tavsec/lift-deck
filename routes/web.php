@@ -82,8 +82,11 @@ Route::middleware(['auth', 'verified', 'role:coach', 'subscribed'])
 
             Route::get('redemptions', [Coach\RedemptionController::class, 'index'])->name('redemptions.index');
             Route::patch('redemptions/{redemption}', [Coach\RedemptionController::class, 'update'])->name('redemptions.update');
-            Route::get('clients/{client}/loyalty', [Coach\LoyaltyController::class, 'show'])->name('clients.loyalty');
         });
+
+        Route::get('clients/{client}/loyalty', [Coach\LoyaltyController::class, 'show'])
+            ->name('clients.loyalty')
+            ->middleware('subscription.feature:loyalty');
 
         // Tracking metrics
         Route::get('tracking-metrics', [Coach\TrackingMetricController::class, 'index'])->name('tracking-metrics.index');
@@ -99,8 +102,10 @@ Route::middleware(['auth', 'verified', 'role:coach', 'subscribed'])
         Route::get('messages/{user}/poll', [Coach\MessageController::class, 'poll'])->name('messages.poll');
 
         // Branding
-        Route::get('branding', [Coach\BrandingController::class, 'edit'])->name('branding.edit');
-        Route::put('branding', [Coach\BrandingController::class, 'update'])->name('branding.update');
+        Route::middleware('subscription.feature:custom_branding')->group(function (): void {
+            Route::get('branding', [Coach\BrandingController::class, 'edit'])->name('branding.edit');
+            Route::put('branding', [Coach\BrandingController::class, 'update'])->name('branding.update');
+        });
     });
 
 // Client routes

@@ -5,7 +5,17 @@ use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 
 beforeEach(function () {
-    $this->coach = User::factory()->coach()->create();
+    $this->coach = User::factory()->coach()->create(['is_free_access' => false, 'trial_ends_at' => null]);
+
+    $this->coach->subscriptions()->create([
+        'type' => 'default',
+        'stripe_id' => 'sub_branding_test',
+        'stripe_status' => 'active',
+        'stripe_price' => config('plans.professional.stripe_price_flat_id'),
+        'quantity' => 1,
+        'ends_at' => null,
+    ]);
+
     $this->actingAs($this->coach);
 });
 
