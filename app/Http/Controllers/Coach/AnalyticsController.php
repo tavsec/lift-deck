@@ -250,6 +250,10 @@ class AnalyticsController extends Controller
                 ->get();
 
             foreach ($allTargets as $target) {
+                if ($target->effective_date === null) {
+                    continue;
+                }
+
                 $exerciseId = $target->workoutExercise->exercise_id;
                 $date = $target->effective_date->format('Y-m-d');
 

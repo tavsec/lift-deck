@@ -23,7 +23,7 @@ class WelcomeClientMail extends Mailable
         $gymName = $this->coach->gym_name ?? $this->coach->name;
 
         return new Envelope(
-            subject: "Welcome to {$gymName}!",
+            subject: "Welcome to {$gymName}'s coaching!",
         );
     }
 

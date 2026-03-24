@@ -483,14 +483,12 @@
 
                         const ctx = this.$refs.canvas.getContext('2d');
                         const theme = chartTheme();
-                        const labels = data.map(d => {
-                            const date = new Date(d.date + 'T00:00:00');
-                            return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
-                        });
 
                         const targets = (targetHistory[this.selectedExercise] || [])
                             .slice()
                             .sort((a, b) => a.date.localeCompare(b.date));
+
+                        const hasTargets = targets.length > 0;
 
                         function activeTarget(dateStr) {
                             let result = null;
@@ -500,29 +498,44 @@
                             return result;
                         }
 
-                        const targetValues = data.map(d => activeTarget(d.date));
-                        const hasTargets = targets.length > 0;
+                        // Build a unified sorted timeline from both log dates and target-change dates
+                        const logDateSet = new Set(data.map(d => d.date));
+                        const allDates = [...logDateSet];
+                        if (hasTargets) {
+                            for (const t of targets) {
+                                if (!logDateSet.has(t.date)) { allDates.push(t.date); }
+                            }
+                        }
+                        allDates.sort();
+
+                        const logByDate = {};
+                        for (const d of data) { logByDate[d.date] = d; }
+
+                        const labels = allDates.map(dateStr => {
+                            const date = new Date(dateStr + 'T00:00:00');
+                            return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+                        });
 
                         const datasets = [{
                             label: 'Top Set Weight (kg)',
-                            data: data.map(d => d.weight),
+                            data: allDates.map(dateStr => logByDate[dateStr]?.weight ?? null),
                             borderColor: '#8B5CF6',
                             backgroundColor: 'rgba(139, 92, 246, 0.1)',
                             fill: true,
                             tension: 0.3,
-                            pointRadius: 4,
+                            pointRadius: allDates.map(dateStr => logByDate[dateStr] ? 4 : 0),
+                            spanGaps: true,
                         }];
 
                         if (hasTargets) {
                             datasets.push({
                                 label: 'Target (kg)',
-                                data: targetValues,
+                                data: allDates.map(dateStr => activeTarget(dateStr)),
                                 borderColor: '#f59e0b',
                                 backgroundColor: 'transparent',
                                 borderDash: [5, 5],
                                 pointRadius: 0,
-                                tension: 0,
-                                stepped: true,
+                                tension: 0.3,
                             });
                         }
 
@@ -535,11 +548,12 @@
                                 plugins: {
                                     legend: { display: hasTargets, labels: { color: theme.tickColor, boxWidth: 12, padding: 12 } },
                                     tooltip: {
+                                        filter: (item) => item.parsed.y !== null,
                                         callbacks: {
                                             label: function(ctx) {
                                                 if (ctx.datasetIndex === 0) {
-                                                    const d = data[ctx.dataIndex];
-                                                    return d.weight + 'kg x ' + d.reps + ' reps';
+                                                    const d = logByDate[allDates[ctx.dataIndex]];
+                                                    return d ? d.weight + 'kg x ' + d.reps + ' reps' : null;
                                                 }
                                                 return ctx.parsed.y !== null ? 'Target: ' + ctx.parsed.y + 'kg' : null;
                                             }

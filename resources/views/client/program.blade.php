@@ -84,7 +84,7 @@
                                                 <details class="mt-1">
                                                     <summary class="text-xs text-gray-400 dark:text-gray-500 cursor-pointer select-none">Target history</summary>
                                                     <div class="mt-1 space-y-0.5 pl-2 border-l-2 border-gray-200 dark:border-gray-700">
-                                                        @foreach($targetHistory->get($workoutExercise->id)->groupBy(fn ($t) => $t->effective_date->format('Y-m-d'))->sortKeysDesc() as $date => $entries)
+                                                        @foreach($targetHistory->get($workoutExercise->id)->filter(fn ($t) => $t->effective_date !== null)->groupBy(fn ($t) => $t->effective_date->format('Y-m-d'))->sortKeysDesc() as $date => $entries)
                                                             <div class="text-xs text-gray-500 dark:text-gray-400">
                                                                 <span class="font-medium">{{ \Carbon\Carbon::parse($date)->format('M d, Y') }}</span>
                                                                 @foreach($entries->sortBy('set_number') as $entry)

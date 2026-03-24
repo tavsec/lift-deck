@@ -25,7 +25,20 @@
       "Bash(npm run:*)",
       "Bash(node -e \"const {getOptions} = require\\(''''/Users/timotejavsec/Documents/Projects/lift-deck/node_modules/workbox-build/build/options/get-manifest-entries-from-compilation.js''''\\); console.log\\(getOptions\\)\")",
       "Bash(node -e \"const defaults = require\\(''''/Users/timotejavsec/Documents/Projects/lift-deck/node_modules/workbox-build/build/options/defaults.js''''\\); console.log\\(JSON.stringify\\(defaults, null, 2\\)\\)\")",
-      "Bash(ls:*)"
+      "Bash(ls:*)",
+      "mcp__laravel-boost__database-schema",
+      "Bash(git check-ignore:*)",
+      "Bash(git -C /Users/timotejavsec/Documents/Projects/lift-deck add .gitignore)",
+      "Bash(git -C:*)",
+      "Bash(composer install:*)",
+      "Bash(ln -s /Users/timotejavsec/Documents/Projects/lift-deck/public/build /Users/timotejavsec/Documents/Projects/lift-deck/.worktrees/payments/public/build)",
+      "Bash(composer require:*)",
+      "Bash(touch:*)",
+      "Bash(grep -r \"cashierWebhooks\\\\|webhook\" /Users/timotejavsec/Documents/Projects/lift-deck/.worktrees/payments/vendor/laravel/cashier/src/ --include=*.php -l)",
+      "Bash(git worktree:*)",
+      "Bash(git branch:*)",
+      "Bash(gh pr:*)",
+      "Bash(git push:*)"
     ]
   },
   "enabledMcpjsonServers": [
