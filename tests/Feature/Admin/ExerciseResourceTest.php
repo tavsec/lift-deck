@@ -56,12 +56,12 @@ describe('Exercise Resource', function () {
     });
 
     it('can edit a global exercise', function () {
-        $exercise = Exercise::factory()->create(['coach_id' => null]);
+        $exercise = Exercise::factory()->create(['coach_id' => null, 'muscle_group' => 'chest']);
 
         Livewire::test(EditExercise::class, ['record' => $exercise->getRouteKey()])
-            ->fillForm(['name' => 'Updated Name'])
+            ->fillForm(['name' => 'Updated Name', 'muscle_group' => 'chest'])
             ->call('save')
-            ->assertNotified();
+            ->assertHasNoFormErrors();
 
         expect($exercise->fresh()->name)->toBe('Updated Name');
     });
