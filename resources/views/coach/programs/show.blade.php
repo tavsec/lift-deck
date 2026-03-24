@@ -87,24 +87,32 @@
                 <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100 mb-4">Assigned Clients ({{ $assignedClients->count() }})</h2>
                 <div class="flex flex-wrap gap-3">
                     @foreach($assignedClients as $assignment)
-                        <a href="{{ route('coach.clients.show', $assignment->client) }}" class="inline-flex items-center px-3 py-2 rounded-lg bg-gray-50 dark:bg-gray-950 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
-                            <div class="h-8 w-8 rounded-full bg-blue-100 flex items-center justify-center mr-2">
-                                <span class="text-sm font-medium text-blue-700">{{ strtoupper(substr($assignment->client->name, 0, 1)) }}</span>
-                            </div>
-                            <div>
-                                <p class="text-sm font-medium text-gray-900 dark:text-gray-100">{{ $assignment->client->name }}</p>
-                                <p class="text-xs text-gray-500 dark:text-gray-400">
-                                    @if($assignment->isActive())
-                                        <span class="text-green-600">Active</span>
-                                    @elseif($assignment->isPaused())
-                                        <span class="text-yellow-600">Paused</span>
-                                    @else
-                                        <span class="text-gray-600 dark:text-gray-400">Completed</span>
-                                    @endif
-                                    - Started {{ $assignment->started_at->format('M d, Y') }}
-                                </p>
-                            </div>
-                        </a>
+                        <div class="inline-flex items-center gap-2">
+                            <a href="{{ route('coach.clients.show', $assignment->client) }}" class="inline-flex items-center px-3 py-2 rounded-lg bg-gray-50 dark:bg-gray-950 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+                                <div class="h-8 w-8 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center mr-2">
+                                    <span class="text-sm font-medium text-blue-700 dark:text-blue-300">{{ strtoupper(substr($assignment->client->name, 0, 1)) }}</span>
+                                </div>
+                                <div>
+                                    <p class="text-sm font-medium text-gray-900 dark:text-gray-100">{{ $assignment->client->name }}</p>
+                                    <p class="text-xs text-gray-500 dark:text-gray-400">
+                                        @if($assignment->isActive())
+                                            <span class="text-green-600">Active</span>
+                                        @elseif($assignment->isPaused())
+                                            <span class="text-yellow-600">Paused</span>
+                                        @else
+                                            <span class="text-gray-600 dark:text-gray-400">Completed</span>
+                                        @endif
+                                        - Started {{ $assignment->started_at->format('M d, Y') }}
+                                    </p>
+                                </div>
+                            </a>
+                            <a href="{{ route('coach.programs.assignments.targets.edit', [$program, $assignment]) }}" class="inline-flex items-center px-2.5 py-1.5 border border-gray-300 dark:border-gray-700 rounded-md text-xs font-medium text-gray-600 dark:text-gray-400 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                                <svg class="w-3.5 h-3.5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3"/>
+                                </svg>
+                                Targets
+                            </a>
+                        </div>
                     @endforeach
                 </div>
             </div>

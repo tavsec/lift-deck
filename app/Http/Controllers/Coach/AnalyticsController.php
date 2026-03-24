@@ -239,6 +239,43 @@ class AnalyticsController extends Controller
 
         $exercisesByMuscleGroup = collect($exerciseList)->groupBy('muscleGroup')->sortKeys();
 
+        // --- Exercise Target History ---
+        $exerciseTargetHistory = [];
+        $activeClientProgram = $client->activeProgram();
+
+        if ($activeClientProgram) {
+            $allTargets = $activeClientProgram->exerciseTargets()
+                ->with('workoutExercise')
+                ->orderBy('effective_date')
+                ->get();
+
+            foreach ($allTargets as $target) {
+                if ($target->effective_date === null) {
+                    continue;
+                }
+
+                $exerciseId = $target->workoutExercise->exercise_id;
+                $date = $target->effective_date->format('Y-m-d');
+
+                if (! isset($exerciseTargetHistory[$exerciseId][$date])) {
+                    $exerciseTargetHistory[$exerciseId][$date] = (float) $target->target_weight;
+                } else {
+                    $exerciseTargetHistory[$exerciseId][$date] = max(
+                        $exerciseTargetHistory[$exerciseId][$date],
+                        (float) $target->target_weight
+                    );
+                }
+            }
+
+            foreach ($exerciseTargetHistory as $exId => $dateMap) {
+                $points = [];
+                foreach ($dateMap as $date => $weight) {
+                    $points[] = ['date' => $date, 'target' => $weight];
+                }
+                $exerciseTargetHistory[$exId] = $points;
+            }
+        }
+
         return view('coach.clients.analytics', compact(
             'client',
             'range',
@@ -255,15 +292,16 @@ class AnalyticsController extends Controller
             'nutritionStats',
             'exerciseProgressionData',
             'exercisesByMuscleGroup',
+            'exerciseTargetHistory',
         ));
     }
 
-    public function exportToExcel(Request $request, User $client){
+    public function exportToExcel(Request $request, User $client)
+    {
         if ($client->coach_id !== auth()->id()) {
             abort(403);
         }
 
-
-        return Excel::download(new CoachAnalyticsExport($client), "analytics.xlsx");
+        return Excel::download(new CoachAnalyticsExport($client), 'analytics.xlsx');
     }
 }

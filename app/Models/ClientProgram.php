@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class ClientProgram extends Model
 {
@@ -49,6 +50,11 @@ class ClientProgram extends Model
     public function isPaused(): bool
     {
         return $this->status === 'paused';
+    }
+
+    public function exerciseTargets(): HasMany
+    {
+        return $this->hasMany(ClientProgramExerciseTarget::class);
     }
 
     public function scopeActive($query)

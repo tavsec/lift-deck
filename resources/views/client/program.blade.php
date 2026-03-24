@@ -71,6 +71,30 @@
                                             @if($workoutExercise->notes)
                                                 <p class="text-xs text-gray-400 dark:text-gray-500 mt-1">{{ $workoutExercise->notes }}</p>
                                             @endif
+                                            @if($currentTargets->has($workoutExercise->id))
+                                                <div class="mt-1 flex flex-wrap gap-1">
+                                                    @foreach($currentTargets->get($workoutExercise->id)->sortKeys() as $setNum => $target)
+                                                        <span class="inline-flex items-center px-1.5 py-0.5 rounded text-xs bg-amber-50 dark:bg-amber-900/20 text-amber-700 dark:text-amber-300">
+                                                            Set {{ $setNum }}: {{ $target->target_weight }} kg
+                                                        </span>
+                                                    @endforeach
+                                                </div>
+                                            @endif
+                                            @if($targetHistory->has($workoutExercise->id) && $targetHistory->get($workoutExercise->id)->count() > 0)
+                                                <details class="mt-1">
+                                                    <summary class="text-xs text-gray-400 dark:text-gray-500 cursor-pointer select-none">Target history</summary>
+                                                    <div class="mt-1 space-y-0.5 pl-2 border-l-2 border-gray-200 dark:border-gray-700">
+                                                        @foreach($targetHistory->get($workoutExercise->id)->filter(fn ($t) => $t->effective_date !== null)->groupBy(fn ($t) => $t->effective_date->format('Y-m-d'))->sortKeysDesc() as $date => $entries)
+                                                            <div class="text-xs text-gray-500 dark:text-gray-400">
+                                                                <span class="font-medium">{{ \Carbon\Carbon::parse($date)->format('M d, Y') }}</span>
+                                                                @foreach($entries->sortBy('set_number') as $entry)
+                                                                    &middot; Set {{ $entry->set_number }}: {{ $entry->target_weight }} kg
+                                                                @endforeach
+                                                            </div>
+                                                        @endforeach
+                                                    </div>
+                                                </details>
+                                            @endif
                                         </div>
                                         <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-300">
                                             {{ ucfirst(str_replace('_', ' ', $workoutExercise->exercise->muscle_group)) }}
