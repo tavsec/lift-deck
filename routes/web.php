@@ -61,6 +61,8 @@ Route::middleware(['auth', 'verified', 'role:coach'])
         // Program assignment routes
         Route::get('programs/{program}/assign', [Coach\ProgramController::class, 'assignForm'])->name('programs.assign');
         Route::post('programs/{program}/assign', [Coach\ProgramController::class, 'assign'])->name('programs.assign.store');
+        Route::get('programs/{program}/assignments/{clientProgram}/targets', [Coach\ClientProgramTargetController::class, 'edit'])->name('programs.assignments.targets.edit');
+        Route::put('programs/{program}/assignments/{clientProgram}/targets', [Coach\ClientProgramTargetController::class, 'update'])->name('programs.assignments.targets.update');
 
         Route::post('clients/{client}/meal-logs', [Coach\ClientMealLogController::class, 'store'])->name('clients.meal-logs.store');
         Route::delete('clients/{client}/meal-logs/{mealLog}', [Coach\ClientMealLogController::class, 'destroy'])->name('clients.meal-logs.destroy');
