@@ -66,6 +66,8 @@ class ClientProgramTargetController extends Controller
             );
         }
 
+        $clientProgram->loadMissing('client');
+
         return redirect()->route('coach.programs.assignments.targets.edit', [$program, $clientProgram])
             ->with('success', 'Target weights updated for '.$clientProgram->client->name.'.');
     }
