@@ -2,6 +2,8 @@
 
 namespace App\Filament\Resources\Clients\Tables;
 
+use App\Filament\Resources\Users\UserResource;
+use App\Models\User;
 use Filament\Actions\ViewAction;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
@@ -21,7 +23,10 @@ class ClientsTable
                 TextColumn::make('coach.name')
                     ->label('Coach')
                     ->sortable()
-                    ->placeholder('—'),
+                    ->placeholder('—')
+                    ->url(fn (User $record): ?string => $record->coach
+                        ? UserResource::getUrl('view', ['record' => $record->coach])
+                        : null),
                 TextColumn::make('assignedTrackingMetrics_count')
                     ->label('Metrics')
                     ->counts('assignedTrackingMetrics')

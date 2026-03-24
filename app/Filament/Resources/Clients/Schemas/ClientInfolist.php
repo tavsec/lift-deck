@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Clients\Schemas;
 
+use App\Filament\Resources\Users\UserResource;
 use Filament\Infolists\Components\RepeatableEntry;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Schemas\Components\Section;
@@ -18,7 +19,10 @@ class ClientInfolist
                     ->copyable(),
                 TextEntry::make('coach.name')
                     ->label('Coach')
-                    ->placeholder('No coach assigned'),
+                    ->placeholder('No coach assigned')
+                    ->url(fn ($record): ?string => $record->coach
+                        ? UserResource::getUrl('view', ['record' => $record->coach])
+                        : null),
                 TextEntry::make('created_at')
                     ->dateTime(),
                 TextEntry::make('is_track_only')

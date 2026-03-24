@@ -2,6 +2,8 @@
 
 namespace App\Filament\Resources\Users\RelationManagers;
 
+use App\Filament\Resources\Clients\ClientResource;
+use App\Models\User;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Schemas\Schema;
 use Filament\Tables\Columns\TextColumn;
@@ -22,7 +24,8 @@ class ClientsRelationManager extends RelationManager
             ->columns([
                 TextColumn::make('name')
                     ->searchable()
-                    ->sortable(),
+                    ->sortable()
+                    ->url(fn (User $record): string => ClientResource::getUrl('view', ['record' => $record])),
                 TextColumn::make('email')
                     ->searchable(),
                 TextColumn::make('assignedTrackingMetrics.trackingMetric.name')
