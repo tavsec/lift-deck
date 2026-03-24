@@ -22,6 +22,7 @@ class ClientProgramExerciseTargetFactory extends Factory
             'client_program_id' => ClientProgram::factory(),
             'workout_exercise_id' => WorkoutExercise::factory(),
             'set_number' => 1,
+            'effective_date' => today(),
             'target_weight' => fake()->randomFloat(2, 20, 200),
         ];
     }

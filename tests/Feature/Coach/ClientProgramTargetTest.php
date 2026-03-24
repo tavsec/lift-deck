@@ -57,6 +57,7 @@ it('coach can update an existing target weight', function () {
         'workout_exercise_id' => $this->workoutExercise->id,
         'set_number' => 1,
         'target_weight' => 60.00,
+        'effective_date' => today(),
     ]);
 
     $this->actingAs($this->coach)
@@ -80,6 +81,7 @@ it('clears target when an empty value is submitted', function () {
         'workout_exercise_id' => $this->workoutExercise->id,
         'set_number' => 1,
         'target_weight' => 60.00,
+        'effective_date' => today(),
     ]);
 
     $this->actingAs($this->coach)
@@ -123,4 +125,81 @@ it('coach cannot view targets for a client program belonging to a different prog
     $this->actingAs($this->coach)
         ->get(route('coach.programs.assignments.targets.edit', [$otherProgram, $this->clientProgram]))
         ->assertForbidden();
+});
+
+it('saving on a new day creates a new history record instead of overwriting', function () {
+    ClientProgramExerciseTarget::factory()->create([
+        'client_program_id' => $this->clientProgram->id,
+        'workout_exercise_id' => $this->workoutExercise->id,
+        'set_number' => 1,
+        'effective_date' => today()->subDay(),
+        'target_weight' => 60.00,
+    ]);
+
+    $this->actingAs($this->coach)
+        ->put(route('coach.programs.assignments.targets.update', [$this->program, $this->clientProgram]), [
+            'targets' => [$this->workoutExercise->id => [1 => '80.00']],
+        ])
+        ->assertRedirect();
+
+    expect(ClientProgramExerciseTarget::where([
+        'client_program_id' => $this->clientProgram->id,
+        'workout_exercise_id' => $this->workoutExercise->id,
+        'set_number' => 1,
+    ])->count())->toBe(2);
+
+    expect(ClientProgramExerciseTarget::where([
+        'client_program_id' => $this->clientProgram->id,
+        'workout_exercise_id' => $this->workoutExercise->id,
+        'set_number' => 1,
+        'effective_date' => today()->toDateString(),
+    ])->first()->target_weight)->toEqual('80.00');
+});
+
+it('saving on the same day updates the existing record', function () {
+    ClientProgramExerciseTarget::factory()->create([
+        'client_program_id' => $this->clientProgram->id,
+        'workout_exercise_id' => $this->workoutExercise->id,
+        'set_number' => 1,
+        'effective_date' => today(),
+        'target_weight' => 60.00,
+    ]);
+
+    $this->actingAs($this->coach)
+        ->put(route('coach.programs.assignments.targets.update', [$this->program, $this->clientProgram]), [
+            'targets' => [$this->workoutExercise->id => [1 => '75.00']],
+        ])
+        ->assertRedirect();
+
+    expect(ClientProgramExerciseTarget::where([
+        'client_program_id' => $this->clientProgram->id,
+        'workout_exercise_id' => $this->workoutExercise->id,
+        'set_number' => 1,
+    ])->count())->toBe(1);
+
+    expect(ClientProgramExerciseTarget::where([
+        'client_program_id' => $this->clientProgram->id,
+        'workout_exercise_id' => $this->workoutExercise->id,
+        'set_number' => 1,
+        'effective_date' => today()->toDateString(),
+    ])->first()->target_weight)->toEqual('75.00');
+});
+
+it('clearing does not remove historical records from previous days', function () {
+    ClientProgramExerciseTarget::factory()->create([
+        'client_program_id' => $this->clientProgram->id,
+        'workout_exercise_id' => $this->workoutExercise->id,
+        'set_number' => 1,
+        'effective_date' => today()->subDay(),
+        'target_weight' => 60.00,
+    ]);
+
+    $this->actingAs($this->coach)
+        ->put(route('coach.programs.assignments.targets.update', [$this->program, $this->clientProgram]), [
+            'targets' => [$this->workoutExercise->id => [1 => null]],
+        ])
+        ->assertRedirect();
+
+    // Previous day's record remains
+    expect(ClientProgramExerciseTarget::where('client_program_id', $this->clientProgram->id)->count())->toBe(1);
 });

@@ -254,7 +254,7 @@
 
             <div x-show="open" x-collapse class="px-4 pb-4">
                 @if(count($exerciseProgressionData) > 0)
-                    <div x-data="exerciseProgression({{ json_encode($exerciseProgressionData) }}, {{ json_encode($exercisesByMuscleGroup) }})" x-init="init()">
+                    <div x-data="exerciseProgression({{ json_encode($exerciseProgressionData) }}, {{ json_encode($exercisesByMuscleGroup) }}, {{ json_encode($exerciseTargetHistory) }})" x-init="init()">
                         <div class="mb-4">
                             <label class="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">Exercise</label>
                             <select x-model="selectedExercise" @change="updateChart()" class="block w-full sm:w-64 rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm">
@@ -442,7 +442,7 @@
                 };
             }
 
-            function exerciseProgression(allData, exerciseGroups) {
+            function exerciseProgression(allData, exerciseGroups, targetHistory = {}) {
                 return {
                     selectedExercise: '',
                     exerciseGroups,
@@ -488,30 +488,60 @@
                             return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
                         });
 
+                        const targets = (targetHistory[this.selectedExercise] || [])
+                            .slice()
+                            .sort((a, b) => a.date.localeCompare(b.date));
+
+                        function activeTarget(dateStr) {
+                            let result = null;
+                            for (const t of targets) {
+                                if (t.date <= dateStr) { result = t.target; } else { break; }
+                            }
+                            return result;
+                        }
+
+                        const targetValues = data.map(d => activeTarget(d.date));
+                        const hasTargets = targets.length > 0;
+
+                        const datasets = [{
+                            label: 'Top Set Weight (kg)',
+                            data: data.map(d => d.weight),
+                            borderColor: '#8B5CF6',
+                            backgroundColor: 'rgba(139, 92, 246, 0.1)',
+                            fill: true,
+                            tension: 0.3,
+                            pointRadius: 4,
+                        }];
+
+                        if (hasTargets) {
+                            datasets.push({
+                                label: 'Target (kg)',
+                                data: targetValues,
+                                borderColor: '#f59e0b',
+                                backgroundColor: 'transparent',
+                                borderDash: [5, 5],
+                                pointRadius: 0,
+                                tension: 0,
+                                stepped: true,
+                            });
+                        }
+
                         new Chart(ctx, {
                             type: 'line',
-                            data: {
-                                labels,
-                                datasets: [{
-                                    label: 'Top Set Weight (kg)',
-                                    data: data.map(d => d.weight),
-                                    borderColor: '#8B5CF6',
-                                    backgroundColor: 'rgba(139, 92, 246, 0.1)',
-                                    fill: true,
-                                    tension: 0.3,
-                                    pointRadius: 4,
-                                }]
-                            },
+                            data: { labels, datasets },
                             options: {
                                 responsive: true,
                                 maintainAspectRatio: false,
                                 plugins: {
-                                    legend: { display: false },
+                                    legend: { display: hasTargets, labels: { color: theme.tickColor, boxWidth: 12, padding: 12 } },
                                     tooltip: {
                                         callbacks: {
                                             label: function(ctx) {
-                                                const d = data[ctx.dataIndex];
-                                                return d.weight + 'kg x ' + d.reps + ' reps';
+                                                if (ctx.datasetIndex === 0) {
+                                                    const d = data[ctx.dataIndex];
+                                                    return d.weight + 'kg x ' + d.reps + ' reps';
+                                                }
+                                                return ctx.parsed.y !== null ? 'Target: ' + ctx.parsed.y + 'kg' : null;
                                             }
                                         }
                                     }

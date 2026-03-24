@@ -26,10 +26,18 @@ class ClientProgramTargetController extends Controller
         $clientProgram->load(['client', 'exerciseTargets']);
 
         $targetsByExercise = $clientProgram->exerciseTargets
+            ->sortByDesc('effective_date')
             ->groupBy('workout_exercise_id')
-            ->map(fn ($targets) => $targets->keyBy('set_number'));
+            ->map(fn ($targets) => $targets
+                ->groupBy('set_number')
+                ->map(fn ($setTargets) => $setTargets->first())
+            );
 
-        return view('coach.programs.targets', compact('program', 'clientProgram', 'targetsByExercise'));
+        $historyByExercise = $clientProgram->exerciseTargets
+            ->sortByDesc('effective_date')
+            ->groupBy('workout_exercise_id');
+
+        return view('coach.programs.targets', compact('program', 'clientProgram', 'targetsByExercise', 'historyByExercise'));
     }
 
     public function update(Request $request, Program $program, ClientProgram $clientProgram): RedirectResponse
@@ -70,6 +78,7 @@ class ClientProgramTargetController extends Controller
                     ClientProgramExerciseTarget::where('client_program_id', $clientProgram->id)
                         ->where('workout_exercise_id', $workoutExerciseId)
                         ->where('set_number', $setNumber)
+                        ->where('effective_date', today()->toDateString())
                         ->delete();
 
                     continue;
@@ -80,6 +89,7 @@ class ClientProgramTargetController extends Controller
                         'client_program_id' => $clientProgram->id,
                         'workout_exercise_id' => $workoutExerciseId,
                         'set_number' => $setNumber,
+                        'effective_date' => today()->toDateString(),
                     ],
                     ['target_weight' => $weight]
                 );

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -14,6 +15,7 @@ class ClientProgramExerciseTarget extends Model
         'client_program_id',
         'workout_exercise_id',
         'set_number',
+        'effective_date',
         'target_weight',
     ];
 
@@ -23,6 +25,14 @@ class ClientProgramExerciseTarget extends Model
             'set_number' => 'integer',
             'target_weight' => 'decimal:2',
         ];
+    }
+
+    protected function effectiveDate(): Attribute
+    {
+        return Attribute::make(
+            get: fn (?string $value) => $value ? \Illuminate\Support\Carbon::parse($value) : null,
+            set: fn (mixed $value) => $value ? \Illuminate\Support\Carbon::parse($value)->toDateString() : null,
+        );
     }
 
     public function clientProgram(): BelongsTo

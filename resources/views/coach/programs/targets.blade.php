@@ -74,6 +74,23 @@
                                             @endif
                                         </div>
                                     </div>
+                                    @if($historyByExercise->has($workoutExercise->id) && $historyByExercise->get($workoutExercise->id)->isNotEmpty())
+                                        <details class="mt-2">
+                                            <summary class="text-xs text-gray-400 dark:text-gray-500 cursor-pointer select-none hover:text-gray-600 dark:hover:text-gray-300">
+                                                Target history
+                                            </summary>
+                                            <div class="mt-2 space-y-1 pl-2 border-l-2 border-gray-200 dark:border-gray-700">
+                                                @foreach($historyByExercise->get($workoutExercise->id)->groupBy(fn ($t) => $t->effective_date->format('Y-m-d'))->sortKeysDesc() as $date => $entries)
+                                                    <div class="text-xs text-gray-500 dark:text-gray-400">
+                                                        <span class="font-medium text-gray-700 dark:text-gray-300">{{ \Carbon\Carbon::parse($date)->format('M d, Y') }}</span>
+                                                        @foreach($entries->sortBy('set_number') as $entry)
+                                                            &middot; Set {{ $entry->set_number }}: {{ $entry->target_weight }} kg
+                                                        @endforeach
+                                                    </div>
+                                                @endforeach
+                                            </div>
+                                        </details>
+                                    @endif
                                 </div>
                             @endforeach
                         </div>
