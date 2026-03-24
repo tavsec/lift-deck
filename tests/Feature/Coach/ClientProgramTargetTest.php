@@ -18,6 +18,7 @@ beforeEach(function () {
     $this->workoutExercise = WorkoutExercise::factory()->create([
         'program_workout_id' => $this->workout->id,
         'exercise_id' => $this->exercise->id,
+        'sets' => 3,
     ]);
 
     $this->clientProgram = ClientProgram::factory()->create([
@@ -37,37 +38,39 @@ it('coach can view the targets edit page', function () {
 it('coach can set a target weight for an exercise', function () {
     $this->actingAs($this->coach)
         ->put(route('coach.programs.assignments.targets.update', [$this->program, $this->clientProgram]), [
-            'targets' => [$this->workoutExercise->id => '80.00'],
+            'targets' => [$this->workoutExercise->id => [1 => '80.00', 2 => '75.00', 3 => '70.00']],
         ])
         ->assertRedirect();
 
-    $target = ClientProgramExerciseTarget::where([
+    expect(ClientProgramExerciseTarget::where([
         'client_program_id' => $this->clientProgram->id,
         'workout_exercise_id' => $this->workoutExercise->id,
-    ])->first();
-    expect($target->target_weight)->toEqual('80.00');
+        'set_number' => 1,
+    ])->first()->target_weight)->toEqual('80.00');
+
+    expect(ClientProgramExerciseTarget::where('client_program_id', $this->clientProgram->id)->count())->toBe(3);
 });
 
 it('coach can update an existing target weight', function () {
     ClientProgramExerciseTarget::factory()->create([
         'client_program_id' => $this->clientProgram->id,
         'workout_exercise_id' => $this->workoutExercise->id,
+        'set_number' => 1,
         'target_weight' => 60.00,
     ]);
 
     $this->actingAs($this->coach)
         ->put(route('coach.programs.assignments.targets.update', [$this->program, $this->clientProgram]), [
-            'targets' => [$this->workoutExercise->id => '90.00'],
+            'targets' => [$this->workoutExercise->id => [1 => '90.00']],
         ])
         ->assertRedirect();
 
-    $target = ClientProgramExerciseTarget::where([
+    expect(ClientProgramExerciseTarget::where([
         'client_program_id' => $this->clientProgram->id,
         'workout_exercise_id' => $this->workoutExercise->id,
-    ])->first();
-    expect($target->target_weight)->toEqual('90.00');
+        'set_number' => 1,
+    ])->first()->target_weight)->toEqual('90.00');
 
-    // Only one record should exist
     expect(ClientProgramExerciseTarget::where('client_program_id', $this->clientProgram->id)->count())->toBe(1);
 });
 
@@ -75,12 +78,13 @@ it('clears target when an empty value is submitted', function () {
     ClientProgramExerciseTarget::factory()->create([
         'client_program_id' => $this->clientProgram->id,
         'workout_exercise_id' => $this->workoutExercise->id,
+        'set_number' => 1,
         'target_weight' => 60.00,
     ]);
 
     $this->actingAs($this->coach)
         ->put(route('coach.programs.assignments.targets.update', [$this->program, $this->clientProgram]), [
-            'targets' => [$this->workoutExercise->id => null],
+            'targets' => [$this->workoutExercise->id => [1 => null]],
         ])
         ->assertRedirect();
 
@@ -100,7 +104,7 @@ it('another coach cannot update targets for someone elses program', function () 
 
     $this->actingAs($otherCoach)
         ->put(route('coach.programs.assignments.targets.update', [$this->program, $this->clientProgram]), [
-            'targets' => [$this->workoutExercise->id => '80.00'],
+            'targets' => [$this->workoutExercise->id => [1 => '80.00']],
         ])
         ->assertForbidden();
 });
@@ -108,9 +112,9 @@ it('another coach cannot update targets for someone elses program', function () 
 it('rejects negative target weight', function () {
     $this->actingAs($this->coach)
         ->put(route('coach.programs.assignments.targets.update', [$this->program, $this->clientProgram]), [
-            'targets' => [$this->workoutExercise->id => '-5'],
+            'targets' => [$this->workoutExercise->id => [1 => '-5']],
         ])
-        ->assertSessionHasErrors('targets.'.$this->workoutExercise->id);
+        ->assertSessionHasErrors('targets.'.$this->workoutExercise->id.'.1');
 });
 
 it('coach cannot view targets for a client program belonging to a different program', function () {

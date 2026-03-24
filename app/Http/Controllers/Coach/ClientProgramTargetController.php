@@ -25,9 +25,9 @@ class ClientProgramTargetController extends Controller
         $program->load('workouts.exercises.exercise');
         $clientProgram->load(['client', 'exerciseTargets']);
 
-        // Key targets by workout_exercise_id for easy lookup in the view
         $targetsByExercise = $clientProgram->exerciseTargets
-            ->keyBy('workout_exercise_id');
+            ->groupBy('workout_exercise_id')
+            ->map(fn ($targets) => $targets->keyBy('set_number'));
 
         return view('coach.programs.targets', compact('program', 'clientProgram', 'targetsByExercise'));
     }
@@ -42,28 +42,48 @@ class ClientProgramTargetController extends Controller
             abort(403);
         }
 
+        $program->loadMissing('workouts.exercises');
+
+        $validExercises = $program->workouts
+            ->flatMap(fn ($workout) => $workout->exercises)
+            ->keyBy('id');
+
         $validated = $request->validate([
             'targets' => ['nullable', 'array'],
-            'targets.*' => ['nullable', 'numeric', 'min:0', 'max:9999.99'],
+            'targets.*' => ['nullable', 'array'],
+            'targets.*.*' => ['nullable', 'numeric', 'min:0', 'max:9999.99'],
         ]);
 
-        foreach ($validated['targets'] ?? [] as $workoutExerciseId => $weight) {
-            if ($weight === null) {
-                // Remove target if cleared
-                ClientProgramExerciseTarget::where('client_program_id', $clientProgram->id)
-                    ->where('workout_exercise_id', $workoutExerciseId)
-                    ->delete();
+        foreach ($validated['targets'] ?? [] as $workoutExerciseId => $sets) {
+            $workoutExercise = $validExercises->get($workoutExerciseId);
 
+            if (! $workoutExercise) {
                 continue;
             }
 
-            ClientProgramExerciseTarget::updateOrCreate(
-                [
-                    'client_program_id' => $clientProgram->id,
-                    'workout_exercise_id' => $workoutExerciseId,
-                ],
-                ['target_weight' => $weight]
-            );
+            foreach ($sets as $setNumber => $weight) {
+                if ($setNumber < 1 || $setNumber > $workoutExercise->sets) {
+                    continue;
+                }
+
+                if ($weight === null) {
+                    ClientProgramExerciseTarget::where('client_program_id', $clientProgram->id)
+                        ->where('workout_exercise_id', $workoutExerciseId)
+                        ->where('set_number', $setNumber)
+                        ->delete();
+
+                    continue;
+                }
+
+                ClientProgramExerciseTarget::updateOrCreate(
+                    [
+                        'client_program_id' => $clientProgram->id,
+                        'workout_exercise_id' => $workoutExerciseId,
+                        'set_number' => $setNumber,
+                    ],
+                    ['target_weight' => $weight]
+                );
+            }
         }
 
         $clientProgram->loadMissing('client');

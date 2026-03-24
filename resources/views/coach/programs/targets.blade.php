@@ -41,30 +41,39 @@
                         <div class="divide-y divide-gray-200 dark:divide-gray-800">
                             @foreach($workout->exercises as $workoutExercise)
                                 <div class="px-6 py-4 flex flex-col gap-1">
-                                    <div class="flex items-center justify-between gap-4">
+                                    <div class="flex items-start justify-between gap-4">
                                         <div class="flex-1 min-w-0">
                                             <p class="text-sm font-medium text-gray-900 dark:text-gray-100 truncate">{{ $workoutExercise->exercise->name }}</p>
                                             <p class="text-xs text-gray-500 dark:text-gray-400">
                                                 {{ $workoutExercise->sets }} sets &times; {{ $workoutExercise->reps }} reps
                                             </p>
                                         </div>
-                                        <div class="flex items-center gap-2 flex-shrink-0">
-                                            <input
-                                                type="number"
-                                                name="targets[{{ $workoutExercise->id }}]"
-                                                value="{{ old('targets.' . $workoutExercise->id, $targetsByExercise->get($workoutExercise->id)?->target_weight) }}"
-                                                min="0"
-                                                max="9999.99"
-                                                step="0.5"
-                                                placeholder="—"
-                                                class="w-28 rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm text-right @error('targets.' . $workoutExercise->id) border-red-300 @enderror"
-                                            >
-                                            <span class="text-sm text-gray-500 dark:text-gray-400 w-6">kg</span>
+                                        <div class="flex flex-col gap-2 flex-shrink-0">
+                                            @if($workoutExercise->sets > 0)
+                                                @for ($set = 1; $set <= $workoutExercise->sets; $set++)
+                                                    <div class="flex items-center gap-2">
+                                                        <span class="text-xs text-gray-400 dark:text-gray-500 w-10 text-right">Set {{ $set }}</span>
+                                                        <input
+                                                            type="number"
+                                                            name="targets[{{ $workoutExercise->id }}][{{ $set }}]"
+                                                            value="{{ old('targets.' . $workoutExercise->id . '.' . $set, $targetsByExercise->get($workoutExercise->id)?->get($set)?->target_weight) }}"
+                                                            min="0"
+                                                            max="9999.99"
+                                                            step="0.5"
+                                                            placeholder="—"
+                                                            class="w-28 rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm text-right @error('targets.' . $workoutExercise->id . '.' . $set) border-red-300 @enderror"
+                                                        >
+                                                        <span class="text-sm text-gray-500 dark:text-gray-400 w-6">kg</span>
+                                                    </div>
+                                                    @error('targets.' . $workoutExercise->id . '.' . $set)
+                                                        <p class="text-xs text-red-600 dark:text-red-400 text-right">{{ $message }}</p>
+                                                    @enderror
+                                                @endfor
+                                            @else
+                                                <p class="text-xs text-gray-400 dark:text-gray-500 italic">No sets configured</p>
+                                            @endif
                                         </div>
                                     </div>
-                                    @error('targets.' . $workoutExercise->id)
-                                        <p class="text-xs text-red-600 dark:text-red-400">{{ $message }}</p>
-                                    @enderror
                                 </div>
                             @endforeach
                         </div>
