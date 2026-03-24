@@ -30,8 +30,7 @@ class ClientsRelationManager extends RelationManager
                     ->searchable(),
                 TextColumn::make('assignedTrackingMetrics.trackingMetric.name')
                     ->label('Tracking Metrics')
-                    ->listWithLineBreaks()
-                    ->bulleted()
+                    ->badge()
                     ->placeholder('None'),
             ])
             ->filters([]);
