@@ -43,7 +43,7 @@ class UserResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            \App\Filament\Resources\Users\RelationManagers\ClientsRelationManager::class,
         ];
     }
 
@@ -59,6 +59,6 @@ class UserResource extends Resource
 
     public static function getEloquentQuery(): Builder
     {
-        return parent::getEloquentQuery()->where("role", "coach");
+        return parent::getEloquentQuery()->where('role', 'coach');
     }
 }
