@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Client;
 use App\Http\Controllers\Coach;
+use App\Http\Controllers\LandingLocaleController;
 use Illuminate\Support\Facades\Route;
 
 Route::domain('beta.liftdeck.io')->group(function () {
@@ -10,9 +11,7 @@ Route::domain('beta.liftdeck.io')->group(function () {
     });
 });
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [LandingLocaleController::class, 'index'])->name('landing.detect');
 
 Route::get('/offline', fn () => view('offline'))->name('offline');
 
@@ -147,3 +146,7 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__.'/auth.php';
+
+Route::get('/{locale}', [LandingLocaleController::class, 'show'])
+    ->where('locale', 'en|si|hr')
+    ->name('landing');
