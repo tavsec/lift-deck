@@ -46,6 +46,7 @@
                 @endif
                 @php $unreadNotificationCount = auth()->user()->unreadNotifications()->count(); @endphp
                 <div class="flex items-center space-x-3">
+                    <x-locale-switcher />
                     <form method="POST" action="{{ route('user.dark-mode.toggle') }}">
                         @csrf
                         @method('PATCH')
