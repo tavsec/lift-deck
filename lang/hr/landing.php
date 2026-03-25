@@ -74,6 +74,8 @@ return [
             'get_started' => [
                 'question' => 'Kako mogu početi?',
                 'answer' => 'Prijavite se za zatvorenu betu! Ispunite ovaj',
+                'short_form' => 'kratki obrazac',
+                'answer_suffix' => 'i naš tim će vas kontaktirati u roku od 24 sata kako bi postavio vaš račun i proveo vas kroz uvođenje.',
             ],
         ],
     ],

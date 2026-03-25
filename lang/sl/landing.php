@@ -74,6 +74,8 @@ return [
             'get_started' => [
                 'question' => 'Kako začnem?',
                 'answer' => 'Prijavite se za zaprto beta testiranje! Izpolnite ta',
+                'short_form' => 'kratek obrazec',
+                'answer_suffix' => 'in naša ekipa vas bo kontaktirala v 24 urah, da nastavi vaš račun in vas vodi skozi uvajanje.',
             ],
         ],
     ],

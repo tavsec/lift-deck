@@ -74,6 +74,8 @@ return [
             'get_started' => [
                 'question' => 'How do I get started?',
                 'answer' => 'Apply for closed beta! Fill out this',
+                'short_form' => 'short form',
+                'answer_suffix' => 'and our team will contact you within 24 hours to set up your account and walk you through onboarding.',
             ],
         ],
     ],

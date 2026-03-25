@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>
-        LiftDeck | Elevate your coaching experience!
+        {{ __('landing.title') }}
     </title>
     <link
         rel="shortcut icon"
@@ -47,7 +47,7 @@
                             href="{{ route('coach.dashboard') }}"
                             class="loginBtn px-[22px] py-2 text-base font-medium text-white hover:opacity-70"
                         >
-                            Sign In
+                            {{ __('landing.nav.sign_in') }}
                         </a>
                     </div>
                 </div>
@@ -72,14 +72,14 @@
                     <h1
                         class="mb-6 text-3xl font-bold leading-snug text-white sm:text-4xl sm:leading-snug lg:text-5xl lg:leading-[1.2]"
                     >
-                        LiftDeck
+                        {{ __('landing.hero.heading') }}
                     </h1>
                     <p
                         class="mx-auto mb-9 max-w-[600px] text-base font-medium text-white sm:text-lg sm:leading-[1.44]"
                     >
-                        Elevate your coaching experience to next level!
+                        {{ __('landing.hero.subheading') }}
                         <br>
-                        <i class="text-sm">Currently in closed beta</i>
+                        <i class="text-sm">{{ __('landing.hero.beta_notice') }}</i>
                     </p>
                     <ul
                         class="flex flex-wrap items-center justify-center gap-5 mb-10"
@@ -89,7 +89,7 @@
                                 href="https://beta.liftdeck.io"
                                 class="inline-flex items-center justify-center rounded-md bg-white px-7 py-[14px] text-center text-base font-medium text-dark shadow-1 transition duration-300 ease-in-out hover:bg-gray-2 hover:text-body-color"
                             >
-                                Join beta testing
+                                {{ __('landing.hero.join_beta') }}
                             </a>
                         </li>
                     </ul>
@@ -1262,15 +1262,15 @@
             <div class="w-full px-4">
                 <div class="mx-auto mb-12 max-w-[485px] text-center lg:mb-[70px]">
               <span class="block mb-2 text-lg font-semibold text-primary">
-                Features
+                {{ __('landing.features.label') }}
               </span>
                     <h2
                         class="mb-3 text-3xl font-bold text-dark dark:text-white sm:text-4xl md:text-[40px] md:leading-[1.2]"
                     >
-                        Main Features Of LiftDeck
+                        {{ __('landing.features.heading') }}
                     </h2>
                     <p class="text-base text-body-color dark:text-dark-6">
-                        Onboard clients in minutes with guided intake forms that capture goals, health history, and equipment. Coaches get instant "client-ready" profiles with auto-flagged risks and constraints.
+                        {{ __('landing.features.onboarding.description') }}
                     </p>
                 </div>
             </div>
@@ -1298,10 +1298,10 @@
                         </svg>
                     </div>
                     <h4 class="mb-3 text-xl font-bold text-dark dark:text-white">
-                        Smart Client Onboarding
+                        {{ __('landing.features.onboarding.title') }}
                     </h4>
                     <p class="mb-8 text-body-color dark:text-dark-6 lg:mb-9">
-                        Onboard clients in minutes with guided intake forms that capture goals, health history, and equipment. Coaches get instant "client-ready" profiles with auto-flagged risks and constraints.                    </p>
+                        {{ __('landing.features.onboarding.description') }}                    </p>
 
                 </div>
             </div>
@@ -1327,10 +1327,10 @@
                         </svg>
                     </div>
                     <h4 class="mb-3 text-xl font-bold text-dark dark:text-white">
-                        Drag & Drop Training
+                        {{ __('landing.features.training.title') }}
                     </h4>
                     <p class="mb-8 text-body-color dark:text-dark-6 lg:mb-9">
-                        Build and assign personalized training programs using drag-and-drop workouts and 100+ exercise templates. Auto-progression rules keep clients advancing without manual tweaks.                    </p>
+                        {{ __('landing.features.training.description') }}                    </p>
 
                 </div>
             </div>
@@ -1388,10 +1388,10 @@
                         </svg>
                     </div>
                     <h4 class="mb-3 text-xl font-bold text-dark dark:text-white">
-                        Custom Meal Planning
+                        {{ __('landing.features.nutrition.title') }}
                     </h4>
                     <p class="mb-8 text-body-color dark:text-dark-6 lg:mb-9">
-                        Create custom meal plans with macro calculators and reusable templates. Clients log meals via photos for easy adherence tracking and weekly nutrition scores.                    </p>
+                        {{ __('landing.features.nutrition.description') }}                    </p>
 
                 </div>
             </div>
@@ -1429,10 +1429,10 @@
                         </svg>
                     </div>
                     <h4 class="mb-3 text-xl font-bold text-dark dark:text-white">
-                        Progress Tracking
+                        {{ __('landing.features.tracking.title') }}
                     </h4>
                     <p class="mb-8 text-body-color dark:text-dark-6 lg:mb-9">
-                        Track real results with simple charts for lifts, body measurements, and adherence streaks. Clients see "wins" like PRs and habit milestones to stay motivated.                    </p>
+                        {{ __('landing.features.tracking.description') }}                    </p>
 
                 </div>
             </div>
@@ -1454,11 +1454,11 @@
                         <h2
                             class="mb-5 text-3xl font-bold leading-tight text-dark dark:text-white sm:text-[40px] sm:leading-[1.2]"
                         >
-                            All-in-One Platform to Coach Smarter                        </h2>
+                            {{ __('landing.about.heading') }}                        </h2>
                         <p
                             class="mb-10 text-base leading-relaxed text-body-color dark:text-dark-6"
                         >
-                            LiftDeck gives personal trainers everything needed to onboard clients, build programs, track nutrition, and grow their business—in one branded app.
+                            {{ __('landing.about.description') }}
                         </p>
 
                     </div>
@@ -1482,21 +1482,21 @@
                         <h2
                             class="mb-2.5 text-3xl font-bold text-white md:text-[38px] md:leading-[1.44]"
                         >
-                            <span>What Are You Looking For?</span>
+                            <span>{{ __('landing.cta.what_looking_for') }}</span>
                             <span class="text-3xl font-normal md:text-[40px]">
-                    Get Started Now
+                    {{ __('landing.cta.heading') }}
                   </span>
                         </h2>
                         <p
                             class="mx-auto mb-6 max-w-[515px] text-base leading-[1.5] text-white"
                         >
-                            LiftDeck is currently in closed beta. Join our select group of trainers testing the platform.
+                            {{ __('landing.cta.description') }}
                         </p>
                         <a
                             href="https://beta.liftdeck.io"
                             class="inline-block rounded-md border border-transparent bg-secondary px-7 py-3 text-base font-medium text-white transition hover:bg-[#0BB489]"
                         >
-                            Join beta testing
+                            {{ __('landing.cta.join_beta') }}
                         </a>
                     </div>
                 </div>
@@ -1581,12 +1581,12 @@
             <div class="w-full px-4">
                 <div class="mx-auto mb-[60px] max-w-[520px] text-center">
               <span class="block mb-2 text-lg font-semibold text-primary">
-                FAQ
+                {{ __('landing.faq.label') }}
               </span>
                     <h2
                         class="mb-3 text-3xl font-bold leading-[1.2] text-dark dark:text-white sm:text-4xl md:text-[40px]"
                     >
-                        Any Questions? Look Here
+                        {{ __('landing.faq.heading') }}
                     </h2>
                     <p
                         class="mx-auto max-w-[485px] text-base text-body-color dark:text-dark-6"
@@ -1623,10 +1623,10 @@
                         <h3
                             class="mb-6 text-xl font-semibold text-dark dark:text-white sm:text-2xl lg:text-xl xl:text-2xl"
                         >
-                            Is LiftDeck right for me?
+                            {{ __('landing.faq.questions.right_for_me.question') }}
                         </h3>
                         <p class="text-base text-body-color dark:text-dark-6">
-                            LiftDeck is perfect for personal trainers and gym coaches with 5–50 clients who want to replace spreadsheets, WhatsApp, and multiple apps with one professional platform. Ideal for hybrid or online coaching.
+                            {{ __('landing.faq.questions.right_for_me.answer') }}
                         </p>
                     </div>
                 </div>
@@ -1655,10 +1655,10 @@
                         <h3
                             class="mb-6 text-xl font-semibold text-dark dark:text-white sm:text-2xl lg:text-xl xl:text-2xl"
                         >
-                            How much does it cost?
+                            {{ __('landing.faq.questions.cost.question') }}
                         </h3>
                         <p class="text-base text-body-color dark:text-dark-6">
-                            Currently, LiftDeck is in closed beta, but if you would like to test it, contact us at <a
+                            {{ __('landing.faq.questions.cost.answer') }} <a
                                 href="mailto:beta@liftdeck.io" class="text-blue-500">beta@liftdeck.io</a>
                         </p>
                     </div>
@@ -1688,10 +1688,10 @@
                         <h3
                             class="mb-6 text-xl font-semibold text-dark dark:text-white sm:text-2xl lg:text-xl xl:text-2xl"
                         >
-                            What about nutrition tracking?
+                            {{ __('landing.faq.questions.nutrition.question') }}
                         </h3>
                         <p class="text-base text-body-color dark:text-dark-6">
-                            Full meal planning included: create templates, set macros, clients log via photos. Track adherence and get weekly nutrition reports.                        </p>
+                            {{ __('landing.faq.questions.nutrition.answer') }}                        </p>
                     </div>
                 </div>
             </div>
@@ -1721,10 +1721,10 @@
                         <h3
                             class="mb-6 text-xl font-semibold text-dark dark:text-white sm:text-2xl lg:text-xl xl:text-2xl"
                         >
-                            Can I customize it for my brand?
+                            {{ __('landing.faq.questions.branding.question') }}
                         </h3>
                         <p class="text-base text-body-color dark:text-dark-6">
-                            Yes! Add your logo, colors, and gym name. Clients see your branded app, not a generic tool. Full white-label coming in V2.
+                            {{ __('landing.faq.questions.branding.answer') }}
                         </p>
                     </div>
                 </div>
@@ -1753,10 +1753,10 @@
                         <h3
                             class="mb-6 text-xl font-semibold text-dark dark:text-white sm:text-2xl lg:text-xl xl:text-2xl"
                         >
-                            Do clients need to download an app?
+                            {{ __('landing.faq.questions.app.question') }}
                         </h3>
                         <p class="text-base text-body-color dark:text-dark-6">
-                            Clients can access their portal on mobile-friendly website portal, so they do not need to download any additional applications
+                            {{ __('landing.faq.questions.app.answer') }}
                         </p>
                     </div>
                 </div>
@@ -1785,11 +1785,11 @@
                         <h3
                             class="mb-6 text-xl font-semibold text-dark dark:text-white sm:text-2xl lg:text-xl xl:text-2xl"
                         >
-                            How do I get started?
+                            {{ __('landing.faq.questions.get_started.question') }}
                         </h3>
                         <p class="text-base text-body-color dark:text-dark-6">
-                            Apply for closed beta! Fill out this <a
-                                href="https://beta.liftdeck.io" class="text-blue-500">short form</a> and our team will contact you within 24 hours to set up your account and walk you through onboarding.                    </div>
+                            {{ __('landing.faq.questions.get_started.answer') }} <a
+                                href="https://beta.liftdeck.io" class="text-blue-500">{{ __('landing.faq.questions.get_started.short_form') }}</a> {{ __('landing.faq.questions.get_started.answer_suffix') }}                    </div>
                 </div>
             </div>
         </div>
