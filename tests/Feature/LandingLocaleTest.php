@@ -1,10 +1,7 @@
 <?php
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
-
-uses(Tests\TestCase::class, RefreshDatabase::class);
 
 test('redirects root to /en when ip-api returns unknown country', function (): void {
     Http::fake(['ip-api.com/*' => Http::response(['countryCode' => 'US'], 200)]);
