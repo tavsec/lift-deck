@@ -143,6 +143,7 @@ Route::middleware(['auth', 'verified', 'role:client'])
 Route::middleware('auth')->group(function () {
     Route::get('media/daily-log/{dailyLog}/{conversion?}', [\App\Http\Controllers\MediaController::class, 'dailyLog'])->name('media.daily-log');
     Route::patch('user/dark-mode', [\App\Http\Controllers\UserPreferencesController::class, 'toggleDarkMode'])->name('user.dark-mode.toggle');
+    Route::patch('user/locale', [\App\Http\Controllers\UserPreferencesController::class, 'updateLocale'])->name('user.locale.update');
 });
 
 require __DIR__.'/auth.php';

@@ -25,3 +25,21 @@ test('middleware sets app locale from authenticated user locale', function (): v
         ->get(route('coach.dashboard'))
         ->assertOk();
 });
+
+test('user locale can be updated via patch request', function (): void {
+    $user = User::factory()->create(['locale' => 'en']);
+
+    $this->actingAs($user)
+        ->patch(route('user.locale.update'), ['locale' => 'sl'])
+        ->assertRedirect();
+
+    expect($user->fresh()->locale)->toBe('sl');
+});
+
+test('invalid locale value is rejected', function (): void {
+    $user = User::factory()->create(['locale' => 'en']);
+
+    $this->actingAs($user)
+        ->patch(route('user.locale.update'), ['locale' => 'xx'])
+        ->assertSessionHasErrors('locale');
+});
