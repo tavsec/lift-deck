@@ -31,6 +31,7 @@ class UserFactory extends Factory
             'remember_token' => Str::random(10),
             'role' => 'coach',
             'dark_mode' => false,
+            'locale' => 'en',
         ];
     }
 
