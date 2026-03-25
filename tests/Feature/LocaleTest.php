@@ -1,11 +1,14 @@
 <?php
 
 use App\Models\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 
-uses(Tests\TestCase::class, RefreshDatabase::class);
+test('user locale defaults to en', function (): void {
+    $user = User::factory()->create();
 
-it('saves locale to user record', function (): void {
+    expect($user->locale)->toBe('en');
+});
+
+test('saves locale to user record', function (): void {
     $user = User::factory()->create(['locale' => 'en']);
 
     expect($user->locale)->toBe('en');
