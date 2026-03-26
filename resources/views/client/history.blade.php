@@ -1,8 +1,8 @@
 <x-layouts.client>
-    <x-slot:title>Workout History</x-slot:title>
+    <x-slot:title>{{ __('client.history.heading') }}</x-slot:title>
 
     <div class="space-y-6">
-        <h1 class="text-3xl font-bold text-gray-900 dark:text-gray-100">Workout History</h1>
+        <h1 class="text-3xl font-bold text-gray-900 dark:text-gray-100">{{ __('client.history.heading') }}</h1>
 
         @if(session('success'))
             <div class="rounded-md bg-green-50 p-4">
@@ -20,7 +20,7 @@
                                     <div class="flex items-center gap-2">
                                         <h3 class="text-base font-semibold text-gray-900 dark:text-gray-100">{{ $log->displayName() }}</h3>
                                         @if($unreadWorkoutLogIds->contains($log->id))
-                                            <span class="flex h-2 w-2 rounded-full bg-blue-500" title="Unread comments"></span>
+                                            <span class="flex h-2 w-2 rounded-full bg-blue-500" title="{{ __('client.history.unread_comments') }}"></span>
                                         @endif
                                     </div>
                                     <p class="text-sm text-gray-500 dark:text-gray-400">{{ $log->completed_at->format('D, M j, Y \a\t g:i A') }}</p>
@@ -53,8 +53,8 @@
                     <svg class="mx-auto h-16 w-16 text-gray-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
-                    <p class="mt-4 text-lg text-gray-600 dark:text-gray-400">No workouts logged yet</p>
-                    <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Complete a workout from the Log tab to see it here.</p>
+                    <p class="mt-4 text-lg text-gray-600 dark:text-gray-400">{{ __('client.history.no_workouts') }}</p>
+                    <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">{{ __('client.history.no_workouts_description') }}</p>
                 </div>
             </x-bladewind::card>
         @endif

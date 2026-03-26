@@ -8,7 +8,7 @@
                 <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
                 </svg>
-                Back to History
+                {{ __('client.history_show.back') }}
             </a>
             <h1 class="text-2xl font-bold text-gray-900 dark:text-gray-100">{{ $workoutLog->displayName() }}</h1>
             <p class="text-sm text-gray-500 dark:text-gray-400">{{ $workoutLog->completed_at->format('D, M j, Y \a\t g:i A') }}</p>
@@ -40,7 +40,7 @@
 
                     @if($firstSet->workoutExercise)
                         <p class="text-xs text-gray-500 dark:text-gray-400">
-                            Prescribed: {{ $firstSet->workoutExercise->sets }} sets &times; {{ $firstSet->workoutExercise->reps }} reps
+                            {{ __('client.history_show.prescribed', ['sets' => $firstSet->workoutExercise->sets, 'reps' => $firstSet->workoutExercise->reps]) }}
                         </p>
                     @endif
 
@@ -48,9 +48,9 @@
                         <table class="w-full text-sm">
                             <thead>
                                 <tr class="text-left text-xs text-gray-500 dark:text-gray-400 border-b border-gray-200 dark:border-gray-800">
-                                    <th class="pb-2 pr-3 w-12">Set</th>
-                                    <th class="pb-2 pr-3">Weight (kg)</th>
-                                    <th class="pb-2">Reps</th>
+                                    <th class="pb-2 pr-3 w-12">{{ __('client.history_show.set') }}</th>
+                                    <th class="pb-2 pr-3">{{ __('client.history_show.weight_kg') }}</th>
+                                    <th class="pb-2">{{ __('client.history_show.reps') }}</th>
                                 </tr>
                             </thead>
                             <tbody>
