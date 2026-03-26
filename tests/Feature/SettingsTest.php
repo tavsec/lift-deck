@@ -39,7 +39,7 @@ test('coach can update profile', function () {
 });
 
 test('coach can upload avatar', function () {
-    Storage::fake('public');
+    Storage::fake();
 
     $this->actingAs($this->coach)
         ->put(route('coach.settings.update'), [
@@ -51,11 +51,11 @@ test('coach can upload avatar', function () {
 
     $this->coach->refresh();
     expect($this->coach->getRawOriginal('avatar'))->not->toBeNull();
-    Storage::disk('public')->assertExists($this->coach->getRawOriginal('avatar'));
+    Storage::assertExists($this->coach->getRawOriginal('avatar'));
 });
 
 test('coach can remove avatar', function () {
-    Storage::fake('public');
+    Storage::fake();
     $this->coach->update(['avatar' => 'avatars/old.jpg']);
 
     $this->actingAs($this->coach)
