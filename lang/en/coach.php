@@ -589,6 +589,8 @@ return [
             'pts' => ':n pts',
             'no_rewards' => 'No rewards found',
             'no_rewards_description' => 'Get started by adding your first reward.',
+            'out_of_stock' => 'Out of stock',
+            'in_stock' => ':n in stock',
         ],
 
         'create' => [
@@ -758,5 +760,7 @@ return [
         'fulfill' => 'Fulfill',
         'reject' => 'Reject',
         'reject_confirm' => 'Are you sure you want to reject this redemption?',
+        'no_redemptions' => 'No redemptions yet',
+        'no_redemptions_description' => 'Redemption requests from your clients will appear here.',
     ],
 ];

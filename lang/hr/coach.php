@@ -589,6 +589,8 @@ return [
             'pts' => ':n boda',
             'no_rewards' => 'Nema pronađenih nagrada',
             'no_rewards_description' => 'Počnite dodavanjem prve nagrade.',
+            'out_of_stock' => 'Nema na zalihi',
+            'in_stock' => ':n na zalihi',
         ],
 
         'create' => [
@@ -755,5 +757,7 @@ return [
         'fulfill' => 'Ispuni',
         'reject' => 'Odbij',
         'reject_confirm' => 'Jeste li sigurni da želite odbiti ovo iskorištavanje?',
+        'no_redemptions' => 'Još nema iskorištavanja',
+        'no_redemptions_description' => 'Zahtjevi za iskorištavanje vaših klijenata pojavit će se ovdje.',
     ],
 ];

@@ -589,6 +589,8 @@ return [
             'pts' => ':n točk',
             'no_rewards' => 'Ni najdenih nagrad',
             'no_rewards_description' => 'Začnite z dodajanjem prve nagrade.',
+            'out_of_stock' => 'Ni na zalogi',
+            'in_stock' => ':n na zalogi',
         ],
 
         'create' => [
@@ -755,5 +757,7 @@ return [
         'fulfill' => 'Izpolni',
         'reject' => 'Zavrni',
         'reject_confirm' => 'Ali ste prepričani, da želite zavrniti to unovčitev?',
+        'no_redemptions' => 'Še ni unovčitev',
+        'no_redemptions_description' => 'Zahteve za unovčitev vaših strank bodo prikazane tukaj.',
     ],
 ];
