@@ -180,8 +180,12 @@
                 <div class="flex-shrink-0 border-t border-gray-200 dark:border-gray-800">
                     <div class="flex items-center px-4 py-4">
                         <div class="flex-shrink-0">
-                            <div class="w-10 h-10 rounded-full flex items-center justify-center text-white font-semibold" style="background-color: var(--color-primary)">
-                                {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
+                            <div class="w-10 h-10 rounded-full flex items-center justify-center text-white font-semibold overflow-hidden" style="background-color: var(--color-primary)">
+                                @if(auth()->user()->avatar)
+                                    <img src="{{ auth()->user()->avatar }}" alt="{{ auth()->user()->name }}" class="w-full h-full object-cover">
+                                @else
+                                    {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
+                                @endif
                             </div>
                         </div>
                         <div class="ml-3 flex-1 min-w-0">
@@ -342,8 +346,12 @@
                     <div class="flex-shrink-0 border-t border-gray-200 dark:border-gray-800">
                         <div class="flex items-center px-4 py-4">
                             <div class="flex-shrink-0">
-                                <div class="w-10 h-10 rounded-full flex items-center justify-center text-white font-semibold" style="background-color: var(--color-primary)">
-                                    {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
+                                <div class="w-10 h-10 rounded-full flex items-center justify-center text-white font-semibold overflow-hidden" style="background-color: var(--color-primary)">
+                                    @if(auth()->user()->avatar)
+                                        <img src="{{ auth()->user()->avatar }}" alt="{{ auth()->user()->name }}" class="w-full h-full object-cover">
+                                    @else
+                                        {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
+                                    @endif
                                 </div>
                             </div>
                             <div class="ml-3 flex-1 min-w-0">

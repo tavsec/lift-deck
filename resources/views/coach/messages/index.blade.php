@@ -19,8 +19,12 @@
                             <a href="{{ route('coach.messages.show', $conversation['client']) }}" class="block hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
                                 <div class="px-4 py-4 flex items-center">
                                     <div class="flex-shrink-0">
-                                        <div class="h-12 w-12 rounded-full bg-blue-100 flex items-center justify-center">
-                                            <span class="text-lg font-medium text-blue-700">{{ strtoupper(substr($conversation['client']->name, 0, 1)) }}</span>
+                                        <div class="h-12 w-12 rounded-full bg-blue-100 flex items-center justify-center overflow-hidden">
+                                            @if($conversation['client']->avatar)
+                                                <img src="{{ $conversation['client']->avatar }}" alt="{{ $conversation['client']->name }}" class="w-full h-full object-cover">
+                                            @else
+                                                <span class="text-lg font-medium text-blue-700">{{ strtoupper(substr($conversation['client']->name, 0, 1)) }}</span>
+                                            @endif
                                         </div>
                                     </div>
                                     <div class="ml-4 flex-1 min-w-0">
@@ -72,8 +76,12 @@
                         @foreach($clientsWithoutMessages as $client)
                             <a href="{{ route('coach.messages.show', $client) }}" class="block px-4 py-3 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
                                 <div class="flex items-center">
-                                    <div class="h-10 w-10 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
-                                        <span class="text-sm font-medium text-gray-700 dark:text-gray-300">{{ strtoupper(substr($client->name, 0, 1)) }}</span>
+                                    <div class="h-10 w-10 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center overflow-hidden">
+                                        @if($client->avatar)
+                                            <img src="{{ $client->avatar }}" alt="{{ $client->name }}" class="w-full h-full object-cover">
+                                        @else
+                                            <span class="text-sm font-medium text-gray-700 dark:text-gray-300">{{ strtoupper(substr($client->name, 0, 1)) }}</span>
+                                        @endif
                                     </div>
                                     <div class="ml-3">
                                         <p class="text-sm font-medium text-gray-900 dark:text-gray-100">{{ $client->name }}</p>

@@ -10,8 +10,12 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
                     </svg>
                 </a>
-                <div class="h-10 w-10 rounded-full bg-blue-100 flex items-center justify-center">
-                    <span class="text-lg font-medium text-blue-700">{{ strtoupper(substr($client->name, 0, 1)) }}</span>
+                <div class="h-10 w-10 rounded-full bg-blue-100 flex items-center justify-center overflow-hidden">
+                    @if($client->avatar)
+                        <img src="{{ $client->avatar }}" alt="{{ $client->name }}" class="w-full h-full object-cover">
+                    @else
+                        <span class="text-lg font-medium text-blue-700">{{ strtoupper(substr($client->name, 0, 1)) }}</span>
+                    @endif
                 </div>
                 <div class="ml-3">
                     <h1 class="text-lg font-medium text-gray-900 dark:text-gray-100">{{ $client->name }}</h1>
