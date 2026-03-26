@@ -245,4 +245,34 @@ return [
         'placeholder' => 'Add a comment...',
         'post' => 'Post Comment',
     ],
+
+    'settings' => [
+        'heading' => 'Settings',
+        'subtitle' => 'Manage your account information and password.',
+        'profile_updated' => 'Profile updated successfully.',
+        'password_updated' => 'Password updated successfully.',
+        'profile' => [
+            'heading' => 'Profile',
+            'photo' => 'Photo',
+            'remove_photo' => 'Remove photo',
+            'name' => 'Name',
+            'email' => 'Email',
+            'phone' => 'Phone',
+            'optional' => 'optional',
+            'bio' => 'Bio',
+            'save' => 'Save',
+        ],
+        'password' => [
+            'heading' => 'Change Password',
+            'current' => 'Current Password',
+            'new' => 'New Password',
+            'confirm' => 'Confirm New Password',
+            'update' => 'Update Password',
+        ],
+        'sign_out' => [
+            'heading' => 'Sign Out',
+            'subtitle' => 'Sign out of your account on this device.',
+            'button' => 'Sign Out',
+        ],
+    ],
 ];

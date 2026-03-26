@@ -245,4 +245,34 @@ return [
         'placeholder' => 'Dodajte komentar...',
         'post' => 'Objavi komentar',
     ],
+
+    'settings' => [
+        'heading' => 'Postavke',
+        'subtitle' => 'Upravljajte svojim podacima i lozinkom.',
+        'profile_updated' => 'Profil je uspješno ažuriran.',
+        'password_updated' => 'Lozinka je uspješno ažurirana.',
+        'profile' => [
+            'heading' => 'Profil',
+            'photo' => 'Fotografija',
+            'remove_photo' => 'Ukloni fotografiju',
+            'name' => 'Ime',
+            'email' => 'E-mail',
+            'phone' => 'Telefon',
+            'optional' => 'nije obavezno',
+            'bio' => 'Bio',
+            'save' => 'Spremi',
+        ],
+        'password' => [
+            'heading' => 'Promijeni lozinku',
+            'current' => 'Trenutna lozinka',
+            'new' => 'Nova lozinka',
+            'confirm' => 'Potvrdi novu lozinku',
+            'update' => 'Ažuriraj lozinku',
+        ],
+        'sign_out' => [
+            'heading' => 'Odjava',
+            'subtitle' => 'Odjavite se sa svog računa na ovom uređaju.',
+            'button' => 'Odjava',
+        ],
+    ],
 ];
