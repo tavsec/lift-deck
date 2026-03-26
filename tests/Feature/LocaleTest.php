@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\User;
+use Illuminate\Support\Facades\Mail;
 
 test('user locale defaults to en', function (): void {
     $user = User::factory()->create();
@@ -42,4 +43,17 @@ test('invalid locale value is rejected', function (): void {
     $this->actingAs($user)
         ->patch(route('user.locale.update'), ['locale' => 'xx'])
         ->assertSessionHasErrors('locale');
+});
+
+test('welcome email is sent in client locale', function (): void {
+    Mail::fake();
+
+    $coach = User::factory()->create(['role' => 'coach', 'locale' => 'en']);
+    $client = User::factory()->create(['role' => 'client', 'coach_id' => $coach->id, 'locale' => 'sl']);
+
+    Mail::to($client->email)->send(new \App\Mail\WelcomeClientMail($client, $coach));
+
+    Mail::assertSent(\App\Mail\WelcomeClientMail::class, function ($mail) {
+        return $mail->locale === 'sl';
+    });
 });

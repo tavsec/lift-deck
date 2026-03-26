@@ -8,7 +8,7 @@ return [
     ],
 
     'reward_redeemed' => [
-        'subject' => 'Nagrada iskorištena: :reward',
+        'subject' => ':name je iskoristio nagradu',
         'heading' => 'Nagrada iskorištena',
         'body' => ':name je iskoristio nagradu ":reward" za :points bodova.',
         'view_redemptions' => 'Pregled iskorištavanja',

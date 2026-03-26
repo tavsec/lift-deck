@@ -8,7 +8,7 @@ return [
     ],
 
     'reward_redeemed' => [
-        'subject' => 'Nagrada unovčena: :reward',
+        'subject' => ':name je unovčil nagrado',
         'heading' => 'Nagrada unovčena',
         'body' => ':name je unovčil nagrado ":reward" za :points točk.',
         'view_redemptions' => 'Oglej si unovčitve',

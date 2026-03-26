@@ -8,7 +8,7 @@ return [
     ],
 
     'reward_redeemed' => [
-        'subject' => 'Reward Redeemed: :reward',
+        'subject' => ':name redeemed a reward',
         'heading' => 'Reward Redeemed',
         'body' => ':name has redeemed the reward ":reward" for :points points.',
         'view_redemptions' => 'View Redemptions',
