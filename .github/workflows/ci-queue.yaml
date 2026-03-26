@@ -6,6 +6,8 @@ on:
       - main
       - develop
       - staging
+    tags:
+      - 'v*'
 
 env:
   REGISTRY: ghcr.io
