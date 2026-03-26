@@ -2,6 +2,69 @@
     <x-slot:title>{{ __('coach.dashboard.heading') }}</x-slot:title>
 
     <div class="space-y-6">
+        {{-- Metrics setup flash banner --}}
+        @if(session('metrics_setup'))
+            <div class="rounded-md bg-green-50 dark:bg-green-900/20 p-4">
+                <div class="flex">
+                    <div class="flex-shrink-0">
+                        <svg class="h-5 w-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                    </div>
+                    <div class="ml-3">
+                        <p class="text-sm font-medium text-green-800 dark:text-green-200">{!! session('metrics_setup') !!}</p>
+                    </div>
+                </div>
+            </div>
+        @endif
+
+        {{-- First-time metrics setup popup --}}
+        @if(auth()->user()->metrics_onboarded_at === null)
+            <div x-data="{ open: true }" x-show="open" class="fixed inset-0 z-50 overflow-y-auto" aria-labelledby="metrics-setup-title" role="dialog" aria-modal="true">
+                <div class="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:p-0">
+                    <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
+
+                    <div class="inline-block align-bottom bg-white dark:bg-gray-900 rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:p-6">
+                        <div>
+                            <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-blue-100 dark:bg-blue-900">
+                                <svg class="h-6 w-6 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                                </svg>
+                            </div>
+                            <div class="mt-3 text-center sm:mt-5">
+                                <h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-gray-100" id="metrics-setup-title">
+                                    {{ __('coach.metrics_setup.title') }}
+                                </h3>
+                                <div class="mt-2">
+                                    <p class="text-sm text-gray-500 dark:text-gray-400">
+                                        {{ __('coach.metrics_setup.description') }}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-5 sm:mt-6 flex flex-col sm:flex-row gap-3">
+                            <form method="POST" action="{{ route('coach.metrics-setup') }}" class="flex-1">
+                                @csrf
+                                <input type="hidden" name="setup" value="1">
+                                <button type="submit" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:text-sm">
+                                    {{ __('coach.metrics_setup.yes') }}
+                                </button>
+                            </form>
+
+                            <form method="POST" action="{{ route('coach.metrics-setup') }}" class="flex-1">
+                                @csrf
+                                <input type="hidden" name="setup" value="0">
+                                <button type="submit" class="w-full inline-flex justify-center rounded-md border border-gray-300 dark:border-gray-700 shadow-sm px-4 py-2 bg-white dark:bg-gray-800 text-base font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:text-sm">
+                                    {{ __('coach.metrics_setup.skip') }}
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @endif
+
         <!-- Welcome Message -->
         <div>
             <h1 class="text-3xl font-bold text-gray-900 dark:text-gray-100">{{ __('coach.dashboard.welcome', ['name' => auth()->user()->name]) }}</h1>
