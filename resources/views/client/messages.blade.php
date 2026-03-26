@@ -1,5 +1,5 @@
 <x-layouts.client>
-    <x-slot:title>Messages</x-slot:title>
+    <x-slot:title>{{ __('client.messages.your_coach') }}</x-slot:title>
 
     <div class="flex flex-col h-[calc(100vh-10rem)]">
         <!-- Header -->
@@ -9,7 +9,7 @@
             </div>
             <div class="ml-3">
                 <h1 class="text-lg font-medium text-gray-900 dark:text-gray-100">{{ $coach->name }}</h1>
-                <p class="text-sm text-gray-500 dark:text-gray-400">Your Coach</p>
+                <p class="text-sm text-gray-500 dark:text-gray-400">{{ __('client.messages.your_coach') }}</p>
             </div>
         </div>
 
@@ -29,7 +29,7 @@
                     <svg class="mx-auto h-12 w-12 text-gray-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
                     </svg>
-                    <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">No messages yet. Start a conversation with your coach!</p>
+                    <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">{{ __('client.messages.no_messages') }}</p>
                 </div>
             @endforelse
         </div>
@@ -37,7 +37,7 @@
         <!-- Message Input -->
         <div class="pt-4 border-t border-gray-200 dark:border-gray-800">
             <form id="message-form" class="flex gap-2">
-                <input type="text" id="message-input" required placeholder="Type your message..." autocomplete="off"
+                <input type="text" id="message-input" required placeholder="{{ __('client.messages.type_placeholder') }}" autocomplete="off"
                     class="flex-1 rounded-lg border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500">
                 <button type="submit" class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-lg font-semibold text-sm text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition ease-in-out duration-150">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

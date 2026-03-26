@@ -42,6 +42,7 @@ class User extends Authenticatable implements FilamentUser
         'primary_color',
         'secondary_color',
         'dark_mode',
+        'locale',
         'is_track_only',
     ];
 

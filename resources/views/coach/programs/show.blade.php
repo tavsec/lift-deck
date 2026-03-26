@@ -9,13 +9,13 @@
                     <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
                     </svg>
-                    Back to Programs
+                    {{ __('coach.programs.show.back') }}
                 </a>
                 <div class="flex items-center gap-3">
                     <h1 class="text-2xl font-bold text-gray-900 dark:text-gray-100">{{ $program->name }}</h1>
                     @if($program->is_template)
                         <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-800">
-                            Template
+                            {{ __('coach.programs.show.template') }}
                         </span>
                     @endif
                 </div>
@@ -25,11 +25,11 @@
                     </span>
                     @if($program->duration_weeks)
                         <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-                            {{ $program->duration_weeks }} weeks
+                            {{ __('coach.programs.show.n_weeks', ['n' => $program->duration_weeks]) }}
                         </span>
                     @endif
                     <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                        {{ $program->workouts->count() }} workouts
+                        {{ __('coach.programs.show.n_workouts', ['n' => $program->workouts->count()]) }}
                     </span>
                 </div>
             </div>
@@ -38,22 +38,22 @@
                     <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"/>
                     </svg>
-                    Assign to Client
+                    {{ __('coach.programs.show.assign') }}
                 </a>
                 <a href="{{ route('coach.programs.edit', $program) }}" class="inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-md font-medium text-sm text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition ease-in-out duration-150">
                     <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
                     </svg>
-                    Edit
+                    {{ __('coach.programs.show.edit') }}
                 </a>
-                <form method="POST" action="{{ route('coach.programs.destroy', $program) }}" onsubmit="return confirm('Are you sure you want to delete this program?');">
+                <form method="POST" action="{{ route('coach.programs.destroy', $program) }}" onsubmit="return confirm('{{ __('coach.programs.show.delete_confirm') }}');">
                     @csrf
                     @method('DELETE')
                     <button type="submit" class="inline-flex items-center px-4 py-2 border border-red-300 rounded-md font-medium text-sm text-red-700 bg-white dark:bg-gray-800 hover:bg-red-50 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition ease-in-out duration-150">
                         <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
                         </svg>
-                        Delete
+                        {{ __('coach.programs.show.delete') }}
                     </button>
                 </form>
             </div>
@@ -76,7 +76,7 @@
 
         @if($program->description)
             <div class="bg-white dark:bg-gray-900 rounded-lg shadow p-6">
-                <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100 mb-2">Description</h2>
+                <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100 mb-2">{{ __('coach.programs.show.description') }}</h2>
                 <p class="text-gray-700 dark:text-gray-300">{{ $program->description }}</p>
             </div>
         @endif
@@ -84,7 +84,7 @@
         <!-- Assigned Clients -->
         @if($assignedClients->count() > 0)
             <div class="bg-white dark:bg-gray-900 rounded-lg shadow p-6">
-                <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100 mb-4">Assigned Clients ({{ $assignedClients->count() }})</h2>
+                <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100 mb-4">{{ __('coach.programs.show.assigned_clients', ['n' => $assignedClients->count()]) }}</h2>
                 <div class="flex flex-wrap gap-3">
                     @foreach($assignedClients as $assignment)
                         <div class="inline-flex items-center gap-2">
@@ -96,13 +96,13 @@
                                     <p class="text-sm font-medium text-gray-900 dark:text-gray-100">{{ $assignment->client->name }}</p>
                                     <p class="text-xs text-gray-500 dark:text-gray-400">
                                         @if($assignment->isActive())
-                                            <span class="text-green-600">Active</span>
+                                            <span class="text-green-600">{{ __('coach.programs.show.active') }}</span>
                                         @elseif($assignment->isPaused())
-                                            <span class="text-yellow-600">Paused</span>
+                                            <span class="text-yellow-600">{{ __('coach.programs.show.paused') }}</span>
                                         @else
-                                            <span class="text-gray-600 dark:text-gray-400">Completed</span>
+                                            <span class="text-gray-600 dark:text-gray-400">{{ __('coach.programs.show.completed') }}</span>
                                         @endif
-                                        - Started {{ $assignment->started_at->format('M d, Y') }}
+                                        - {{ __('coach.programs.show.started') }} {{ $assignment->started_at->format('M d, Y') }}
                                     </p>
                                 </div>
                             </a>
@@ -110,7 +110,7 @@
                                 <svg class="w-3.5 h-3.5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3"/>
                                 </svg>
-                                Targets
+                                {{ __('coach.programs.show.targets') }}
                             </a>
                         </div>
                     @endforeach
@@ -120,7 +120,7 @@
 
         <!-- Workouts -->
         <div class="space-y-4">
-            <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">Workouts</h2>
+            <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">{{ __('coach.programs.show.workouts') }}</h2>
 
             @if($program->workouts->count() > 0)
                 @foreach($program->workouts as $workout)
@@ -161,7 +161,7 @@
                             </div>
                         @else
                             <div class="px-6 py-8 text-center text-sm text-gray-500 dark:text-gray-400">
-                                No exercises added yet
+                                {{ __('coach.programs.show.no_exercises') }}
                             </div>
                         @endif
                     </div>
@@ -172,11 +172,11 @@
                         <svg class="mx-auto h-12 w-12 text-gray-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
                         </svg>
-                        <h3 class="mt-2 text-sm font-medium text-gray-900 dark:text-gray-100">No workouts yet</h3>
-                        <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Add workouts and exercises to complete this program.</p>
+                        <h3 class="mt-2 text-sm font-medium text-gray-900 dark:text-gray-100">{{ __('coach.programs.show.no_workouts') }}</h3>
+                        <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">{{ __('coach.programs.show.no_workouts_description') }}</p>
                         <div class="mt-6">
                             <a href="{{ route('coach.programs.edit', $program) }}" class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-700">
-                                Edit Program
+                                {{ __('coach.programs.show.edit_program') }}
                             </a>
                         </div>
                     </div>

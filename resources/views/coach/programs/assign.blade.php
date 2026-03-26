@@ -1,5 +1,5 @@
 <x-layouts.coach>
-    <x-slot:title>Assign {{ $program->name }}</x-slot:title>
+    <x-slot:title>{{ __('coach.programs.assign.heading') }}</x-slot:title>
 
     <div class="space-y-6">
         <!-- Header -->
@@ -8,10 +8,10 @@
                 <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
                 </svg>
-                Back to Program
+                {{ __('coach.programs.assign.back') }}
             </a>
-            <h1 class="text-2xl font-bold text-gray-900 dark:text-gray-100">Assign Program to Client</h1>
-            <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Assign "{{ $program->name }}" to one of your clients.</p>
+            <h1 class="text-2xl font-bold text-gray-900 dark:text-gray-100">{{ __('coach.programs.assign.heading') }}</h1>
+            <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">{{ __('coach.programs.assign.subtitle', ['name' => $program->name]) }}</p>
         </div>
 
         <!-- Form -->
@@ -21,10 +21,10 @@
                     @csrf
 
                     <div>
-                        <label for="client_id" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Select Client <span class="text-red-500">*</span></label>
+                        <label for="client_id" class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('coach.programs.assign.select_client') }} <span class="text-red-500">*</span></label>
                         <select name="client_id" id="client_id" required
                             class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm @error('client_id') border-red-300 @enderror">
-                            <option value="">Choose a client...</option>
+                            <option value="">{{ __('coach.programs.assign.client_placeholder') }}</option>
                             @foreach($clients as $client)
                                 <option value="{{ $client->id }}" {{ old('client_id') == $client->id ? 'selected' : '' }}>
                                     {{ $client->name }} ({{ $client->email }})
@@ -37,7 +37,7 @@
                     </div>
 
                     <div>
-                        <label for="started_at" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Start Date <span class="text-red-500">*</span></label>
+                        <label for="started_at" class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('coach.programs.assign.start_date') }} <span class="text-red-500">*</span></label>
                         <input type="date" name="started_at" id="started_at" value="{{ old('started_at', now()->format('Y-m-d')) }}" required
                             class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm @error('started_at') border-red-300 @enderror">
                         @error('started_at')
@@ -53,9 +53,9 @@
                                 </svg>
                             </div>
                             <div class="ml-3">
-                                <h3 class="text-sm font-medium text-yellow-800">Note</h3>
+                                <h3 class="text-sm font-medium text-yellow-800">{{ __('coach.programs.assign.note') }}</h3>
                                 <div class="mt-1 text-sm text-yellow-700">
-                                    <p>If the client already has an active program, it will be paused when this new program is assigned.</p>
+                                    <p>{{ __('coach.programs.assign.note_text') }}</p>
                                 </div>
                             </div>
                         </div>
@@ -63,10 +63,10 @@
 
                     <div class="flex items-center justify-end gap-4 pt-4 border-t border-gray-200 dark:border-gray-800">
                         <a href="{{ route('coach.programs.show', $program) }}" class="inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-md font-medium text-sm text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition ease-in-out duration-150">
-                            Cancel
+                            {{ __('coach.programs.assign.cancel') }}
                         </a>
                         <button type="submit" class="inline-flex items-center px-4 py-2 bg-green-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-green-700 focus:bg-green-700 active:bg-green-900 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition ease-in-out duration-150">
-                            Assign Program
+                            {{ __('coach.programs.assign.assign') }}
                         </button>
                     </div>
                 </form>
@@ -75,11 +75,11 @@
                     <svg class="mx-auto h-12 w-12 text-gray-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/>
                     </svg>
-                    <h3 class="mt-2 text-sm font-medium text-gray-900 dark:text-gray-100">No available clients</h3>
-                    <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">All your clients already have this program assigned, or you don't have any clients yet.</p>
+                    <h3 class="mt-2 text-sm font-medium text-gray-900 dark:text-gray-100">{{ __('coach.programs.assign.no_clients') }}</h3>
+                    <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">{{ __('coach.programs.assign.no_clients_description') }}</p>
                     <div class="mt-6">
                         <a href="{{ route('coach.clients.create') }}" class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-700">
-                            Invite a Client
+                            {{ __('coach.programs.assign.invite_client') }}
                         </a>
                     </div>
                 </div>
@@ -88,22 +88,22 @@
 
         <!-- Program Summary -->
         <div class="bg-white dark:bg-gray-900 rounded-lg shadow p-6">
-            <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100 mb-4">Program Summary</h2>
+            <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100 mb-4">{{ __('coach.programs.assign.summary') }}</h2>
             <dl class="grid grid-cols-2 gap-4 text-sm">
                 <div>
-                    <dt class="text-gray-500 dark:text-gray-400">Name</dt>
+                    <dt class="text-gray-500 dark:text-gray-400">{{ __('coach.programs.assign.name') }}</dt>
                     <dd class="font-medium text-gray-900 dark:text-gray-100">{{ $program->name }}</dd>
                 </div>
                 <div>
-                    <dt class="text-gray-500 dark:text-gray-400">Type</dt>
+                    <dt class="text-gray-500 dark:text-gray-400">{{ __('coach.programs.assign.type') }}</dt>
                     <dd class="font-medium text-gray-900 dark:text-gray-100">{{ ucfirst(str_replace('_', ' ', $program->type)) }}</dd>
                 </div>
                 <div>
-                    <dt class="text-gray-500 dark:text-gray-400">Duration</dt>
-                    <dd class="font-medium text-gray-900 dark:text-gray-100">{{ $program->duration_weeks ? $program->duration_weeks . ' weeks' : 'Not set' }}</dd>
+                    <dt class="text-gray-500 dark:text-gray-400">{{ __('coach.programs.assign.duration') }}</dt>
+                    <dd class="font-medium text-gray-900 dark:text-gray-100">{{ $program->duration_weeks ? __('coach.programs.assign.n_weeks', ['n' => $program->duration_weeks]) : __('coach.programs.assign.not_set') }}</dd>
                 </div>
                 <div>
-                    <dt class="text-gray-500 dark:text-gray-400">Workouts</dt>
+                    <dt class="text-gray-500 dark:text-gray-400">{{ __('coach.programs.assign.workouts') }}</dt>
                     <dd class="font-medium text-gray-900 dark:text-gray-100">{{ $program->workouts->count() }}</dd>
                 </div>
             </dl>

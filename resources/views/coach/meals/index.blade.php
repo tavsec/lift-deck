@@ -1,18 +1,18 @@
 <x-layouts.coach>
-    <x-slot:title>Meal Library</x-slot:title>
+    <x-slot:title>{{ __('coach.meals.index.heading') }}</x-slot:title>
 
     <div class="space-y-6">
         <!-- Header -->
         <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div>
-                <h1 class="text-2xl font-bold text-gray-900 dark:text-gray-100">Meal Library</h1>
-                <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Browse and manage meals for your clients</p>
+                <h1 class="text-2xl font-bold text-gray-900 dark:text-gray-100">{{ __('coach.meals.index.heading') }}</h1>
+                <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">{{ __('coach.meals.index.subtitle') }}</p>
             </div>
             <a href="{{ route('coach.meals.create') }}" class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-700 focus:bg-blue-700 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition ease-in-out duration-150">
                 <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
                 </svg>
-                Add Meal
+                {{ __('coach.meals.index.add') }}
             </a>
         </div>
 
@@ -35,14 +35,14 @@
         <div class="bg-white dark:bg-gray-900 rounded-lg shadow p-4">
             <form method="GET" action="{{ route('coach.meals.index') }}" class="flex flex-col sm:flex-row gap-4">
                 <div class="flex-1">
-                    <input type="text" name="search" value="{{ request('search') }}" placeholder="Search meals..." class="w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm">
+                    <input type="text" name="search" value="{{ request('search') }}" placeholder="{{ __('coach.meals.index.search_placeholder') }}" class="w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm">
                 </div>
                 <button type="submit" class="inline-flex items-center px-4 py-2 bg-gray-100 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-md font-medium text-xs text-gray-700 dark:text-gray-300 uppercase tracking-widest hover:bg-gray-200 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition ease-in-out duration-150">
-                    Search
+                    {{ __('coach.meals.index.search') }}
                 </button>
                 @if(request('search'))
                     <a href="{{ route('coach.meals.index') }}" class="inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-md font-medium text-xs text-gray-700 dark:text-gray-300 uppercase tracking-widest hover:bg-gray-50 dark:hover:bg-gray-800 transition ease-in-out duration-150">
-                        Clear
+                        {{ __('coach.meals.index.clear') }}
                     </a>
                 @endif
             </form>
@@ -93,12 +93,12 @@
                     <svg class="mx-auto h-12 w-12 text-gray-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
                     </svg>
-                    <h3 class="mt-2 text-sm font-medium text-gray-900 dark:text-gray-100">No meals found</h3>
+                    <h3 class="mt-2 text-sm font-medium text-gray-900 dark:text-gray-100">{{ __('coach.meals.index.no_meals') }}</h3>
                     <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">
                         @if(request('search'))
-                            Try adjusting your search.
+                            {{ __('coach.meals.index.no_meals_search') }}
                         @else
-                            Get started by adding your first meal.
+                            {{ __('coach.meals.index.no_meals_empty') }}
                         @endif
                     </p>
                     @if(!request('search'))
@@ -107,7 +107,7 @@
                                 <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
                                 </svg>
-                                Add Meal
+                                {{ __('coach.meals.index.add') }}
                             </a>
                         </div>
                     @endif

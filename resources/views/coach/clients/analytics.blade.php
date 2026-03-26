@@ -1,5 +1,5 @@
 <x-layouts.coach>
-    <x-slot:title>{{ $client->name }} — Analytics</x-slot:title>
+    <x-slot:title>{{ __('coach.clients.analytics.heading', ['name' => $client->name]) }}</x-slot:title>
 
     <div class="space-y-6">
         <!-- Header -->
@@ -8,49 +8,49 @@
                 <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
                 </svg>
-                Back to {{ $client->name }}
+                {{ __('coach.clients.analytics.back', ['name' => $client->name]) }}
             </a>
-            <h1 class="text-2xl font-bold text-gray-900 dark:text-gray-100">{{ $client->name }} — Analytics</h1>
+            <h1 class="text-2xl font-bold text-gray-900 dark:text-gray-100">{{ __('coach.clients.analytics.heading', ['name' => $client->name]) }}</h1>
         </div>
 
         <!-- Date Range Filter -->
         <div class="bg-white dark:bg-gray-900 rounded-lg shadow p-4 flex justify-between align-middle">
             <form method="GET" action="{{ route('coach.clients.analytics', $client) }}" x-data="{ range: '{{ $range }}' }" class="flex flex-wrap items-end gap-3">
                 <div>
-                    <label class="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">Time Period</label>
+                    <label class="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">{{ __('coach.clients.analytics.time_period') }}</label>
                     <select name="range" x-model="range" @change="if (range !== 'custom') $el.closest('form').submit()"
                         class="block rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm">
-                        <option value="7">Last 7 days</option>
-                        <option value="14">Last 14 days</option>
-                        <option value="30">Last 30 days</option>
-                        <option value="90">Last 90 days</option>
-                        <option value="custom">Custom range</option>
+                        <option value="7">{{ __('coach.clients.analytics.last_7_days') }}</option>
+                        <option value="14">{{ __('coach.clients.analytics.last_14_days') }}</option>
+                        <option value="30">{{ __('coach.clients.analytics.last_30_days') }}</option>
+                        <option value="90">{{ __('coach.clients.analytics.last_90_days') }}</option>
+                        <option value="custom">{{ __('coach.clients.analytics.custom_range') }}</option>
                     </select>
                 </div>
 
                 <template x-if="range === 'custom'">
                     <div class="flex items-end gap-2">
                         <div>
-                            <label class="block text-xs text-gray-500 dark:text-gray-400">From</label>
+                            <label class="block text-xs text-gray-500 dark:text-gray-400">{{ __('coach.clients.analytics.from') }}</label>
                             <input type="date" name="from" value="{{ $from }}" class="block rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm">
                         </div>
                         <div>
-                            <label class="block text-xs text-gray-500 dark:text-gray-400">To</label>
+                            <label class="block text-xs text-gray-500 dark:text-gray-400">{{ __('coach.clients.analytics.to') }}</label>
                             <input type="date" name="to" value="{{ $to }}" class="block rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm">
                         </div>
                         <button type="submit" class="inline-flex items-center px-3 py-2 bg-blue-600 border border-transparent rounded-md text-xs font-semibold text-white uppercase tracking-widest hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
-                            Apply
+                            {{ __('coach.clients.analytics.apply') }}
                         </button>
                     </div>
                 </template>
             </form>
-            <a href="{{ route('coach.clients.analytics.export', $client) }}" class="cursor-pointer inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-700 focus:bg-blue-700 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition ease-in-out duration-150">Export all data</a>
+            <a href="{{ route('coach.clients.analytics.export', $client) }}" class="cursor-pointer inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-700 focus:bg-blue-700 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition ease-in-out duration-150">{{ __('coach.clients.analytics.export') }}</a>
         </div>
 
         <!-- Daily Check-ins Section -->
         <div x-data="{ open: true }" class="bg-white dark:bg-gray-900 rounded-lg shadow">
             <button @click="open = !open" class="w-full flex items-center justify-between px-4 py-3 text-left">
-                <h2 class="text-lg font-semibold text-gray-900 dark:text-gray-100">Daily Check-ins</h2>
+                <h2 class="text-lg font-semibold text-gray-900 dark:text-gray-100">{{ __('coach.clients.analytics.check_ins') }}</h2>
                 <svg :class="{ 'rotate-180': open }" class="w-5 h-5 text-gray-500 dark:text-gray-400 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
                 </svg>
@@ -75,7 +75,7 @@
                         <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-800 text-sm">
                             <thead class="bg-gray-50 dark:bg-gray-800">
                                 <tr>
-                                    <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">Date</th>
+                                    <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">{{ __('coach.clients.analytics.table.date') }}</th>
                                     @foreach($tableMetrics as $metric)
                                         <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">{{ $metric->name }}</th>
                                     @endforeach
@@ -123,7 +123,7 @@
                 @endif
 
                 @if(count($checkInCharts) === 0 && $tableMetrics->count() === 0)
-                    <p class="text-sm text-gray-500 dark:text-gray-400">No check-in data for this period.</p>
+                    <p class="text-sm text-gray-500 dark:text-gray-400">{{ __('coach.clients.analytics.no_check_ins') }}</p>
                 @endif
             </div>
         </div>
@@ -131,7 +131,7 @@
         <!-- Nutrition -->
         <div x-data="{ open: true }" class="bg-white dark:bg-gray-900 rounded-lg shadow">
             <button @click="open = !open" class="w-full flex items-center justify-between px-4 py-3 text-left">
-                <h2 class="text-lg font-semibold text-gray-900 dark:text-gray-100">Nutrition</h2>
+                <h2 class="text-lg font-semibold text-gray-900 dark:text-gray-100">{{ __('coach.clients.analytics.nutrition') }}</h2>
                 <svg :class="{ 'rotate-180': open }" class="w-5 h-5 text-gray-500 dark:text-gray-400 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
                 </svg>
@@ -141,7 +141,7 @@
                 @if($nutritionStats['daysLogged'] > 0)
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                         <div>
-                            <h3 class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Calories</h3>
+                            <h3 class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">{{ __('coach.clients.analytics.calories') }}</h3>
                             <div class="h-56">
                                 <canvas
                                     x-data="caloriesChart({{ json_encode($nutritionData) }})"
@@ -151,7 +151,7 @@
                             </div>
                         </div>
                         <div>
-                            <h3 class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Macros (g)</h3>
+                            <h3 class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">{{ __('coach.clients.analytics.macros') }}</h3>
                             <div class="h-56">
                                 <canvas
                                     x-data="macrosChart({{ json_encode($nutritionData) }})"
@@ -164,23 +164,23 @@
 
                     <div class="grid grid-cols-2 sm:grid-cols-5 gap-4 p-4 bg-gray-50 dark:bg-gray-950 rounded-lg">
                         <div class="text-center">
-                            <p class="text-xs text-gray-500 dark:text-gray-400 uppercase">Avg. Daily Calories</p>
+                            <p class="text-xs text-gray-500 dark:text-gray-400 uppercase">{{ __('coach.clients.analytics.avg_calories') }}</p>
                             <p class="text-lg font-bold text-gray-900 dark:text-gray-100">{{ number_format($nutritionStats['avgCalories']) }}</p>
                         </div>
                         <div class="text-center">
-                            <p class="text-xs text-gray-500 dark:text-gray-400 uppercase">Avg. Protein</p>
+                            <p class="text-xs text-gray-500 dark:text-gray-400 uppercase">{{ __('coach.clients.analytics.avg_protein') }}</p>
                             <p class="text-lg font-bold text-gray-900 dark:text-gray-100">{{ $nutritionStats['avgProtein'] }}g</p>
                         </div>
                         <div class="text-center">
-                            <p class="text-xs text-gray-500 dark:text-gray-400 uppercase">Avg. Carbs</p>
+                            <p class="text-xs text-gray-500 dark:text-gray-400 uppercase">{{ __('coach.clients.analytics.avg_carbs') }}</p>
                             <p class="text-lg font-bold text-gray-900 dark:text-gray-100">{{ $nutritionStats['avgCarbs'] }}g</p>
                         </div>
                         <div class="text-center">
-                            <p class="text-xs text-gray-500 dark:text-gray-400 uppercase">Avg. Fat</p>
+                            <p class="text-xs text-gray-500 dark:text-gray-400 uppercase">{{ __('coach.clients.analytics.avg_fat') }}</p>
                             <p class="text-lg font-bold text-gray-900 dark:text-gray-100">{{ $nutritionStats['avgFat'] }}g</p>
                         </div>
                         <div class="text-center">
-                            <p class="text-xs text-gray-500 dark:text-gray-400 uppercase">Adherence</p>
+                            <p class="text-xs text-gray-500 dark:text-gray-400 uppercase">{{ __('coach.clients.analytics.adherence') }}</p>
                             @if($nutritionStats['adherenceRate'] !== null)
                                 <p class="text-lg font-bold {{ $nutritionStats['adherenceRate'] >= 80 ? 'text-green-600' : ($nutritionStats['adherenceRate'] >= 50 ? 'text-yellow-600' : 'text-red-600') }}">{{ $nutritionStats['adherenceRate'] }}%</p>
                             @else
@@ -189,7 +189,7 @@
                         </div>
                     </div>
                 @else
-                    <p class="text-sm text-gray-500 dark:text-gray-400 text-center py-8">No nutrition data for this period.</p>
+                    <p class="text-sm text-gray-500 dark:text-gray-400 text-center py-8">{{ __('coach.clients.analytics.no_nutrition') }}</p>
                 @endif
             </div>
         </div>
@@ -197,7 +197,7 @@
         <!-- Progress Photos -->
             <div x-data="{ open: true }" class="bg-white dark:bg-gray-900 rounded-lg shadow">
                 <button @click="open = !open" class="w-full flex items-center justify-between px-4 py-3 text-left">
-                    <h2 class="text-lg font-semibold text-gray-900 dark:text-gray-100">Progress Photos</h2>
+                    <h2 class="text-lg font-semibold text-gray-900 dark:text-gray-100">{{ __('coach.clients.analytics.progress_photos') }}</h2>
                     <svg :class="{ 'rotate-180': open }" class="w-5 h-5 text-gray-500 dark:text-gray-400 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
                     </svg>
@@ -237,7 +237,7 @@
                             @endif
                         @endforeach
                     @else
-                        <p class="text-sm text-gray-500 dark:text-gray-400 text-center py-8">No progress photos for this period.</p>
+                        <p class="text-sm text-gray-500 dark:text-gray-400 text-center py-8">{{ __('coach.clients.analytics.no_photos') }}</p>
                     @endif
                 </div>
             </div>
@@ -246,7 +246,7 @@
         <!-- Exercise Progression -->
         <div x-data="{ open: true }" class="bg-white dark:bg-gray-900 rounded-lg shadow">
             <button @click="open = !open" class="w-full flex items-center justify-between px-4 py-3 text-left">
-                <h2 class="text-lg font-semibold text-gray-900 dark:text-gray-100">Exercise Progression</h2>
+                <h2 class="text-lg font-semibold text-gray-900 dark:text-gray-100">{{ __('coach.clients.analytics.exercise_progression') }}</h2>
                 <svg :class="{ 'rotate-180': open }" class="w-5 h-5 text-gray-500 dark:text-gray-400 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
                 </svg>
@@ -256,7 +256,7 @@
                 @if(count($exerciseProgressionData) > 0)
                     <div x-data="exerciseProgression({{ json_encode($exerciseProgressionData) }}, {{ json_encode($exercisesByMuscleGroup) }}, {{ json_encode($exerciseTargetHistory) }})" x-init="init()">
                         <div class="mb-4">
-                            <label class="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">Exercise</label>
+                            <label class="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">{{ __('coach.clients.analytics.table.exercise') }}</label>
                             <select x-model="selectedExercise" @change="updateChart()" class="block w-full sm:w-64 rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm">
                                 <template x-for="(exercises, group) in exerciseGroups" :key="group">
                                     <optgroup :label="group">
@@ -274,22 +274,22 @@
 
                         <div x-show="summary" class="grid grid-cols-3 gap-4 p-4 bg-gray-50 dark:bg-gray-950 rounded-lg">
                             <div class="text-center">
-                                <p class="text-xs text-gray-500 dark:text-gray-400 uppercase">Start &rarr; End</p>
+                                <p class="text-xs text-gray-500 dark:text-gray-400 uppercase">{{ __('coach.clients.analytics.table.start_end') }}</p>
                                 <p class="text-sm font-bold text-gray-900 dark:text-gray-100" x-text="summary?.startWeight + 'kg &rarr; ' + summary?.endWeight + 'kg'"></p>
                             </div>
                             <div class="text-center">
-                                <p class="text-xs text-gray-500 dark:text-gray-400 uppercase">Change</p>
+                                <p class="text-xs text-gray-500 dark:text-gray-400 uppercase">{{ __('coach.clients.analytics.table.change') }}</p>
                                 <p class="text-sm font-bold" :class="summary?.change >= 0 ? 'text-green-600' : 'text-red-600'"
                                    x-text="(summary?.change >= 0 ? '+' : '') + summary?.change + 'kg (' + (summary?.change >= 0 ? '+' : '') + summary?.changePercent + '%)'"></p>
                             </div>
                             <div class="text-center">
-                                <p class="text-xs text-gray-500 dark:text-gray-400 uppercase">Sessions</p>
+                                <p class="text-xs text-gray-500 dark:text-gray-400 uppercase">{{ __('coach.clients.analytics.table.sessions') }}</p>
                                 <p class="text-sm font-bold text-gray-900 dark:text-gray-100" x-text="summary?.sessions"></p>
                             </div>
                         </div>
                     </div>
                 @else
-                    <p class="text-sm text-gray-500 dark:text-gray-400 text-center py-8">No workouts logged for this period.</p>
+                    <p class="text-sm text-gray-500 dark:text-gray-400 text-center py-8">{{ __('coach.clients.analytics.no_workouts') }}</p>
                 @endif
             </div>
         </div>

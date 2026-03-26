@@ -16,14 +16,16 @@ class WelcomeClientMail extends Mailable
     public function __construct(
         public User $client,
         public User $coach,
-    ) {}
+    ) {
+        $this->locale($this->client->locale ?? 'en');
+    }
 
     public function envelope(): Envelope
     {
         $gymName = $this->coach->gym_name ?? $this->coach->name;
 
         return new Envelope(
-            subject: "Welcome to {$gymName}'s coaching!",
+            subject: __('emails.welcome_client.subject', ['gym_name' => $gymName]),
         );
     }
 

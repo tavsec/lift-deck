@@ -1,11 +1,11 @@
 <x-layouts.coach>
-    <x-slot:title>Redemptions</x-slot:title>
+    <x-slot:title>{{ __('coach.redemptions.heading') }}</x-slot:title>
 
     <div class="space-y-6">
         <!-- Header -->
         <div>
-            <h1 class="text-2xl font-bold text-gray-900">Reward Redemptions</h1>
-            <p class="mt-1 text-sm text-gray-500">Review and fulfil reward redemption requests from your clients.</p>
+            <h1 class="text-2xl font-bold text-gray-900">{{ __('coach.redemptions.heading') }}</h1>
+            <p class="mt-1 text-sm text-gray-500">{{ __('coach.redemptions.subtitle') }}</p>
         </div>
 
         @if(session('success'))
@@ -43,12 +43,12 @@
                 <table class="min-w-full divide-y divide-gray-200">
                     <thead class="bg-gray-50">
                         <tr>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Client</th>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Reward</th>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Points Spent</th>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Notes</th>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('coach.redemptions.table.client') }}</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('coach.redemptions.table.reward') }}</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('coach.redemptions.table.points_spent') }}</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('coach.redemptions.table.status') }}</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('coach.redemptions.table.notes') }}</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('coach.redemptions.table.actions') }}</th>
                         </tr>
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-200">
@@ -65,11 +65,11 @@
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     @if($redemption->status === 'pending')
-                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">Pending</span>
+                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">{{ __('coach.redemptions.status_pending') }}</span>
                                     @elseif($redemption->status === 'fulfilled')
-                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">Fulfilled</span>
+                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">{{ __('coach.redemptions.status_fulfilled') }}</span>
                                     @elseif($redemption->status === 'rejected')
-                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">Rejected</span>
+                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">{{ __('coach.redemptions.status_rejected') }}</span>
                                     @else
                                         <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">{{ ucfirst($redemption->status) }}</span>
                                     @endif
@@ -89,15 +89,15 @@
                                                 @method('PATCH')
                                                 <input type="hidden" name="status" value="fulfilled">
                                                 <button type="submit" class="inline-flex items-center px-3 py-1.5 bg-green-600 border border-transparent rounded-md font-medium text-xs text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition ease-in-out duration-150">
-                                                    Fulfill
+                                                    {{ __('coach.redemptions.fulfill') }}
                                                 </button>
                                             </form>
-                                            <form method="POST" action="{{ route('coach.redemptions.update', $redemption) }}" onsubmit="return confirm('Are you sure you want to reject this redemption?')">
+                                            <form method="POST" action="{{ route('coach.redemptions.update', $redemption) }}" onsubmit="return confirm('{{ __('coach.redemptions.reject_confirm') }}')">
                                                 @csrf
                                                 @method('PATCH')
                                                 <input type="hidden" name="status" value="rejected">
                                                 <button type="submit" class="inline-flex items-center px-3 py-1.5 bg-red-600 border border-transparent rounded-md font-medium text-xs text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition ease-in-out duration-150">
-                                                    Reject
+                                                    {{ __('coach.redemptions.reject') }}
                                                 </button>
                                             </form>
                                         </div>
@@ -122,8 +122,8 @@
                     <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"/>
                     </svg>
-                    <h3 class="mt-2 text-sm font-medium text-gray-900">No redemptions yet</h3>
-                    <p class="mt-1 text-sm text-gray-500">Redemption requests from your clients will appear here.</p>
+                    <h3 class="mt-2 text-sm font-medium text-gray-900">{{ __('coach.redemptions.no_redemptions') }}</h3>
+                    <p class="mt-1 text-sm text-gray-500">{{ __('coach.redemptions.no_redemptions_description') }}</p>
                 </div>
             </div>
         @endif

@@ -1,12 +1,12 @@
 <x-layouts.coach>
-    <x-slot:title>Tracking Metrics</x-slot:title>
+    <x-slot:title>{{ __('coach.tracking_metrics.heading') }}</x-slot:title>
 
     <div class="space-y-6">
         <!-- Header -->
         <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div>
-                <h1 class="text-2xl font-bold text-gray-900 dark:text-gray-100">Tracking Metrics</h1>
-                <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Define what your clients track daily (weight, steps, mood, etc.)</p>
+                <h1 class="text-2xl font-bold text-gray-900 dark:text-gray-100">{{ __('coach.tracking_metrics.heading') }}</h1>
+                <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">{{ __('coach.tracking_metrics.subtitle') }}</p>
             </div>
         </div>
 
@@ -32,7 +32,7 @@
                     <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
                     </svg>
-                    Add New Metric
+                    {{ __('coach.tracking_metrics.add') }}
                 </span>
                 <svg class="w-5 h-5 text-gray-400 dark:text-gray-500 transition-transform" :class="{ 'rotate-180': open }" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
@@ -45,7 +45,7 @@
 
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
-                            <label for="name" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Name <span class="text-red-500">*</span></label>
+                            <label for="name" class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('coach.tracking_metrics.name') }} <span class="text-red-500">*</span></label>
                             <input type="text" name="name" id="name" value="{{ old('name') }}" required
                                 class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
                                 placeholder="e.g., Body Weight">
@@ -55,20 +55,20 @@
                         </div>
 
                         <div>
-                            <label for="type" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Type <span class="text-red-500">*</span></label>
+                            <label for="type" class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('coach.tracking_metrics.type') }} <span class="text-red-500">*</span></label>
                             <select name="type" id="type" x-model="type" required
                                 class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
-                                <option value="number">Number (e.g., weight, steps)</option>
-                                <option value="scale">Scale (e.g., 1-5 rating)</option>
-                                <option value="boolean">Yes / No</option>
-                                <option value="text">Text (free-form notes)</option>
-                                <option value="image">Image (progress photo)</option>
+                                <option value="number">{{ __('coach.tracking_metrics.type_number') }}</option>
+                                <option value="scale">{{ __('coach.tracking_metrics.type_scale') }}</option>
+                                <option value="boolean">{{ __('coach.tracking_metrics.type_boolean') }}</option>
+                                <option value="text">{{ __('coach.tracking_metrics.type_text') }}</option>
+                                <option value="image">{{ __('coach.tracking_metrics.type_image') }}</option>
                             </select>
                         </div>
                     </div>
 
                     <div>
-                        <label for="description" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Description</label>
+                        <label for="description" class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('coach.tracking_metrics.description') }}</label>
                         <input type="text" name="description" id="description" value="{{ old('description') }}"
                             class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
                             placeholder="Optional hint shown to clients, e.g., 'Weigh yourself first thing in the morning'">
@@ -79,20 +79,20 @@
 
                     <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
                         <div x-show="type === 'number'">
-                            <label for="unit" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Unit</label>
+                            <label for="unit" class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('coach.tracking_metrics.unit') }}</label>
                             <input type="text" name="unit" id="unit" value="{{ old('unit') }}"
                                 class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
                                 placeholder="e.g., kg, steps, ml">
                         </div>
 
                         <div x-show="type === 'scale'">
-                            <label for="scale_min" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Scale Min</label>
+                            <label for="scale_min" class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('coach.tracking_metrics.scale_min') }}</label>
                             <input type="number" name="scale_min" id="scale_min" value="{{ old('scale_min', 1) }}"
                                 class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
                         </div>
 
                         <div x-show="type === 'scale'">
-                            <label for="scale_max" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Scale Max</label>
+                            <label for="scale_max" class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('coach.tracking_metrics.scale_max') }}</label>
                             <input type="number" name="scale_max" id="scale_max" value="{{ old('scale_max', 5) }}"
                                 class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
                         </div>
@@ -100,7 +100,7 @@
 
                     <div class="flex justify-end">
                         <button type="submit" class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-700 focus:bg-blue-700 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition ease-in-out duration-150">
-                            Add Metric
+                            {{ __('coach.tracking_metrics.add_button') }}
                         </button>
                     </div>
                 </form>
@@ -113,8 +113,8 @@
 
         <div class="bg-white dark:bg-gray-900 rounded-lg shadow">
             <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-800">
-                <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">Active Metrics ({{ $activeMetrics->count() }})</h2>
-                <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">These metrics are available for client assignment.</p>
+                <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">{{ __('coach.tracking_metrics.active_heading', ['n' => $activeMetrics->count()]) }}</h2>
+                <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">{{ __('coach.tracking_metrics.active_description') }}</p>
             </div>
 
             @if($activeMetrics->count() > 0)
@@ -132,15 +132,15 @@
                                         @endif
                                         <p class="text-xs text-gray-500 dark:text-gray-400">
                                             @if($metric->type === 'number')
-                                                Number{{ $metric->unit ? " ({$metric->unit})" : '' }}
+                                                {{ __('coach.tracking_metrics.type_number_label') }}{{ $metric->unit ? " ({$metric->unit})" : '' }}
                                             @elseif($metric->type === 'scale')
-                                                Scale ({{ $metric->scale_min }}-{{ $metric->scale_max }})
+                                                {{ __('coach.tracking_metrics.type_scale_label') }} ({{ $metric->scale_min }}-{{ $metric->scale_max }})
                                             @elseif($metric->type === 'boolean')
-                                                Yes / No
+                                                {{ __('coach.tracking_metrics.type_boolean') }}
                                             @elseif($metric->type === 'text')
-                                                Text
+                                                {{ __('coach.tracking_metrics.type_text_label') }}
                                             @elseif($metric->type === 'image')
-                                                Image (progress photo)
+                                                {{ __('coach.tracking_metrics.type_image_label') }}
                                             @endif
                                         </p>
                                     </div>
@@ -179,7 +179,7 @@
                                     </button>
 
                                     <!-- Deactivate -->
-                                    <form method="POST" action="{{ route('coach.tracking-metrics.destroy', $metric) }}" onsubmit="return confirm('Deactivate this metric? It will no longer be available for new assignments.')">
+                                    <form method="POST" action="{{ route('coach.tracking-metrics.destroy', $metric) }}" onsubmit="return confirm('{{ __('coach.tracking_metrics.deactivate_confirm') }}')">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="p-1.5 text-gray-400 dark:text-gray-500 hover:text-red-600 rounded" title="Deactivate">
@@ -199,25 +199,25 @@
 
                                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                                         <div>
-                                            <label class="block text-xs font-medium text-gray-700 dark:text-gray-300">Name</label>
+                                            <label class="block text-xs font-medium text-gray-700 dark:text-gray-300">{{ __('coach.tracking_metrics.name') }}</label>
                                             <input type="text" name="name" value="{{ $metric->name }}" required
                                                 class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
                                         </div>
                                         <div>
-                                            <label class="block text-xs font-medium text-gray-700 dark:text-gray-300">Type</label>
+                                            <label class="block text-xs font-medium text-gray-700 dark:text-gray-300">{{ __('coach.tracking_metrics.type') }}</label>
                                             <select name="type" x-model="type" required
                                                 class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
-                                                <option value="number">Number</option>
-                                                <option value="scale">Scale</option>
-                                                <option value="boolean">Yes / No</option>
-                                                <option value="text">Text</option>
-                                                <option value="image">Image</option>
+                                                <option value="number">{{ __('coach.tracking_metrics.type_number_label') }}</option>
+                                                <option value="scale">{{ __('coach.tracking_metrics.type_scale_label') }}</option>
+                                                <option value="boolean">{{ __('coach.tracking_metrics.type_boolean') }}</option>
+                                                <option value="text">{{ __('coach.tracking_metrics.type_text_label') }}</option>
+                                                <option value="image">{{ __('coach.tracking_metrics.type_image_label') }}</option>
                                             </select>
                                         </div>
                                     </div>
 
                                     <div>
-                                        <label class="block text-xs font-medium text-gray-700 dark:text-gray-300">Description</label>
+                                        <label class="block text-xs font-medium text-gray-700 dark:text-gray-300">{{ __('coach.tracking_metrics.description') }}</label>
                                         <input type="text" name="description" value="{{ $metric->description }}"
                                             class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
                                             placeholder="Optional hint for clients">
@@ -225,17 +225,17 @@
 
                                     <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
                                         <div x-show="type === 'number'">
-                                            <label class="block text-xs font-medium text-gray-700 dark:text-gray-300">Unit</label>
+                                            <label class="block text-xs font-medium text-gray-700 dark:text-gray-300">{{ __('coach.tracking_metrics.unit') }}</label>
                                             <input type="text" name="unit" value="{{ $metric->unit }}"
                                                 class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
                                         </div>
                                         <div x-show="type === 'scale'">
-                                            <label class="block text-xs font-medium text-gray-700 dark:text-gray-300">Scale Min</label>
+                                            <label class="block text-xs font-medium text-gray-700 dark:text-gray-300">{{ __('coach.tracking_metrics.scale_min') }}</label>
                                             <input type="number" name="scale_min" value="{{ $metric->scale_min }}"
                                                 class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
                                         </div>
                                         <div x-show="type === 'scale'">
-                                            <label class="block text-xs font-medium text-gray-700 dark:text-gray-300">Scale Max</label>
+                                            <label class="block text-xs font-medium text-gray-700 dark:text-gray-300">{{ __('coach.tracking_metrics.scale_max') }}</label>
                                             <input type="number" name="scale_max" value="{{ $metric->scale_max }}"
                                                 class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
                                         </div>
@@ -243,10 +243,10 @@
 
                                     <div class="flex items-center gap-2">
                                         <button type="submit" class="inline-flex items-center px-3 py-1.5 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-700 transition ease-in-out duration-150">
-                                            Save
+                                            {{ __('coach.programs.edit.save') }}
                                         </button>
                                         <button @click="editing = false" type="button" class="inline-flex items-center px-3 py-1.5 border border-gray-300 dark:border-gray-700 rounded-md text-xs font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-800 transition ease-in-out duration-150">
-                                            Cancel
+                                            {{ __('coach.meals.edit.cancel') }}
                                         </button>
                                     </div>
                                 </form>
@@ -259,8 +259,8 @@
                     <svg class="mx-auto h-12 w-12 text-gray-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
                     </svg>
-                    <h3 class="mt-2 text-sm font-medium text-gray-900 dark:text-gray-100">No tracking metrics</h3>
-                    <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Add your first metric above to get started.</p>
+                    <h3 class="mt-2 text-sm font-medium text-gray-900 dark:text-gray-100">{{ __('coach.tracking_metrics.no_metrics') }}</h3>
+                    <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">{{ __('coach.tracking_metrics.no_metrics_description') }}</p>
                 </div>
             @endif
         </div>
@@ -269,7 +269,7 @@
         @if($inactiveMetrics->count() > 0)
             <div x-data="{ open: false }" class="bg-white dark:bg-gray-900 rounded-lg shadow">
                 <button @click="open = !open" type="button" class="w-full flex items-center justify-between px-6 py-4 text-left">
-                    <span class="text-sm font-medium text-gray-500 dark:text-gray-400">Inactive Metrics ({{ $inactiveMetrics->count() }})</span>
+                    <span class="text-sm font-medium text-gray-500 dark:text-gray-400">{{ __('coach.tracking_metrics.inactive_heading', ['n' => $inactiveMetrics->count()]) }}</span>
                     <svg class="w-5 h-5 text-gray-400 dark:text-gray-500 transition-transform" :class="{ 'rotate-180': open }" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
                     </svg>
@@ -283,22 +283,22 @@
                                     <p class="text-sm font-medium text-gray-500 dark:text-gray-400 line-through">{{ $metric->name }}</p>
                                     <p class="text-xs text-gray-400 dark:text-gray-500">
                                         @if($metric->type === 'number')
-                                            Number{{ $metric->unit ? " ({$metric->unit})" : '' }}
+                                            {{ __('coach.tracking_metrics.type_number_label') }}{{ $metric->unit ? " ({$metric->unit})" : '' }}
                                         @elseif($metric->type === 'scale')
-                                            Scale ({{ $metric->scale_min }}-{{ $metric->scale_max }})
+                                            {{ __('coach.tracking_metrics.type_scale_label') }} ({{ $metric->scale_min }}-{{ $metric->scale_max }})
                                         @elseif($metric->type === 'boolean')
-                                            Yes / No
+                                            {{ __('coach.tracking_metrics.type_boolean') }}
                                         @elseif($metric->type === 'text')
-                                            Text
+                                            {{ __('coach.tracking_metrics.type_text_label') }}
                                         @elseif($metric->type === 'image')
-                                            Image (progress photo)
+                                            {{ __('coach.tracking_metrics.type_image_label') }}
                                         @endif
                                     </p>
                                 </div>
                                 <form method="POST" action="{{ route('coach.tracking-metrics.restore', $metric) }}">
                                     @csrf
                                     <button type="submit" class="inline-flex items-center px-3 py-1.5 border border-gray-300 dark:border-gray-700 rounded-md text-xs font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-800 transition ease-in-out duration-150">
-                                        Reactivate
+                                        {{ __('coach.tracking_metrics.reactivate') }}
                                     </button>
                                 </form>
                             </li>

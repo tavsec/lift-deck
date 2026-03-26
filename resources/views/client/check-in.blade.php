@@ -1,10 +1,10 @@
 <x-layouts.client>
-    <x-slot:title>Daily Check-in</x-slot:title>
+    <x-slot:title>{{ __('client.check_in.heading') }}</x-slot:title>
 
     <div class="py-6 space-y-6" x-data="checkIn()">
         <!-- Header with Date Navigation -->
         <div>
-            <h1 class="text-2xl font-bold text-gray-900 dark:text-gray-100">Daily Check-in</h1>
+            <h1 class="text-2xl font-bold text-gray-900 dark:text-gray-100">{{ __('client.check_in.heading') }}</h1>
             <div class="mt-3 flex items-center justify-between">
                 <a :href="prevUrl" class="p-2 rounded-md text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-800">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -17,7 +17,7 @@
                         class="rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm">
                     <button @click="goToToday()" x-show="currentDate !== today"
                         class="text-xs text-blue-600 hover:text-blue-800 font-medium">
-                        Today
+                        {{ __('client.check_in.today') }}
                     </button>
                 </div>
 
@@ -70,7 +70,7 @@
                             <input type="number" step="any" name="metrics[{{ $metric->id }}]"
                                 value="{{ $existingLogs->get($metric->id)?->value }}"
                                 class="block w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
-                                placeholder="Enter value...">
+                                placeholder="{{ __('client.check_in.enter_value') }}">
 
                         @elseif($metric->type === 'scale')
                             @php $currentVal = $existingLogs->get($metric->id)?->value; @endphp
@@ -86,8 +86,8 @@
                                     @endfor
                                 </div>
                                 <div class="flex justify-between text-xs text-gray-400 dark:text-gray-500">
-                                    <span>Low</span>
-                                    <span>High</span>
+                                    <span>{{ __('client.check_in.low') }}</span>
+                                    <span>{{ __('client.check_in.high') }}</span>
                                 </div>
                             </div>
 
@@ -98,19 +98,19 @@
                                 <button type="button" @click="value = value === '1' ? '' : '1'"
                                     :class="value === '1' ? 'bg-green-600 text-white border-green-600' : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700'"
                                     class="flex-1 py-2 text-sm font-medium border rounded-md transition-colors">
-                                    Yes
+                                    {{ __('client.check_in.yes') }}
                                 </button>
                                 <button type="button" @click="value = value === '0' ? '' : '0'"
                                     :class="value === '0' ? 'bg-red-500 text-white border-red-500' : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700'"
                                     class="flex-1 py-2 text-sm font-medium border rounded-md transition-colors">
-                                    No
+                                    {{ __('client.check_in.no') }}
                                 </button>
                             </div>
 
                         @elseif($metric->type === 'text')
                             <textarea name="metrics[{{ $metric->id }}]" rows="2"
                                 class="block w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
-                                placeholder="Write notes...">{{ $existingLogs->get($metric->id)?->value }}</textarea>
+                                placeholder="{{ __('client.check_in.write_notes') }}">{{ $existingLogs->get($metric->id)?->value }}</textarea>
 
                         @elseif($metric->type === 'image')
                             @php
@@ -147,7 +147,7 @@
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/>
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/>
                                             </svg>
-                                            <p class="text-xs text-gray-500 dark:text-gray-400">Tap to upload photo</p>
+                                            <p class="text-xs text-gray-500 dark:text-gray-400">{{ __('client.check_in.tap_to_upload') }}</p>
                                         </div>
                                         <input type="file" class="hidden" accept="image/jpeg,image/png,image/webp,image/heic,image/heif" @change="handleFileSelect($event)">
                                     </label>
@@ -169,7 +169,7 @@
                 @endforeach
 
                 <button type="submit" class="w-full inline-flex items-center justify-center px-4 py-3 bg-blue-600 border border-transparent rounded-md font-semibold text-sm text-white uppercase tracking-widest hover:bg-blue-700 focus:bg-blue-700 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition ease-in-out duration-150">
-                    Save Check-in
+                    {{ __('client.check_in.save') }}
                 </button>
             </form>
         @else
@@ -178,8 +178,8 @@
                     <svg class="mx-auto h-12 w-12 text-gray-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
                     </svg>
-                    <h3 class="mt-2 text-sm font-medium text-gray-900 dark:text-gray-100">No metrics assigned</h3>
-                    <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Your coach hasn't assigned any tracking metrics yet.</p>
+                    <h3 class="mt-2 text-sm font-medium text-gray-900 dark:text-gray-100">{{ __('client.check_in.no_metrics') }}</h3>
+                    <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">{{ __('client.check_in.no_metrics_description') }}</p>
                 </div>
             </div>
         @endif

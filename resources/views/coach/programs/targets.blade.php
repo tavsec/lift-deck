@@ -1,5 +1,5 @@
 <x-layouts.coach>
-    <x-slot:title>Target Weights – {{ $clientProgram->client->name }}</x-slot:title>
+    <x-slot:title>{{ __('coach.programs.targets.heading', ['name' => $clientProgram->client->name]) }}</x-slot:title>
 
     <div class="space-y-6">
         <!-- Header -->
@@ -8,11 +8,11 @@
                 <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
                 </svg>
-                Back to Program
+                {{ __('coach.programs.targets.back') }}
             </a>
-            <h1 class="text-2xl font-bold text-gray-900 dark:text-gray-100">Target Weights</h1>
+            <h1 class="text-2xl font-bold text-gray-900 dark:text-gray-100">{{ __('coach.programs.targets.title') }}</h1>
             <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">
-                Set target weights for <span class="font-medium text-gray-700 dark:text-gray-300">{{ $clientProgram->client->name }}</span> on <span class="font-medium text-gray-700 dark:text-gray-300">{{ $program->name }}</span>. Leave blank to remove a target.
+                {{ __('coach.programs.targets.subtitle', ['client' => $clientProgram->client->name, 'program' => $program->name]) }}
             </p>
         </div>
 
@@ -52,7 +52,7 @@
                                             @if($workoutExercise->sets > 0)
                                                 @for ($set = 1; $set <= $workoutExercise->sets; $set++)
                                                     <div class="flex items-center gap-2">
-                                                        <span class="text-xs text-gray-400 dark:text-gray-500 w-10 text-right">Set {{ $set }}</span>
+                                                        <span class="text-xs text-gray-400 dark:text-gray-500 w-10 text-right">{{ __('coach.programs.targets.set_n', ['n' => $set]) }}</span>
                                                         <input
                                                             type="number"
                                                             name="targets[{{ $workoutExercise->id }}][{{ $set }}]"
@@ -63,21 +63,21 @@
                                                             placeholder="—"
                                                             class="w-28 rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm text-right @error('targets.' . $workoutExercise->id . '.' . $set) border-red-300 @enderror"
                                                         >
-                                                        <span class="text-sm text-gray-500 dark:text-gray-400 w-6">kg</span>
+                                                        <span class="text-sm text-gray-500 dark:text-gray-400 w-6">{{ __('coach.programs.targets.kg') }}</span>
                                                     </div>
                                                     @error('targets.' . $workoutExercise->id . '.' . $set)
                                                         <p class="text-xs text-red-600 dark:text-red-400 text-right">{{ $message }}</p>
                                                     @enderror
                                                 @endfor
                                             @else
-                                                <p class="text-xs text-gray-400 dark:text-gray-500 italic">No sets configured</p>
+                                                <p class="text-xs text-gray-400 dark:text-gray-500 italic">{{ __('coach.programs.targets.no_sets') }}</p>
                                             @endif
                                         </div>
                                     </div>
                                     @if($historyByExercise->has($workoutExercise->id) && $historyByExercise->get($workoutExercise->id)->isNotEmpty())
                                         <details class="mt-2">
                                             <summary class="text-xs text-gray-400 dark:text-gray-500 cursor-pointer select-none hover:text-gray-600 dark:hover:text-gray-300">
-                                                Target history
+                                                {{ __('coach.programs.targets.history') }}
                                             </summary>
                                             <div class="mt-2 space-y-1 pl-2 border-l-2 border-gray-200 dark:border-gray-700">
                                                 @foreach($historyByExercise->get($workoutExercise->id)->filter(fn ($t) => $t->effective_date !== null)->groupBy(fn ($t) => $t->effective_date->format('Y-m-d'))->sortKeysDesc() as $date => $entries)
@@ -100,10 +100,10 @@
 
             <div class="flex items-center justify-end gap-4 pt-2">
                 <a href="{{ route('coach.programs.show', $program) }}" class="inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-md font-medium text-sm text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition ease-in-out duration-150">
-                    Cancel
+                    {{ __('coach.programs.targets.cancel') }}
                 </a>
                 <button type="submit" class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-700 focus:bg-blue-700 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition ease-in-out duration-150">
-                    Save Targets
+                    {{ __('coach.programs.targets.save') }}
                 </button>
             </div>
         </form>

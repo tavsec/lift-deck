@@ -6,10 +6,10 @@
             </svg>
         </div>
 
-        <h1 class="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-2">Welcome!</h1>
+        <h1 class="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-2">{{ __('client.welcome.heading') }}</h1>
 
         <p class="text-lg text-gray-600 dark:text-gray-400 mb-8">
-            You're now connected with<br>
+            {{ __('client.welcome.connected_with') }}<br>
             <span class="font-semibold text-gray-900 dark:text-gray-100">{{ $coach->gym_name ?? $coach->name }}</span>
         </p>
 
@@ -21,12 +21,12 @@
             @if($coach->onboarding_welcome_text)
                 {{ $coach->onboarding_welcome_text }}
             @else
-                Let's set up your profile so your coach can create the perfect program for you.
+                {{ __('client.welcome.default_message') }}
             @endif
         </p>
 
         <a href="{{ route('client.onboarding') }}" class="inline-flex items-center px-6 py-3 bg-blue-600 border border-transparent rounded-md font-semibold text-sm text-white uppercase tracking-widest hover:bg-blue-700 focus:bg-blue-700 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition ease-in-out duration-150">
-            Continue to Setup
+            {{ __('client.welcome.continue') }}
         </a>
     </div>
 </x-guest-layout>
