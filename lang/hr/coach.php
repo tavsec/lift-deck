@@ -574,6 +574,7 @@ return [
         ],
 
         'show' => [
+            'title' => 'Razgovor s :name',
             'view_profile' => 'Pregled profila',
             'no_messages' => 'Još nema poruka. Pokrenite razgovor!',
             'type_placeholder' => 'Upišite poruku...',

@@ -1,5 +1,5 @@
 <x-layouts.coach>
-    <x-slot:title>Chat with {{ $client->name }}</x-slot:title>
+    <x-slot:title>{{ __('coach.messages.show.title', ['name' => $client->name]) }}</x-slot:title>
 
     <div class="flex flex-col h-[calc(100vh-8rem)]">
         <!-- Header -->

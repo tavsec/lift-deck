@@ -574,6 +574,7 @@ return [
         ],
 
         'show' => [
+            'title' => 'Chat with :name',
             'view_profile' => 'View Profile',
             'no_messages' => 'No messages yet. Start the conversation!',
             'type_placeholder' => 'Type your message...',

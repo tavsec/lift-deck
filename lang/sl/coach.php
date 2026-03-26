@@ -574,6 +574,7 @@ return [
         ],
 
         'show' => [
+            'title' => 'Klepet z :name',
             'view_profile' => 'Oglej profil',
             'no_messages' => 'Še ni sporočil. Začnite pogovor!',
             'type_placeholder' => 'Vtipkajte sporočilo...',
