@@ -41,7 +41,16 @@
             <div class="flex items-center justify-between w-full px-4">
                 <div>
                 </div>
-                <div class="flex items-center justify-end pr-0">
+                <div class="flex items-center justify-end gap-4 pr-0">
+                    <div class="flex items-center gap-1">
+                        @php $currentLocale = app()->getLocale(); @endphp
+                        @foreach(['en' => 'EN', 'sl' => 'SL', 'hr' => 'HR'] as $locale => $label)
+                            @php $urlPath = ['en' => 'en', 'sl' => 'si', 'hr' => 'hr'][$locale]; @endphp
+                            <a href="/{{ $urlPath }}"
+                               class="text-xs font-semibold px-2 py-1 rounded {{ $currentLocale === $locale ? 'bg-white text-primary' : 'text-white hover:opacity-70' }}"
+                            >{{ $label }}</a>
+                        @endforeach
+                    </div>
                     <div class="sm:flex">
                         <a
                             href="{{ route('coach.dashboard') }}"
