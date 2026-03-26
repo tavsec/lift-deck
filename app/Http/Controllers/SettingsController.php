@@ -21,7 +21,35 @@ class SettingsController extends Controller
         return view('client.settings.edit', ['user' => auth()->user()]);
     }
 
-    public function update(UpdateSettingsRequest $request, string $role): RedirectResponse
+    public function updateCoach(UpdateSettingsRequest $request): RedirectResponse
+    {
+        $this->updateProfile($request);
+
+        return redirect()->route('coach.settings.edit')->with('status', 'profile-updated');
+    }
+
+    public function updateClient(UpdateSettingsRequest $request): RedirectResponse
+    {
+        $this->updateProfile($request);
+
+        return redirect()->route('client.settings.edit')->with('status', 'profile-updated');
+    }
+
+    public function updatePasswordCoach(Request $request): RedirectResponse
+    {
+        $this->changePassword($request);
+
+        return redirect()->route('coach.settings.edit')->with('status', 'password-updated');
+    }
+
+    public function updatePasswordClient(Request $request): RedirectResponse
+    {
+        $this->changePassword($request);
+
+        return redirect()->route('client.settings.edit')->with('status', 'password-updated');
+    }
+
+    private function updateProfile(UpdateSettingsRequest $request): void
     {
         $user = $request->user();
         $validated = $request->validated();
@@ -49,13 +77,9 @@ class SettingsController extends Controller
             Storage::delete($user->getRawOriginal('avatar'));
             $user->update(['avatar' => null]);
         }
-
-        $redirectRoute = $role === 'coach' ? 'coach.settings.edit' : 'client.settings.edit';
-
-        return redirect()->route($redirectRoute)->with('status', 'profile-updated');
     }
 
-    public function updatePassword(Request $request, string $role): RedirectResponse
+    private function changePassword(Request $request): void
     {
         $validated = $request->validate([
             'current_password' => ['required', 'current_password'],
@@ -65,9 +89,5 @@ class SettingsController extends Controller
         $request->user()->update([
             'password' => Hash::make($validated['password']),
         ]);
-
-        $redirectRoute = $role === 'coach' ? 'coach.settings.edit' : 'client.settings.edit';
-
-        return redirect()->route($redirectRoute)->with('status', 'password-updated');
     }
 }

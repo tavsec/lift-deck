@@ -102,8 +102,8 @@ Route::middleware(['auth', 'verified', 'role:coach'])
         Route::put('branding', [Coach\BrandingController::class, 'update'])->name('branding.update');
 
         Route::get('settings', [App\Http\Controllers\SettingsController::class, 'editCoach'])->name('settings.edit');
-        Route::put('settings', fn (App\Http\Requests\UpdateSettingsRequest $request) => app(App\Http\Controllers\SettingsController::class)->update($request, 'coach'))->name('settings.update');
-        Route::put('settings/password', fn (Illuminate\Http\Request $request) => app(App\Http\Controllers\SettingsController::class)->updatePassword($request, 'coach'))->name('settings.password');
+        Route::put('settings', [App\Http\Controllers\SettingsController::class, 'updateCoach'])->name('settings.update');
+        Route::put('settings/password', [App\Http\Controllers\SettingsController::class, 'updatePasswordCoach'])->name('settings.password');
     });
 
 // Client routes
@@ -142,8 +142,8 @@ Route::middleware(['auth', 'verified', 'role:client'])
         });
 
         Route::get('settings', [App\Http\Controllers\SettingsController::class, 'editClient'])->name('settings.edit');
-        Route::put('settings', fn (App\Http\Requests\UpdateSettingsRequest $request) => app(App\Http\Controllers\SettingsController::class)->update($request, 'client'))->name('settings.update');
-        Route::put('settings/password', fn (Illuminate\Http\Request $request) => app(App\Http\Controllers\SettingsController::class)->updatePassword($request, 'client'))->name('settings.password');
+        Route::put('settings', [App\Http\Controllers\SettingsController::class, 'updateClient'])->name('settings.update');
+        Route::put('settings/password', [App\Http\Controllers\SettingsController::class, 'updatePasswordClient'])->name('settings.password');
     });
 
 // Media serving (private, authorized)
