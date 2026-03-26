@@ -42,14 +42,42 @@
                 <div>
                 </div>
                 <div class="flex items-center justify-end gap-4 pr-0">
-                    <div class="flex items-center gap-1">
-                        @php $currentLocale = app()->getLocale(); @endphp
-                        @foreach(['en' => 'EN', 'sl' => 'SL', 'hr' => 'HR'] as $locale => $label)
-                            @php $urlPath = ['en' => 'en', 'sl' => 'si', 'hr' => 'hr'][$locale]; @endphp
-                            <a href="/{{ $urlPath }}"
-                               class="text-xs font-semibold px-2 py-1 rounded {{ $currentLocale === $locale ? 'bg-white text-primary' : 'text-white hover:opacity-70' }}"
-                            >{{ $label }}</a>
-                        @endforeach
+                    @php
+                        $currentLocale = app()->getLocale();
+                        $landingLocales = [
+                            'en' => ['flag' => '🇬🇧', 'url' => 'en'],
+                            'sl' => ['flag' => '🇸🇮', 'url' => 'si'],
+                            'hr' => ['flag' => '🇭🇷', 'url' => 'hr'],
+                        ];
+                    @endphp
+                    <div x-data="{ open: false }" class="relative">
+                        <button
+                            @click="open = !open"
+                            @click.outside="open = false"
+                            type="button"
+                            class="flex items-center gap-1.5 text-white hover:opacity-70"
+                        >
+                            <span>{{ $landingLocales[$currentLocale]['flag'] }}</span>
+                            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                            </svg>
+                        </button>
+
+                        <div
+                            x-show="open"
+                            x-transition
+                            class="absolute right-0 top-full mt-2 w-36 bg-white rounded-lg shadow-lg py-1 z-50"
+                        >
+                            @foreach($landingLocales as $locale => $meta)
+                                <a
+                                    href="/{{ $meta['url'] }}"
+                                    class="flex items-center gap-2 px-3 py-1.5 text-sm {{ $currentLocale === $locale ? 'text-blue-600 font-medium' : 'text-gray-700 hover:bg-gray-50' }}"
+                                >
+                                    <span>{{ $meta['flag'] }}</span>
+                                    <span>{{ ['en' => 'English', 'sl' => 'Slovenščina', 'hr' => 'Hrvatski'][$locale] }}</span>
+                                </a>
+                            @endforeach
+                        </div>
                     </div>
                     <div class="sm:flex">
                         <a
