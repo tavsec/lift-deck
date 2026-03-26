@@ -246,6 +246,13 @@ return [
             'meal_name' => 'Name',
             'meal_name_placeholder' => 'e.g. Chicken Breast',
             'log_meal_button' => 'Log Meal',
+            'last_7_days' => 'Last 7 days',
+            'last_14_days' => 'Last 14 days',
+            'last_30_days' => 'Last 30 days',
+            'custom_range' => 'Custom range',
+            'from' => 'From',
+            'to' => 'To',
+            'apply' => 'Apply',
             'meal_singular' => 'meal',
             'meal_plural' => 'meals',
             'no_meals' => 'No meals logged',
@@ -264,6 +271,7 @@ return [
         ],
 
         'workout_log_form' => [
+            'back' => 'Back to :name',
             'heading_edit' => 'Edit Workout for :name',
             'heading_create' => 'Log Workout for :name',
             'subtitle_edit' => 'Update the workout details below.',
@@ -693,6 +701,9 @@ return [
             'search_placeholder' => 'Search meals...',
             'search' => 'Search',
             'clear' => 'Clear',
+            'no_meals' => 'No meals found',
+            'no_meals_search' => 'Try adjusting your search.',
+            'no_meals_empty' => 'Get started by adding your first meal.',
         ],
 
         'create' => [

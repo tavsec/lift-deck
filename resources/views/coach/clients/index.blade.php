@@ -1,22 +1,22 @@
 <x-layouts.coach>
-    <x-slot:title>Clients</x-slot:title>
+    <x-slot:title>{{ __('coach.clients.index.heading') }}</x-slot:title>
 
     <div class="space-y-6">
         <!-- Header -->
         <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div>
-                <h1 class="text-2xl font-bold text-gray-900 dark:text-gray-100">Clients</h1>
-                <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Manage your coaching clients</p>
+                <h1 class="text-2xl font-bold text-gray-900 dark:text-gray-100">{{ __('coach.clients.index.heading') }}</h1>
+                <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">{{ __('coach.clients.index.subtitle') }}</p>
             </div>
             <div class="flex gap-2">
                 <a href="{{ route('coach.clients.create-track-only') }}" class="inline-flex items-center px-4 py-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-md font-medium text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition ease-in-out duration-150">
-                    Add Track-Only Client
+                    {{ __('coach.clients.index.add_track_only') }}
                 </a>
                 <a href="{{ route('coach.clients.create') }}" class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-700 focus:bg-blue-700 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition ease-in-out duration-150">
                     <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
                     </svg>
-                    Generate Code
+                    {{ __('coach.clients.index.generate_code') }}
                 </a>
             </div>
         </div>
@@ -49,9 +49,9 @@
                                 </svg>
                             </div>
                             <div class="mt-3 text-center sm:mt-5">
-                                <h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-gray-100" id="modal-title">Invitation Code Generated</h3>
+                                <h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-gray-100" id="modal-title">{{ __('coach.clients.index.code_generated') }}</h3>
                                 <div class="mt-4">
-                                    <p class="text-sm text-gray-500 dark:text-gray-400 mb-4">Share this code with your client to let them register:</p>
+                                    <p class="text-sm text-gray-500 dark:text-gray-400 mb-4">{{ __('coach.clients.index.code_description') }}</p>
                                     <div class="bg-gray-100 dark:bg-gray-800 rounded-lg p-4 mb-4">
                                         <p id="invitation-code" class="text-3xl font-mono font-bold tracking-wider text-gray-900 dark:text-gray-100">{{ session('invitation_code') }}</p>
                                     </div>
@@ -59,11 +59,11 @@
                                         <svg class="h-4 w-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
                                         </svg>
-                                        Copy Code
+                                        {{ __('coach.clients.index.copy_code') }}
                                     </button>
                                 </div>
                                 <div class="mt-4 pt-4 border-t border-gray-200 dark:border-gray-800">
-                                    <p class="text-sm text-gray-500 dark:text-gray-400 mb-2">Or share this link:</p>
+                                    <p class="text-sm text-gray-500 dark:text-gray-400 mb-2">{{ __('coach.clients.index.or_share_link') }}</p>
                                     <div class="flex items-center gap-2">
                                         <input type="text" readonly value="{{ url('/join/' . session('invitation_code')) }}" class="flex-1 text-sm rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 bg-gray-50">
                                         <button onclick="navigator.clipboard.writeText('{{ url('/join/' . session('invitation_code')) }}')" class="inline-flex items-center px-3 py-2 border border-gray-300 dark:border-gray-700 shadow-sm text-sm leading-4 font-medium rounded-md text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
@@ -77,7 +77,7 @@
                         </div>
                         <div class="mt-5 sm:mt-6">
                             <button @click="open = false" class="inline-flex justify-center w-full rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:text-sm">
-                                Done
+                                {{ __('coach.clients.index.done') }}
                             </button>
                         </div>
                     </div>
@@ -89,10 +89,10 @@
         <div class="bg-white dark:bg-gray-900 rounded-lg shadow p-4">
             <form method="GET" action="{{ route('coach.clients.index') }}" class="flex gap-4">
                 <div class="flex-1">
-                    <input type="text" name="search" value="{{ request('search') }}" placeholder="Search by name or email..." class="w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm">
+                    <input type="text" name="search" value="{{ request('search') }}" placeholder="{{ __('coach.clients.index.search_placeholder') }}" class="w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm">
                 </div>
                 <button type="submit" class="inline-flex items-center px-4 py-2 bg-gray-100 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-md font-medium text-xs text-gray-700 dark:text-gray-300 uppercase tracking-widest hover:bg-gray-200 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition ease-in-out duration-150">
-                    Search
+                    {{ __('coach.clients.index.search') }}
                 </button>
             </form>
         </div>
@@ -100,7 +100,7 @@
         <!-- Pending Invitations -->
         @if($pendingInvitations->count() > 0)
             <div class="bg-yellow-50 rounded-lg shadow p-4">
-                <h3 class="text-sm font-medium text-yellow-800 mb-3">Pending Invitations ({{ $pendingInvitations->count() }})</h3>
+                <h3 class="text-sm font-medium text-yellow-800 mb-3">{{ __('coach.clients.index.pending_invitations') }} ({{ $pendingInvitations->count() }})</h3>
                 <div class="space-y-2">
                     @foreach($pendingInvitations as $invitation)
                         <div class="flex items-center justify-between bg-white dark:bg-gray-900 rounded-md p-3 border border-yellow-200">
@@ -113,7 +113,7 @@
                                 </button>
                             </div>
                             <div class="text-xs text-gray-500 dark:text-gray-400">
-                                Expires {{ $invitation->expires_at->diffForHumans() }}
+                                {{ __('coach.clients.index.expires', ['time' => $invitation->expires_at->diffForHumans()]) }}
                             </div>
                         </div>
                     @endforeach
@@ -128,11 +128,11 @@
                 <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-800">
                     <thead class="bg-gray-50 dark:bg-gray-800">
                         <tr>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Client</th>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Goal</th>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Status</th>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Joined</th>
-                            <th scope="col" class="relative px-6 py-3"><span class="sr-only">Actions</span></th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">{{ __('coach.clients.index.table.client') }}</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">{{ __('coach.clients.index.table.goal') }}</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">{{ __('coach.clients.index.table.status') }}</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">{{ __('coach.clients.index.table.joined') }}</th>
+                            <th scope="col" class="relative px-6 py-3"><span class="sr-only">{{ __('coach.clients.index.table.actions') }}</span></th>
                         </tr>
                     </thead>
                     <tbody class="bg-white dark:bg-gray-900 divide-y divide-gray-200 dark:divide-gray-800">
@@ -149,7 +149,7 @@
                                             <div class="flex items-center gap-2">
                                                 <span class="text-sm font-medium text-gray-900 dark:text-gray-100 group-hover:text-blue-600">{{ $client->name }}</span>
                                                 @if($client->is_track_only)
-                                                    <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400">Track only</span>
+                                                    <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400">{{ __('coach.clients.index.track_only') }}</span>
                                                 @endif
                                                 @if($clientIdsWithUnread->contains($client->id))
                                                     <span class="flex h-2 w-2 rounded-full bg-blue-500" title="Unread comments"></span>
@@ -168,21 +168,21 @@
                                             {{ str_replace('_', ' ', ucfirst($client->clientProfile->goal)) }}
                                         </span>
                                     @else
-                                        <span class="text-sm text-gray-400 dark:text-gray-500">Not set</span>
+                                        <span class="text-sm text-gray-400 dark:text-gray-500">{{ __('coach.clients.index.goal_not_set') }}</span>
                                     @endif
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     @if($client->clientProfile?->isOnboardingComplete())
-                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">Active</span>
+                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">{{ __('coach.clients.index.status_active') }}</span>
                                     @else
-                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">Pending Onboarding</span>
+                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">{{ __('coach.clients.index.status_pending') }}</span>
                                     @endif
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
                                     {{ $client->created_at->format('M d, Y') }}
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                    <a href="{{ route('coach.clients.show', $client) }}" class="text-blue-600 hover:text-blue-900">View</a>
+                                    <a href="{{ route('coach.clients.show', $client) }}" class="text-blue-600 hover:text-blue-900">{{ __('coach.clients.index.view') }}</a>
                                 </td>
                             </tr>
                         @endforeach
@@ -200,14 +200,14 @@
                     <svg class="mx-auto h-12 w-12 text-gray-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
                     </svg>
-                    <h3 class="mt-2 text-sm font-medium text-gray-900 dark:text-gray-100">No clients yet</h3>
-                    <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Get started by inviting your first client.</p>
+                    <h3 class="mt-2 text-sm font-medium text-gray-900 dark:text-gray-100">{{ __('coach.clients.index.no_clients') }}</h3>
+                    <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">{{ __('coach.clients.index.no_clients_description') }}</p>
                     <div class="mt-6">
                         <a href="{{ route('coach.clients.create') }}" class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-700">
                             <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
                             </svg>
-                            Generate Code
+                            {{ __('coach.clients.index.generate_code') }}
                         </a>
                     </div>
                 </div>

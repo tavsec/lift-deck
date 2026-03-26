@@ -1,18 +1,18 @@
 <x-layouts.coach>
-    <x-slot:title>Exercise Library</x-slot:title>
+    <x-slot:title>{{ __('coach.exercises.index.heading') }}</x-slot:title>
 
     <div class="space-y-6">
         <!-- Header -->
         <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div>
-                <h1 class="text-2xl font-bold text-gray-900 dark:text-gray-100">Exercise Library</h1>
-                <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Browse and manage exercises for your programs</p>
+                <h1 class="text-2xl font-bold text-gray-900 dark:text-gray-100">{{ __('coach.exercises.index.heading') }}</h1>
+                <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">{{ __('coach.exercises.index.subtitle') }}</p>
             </div>
             <a href="{{ route('coach.exercises.create') }}" class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-700 focus:bg-blue-700 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition ease-in-out duration-150">
                 <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
                 </svg>
-                Add Exercise
+                {{ __('coach.exercises.index.add') }}
             </a>
         </div>
 
@@ -35,11 +35,11 @@
         <div class="bg-white dark:bg-gray-900 rounded-lg shadow p-4">
             <form method="GET" action="{{ route('coach.exercises.index') }}" class="flex flex-col sm:flex-row gap-4">
                 <div class="flex-1">
-                    <input type="text" name="search" value="{{ request('search') }}" placeholder="Search exercises..." class="w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm">
+                    <input type="text" name="search" value="{{ request('search') }}" placeholder="{{ __('coach.exercises.index.search_placeholder') }}" class="w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm">
                 </div>
                 <div class="sm:w-48">
                     <select name="muscle_group" class="w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm">
-                        <option value="">All Muscle Groups</option>
+                        <option value="">{{ __('coach.exercises.index.all_muscle_groups') }}</option>
                         @foreach($muscleGroups as $group)
                             <option value="{{ $group }}" {{ request('muscle_group') === $group ? 'selected' : '' }}>
                                 {{ ucfirst(str_replace('_', ' ', $group)) }}
@@ -48,11 +48,11 @@
                     </select>
                 </div>
                 <button type="submit" class="inline-flex items-center px-4 py-2 bg-gray-100 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-md font-medium text-xs text-gray-700 dark:text-gray-300 uppercase tracking-widest hover:bg-gray-200 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition ease-in-out duration-150">
-                    Filter
+                    {{ __('coach.exercises.index.filter') }}
                 </button>
                 @if(request('search') || request('muscle_group'))
                     <a href="{{ route('coach.exercises.index') }}" class="inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-md font-medium text-xs text-gray-700 dark:text-gray-300 uppercase tracking-widest hover:bg-gray-50 dark:hover:bg-gray-800 transition ease-in-out duration-150">
-                        Clear
+                        {{ __('coach.exercises.index.clear') }}
                     </a>
                 @endif
             </form>
@@ -75,7 +75,7 @@
                                 </div>
                                 @if($exercise->isCustom())
                                     <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-blue-100 text-blue-800">
-                                        Custom
+                                        {{ __('coach.exercises.index.custom') }}
                                     </span>
                                 @endif
                             </div>
@@ -88,7 +88,7 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/>
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
                                     </svg>
-                                    Video available
+                                    {{ __('coach.exercises.index.video_available') }}
                                 </div>
                             @endif
                         </div>
@@ -107,12 +107,12 @@
                     <svg class="mx-auto h-12 w-12 text-gray-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
                     </svg>
-                    <h3 class="mt-2 text-sm font-medium text-gray-900 dark:text-gray-100">No exercises found</h3>
+                    <h3 class="mt-2 text-sm font-medium text-gray-900 dark:text-gray-100">{{ __('coach.exercises.index.no_exercises') }}</h3>
                     <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">
                         @if(request('search') || request('muscle_group'))
-                            Try adjusting your search or filters.
+                            {{ __('coach.exercises.index.no_exercises_search') }}
                         @else
-                            Get started by adding your first exercise.
+                            {{ __('coach.exercises.index.no_exercises_empty') }}
                         @endif
                     </p>
                     @if(!request('search') && !request('muscle_group'))
@@ -121,7 +121,7 @@
                                 <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
                                 </svg>
-                                Add Exercise
+                                {{ __('coach.exercises.index.add') }}
                             </a>
                         </div>
                     @endif

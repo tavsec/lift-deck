@@ -1,17 +1,17 @@
 <x-layouts.coach>
-    <x-slot:title>Messages</x-slot:title>
+    <x-slot:title>{{ __('coach.messages.index.heading') }}</x-slot:title>
 
     <div class="space-y-6">
         <!-- Header -->
         <div>
-            <h1 class="text-2xl font-bold text-gray-900 dark:text-gray-100">Messages</h1>
-            <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Communicate with your clients</p>
+            <h1 class="text-2xl font-bold text-gray-900 dark:text-gray-100">{{ __('coach.messages.index.heading') }}</h1>
+            <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">{{ __('coach.messages.index.subtitle') }}</p>
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
             <!-- Conversations List -->
             <div class="lg:col-span-2 space-y-4">
-                <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">Conversations</h2>
+                <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">{{ __('coach.messages.index.conversations') }}</h2>
 
                 @if($conversations->count() > 0)
                     <div class="bg-white dark:bg-gray-900 rounded-lg shadow divide-y divide-gray-200 dark:divide-gray-800">
@@ -35,7 +35,7 @@
                                         <div class="flex items-center justify-between mt-1">
                                             <p class="text-sm text-gray-500 dark:text-gray-400 truncate">
                                                 @if($conversation['latest_message']->sender_id === auth()->id())
-                                                    <span class="text-gray-400 dark:text-gray-500">You: </span>
+                                                    <span class="text-gray-400 dark:text-gray-500">{{ __('coach.messages.index.you') }} </span>
                                                 @endif
                                                 {{ Str::limit($conversation['latest_message']->body, 50) }}
                                             </p>
@@ -56,8 +56,8 @@
                             <svg class="mx-auto h-12 w-12 text-gray-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
                             </svg>
-                            <h3 class="mt-2 text-sm font-medium text-gray-900 dark:text-gray-100">No conversations yet</h3>
-                            <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Start a conversation with one of your clients.</p>
+                            <h3 class="mt-2 text-sm font-medium text-gray-900 dark:text-gray-100">{{ __('coach.messages.index.no_conversations') }}</h3>
+                            <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">{{ __('coach.messages.index.no_conversations_description') }}</p>
                         </div>
                     </div>
                 @endif
@@ -65,7 +65,7 @@
 
             <!-- Start New Conversation -->
             <div class="space-y-4">
-                <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">Start New Conversation</h2>
+                <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">{{ __('coach.messages.index.start_new') }}</h2>
 
                 @if($clientsWithoutMessages->count() > 0)
                     <div class="bg-white dark:bg-gray-900 rounded-lg shadow divide-y divide-gray-200 dark:divide-gray-800">
@@ -85,7 +85,7 @@
                     </div>
                 @else
                     <div class="bg-white dark:bg-gray-900 rounded-lg shadow p-4">
-                        <p class="text-sm text-gray-500 dark:text-gray-400 text-center">All clients have active conversations.</p>
+                        <p class="text-sm text-gray-500 dark:text-gray-400 text-center">{{ __('coach.messages.index.all_active') }}</p>
                     </div>
                 @endif
             </div>

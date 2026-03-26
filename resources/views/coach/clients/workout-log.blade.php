@@ -8,11 +8,11 @@
                 <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
                 </svg>
-                Back to {{ $client->name }}
+                {{ __('coach.clients.workout_log.back', ['name' => $client->name]) }}
             </a>
             <h1 class="text-2xl font-bold text-gray-900 dark:text-gray-100">{{ $workoutLog->displayName() }}</h1>
             @if($workoutLog->custom_name)
-                <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-yellow-100 text-yellow-800 mt-1">Custom Workout</span>
+                <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-yellow-100 text-yellow-800 mt-1">{{ __('coach.clients.workout_log.custom_workout') }}</span>
             @endif
             <div class="flex items-center gap-3 mt-1">
                 <p class="text-sm text-gray-500 dark:text-gray-400">{{ $workoutLog->completed_at->format('D, M j, Y \a\t g:i A') }}</p>
@@ -23,7 +23,7 @@
 
         @if($workoutLog->notes)
             <div class="bg-white dark:bg-gray-900 rounded-lg shadow p-6">
-                <h2 class="text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">Notes</h2>
+                <h2 class="text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">{{ __('coach.clients.workout_log.notes') }}</h2>
                 <p class="text-sm text-gray-900 dark:text-gray-100">{{ $workoutLog->notes }}</p>
             </div>
         @endif
@@ -47,7 +47,7 @@
                     </div>
                     @if($firstSet->workoutExercise)
                         <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">
-                            Prescribed: {{ $firstSet->workoutExercise->sets }} sets &times; {{ $firstSet->workoutExercise->reps }} reps
+                            {{ __('coach.clients.workout_log.prescribed', ['sets' => $firstSet->workoutExercise->sets, 'reps' => $firstSet->workoutExercise->reps]) }}
                         </p>
                     @endif
                 </div>
@@ -56,9 +56,9 @@
                     <table class="w-full text-sm">
                         <thead>
                             <tr class="text-left text-xs text-gray-500 dark:text-gray-400 border-b border-gray-200 dark:border-gray-800">
-                                <th class="pb-2 pr-3 w-16">Set</th>
-                                <th class="pb-2 pr-3">Weight (kg)</th>
-                                <th class="pb-2">Reps</th>
+                                <th class="pb-2 pr-3 w-16">{{ __('coach.clients.workout_log.set') }}</th>
+                                <th class="pb-2 pr-3">{{ __('coach.clients.workout_log.weight_kg') }}</th>
+                                <th class="pb-2">{{ __('coach.clients.workout_log.reps') }}</th>
                             </tr>
                         </thead>
                         <tbody>
