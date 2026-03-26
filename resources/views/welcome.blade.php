@@ -55,10 +55,10 @@
                             @click="open = !open"
                             @click.outside="open = false"
                             type="button"
-                            class="flex items-center gap-1.5 text-white hover:opacity-70"
+                            class="flex items-center gap-2 text-white hover:opacity-70"
                         >
-                            <span>{{ $landingLocales[$currentLocale]['flag'] }}</span>
-                            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <span class="text-lg">{{ $landingLocales[$currentLocale]['flag'] }}</span>
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
                             </svg>
                         </button>
@@ -66,14 +66,14 @@
                         <div
                             x-show="open"
                             x-transition
-                            class="absolute right-0 top-full mt-2 w-36 bg-white rounded-lg shadow-lg py-1 z-50"
+                            class="absolute right-0 top-full mt-2 w-40 bg-white rounded-lg shadow-lg py-1 z-50"
                         >
                             @foreach($landingLocales as $locale => $meta)
                                 <a
                                     href="/{{ $meta['url'] }}"
-                                    class="flex items-center gap-2 px-3 py-1.5 text-sm {{ $currentLocale === $locale ? 'text-blue-600 font-medium' : 'text-gray-700 hover:bg-gray-50' }}"
+                                    class="flex items-center gap-2.5 px-3 py-2 text-sm {{ $currentLocale === $locale ? 'text-blue-600 font-medium' : 'text-gray-700 hover:bg-gray-50' }}"
                                 >
-                                    <span>{{ $meta['flag'] }}</span>
+                                    <span class="text-base">{{ $meta['flag'] }}</span>
                                     <span>{{ ['en' => 'English', 'sl' => 'Slovenščina', 'hr' => 'Hrvatski'][$locale] }}</span>
                                 </a>
                             @endforeach

@@ -13,6 +13,8 @@ class SetLocale
     {
         if (auth()->check()) {
             App::setLocale(auth()->user()->locale ?? 'en');
+        } elseif (session()->has('locale')) {
+            App::setLocale(session('locale'));
         }
 
         return $next($request);

@@ -43,6 +43,7 @@ class LandingLocaleController extends Controller
     {
         $internalLocale = self::URL_TO_LOCALE[$locale] ?? 'en';
         App::setLocale($internalLocale);
+        session(['locale' => $internalLocale]);
 
         return view('welcome');
     }
