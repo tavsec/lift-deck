@@ -4,8 +4,12 @@
     <div class="flex flex-col h-[calc(100vh-10rem)]">
         <!-- Header -->
         <div class="flex items-center pb-4 border-b border-gray-200 dark:border-gray-800">
-            <div class="h-10 w-10 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center">
-                <span class="text-lg font-medium text-blue-700 dark:text-blue-300">{{ strtoupper(substr($coach->name, 0, 1)) }}</span>
+            <div class="h-10 w-10 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center overflow-hidden">
+                @if($coach->avatar)
+                    <img src="{{ $coach->avatar }}" alt="{{ $coach->name }}" class="w-full h-full object-cover">
+                @else
+                    <span class="text-lg font-medium text-blue-700 dark:text-blue-300">{{ strtoupper(substr($coach->name, 0, 1)) }}</span>
+                @endif
             </div>
             <div class="ml-3">
                 <h1 class="text-lg font-medium text-gray-900 dark:text-gray-100">{{ $coach->name }}</h1>

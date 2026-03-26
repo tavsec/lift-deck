@@ -89,8 +89,12 @@
                     @foreach($assignedClients as $assignment)
                         <div class="inline-flex items-center gap-2">
                             <a href="{{ route('coach.clients.show', $assignment->client) }}" class="inline-flex items-center px-3 py-2 rounded-lg bg-gray-50 dark:bg-gray-950 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
-                                <div class="h-8 w-8 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center mr-2">
-                                    <span class="text-sm font-medium text-blue-700 dark:text-blue-300">{{ strtoupper(substr($assignment->client->name, 0, 1)) }}</span>
+                                <div class="h-8 w-8 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center overflow-hidden mr-2">
+                                    @if($assignment->client->avatar)
+                                        <img src="{{ $assignment->client->avatar }}" alt="{{ $assignment->client->name }}" class="w-full h-full object-cover">
+                                    @else
+                                        <span class="text-sm font-medium text-blue-700 dark:text-blue-300">{{ strtoupper(substr($assignment->client->name, 0, 1)) }}</span>
+                                    @endif
                                 </div>
                                 <div>
                                     <p class="text-sm font-medium text-gray-900 dark:text-gray-100">{{ $assignment->client->name }}</p>

@@ -12,8 +12,12 @@
                     {{ __('coach.clients.show.back') }}
                 </a>
                 <div class="flex items-center gap-4">
-                    <div class="h-16 w-16 rounded-full bg-blue-100 flex items-center justify-center">
-                        <span class="text-2xl font-bold text-blue-700">{{ strtoupper(substr($client->name, 0, 1)) }}</span>
+                    <div class="h-16 w-16 rounded-full bg-blue-100 flex items-center justify-center overflow-hidden">
+                        @if($client->avatar)
+                            <img src="{{ $client->avatar }}" alt="{{ $client->name }}" class="w-full h-full object-cover">
+                        @else
+                            <span class="text-2xl font-bold text-blue-700">{{ strtoupper(substr($client->name, 0, 1)) }}</span>
+                        @endif
                     </div>
                     <div>
                         <h1 class="text-2xl font-bold text-gray-900 dark:text-gray-100">{{ $client->name }}</h1>

@@ -133,8 +133,12 @@
                     <div class="divide-y divide-gray-100 dark:divide-gray-800">
                         @foreach($recentComments as $comment)
                             <a href="{{ route('coach.clients.workout-log', [$comment->workoutLog->client, $comment->workoutLog]) }}" class="flex items-start gap-3 py-3 hover:bg-gray-50 dark:hover:bg-gray-800 -mx-2 px-2 rounded transition-colors">
-                                <div class="flex-shrink-0 h-8 w-8 rounded-full bg-blue-100 flex items-center justify-center">
-                                    <span class="text-xs font-medium text-blue-700">{{ strtoupper(substr($comment->user->name, 0, 1)) }}</span>
+                                <div class="flex-shrink-0 h-8 w-8 rounded-full bg-blue-100 flex items-center justify-center overflow-hidden">
+                                    @if($comment->user->avatar)
+                                        <img src="{{ $comment->user->avatar }}" alt="{{ $comment->user->name }}" class="w-full h-full object-cover">
+                                    @else
+                                        <span class="text-xs font-medium text-blue-700">{{ strtoupper(substr($comment->user->name, 0, 1)) }}</span>
+                                    @endif
                                 </div>
                                 <div class="flex-1 min-w-0">
                                     <p class="text-sm text-gray-900 dark:text-gray-100">

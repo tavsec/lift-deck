@@ -141,8 +141,12 @@
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <a href="{{ route('coach.clients.show', $client) }}" class="flex items-center group">
                                         <div class="flex-shrink-0 h-10 w-10">
-                                            <div class="h-10 w-10 rounded-full bg-blue-100 flex items-center justify-center">
-                                                <span class="text-sm font-medium text-blue-700">{{ strtoupper(substr($client->name, 0, 1)) }}</span>
+                                            <div class="h-10 w-10 rounded-full bg-blue-100 flex items-center justify-center overflow-hidden">
+                                                @if($client->avatar)
+                                                    <img src="{{ $client->avatar }}" alt="{{ $client->name }}" class="w-full h-full object-cover">
+                                                @else
+                                                    <span class="text-sm font-medium text-blue-700">{{ strtoupper(substr($client->name, 0, 1)) }}</span>
+                                                @endif
                                             </div>
                                         </div>
                                         <div class="ml-4">

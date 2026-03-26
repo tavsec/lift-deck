@@ -100,6 +100,10 @@ Route::middleware(['auth', 'verified', 'role:coach'])
         // Branding
         Route::get('branding', [Coach\BrandingController::class, 'edit'])->name('branding.edit');
         Route::put('branding', [Coach\BrandingController::class, 'update'])->name('branding.update');
+
+        Route::get('settings', [App\Http\Controllers\SettingsController::class, 'editCoach'])->name('settings.edit');
+        Route::put('settings', [App\Http\Controllers\SettingsController::class, 'updateCoach'])->name('settings.update');
+        Route::put('settings/password', [App\Http\Controllers\SettingsController::class, 'updatePasswordCoach'])->name('settings.password');
     });
 
 // Client routes
@@ -136,6 +140,10 @@ Route::middleware(['auth', 'verified', 'role:client'])
             Route::post('rewards/{reward}/redeem', [Client\RewardController::class, 'redeem'])->name('rewards.redeem');
             Route::get('loyalty', [Client\LoyaltyController::class, 'index'])->name('loyalty');
         });
+
+        Route::get('settings', [App\Http\Controllers\SettingsController::class, 'editClient'])->name('settings.edit');
+        Route::put('settings', [App\Http\Controllers\SettingsController::class, 'updateClient'])->name('settings.update');
+        Route::put('settings/password', [App\Http\Controllers\SettingsController::class, 'updatePasswordClient'])->name('settings.password');
     });
 
 // Media serving (private, authorized)

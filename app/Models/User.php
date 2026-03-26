@@ -78,6 +78,13 @@ class User extends Authenticatable implements FilamentUser
         );
     }
 
+    public function avatar(): Attribute
+    {
+        return Attribute::make(
+            get: fn (?string $value) => $value ? Storage::temporaryUrl($value, now()->addDay()) : null
+        );
+    }
+
     /**
      * Get the coach that this user belongs to.
      */
