@@ -13,9 +13,13 @@
             <span class="font-semibold text-gray-900 dark:text-gray-100">{{ $coach->gym_name ?? $coach->name }}</span>
         </p>
 
-        @if($coach->avatar)
-            <img src="{{ $coach->avatar }}" alt="{{ $coach->name }}" class="mx-auto h-24 w-24 rounded-full object-cover mb-8">
-        @endif
+        <div class="mx-auto h-24 w-24 rounded-full bg-blue-100 flex items-center justify-center overflow-hidden mb-8">
+            @if($coach->avatar)
+                <img src="{{ $coach->avatar }}" alt="{{ $coach->name }}" class="w-full h-full object-cover">
+            @else
+                <span class="text-3xl font-bold text-blue-700">{{ strtoupper(substr($coach->name, 0, 1)) }}</span>
+            @endif
+        </div>
 
         <p class="text-sm text-gray-500 dark:text-gray-400 mb-8">
             @if($coach->onboarding_welcome_text)

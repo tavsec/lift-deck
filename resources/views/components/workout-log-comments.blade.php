@@ -20,9 +20,13 @@
             @foreach($workoutLog->comments as $comment)
                 <div class="flex gap-3">
                     <div class="flex-shrink-0">
-                        <div class="h-8 w-8 rounded-full flex items-center justify-center text-sm font-medium
+                        <div class="h-8 w-8 rounded-full flex items-center justify-center text-sm font-medium overflow-hidden
                             {{ $comment->user->isCoach() ? 'bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300' : 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300' }}">
-                            {{ strtoupper(substr($comment->user->name, 0, 1)) }}
+                            @if($comment->user->avatar)
+                                <img src="{{ $comment->user->avatar }}" alt="{{ $comment->user->name }}" class="w-full h-full object-cover">
+                            @else
+                                {{ strtoupper(substr($comment->user->name, 0, 1)) }}
+                            @endif
                         </div>
                     </div>
                     <div class="flex-1 min-w-0">
