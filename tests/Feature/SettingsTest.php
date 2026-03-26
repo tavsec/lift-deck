@@ -7,8 +7,7 @@ use Illuminate\Support\Facades\Storage;
 
 beforeEach(function () {
     $this->coach = User::factory()->coach()->create();
-    $this->client = User::factory()->create([
-        'role' => 'client',
+    $this->client = User::factory()->client()->create([
         'coach_id' => $this->coach->id,
     ]);
 });
@@ -40,7 +39,7 @@ test('coach can update profile', function () {
 });
 
 test('coach can upload avatar', function () {
-    Storage::fake();
+    Storage::fake('public');
 
     $this->actingAs($this->coach)
         ->put(route('coach.settings.update'), [
@@ -52,10 +51,11 @@ test('coach can upload avatar', function () {
 
     $this->coach->refresh();
     expect($this->coach->getRawOriginal('avatar'))->not->toBeNull();
+    Storage::disk('public')->assertExists($this->coach->getRawOriginal('avatar'));
 });
 
 test('coach can remove avatar', function () {
-    Storage::fake();
+    Storage::fake('public');
     $this->coach->update(['avatar' => 'avatars/old.jpg']);
 
     $this->actingAs($this->coach)
@@ -145,4 +145,18 @@ test('guest cannot access coach settings', function () {
 
 test('guest cannot access client settings', function () {
     $this->get(route('client.settings.edit'))->assertRedirect(route('login'));
+});
+
+// --- Cross-role access ---
+
+test('coach cannot access client settings page', function () {
+    $this->actingAs($this->coach)
+        ->get(route('client.settings.edit'))
+        ->assertRedirect(route('coach.dashboard'));
+});
+
+test('client cannot access coach settings page', function () {
+    $this->actingAs($this->client)
+        ->get(route('coach.settings.edit'))
+        ->assertRedirect(route('client.dashboard'));
 });
