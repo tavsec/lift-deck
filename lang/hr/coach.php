@@ -787,4 +787,22 @@ return [
         'no_redemptions' => 'Još nema iskorištavanja',
         'no_redemptions_description' => 'Zahtjevi za iskorištavanje vaših klijenata pojavit će se ovdje.',
     ],
+
+    'default_metrics' => [
+        'weight' => 'Tjelesna težina',
+        'steps' => 'Koraci',
+        'progress_image' => 'Slika napretka',
+        'mood' => 'Raspoloženje',
+        'energy' => 'Razina energije',
+        'sleep' => 'Kvaliteta sna',
+    ],
+
+    'metrics_setup' => [
+        'title' => 'Postavi metrike praćenja',
+        'description' => 'Želite li da dodamo neke zadane metrike praćenja na vaš račun? Dodat ćemo: tjelesnu težinu, korake, sliku napretka, raspoloženje, razinu energije i kvalitetu sna.',
+        'yes' => 'Da, dodaj ih',
+        'skip' => 'Preskoči za sada',
+        'seeded' => 'Zadane metrike su dodane. Možete ih upravljati u odjeljku <a href=":url" class="font-semibold underline">Praćenje</a>.',
+        'skipped' => 'Nema problema. Metrike možete kreirati u bilo koje vrijeme u odjeljku <a href=":url" class="font-semibold underline">Praćenje</a>.',
+    ],
 ];

@@ -790,4 +790,22 @@ return [
         'no_redemptions' => 'No redemptions yet',
         'no_redemptions_description' => 'Redemption requests from your clients will appear here.',
     ],
+
+    'default_metrics' => [
+        'weight' => 'Body Weight',
+        'steps' => 'Steps',
+        'progress_image' => 'Progress Image',
+        'mood' => 'Mood',
+        'energy' => 'Energy Level',
+        'sleep' => 'Sleep Quality',
+    ],
+
+    'metrics_setup' => [
+        'title' => 'Set Up Your Tracking Metrics',
+        'description' => 'Would you like us to add some default tracking metrics to your account? We\'ll add: Body Weight, Steps, Progress Image, Mood, Energy Level, and Sleep Quality.',
+        'yes' => 'Yes, add them',
+        'skip' => 'Skip for now',
+        'seeded' => 'Default metrics added. You can manage them in the <a href=":url" class="font-semibold underline">Tracking</a> section.',
+        'skipped' => 'No problem. You can create metrics anytime in the <a href=":url" class="font-semibold underline">Tracking</a> section.',
+    ],
 ];

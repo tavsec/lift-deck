@@ -92,6 +92,7 @@ Route::middleware(['auth', 'verified', 'role:coach'])
         Route::post('tracking-metrics/{trackingMetric}/restore', [Coach\TrackingMetricController::class, 'restore'])->name('tracking-metrics.restore');
         Route::post('tracking-metrics/{trackingMetric}/move-up', [Coach\TrackingMetricController::class, 'moveUp'])->name('tracking-metrics.move-up');
         Route::post('tracking-metrics/{trackingMetric}/move-down', [Coach\TrackingMetricController::class, 'moveDown'])->name('tracking-metrics.move-down');
+        Route::post('metrics-setup', Coach\MetricsSetupController::class)->name('metrics-setup');
         Route::get('messages', [Coach\MessageController::class, 'index'])->name('messages.index');
         Route::get('messages/{user}', [Coach\MessageController::class, 'show'])->name('messages.show');
         Route::post('messages/{user}', [Coach\MessageController::class, 'store'])->name('messages.store');

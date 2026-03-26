@@ -44,6 +44,7 @@ class User extends Authenticatable implements FilamentUser
         'dark_mode',
         'locale',
         'is_track_only',
+        'metrics_onboarded_at',
     ];
 
     /**
@@ -68,6 +69,7 @@ class User extends Authenticatable implements FilamentUser
             'password' => 'hashed',
             'dark_mode' => 'boolean',
             'is_track_only' => 'boolean',
+            'metrics_onboarded_at' => 'datetime',
         ];
     }
 
