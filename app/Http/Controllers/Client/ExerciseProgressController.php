@@ -12,16 +12,15 @@ class ExerciseProgressController extends Controller
 {
     public function __invoke(Request $request, Exercise $exercise): JsonResponse
     {
-        $client = auth()->user();
+        $user = auth()->user();
         $range = (int) $request->get('range', 90);
 
         if (! in_array($range, [30, 90, 365, 0])) {
             $range = 90;
         }
 
-        // PRs — all time, no range filter
         $allLogs = ExerciseLog::query()
-            ->whereHas('workoutLog', fn ($q) => $q->where('client_id', $client->id))
+            ->whereHas('workoutLog', fn ($q) => $q->where('client_id', $user->id))
             ->where('exercise_id', $exercise->id)
             ->get(['weight', 'reps']);
 
@@ -32,10 +31,9 @@ class ExerciseProgressController extends Controller
             ->map(fn ($log) => (float) $log->weight * (1 + $log->reps / 30))
             ->max();
 
-        // Chart data — range limited
         $chartLogs = ExerciseLog::query()
             ->whereHas('workoutLog', fn ($q) => $q
-                ->where('client_id', $client->id)
+                ->where('client_id', $user->id)
                 ->when($range > 0, fn ($q) => $q->where('completed_at', '>=', now()->subDays($range)->startOfDay()))
             )
             ->where('exercise_id', $exercise->id)

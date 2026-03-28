@@ -87,9 +87,17 @@ it('returns all chart data when range is 0', function () {
 });
 
 it('defaults to 90 days for an invalid range value', function () {
-    $this->actingAs($this->client)
+    $recentLog = WorkoutLog::factory()->create(['client_id' => $this->client->id, 'completed_at' => now()->subDays(10)]);
+    $oldLog = WorkoutLog::factory()->create(['client_id' => $this->client->id, 'completed_at' => now()->subDays(100)]);
+    ExerciseLog::factory()->create(['workout_log_id' => $recentLog->id, 'exercise_id' => $this->exercise->id, 'weight' => 80, 'reps' => 5, 'set_number' => 1]);
+    ExerciseLog::factory()->create(['workout_log_id' => $oldLog->id, 'exercise_id' => $this->exercise->id, 'weight' => 70, 'reps' => 5, 'set_number' => 1]);
+
+    $response = $this->actingAs($this->client)
         ->getJson(route('client.exercises.progress', $this->exercise).'?range=999')
         ->assertOk();
+
+    // 90-day fallback: 10-day-old entry is included, 100-day-old entry is excluded
+    expect($response->json('weightChart'))->toHaveCount(1);
 });
 
 it('cannot see another clients exercise data', function () {
