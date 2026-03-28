@@ -177,3 +177,37 @@ it('returns empty check-in data when client has no coach', function () {
     expect($result['checkInCharts'])->toBeEmpty();
     expect($result['tableMetrics']->count())->toBe(0);
 });
+
+it('returns exercise progression data', function () {
+    $exercise = \App\Models\Exercise::factory()->create(['coach_id' => $this->coach->id]);
+    $workoutLog = \App\Models\WorkoutLog::factory()->create([
+        'client_id' => $this->client->id,
+        'completed_at' => now(),
+    ]);
+    \App\Models\ExerciseLog::factory()->create([
+        'workout_log_id' => $workoutLog->id,
+        'exercise_id' => $exercise->id,
+        'weight' => 100,
+        'reps' => 8,
+    ]);
+
+    $result = $this->service->getExerciseProgressionData(
+        $this->client,
+        now()->subDays(29)->format('Y-m-d'),
+        now()->format('Y-m-d')
+    );
+
+    expect($result)->toHaveKeys(['exerciseProgressionData', 'exercisesByMuscleGroup', 'exerciseTargetHistory']);
+    expect($result['exerciseProgressionData'])->toHaveKey($exercise->id);
+});
+
+it('returns empty exercise data when no workouts', function () {
+    $result = $this->service->getExerciseProgressionData(
+        $this->client,
+        now()->subDays(29)->format('Y-m-d'),
+        now()->format('Y-m-d')
+    );
+
+    expect($result['exerciseProgressionData'])->toBeEmpty();
+    expect($result['exercisesByMuscleGroup']->isEmpty())->toBeTrue();
+});

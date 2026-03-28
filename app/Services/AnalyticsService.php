@@ -230,4 +230,104 @@ class AnalyticsService
 
         return compact('checkInCharts', 'tableMetrics', 'checkInTableData', 'imageMetrics', 'imageMetricData');
     }
+
+    /**
+     * Get exercise progression data for a client over a date range.
+     *
+     * @param  User  $client  The client to retrieve exercise progression data for.
+     * @param  string  $from  Start date in Y-m-d format.
+     * @param  string  $to  End date in Y-m-d format.
+     * @return array{
+     *     exerciseProgressionData: array<int, array<int, array{date: string, weight: float, reps: int}>>,
+     *     exercisesByMuscleGroup: \Illuminate\Support\Collection,
+     *     exerciseTargetHistory: array<int, array<int, array{date: string, target: float}>>
+     * }
+     */
+    public function getExerciseProgressionData(User $client, string $from, string $to): array
+    {
+        $workoutLogs = $client->workoutLogs()
+            ->whereDate('completed_at', '>=', $from)
+            ->whereDate('completed_at', '<=', $to)
+            ->with(['exerciseLogs.exercise'])
+            ->orderBy('completed_at')
+            ->get();
+
+        $exerciseProgressionData = [];
+        $exerciseList = [];
+
+        foreach ($workoutLogs as $workoutLog) {
+            foreach ($workoutLog->exerciseLogs as $exerciseLog) {
+                $exId = $exerciseLog->exercise_id;
+                $exercise = $exerciseLog->exercise;
+
+                if (! isset($exerciseList[$exId])) {
+                    $exerciseList[$exId] = [
+                        'id' => $exId,
+                        'name' => $exercise->name,
+                        'muscleGroup' => $exercise->muscle_group,
+                    ];
+                }
+
+                if (! isset($exerciseProgressionData[$exId])) {
+                    $exerciseProgressionData[$exId] = [];
+                }
+
+                $dateKey = $workoutLog->completed_at->format('Y-m-d');
+
+                if (! isset($exerciseProgressionData[$exId][$dateKey])
+                    || $exerciseLog->weight > $exerciseProgressionData[$exId][$dateKey]['weight']) {
+                    $exerciseProgressionData[$exId][$dateKey] = [
+                        'date' => $dateKey,
+                        'weight' => (float) $exerciseLog->weight,
+                        'reps' => $exerciseLog->reps,
+                    ];
+                }
+            }
+        }
+
+        foreach ($exerciseProgressionData as $exId => $sessions) {
+            ksort($sessions);
+            $exerciseProgressionData[$exId] = array_values($sessions);
+        }
+
+        $exercisesByMuscleGroup = collect($exerciseList)->groupBy('muscleGroup')->sortKeys();
+
+        $exerciseTargetHistory = [];
+        $activeClientProgram = $client->activeProgram();
+
+        if ($activeClientProgram) {
+            $allTargets = $activeClientProgram->exerciseTargets()
+                ->with('workoutExercise')
+                ->orderBy('effective_date')
+                ->get();
+
+            foreach ($allTargets as $target) {
+                if ($target->effective_date === null) {
+                    continue;
+                }
+
+                $exerciseId = $target->workoutExercise->exercise_id;
+                $date = $target->effective_date->format('Y-m-d');
+
+                if (! isset($exerciseTargetHistory[$exerciseId][$date])) {
+                    $exerciseTargetHistory[$exerciseId][$date] = (float) $target->target_weight;
+                } else {
+                    $exerciseTargetHistory[$exerciseId][$date] = max(
+                        $exerciseTargetHistory[$exerciseId][$date],
+                        (float) $target->target_weight
+                    );
+                }
+            }
+
+            foreach ($exerciseTargetHistory as $exId => $dateMap) {
+                $points = [];
+                foreach ($dateMap as $date => $weight) {
+                    $points[] = ['date' => $date, 'target' => $weight];
+                }
+                $exerciseTargetHistory[$exId] = $points;
+            }
+        }
+
+        return compact('exerciseProgressionData', 'exercisesByMuscleGroup', 'exerciseTargetHistory');
+    }
 }
