@@ -129,6 +129,7 @@ Route::middleware(['auth', 'verified', 'role:client'])
         Route::get('history', [Client\HistoryController::class, 'index'])->name('history');
         Route::get('history/{workoutLog}', [Client\HistoryController::class, 'show'])->name('history.show');
         Route::post('history/{workoutLog}/comment', [Client\HistoryController::class, 'comment'])->name('history.comment');
+        Route::get('exercises/{exercise}/progress', Client\ExerciseProgressController::class)->name('exercises.progress');
         Route::get('nutrition', [Client\NutritionController::class, 'index'])->name('nutrition');
         Route::get('nutrition/meals', [Client\NutritionController::class, 'meals'])->name('nutrition.meals');
         Route::post('nutrition', [Client\NutritionController::class, 'store'])->name('nutrition.store');
