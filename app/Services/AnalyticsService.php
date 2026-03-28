@@ -142,7 +142,7 @@ class AnalyticsService
 
         $assignedMetricIds = $client->assignedTrackingMetrics()->pluck('tracking_metric_id');
 
-        $coach = \App\Models\User::find($client->coach_id);
+        $coach = $client->coach;
         $assignedMetrics = $coach
             ? $coach->trackingMetrics()
                 ->whereIn('id', $assignedMetricIds)
@@ -184,14 +184,16 @@ class AnalyticsService
         }
 
         $checkInTableData = [];
-        foreach ($dates as $date) {
-            $row = ['date' => $date];
-            foreach ($tableMetrics as $metric) {
-                $log = $dailyLogs->where('tracking_metric_id', $metric->id)
-                    ->first(fn ($l) => $l->date->format('Y-m-d') === $date);
-                $row['metric_'.$metric->id] = $log?->value;
+        if ($tableMetrics->isNotEmpty()) {
+            foreach ($dates as $date) {
+                $row = ['date' => $date];
+                foreach ($tableMetrics as $metric) {
+                    $log = $dailyLogs->where('tracking_metric_id', $metric->id)
+                        ->first(fn ($l) => $l->date->format('Y-m-d') === $date);
+                    $row['metric_'.$metric->id] = $log?->value;
+                }
+                $checkInTableData[] = $row;
             }
-            $checkInTableData[] = $row;
         }
 
         $imageMetricData = [];

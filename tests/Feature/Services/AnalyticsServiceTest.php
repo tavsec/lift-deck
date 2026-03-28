@@ -135,3 +135,45 @@ it('returns empty check-in data when no metrics assigned', function () {
     expect($result['checkInCharts'])->toBeEmpty();
     expect($result['tableMetrics']->count())->toBe(0);
 });
+
+it('returns check-in table data for boolean metrics', function () {
+    $metric = \App\Models\TrackingMetric::factory()->create([
+        'coach_id' => $this->coach->id,
+        'type' => 'boolean',
+    ]);
+    \App\Models\ClientTrackingMetric::factory()->create([
+        'client_id' => $this->client->id,
+        'tracking_metric_id' => $metric->id,
+    ]);
+    \App\Models\DailyLog::factory()->create([
+        'client_id' => $this->client->id,
+        'tracking_metric_id' => $metric->id,
+        'date' => now()->format('Y-m-d'),
+        'value' => '1',
+    ]);
+
+    $result = $this->service->getCheckInChartData(
+        $this->client,
+        now()->subDays(6)->format('Y-m-d'),
+        now()->format('Y-m-d')
+    );
+
+    expect($result['tableMetrics']->count())->toBe(1);
+    expect($result['checkInTableData'])->not->toBeEmpty();
+});
+
+it('returns empty check-in data when client has no coach', function () {
+    $clientWithNoCoach = \App\Models\User::factory()->create([
+        'role' => 'client',
+        'coach_id' => null,
+    ]);
+
+    $result = $this->service->getCheckInChartData(
+        $clientWithNoCoach,
+        now()->subDays(6)->format('Y-m-d'),
+        now()->format('Y-m-d')
+    );
+
+    expect($result['checkInCharts'])->toBeEmpty();
+    expect($result['tableMetrics']->count())->toBe(0);
+});
