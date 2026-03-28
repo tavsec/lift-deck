@@ -7,6 +7,31 @@ use Carbon\Carbon;
 
 class AnalyticsService
 {
+    /**
+     * Get nutrition data and stats for a client over a date range.
+     *
+     * @param  User  $client  The client to retrieve nutrition data for.
+     * @param  string  $from  Start date in Y-m-d format.
+     * @param  string  $to  End date in Y-m-d format.
+     * @return array{
+     *     nutritionData: array<int, array{
+     *         date: string,
+     *         calories: int,
+     *         protein: float,
+     *         carbs: float,
+     *         fat: float,
+     *         goalCalories: int|null
+     *     }>,
+     *     nutritionStats: array{
+     *         avgCalories: int,
+     *         avgProtein: float,
+     *         avgCarbs: float,
+     *         avgFat: float,
+     *         adherenceRate: int|null,
+     *         daysLogged: int
+     *     }
+     * }
+     */
     public function getNutritionData(User $client, string $from, string $to): array
     {
         $startDate = Carbon::parse($from);
@@ -24,6 +49,7 @@ class AnalyticsService
             ->orderBy('date')
             ->get();
 
+        // All goals up to the end date are pre-loaded to avoid N+1 queries in the date loop.
         $macroGoals = $client->macroGoals()
             ->whereDate('effective_date', '<=', $to)
             ->orderBy('effective_date')
@@ -58,7 +84,7 @@ class AnalyticsService
                 $totalCarbs += $dayCarbs;
                 $totalFat += $dayFat;
 
-                if ($goalCalories) {
+                if ($goalCalories !== null) {
                     $daysWithGoal++;
                     $deviation = abs($dayCals - $goalCalories) / $goalCalories;
                     if ($deviation <= 0.10) {
@@ -82,7 +108,7 @@ class AnalyticsService
             'avgProtein' => $daysWithMeals > 0 ? round($totalProtein / $daysWithMeals, 1) : 0,
             'avgCarbs' => $daysWithMeals > 0 ? round($totalCarbs / $daysWithMeals, 1) : 0,
             'avgFat' => $daysWithMeals > 0 ? round($totalFat / $daysWithMeals, 1) : 0,
-            'adherenceRate' => $daysWithGoal > 0 ? round(($daysAdherent / $daysWithGoal) * 100) : null,
+            'adherenceRate' => $daysWithGoal > 0 ? (int) round(($daysAdherent / $daysWithGoal) * 100) : null,
             'daysLogged' => $daysWithMeals,
         ];
 

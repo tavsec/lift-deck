@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\MacroGoal;
 use App\Models\MealLog;
 use App\Models\User;
 use App\Services\AnalyticsService;
@@ -40,4 +41,60 @@ it('returns zero stats when no meals logged', function () {
 
     expect($result['nutritionStats']['daysLogged'])->toBe(0);
     expect($result['nutritionStats']['avgCalories'])->toBe(0);
+});
+
+it('returns adherence rate of 100 when calories are within 10% of goal', function () {
+    $today = now()->format('Y-m-d');
+
+    MacroGoal::factory()->create([
+        'client_id' => $this->client->id,
+        'coach_id' => $this->coach->id,
+        'calories' => 2000,
+        'effective_date' => $today,
+    ]);
+
+    MealLog::factory()->create([
+        'client_id' => $this->client->id,
+        'date' => $today,
+        'calories' => 2000,
+    ]);
+
+    $result = $this->service->getNutritionData($this->client, $today, $today);
+
+    expect($result['nutritionStats']['adherenceRate'])->toBe(100);
+});
+
+it('returns adherence rate of 0 when calories are outside 10% of goal', function () {
+    $today = now()->format('Y-m-d');
+
+    MacroGoal::factory()->create([
+        'client_id' => $this->client->id,
+        'coach_id' => $this->coach->id,
+        'calories' => 2000,
+        'effective_date' => $today,
+    ]);
+
+    MealLog::factory()->create([
+        'client_id' => $this->client->id,
+        'date' => $today,
+        'calories' => 500,
+    ]);
+
+    $result = $this->service->getNutritionData($this->client, $today, $today);
+
+    expect($result['nutritionStats']['adherenceRate'])->toBe(0);
+});
+
+it('returns null adherence rate when no macro goal is set', function () {
+    $today = now()->format('Y-m-d');
+
+    MealLog::factory()->create([
+        'client_id' => $this->client->id,
+        'date' => $today,
+        'calories' => 2000,
+    ]);
+
+    $result = $this->service->getNutritionData($this->client, $today, $today);
+
+    expect($result['nutritionStats']['adherenceRate'])->toBeNull();
 });
