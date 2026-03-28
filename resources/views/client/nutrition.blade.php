@@ -128,7 +128,7 @@
 
         <!-- Nutrition Charts (Last 30 Days) -->
         @if($nutritionStats['daysLogged'] > 0)
-            <div class="bg-white dark:bg-gray-900 rounded-lg shadow p-4">
+            <x-bladewind::card>
                 <h2 class="text-base font-semibold text-gray-900 dark:text-gray-100 mb-4">{{ __('client.nutrition.charts_heading') }}</h2>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
@@ -180,7 +180,7 @@
                         @endif
                     </div>
                 </div>
-            </div>
+            </x-bladewind::card>
         @endif
 
         <!-- Add Meal Section -->
