@@ -199,6 +199,41 @@ it('returns exercise progression data', function () {
 
     expect($result)->toHaveKeys(['exerciseProgressionData', 'exercisesByMuscleGroup', 'exerciseTargetHistory']);
     expect($result['exerciseProgressionData'])->toHaveKey($exercise->id);
+    expect($result['exerciseProgressionData'][$exercise->id][0])->toMatchArray([
+        'date' => now()->format('Y-m-d'),
+        'weight' => 100.0,
+        'reps' => 8,
+    ]);
+});
+
+it('keeps only the top set per exercise per day', function () {
+    $exercise = \App\Models\Exercise::factory()->create(['coach_id' => $this->coach->id]);
+    $workoutLog = \App\Models\WorkoutLog::factory()->create([
+        'client_id' => $this->client->id,
+        'completed_at' => now(),
+    ]);
+    // Two logs same day — only the heavier one should be kept
+    \App\Models\ExerciseLog::factory()->create([
+        'workout_log_id' => $workoutLog->id,
+        'exercise_id' => $exercise->id,
+        'weight' => 80,
+        'reps' => 10,
+    ]);
+    \App\Models\ExerciseLog::factory()->create([
+        'workout_log_id' => $workoutLog->id,
+        'exercise_id' => $exercise->id,
+        'weight' => 100,
+        'reps' => 8,
+    ]);
+
+    $result = $this->service->getExerciseProgressionData(
+        $this->client,
+        now()->subDays(29)->format('Y-m-d'),
+        now()->format('Y-m-d')
+    );
+
+    expect($result['exerciseProgressionData'][$exercise->id])->toHaveCount(1);
+    expect($result['exerciseProgressionData'][$exercise->id][0]['weight'])->toBe(100.0);
 });
 
 it('returns empty exercise data when no workouts', function () {
