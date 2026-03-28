@@ -14,7 +14,7 @@
         </div>
 
         <!-- Date Range Filter -->
-        <div class="bg-white dark:bg-gray-900 rounded-lg shadow p-4">
+        <x-bladewind::card>
             <form method="GET" action="{{ route('client.check-in.history') }}">
                 <div>
                     <label class="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">{{ __('client.check_in_history.time_period') }}</label>
@@ -27,26 +27,22 @@
                     </select>
                 </div>
             </form>
-        </div>
+        </x-bladewind::card>
 
         @if(count($checkInCharts) === 0 && $tableMetrics->count() === 0 && $imageMetrics->isEmpty())
             <!-- No metrics assigned -->
-            <div class="bg-white dark:bg-gray-900 rounded-lg shadow">
+            <x-bladewind::card>
                 <div class="text-center py-12">
                     <svg class="mx-auto h-12 w-12 text-gray-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
                     </svg>
                     <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">{{ __('client.check_in_history.no_metrics') }}</p>
                 </div>
-            </div>
+            </x-bladewind::card>
         @else
             <!-- Check-in Charts & Table -->
-            <div class="bg-white dark:bg-gray-900 rounded-lg shadow">
-                <div class="px-4 py-3 border-b border-gray-200 dark:border-gray-800">
-                    <h2 class="text-lg font-semibold text-gray-900 dark:text-gray-100">{{ __('client.check_in.heading') }}</h2>
-                </div>
-
-                <div class="px-4 pb-4 pt-4 space-y-6">
+            <x-bladewind::card>
+                <div class="space-y-6">
                     @if(count($checkInCharts) > 0)
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                             @foreach($checkInCharts as $chart)
@@ -74,13 +70,7 @@
                                 <tbody class="divide-y divide-gray-200 dark:divide-gray-800">
                                     @foreach($checkInTableData as $row)
                                         @php
-                                            $hasValue = false;
-                                            foreach ($tableMetrics as $metric) {
-                                                if ($row['metric_' . $metric->id] !== null) {
-                                                    $hasValue = true;
-                                                    break;
-                                                }
-                                            }
+                                            $hasValue = collect($tableMetrics)->contains(fn ($m) => $row['metric_' . $m->id] !== null);
                                         @endphp
                                         @if($hasValue)
                                             <tr>
@@ -116,16 +106,14 @@
                         <p class="text-sm text-gray-500 dark:text-gray-400 text-center py-8">{{ __('client.check_in_history.no_data') }}</p>
                     @endif
                 </div>
-            </div>
+            </x-bladewind::card>
 
             @if($imageMetrics->isNotEmpty())
                 <!-- Progress Photos -->
-                <div class="bg-white dark:bg-gray-900 rounded-lg shadow">
-                    <div class="px-4 py-3 border-b border-gray-200 dark:border-gray-800">
-                        <h2 class="text-lg font-semibold text-gray-900 dark:text-gray-100">{{ __('client.check_in_history.progress_photos') }}</h2>
-                    </div>
+                <x-bladewind::card>
+                    <h2 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">{{ __('client.check_in_history.progress_photos') }}</h2>
 
-                    <div class="px-4 pb-4 pt-4 space-y-6">
+                    <div class="space-y-6">
                         @php $hasAnyPhotos = collect($imageMetricData)->contains(fn ($m) => count($m['photos']) > 0); @endphp
 
                         @if($hasAnyPhotos)
@@ -162,7 +150,7 @@
                             <p class="text-sm text-gray-500 dark:text-gray-400 text-center py-8">{{ __('client.check_in_history.no_photos') }}</p>
                         @endif
                     </div>
-                </div>
+                </x-bladewind::card>
             @endif
         @endif
     </div>
