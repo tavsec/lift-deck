@@ -117,6 +117,7 @@ Route::middleware(['auth', 'verified', 'role:client'])
         Route::get('onboarding', [Client\OnboardingController::class, 'show'])->name('onboarding');
         Route::post('onboarding', [Client\OnboardingController::class, 'store'])->name('onboarding.store');
         Route::post('onboarding/skip', [Client\OnboardingController::class, 'skip'])->name('onboarding.skip');
+        Route::get('check-in/history', [Client\CheckInController::class, 'history'])->name('check-in.history');
         Route::get('check-in', [Client\CheckInController::class, 'index'])->name('check-in');
         Route::post('check-in', [Client\CheckInController::class, 'store'])->name('check-in.store');
         Route::get('program', [Client\ProgramController::class, 'index'])->name('program');

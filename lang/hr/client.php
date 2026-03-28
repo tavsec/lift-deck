@@ -65,6 +65,22 @@ return [
         'prescribed' => 'Propisano: :sets serija × :reps ponavljanja',
     ],
 
+    'check_in_history' => [
+        'heading' => 'Povijest metrika',
+        'back' => 'Natrag na prijavu',
+        'view_history' => 'Pregledaj povijest',
+        'time_period' => 'Vremenski period',
+        'last_7_days' => 'Zadnjih 7 dana',
+        'last_14_days' => 'Zadnjih 14 dana',
+        'last_30_days' => 'Zadnjih 30 dana',
+        'last_90_days' => 'Zadnjih 90 dana',
+        'no_metrics' => 'Nema dodijeljenih metrika.',
+        'no_data' => 'Nema podataka za ovo razdoblje.',
+        'date' => 'Datum',
+        'progress_photos' => 'Fotografije napretka',
+        'no_photos' => 'Nema fotografija za ovo razdoblje.',
+    ],
+
     'check_in' => [
         'heading' => 'Dnevna prijava',
         'today' => 'Danas',

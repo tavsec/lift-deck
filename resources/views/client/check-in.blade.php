@@ -4,7 +4,12 @@
     <div class="py-6 space-y-6" x-data="checkIn()">
         <!-- Header with Date Navigation -->
         <div>
-            <h1 class="text-2xl font-bold text-gray-900 dark:text-gray-100">{{ __('client.check_in.heading') }}</h1>
+            <div class="flex items-center justify-between">
+                <h1 class="text-2xl font-bold text-gray-900 dark:text-gray-100">{{ __('client.check_in.heading') }}</h1>
+                <a href="{{ route('client.check-in.history') }}" class="text-sm text-blue-600 dark:text-blue-400 hover:underline">
+                    {{ __('client.check_in_history.view_history') }} →
+                </a>
+            </div>
             <div class="mt-3 flex items-center justify-between">
                 <a :href="prevUrl" class="p-2 rounded-md text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-800">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
