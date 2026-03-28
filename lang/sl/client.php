@@ -116,6 +116,15 @@ return [
         'optional_notes' => 'Neobvezne opombe...',
         'meal_name_placeholder' => 'npr. Piščanec z rižem na žaru',
         'remove_meal_confirm' => 'Odstraniti ta obrok?',
+        'charts_heading' => 'Zadnjih 30 dni',
+        'avg_calories' => 'Povp. kalorije',
+        'avg_protein' => 'Povp. beljakovine',
+        'avg_carbs' => 'Povp. ogljikohidrati',
+        'avg_fat' => 'Povp. maščobe',
+        'adherence' => 'Doslednost',
+        'calories' => 'Kalorije',
+        'macros' => 'Makrohranila',
+        'no_chart_data' => 'Ni podatkov o prehrani v zadnjih 30 dneh.',
     ],
 
     'log' => [

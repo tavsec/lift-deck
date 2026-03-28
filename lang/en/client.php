@@ -116,6 +116,15 @@ return [
         'optional_notes' => 'Optional notes...',
         'meal_name_placeholder' => 'e.g., Grilled chicken with rice',
         'remove_meal_confirm' => 'Remove this meal?',
+        'charts_heading' => 'Last 30 Days',
+        'avg_calories' => 'Avg Calories',
+        'avg_protein' => 'Avg Protein',
+        'avg_carbs' => 'Avg Carbs',
+        'avg_fat' => 'Avg Fat',
+        'adherence' => 'Adherence',
+        'calories' => 'Calories',
+        'macros' => 'Macros',
+        'no_chart_data' => 'No nutrition data logged in the last 30 days.',
     ],
 
     'log' => [

@@ -116,6 +116,15 @@ return [
         'optional_notes' => 'Neobavezne bilješke...',
         'meal_name_placeholder' => 'npr. Piletina s rižom na žaru',
         'remove_meal_confirm' => 'Ukloniti ovaj obrok?',
+        'charts_heading' => 'Zadnjih 30 dana',
+        'avg_calories' => 'Avg. kalorije',
+        'avg_protein' => 'Avg. proteini',
+        'avg_carbs' => 'Avg. ugljikohidrati',
+        'avg_fat' => 'Avg. masti',
+        'adherence' => 'Adherencija',
+        'calories' => 'Kalorije',
+        'macros' => 'Makronutrijenti',
+        'no_chart_data' => 'Nema podataka o prehrani u zadnjih 30 dana.',
     ],
 
     'log' => [
