@@ -61,16 +61,16 @@ it('skips sets with zero reps in 1rm calculation', function () {
 it('limits chart data to the requested range but prs remain all-time', function () {
     $oldLog = WorkoutLog::factory()->create(['client_id' => $this->client->id, 'completed_at' => now()->subDays(60)]);
     $recentLog = WorkoutLog::factory()->create(['client_id' => $this->client->id, 'completed_at' => now()->subDays(10)]);
-    ExerciseLog::factory()->create(['workout_log_id' => $oldLog->id, 'exercise_id' => $this->exercise->id, 'weight' => 90, 'reps' => 5, 'set_number' => 1]);
-    ExerciseLog::factory()->create(['workout_log_id' => $recentLog->id, 'exercise_id' => $this->exercise->id, 'weight' => 100, 'reps' => 5, 'set_number' => 1]);
+    ExerciseLog::factory()->create(['workout_log_id' => $oldLog->id, 'exercise_id' => $this->exercise->id, 'weight' => 120, 'reps' => 5, 'set_number' => 1]);
+    ExerciseLog::factory()->create(['workout_log_id' => $recentLog->id, 'exercise_id' => $this->exercise->id, 'weight' => 90, 'reps' => 5, 'set_number' => 1]);
 
     $response = $this->actingAs($this->client)
         ->getJson(route('client.exercises.progress', $this->exercise).'?range=30')
         ->assertOk();
 
     expect($response->json('weightChart'))->toHaveCount(1);
-    expect($response->json('weightChart.0.weight'))->toBe(100.0);
-    expect($response->json('maxWeight'))->toBe(100.0); // all-time, includes old log
+    expect($response->json('weightChart.0.weight'))->toBe(90.0);
+    expect($response->json('maxWeight'))->toBe(120.0); // all-time, includes old log
 });
 
 it('returns all chart data when range is 0', function () {
