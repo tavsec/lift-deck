@@ -51,6 +51,10 @@ return [
         'unread_comments' => 'Unread comments',
         'no_workouts' => 'No workouts logged yet',
         'no_workouts_description' => 'Complete a workout from the Log tab to see it here.',
+        'exercise_progress' => 'Exercise Progress',
+        'start_end' => 'Start → End',
+        'change' => 'Change',
+        'sessions' => 'Sessions',
     ],
 
     'history_show' => [

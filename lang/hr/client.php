@@ -51,6 +51,10 @@ return [
         'unread_comments' => 'Nepročitani komentari',
         'no_workouts' => 'Još nema zabilježenih treninga',
         'no_workouts_description' => 'Dovršite trening iz kartice Dnevnik da biste ga ovdje vidjeli.',
+        'exercise_progress' => 'Napredak vježbi',
+        'start_end' => 'Početak → Kraj',
+        'change' => 'Promjena',
+        'sessions' => 'Treninzi',
     ],
 
     'history_show' => [

@@ -51,6 +51,10 @@ return [
         'unread_comments' => 'Neprebrani komentarji',
         'no_workouts' => 'Še ni zabeleženih treningov',
         'no_workouts_description' => 'Opravite trening iz zavihka Dnevnik, da ga vidite tukaj.',
+        'exercise_progress' => 'Napredek vaj',
+        'start_end' => 'Začetek → Konec',
+        'change' => 'Sprememba',
+        'sessions' => 'Treningi',
     ],
 
     'history_show' => [
