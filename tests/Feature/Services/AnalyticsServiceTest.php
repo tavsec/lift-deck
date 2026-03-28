@@ -98,3 +98,40 @@ it('returns null adherence rate when no macro goal is set', function () {
 
     expect($result['nutritionStats']['adherenceRate'])->toBeNull();
 });
+
+it('returns check-in chart data for numeric metrics', function () {
+    $metric = \App\Models\TrackingMetric::factory()->number()->create([
+        'coach_id' => $this->coach->id,
+    ]);
+    \App\Models\ClientTrackingMetric::factory()->create([
+        'client_id' => $this->client->id,
+        'tracking_metric_id' => $metric->id,
+    ]);
+    \App\Models\DailyLog::factory()->create([
+        'client_id' => $this->client->id,
+        'tracking_metric_id' => $metric->id,
+        'date' => now()->format('Y-m-d'),
+        'value' => '82.5',
+    ]);
+
+    $result = $this->service->getCheckInChartData(
+        $this->client,
+        now()->subDays(6)->format('Y-m-d'),
+        now()->format('Y-m-d')
+    );
+
+    expect($result)->toHaveKeys(['checkInCharts', 'tableMetrics', 'checkInTableData', 'imageMetrics', 'imageMetricData']);
+    expect($result['checkInCharts'])->toHaveCount(1);
+    expect($result['checkInCharts'][0]['data'][0]['value'])->toBe(82.5);
+});
+
+it('returns empty check-in data when no metrics assigned', function () {
+    $result = $this->service->getCheckInChartData(
+        $this->client,
+        now()->subDays(6)->format('Y-m-d'),
+        now()->format('Y-m-d')
+    );
+
+    expect($result['checkInCharts'])->toBeEmpty();
+    expect($result['tableMetrics']->count())->toBe(0);
+});
