@@ -198,7 +198,7 @@ class AnalyticsService
 
         $imageMetricData = [];
         if ($imageMetrics->isNotEmpty()) {
-            $imageLogs = \App\Models\DailyLog::where('client_id', $client->id)
+            $imageLogs = $client->dailyLogs()
                 ->whereIn('tracking_metric_id', $imageMetrics->pluck('id'))
                 ->where('value', 'uploaded')
                 ->whereDate('date', '>=', $from)

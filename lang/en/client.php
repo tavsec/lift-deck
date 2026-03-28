@@ -144,7 +144,6 @@ return [
         'adherence' => 'Adherence',
         'calories' => 'Calories',
         'macros' => 'Macros',
-        'no_chart_data' => 'No nutrition data logged in the last 30 days.',
     ],
 
     'log' => [

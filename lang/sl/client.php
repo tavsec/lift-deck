@@ -144,7 +144,6 @@ return [
         'adherence' => 'Doslednost',
         'calories' => 'Kalorije',
         'macros' => 'Makrohranila',
-        'no_chart_data' => 'Ni podatkov o prehrani v zadnjih 30 dneh.',
     ],
 
     'log' => [

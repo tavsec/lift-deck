@@ -6,7 +6,6 @@ use App\Exports\CoachAnalyticsExport;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Services\AnalyticsService;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Maatwebsite\Excel\Facades\Excel;
@@ -29,15 +28,6 @@ class AnalyticsController extends Controller
             $days = (int) $range;
             $from = now()->subDays($days - 1)->format('Y-m-d');
             $to = now()->format('Y-m-d');
-        }
-
-        $startDate = Carbon::parse($from);
-        $endDate = Carbon::parse($to);
-
-        $dates = collect();
-        $dayCount = $startDate->diffInDays($endDate) + 1;
-        for ($i = 0; $i < $dayCount; $i++) {
-            $dates->push($startDate->copy()->addDays($i)->format('Y-m-d'));
         }
 
         ['nutritionData' => $nutritionData, 'nutritionStats' => $nutritionStats] =
@@ -64,7 +54,6 @@ class AnalyticsController extends Controller
             'range',
             'from',
             'to',
-            'dates',
             'checkInCharts',
             'chartMetrics',
             'tableMetrics',
