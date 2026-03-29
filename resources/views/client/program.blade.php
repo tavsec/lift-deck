@@ -274,11 +274,19 @@
                     this.progressData = null;
                     this._destroyCharts();
                     fetch(`/client/exercises/${exerciseId}/progress?range=${range}`)
-                        .then(r => r.json())
+                        .then(r => {
+                            if (!r.ok) {
+                                throw new Error(r.status);
+                            }
+                            return r.json();
+                        })
                         .then(data => {
                             this.progressData = data;
                             this.progressLoading = false;
                             this.$nextTick(() => this._renderCharts(data));
+                        })
+                        .catch(() => {
+                            this.progressLoading = false;
                         });
                 },
 
@@ -314,7 +322,7 @@
                                     pointRadius: 3,
                                 }],
                             },
-                            options: commonOptions,
+                            options: { ...commonOptions },
                         }));
                     }
 
@@ -333,7 +341,7 @@
                                     pointRadius: 3,
                                 }],
                             },
-                            options: commonOptions,
+                            options: { ...commonOptions },
                         }));
                     }
                 },
