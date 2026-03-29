@@ -126,6 +126,63 @@
             </div>
         @endif
 
+        <!-- Nutrition Charts (Last 30 Days) -->
+        @if($nutritionStats['daysLogged'] > 0)
+            <x-bladewind::card>
+                <h2 class="text-base font-semibold text-gray-900 dark:text-gray-100 mb-4">{{ __('client.nutrition.charts_heading') }}</h2>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                    <div>
+                        <h3 class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">{{ __('client.nutrition.calories') }}</h3>
+                        <div class="h-56">
+                            <canvas
+                                x-data="clientCaloriesChart({{ json_encode($nutritionData) }})"
+                                x-ref="canvas"
+                                x-init="renderChart()"
+                            ></canvas>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">{{ __('client.nutrition.macros') }}</h3>
+                        <div class="h-56">
+                            <canvas
+                                x-data="clientMacrosChart({{ json_encode($nutritionData) }})"
+                                x-ref="canvas"
+                                x-init="renderChart()"
+                            ></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 sm:grid-cols-5 gap-4 p-4 bg-gray-50 dark:bg-gray-950 rounded-lg">
+                    <div class="text-center">
+                        <p class="text-xs text-gray-500 dark:text-gray-400 uppercase">{{ __('client.nutrition.avg_calories') }}</p>
+                        <p class="text-lg font-bold text-gray-900 dark:text-gray-100">{{ number_format($nutritionStats['avgCalories']) }}</p>
+                    </div>
+                    <div class="text-center">
+                        <p class="text-xs text-gray-500 dark:text-gray-400 uppercase">{{ __('client.nutrition.avg_protein') }}</p>
+                        <p class="text-lg font-bold text-gray-900 dark:text-gray-100">{{ $nutritionStats['avgProtein'] }}g</p>
+                    </div>
+                    <div class="text-center">
+                        <p class="text-xs text-gray-500 dark:text-gray-400 uppercase">{{ __('client.nutrition.avg_carbs') }}</p>
+                        <p class="text-lg font-bold text-gray-900 dark:text-gray-100">{{ $nutritionStats['avgCarbs'] }}g</p>
+                    </div>
+                    <div class="text-center">
+                        <p class="text-xs text-gray-500 dark:text-gray-400 uppercase">{{ __('client.nutrition.avg_fat') }}</p>
+                        <p class="text-lg font-bold text-gray-900 dark:text-gray-100">{{ $nutritionStats['avgFat'] }}g</p>
+                    </div>
+                    <div class="text-center">
+                        <p class="text-xs text-gray-500 dark:text-gray-400 uppercase">{{ __('client.nutrition.adherence') }}</p>
+                        @if($nutritionStats['adherenceRate'] !== null)
+                            <p class="text-lg font-bold {{ $nutritionStats['adherenceRate'] >= 80 ? 'text-green-600' : ($nutritionStats['adherenceRate'] >= 50 ? 'text-yellow-600' : 'text-red-600') }}">{{ $nutritionStats['adherenceRate'] }}%</p>
+                        @else
+                            <p class="text-lg font-bold text-gray-400 dark:text-gray-500">—</p>
+                        @endif
+                    </div>
+                </div>
+            </x-bladewind::card>
+        @endif
+
         <!-- Add Meal Section -->
         <div class="bg-white dark:bg-gray-900 rounded-lg shadow">
             <div class="border-b border-gray-200 dark:border-gray-800">
@@ -285,7 +342,98 @@
     </div>
 
     @push('scripts')
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
     <script>
+        function chartTheme() {
+            const dark = document.documentElement.classList.contains('dark');
+            return {
+                tickColor:  dark ? '#9ca3af' : '#6b7280',
+                gridColor:  dark ? 'rgba(75, 85, 99, 0.25)' : 'rgba(229, 231, 235, 1)',
+                legendColor: dark ? '#d1d5db' : '#374151',
+            };
+        }
+
+        function clientCaloriesChart(nutritionData) {
+            return {
+                renderChart() {
+                    const existing = Chart.getChart(this.$refs.canvas);
+                    if (existing) existing.destroy();
+                    const ctx = this.$refs.canvas.getContext('2d');
+                    const theme = chartTheme();
+                    const labels = nutritionData.map(d => {
+                        const date = new Date(d.date + 'T00:00:00');
+                        return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+                    });
+                    const calories = nutritionData.map(d => d.calories);
+                    const goals = nutritionData.map(d => d.goalCalories);
+
+                    const bgColors = nutritionData.map(d => {
+                        if (!d.goalCalories || d.calories === 0) return 'rgba(209, 213, 219, 0.5)';
+                        const dev = Math.abs(d.calories - d.goalCalories) / d.goalCalories;
+                        if (dev <= 0.10) return 'rgba(34, 197, 94, 0.7)';
+                        if (dev <= 0.25) return 'rgba(234, 179, 8, 0.7)';
+                        return 'rgba(239, 68, 68, 0.7)';
+                    });
+
+                    new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels,
+                            datasets: [
+                                { label: 'Calories', data: calories, backgroundColor: bgColors, borderRadius: 3 },
+                                { label: 'Goal', data: goals, type: 'line', borderColor: 'rgba(107, 114, 128, 0.5)', borderDash: [5, 5], pointRadius: 0, fill: false, borderWidth: 2 }
+                            ]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            plugins: { legend: { display: true, position: 'bottom', labels: { boxWidth: 12, color: theme.legendColor } } },
+                            scales: {
+                                x: { ticks: { maxTicksLimit: 10, color: theme.tickColor }, grid: { color: theme.gridColor } },
+                                y: { beginAtZero: true, ticks: { color: theme.tickColor }, grid: { color: theme.gridColor } }
+                            }
+                        }
+                    });
+                }
+            };
+        }
+
+        function clientMacrosChart(nutritionData) {
+            return {
+                renderChart() {
+                    const existing = Chart.getChart(this.$refs.canvas);
+                    if (existing) existing.destroy();
+                    const ctx = this.$refs.canvas.getContext('2d');
+                    const theme = chartTheme();
+                    const labels = nutritionData.map(d => {
+                        const date = new Date(d.date + 'T00:00:00');
+                        return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+                    });
+
+                    new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels,
+                            datasets: [
+                                { label: 'Protein', data: nutritionData.map(d => d.protein), backgroundColor: 'rgba(59, 130, 246, 0.7)', borderRadius: 2 },
+                                { label: 'Carbs', data: nutritionData.map(d => d.carbs), backgroundColor: 'rgba(234, 179, 8, 0.7)', borderRadius: 2 },
+                                { label: 'Fat', data: nutritionData.map(d => d.fat), backgroundColor: 'rgba(239, 68, 68, 0.7)', borderRadius: 2 },
+                            ]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            plugins: { legend: { display: true, position: 'bottom', labels: { boxWidth: 12, color: theme.legendColor } } },
+                            scales: {
+                                x: { stacked: true, ticks: { maxTicksLimit: 10, color: theme.tickColor }, grid: { color: theme.gridColor } },
+                                y: { stacked: true, beginAtZero: true, ticks: { color: theme.tickColor }, grid: { color: theme.gridColor } }
+                            }
+                        }
+                    });
+                }
+            };
+        }
+
         function nutritionLogger() {
             const currentDate = '{{ $date }}';
             const today = '{{ now()->format("Y-m-d") }}';

@@ -4,15 +4,16 @@ namespace App\Http\Controllers\Coach;
 
 use App\Exports\CoachAnalyticsExport;
 use App\Http\Controllers\Controller;
-use App\Models\DailyLog;
 use App\Models\User;
-use Carbon\Carbon;
+use App\Services\AnalyticsService;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Maatwebsite\Excel\Facades\Excel;
 
 class AnalyticsController extends Controller
 {
+    public function __construct(private readonly AnalyticsService $analyticsService) {}
+
     public function show(Request $request, User $client): View
     {
         if ($client->coach_id !== auth()->id()) {
@@ -29,259 +30,30 @@ class AnalyticsController extends Controller
             $to = now()->format('Y-m-d');
         }
 
-        $startDate = Carbon::parse($from);
-        $endDate = Carbon::parse($to);
+        ['nutritionData' => $nutritionData, 'nutritionStats' => $nutritionStats] =
+            $this->analyticsService->getNutritionData($client, $from, $to);
 
-        $dates = collect();
-        $dayCount = $startDate->diffInDays($endDate) + 1;
-        for ($i = 0; $i < $dayCount; $i++) {
-            $dates->push($startDate->copy()->addDays($i)->format('Y-m-d'));
-        }
+        [
+            'checkInCharts' => $checkInCharts,
+            'tableMetrics' => $tableMetrics,
+            'checkInTableData' => $checkInTableData,
+            'imageMetrics' => $imageMetrics,
+            'imageMetricData' => $imageMetricData,
+        ] = $this->analyticsService->getCheckInChartData($client, $from, $to);
 
-        // --- Daily Check-ins ---
-        $assignedMetricIds = $client->assignedTrackingMetrics()->pluck('tracking_metric_id');
-        $assignedMetrics = auth()->user()->trackingMetrics()
-            ->whereIn('id', $assignedMetricIds)
-            ->where('is_active', true)
-            ->orderBy('order')
-            ->get();
+        $chartMetrics = collect($checkInCharts);
 
-        $dailyLogs = $client->dailyLogs()
-            ->whereIn('tracking_metric_id', $assignedMetricIds)
-            ->whereDate('date', '>=', $from)
-            ->whereDate('date', '<=', $to)
-            ->orderBy('date')
-            ->get();
-
-        $chartMetrics = $assignedMetrics->whereIn('type', ['number', 'scale']);
-        $tableMetrics = $assignedMetrics->whereIn('type', ['boolean', 'text']);
-        $imageMetrics = $assignedMetrics->where('type', 'image');
-
-        $checkInCharts = [];
-        foreach ($chartMetrics as $metric) {
-            $metricLogs = $dailyLogs->where('tracking_metric_id', $metric->id);
-            $dataPoints = [];
-            foreach ($metricLogs as $log) {
-                $dataPoints[] = [
-                    'date' => $log->date->format('Y-m-d'),
-                    'value' => (float) $log->value,
-                ];
-            }
-            $checkInCharts[] = [
-                'id' => $metric->id,
-                'name' => $metric->name,
-                'unit' => $metric->unit,
-                'type' => $metric->type,
-                'scaleMin' => $metric->scale_min,
-                'scaleMax' => $metric->scale_max,
-                'data' => $dataPoints,
-            ];
-        }
-
-        $checkInTableData = [];
-        foreach ($dates as $date) {
-            $row = ['date' => $date];
-            foreach ($tableMetrics as $metric) {
-                $log = $dailyLogs->where('tracking_metric_id', $metric->id)
-                    ->first(fn ($l) => $l->date->format('Y-m-d') === $date);
-                $row['metric_'.$metric->id] = $log?->value;
-            }
-            $checkInTableData[] = $row;
-        }
-
-        // --- Nutrition ---
-        $mealLogs = $client->mealLogs()
-            ->whereDate('date', '>=', $from)
-            ->whereDate('date', '<=', $to)
-            ->orderBy('date')
-            ->get();
-
-        $macroGoals = $client->macroGoals()
-            ->whereDate('effective_date', '<=', $to)
-            ->orderBy('effective_date')
-            ->get();
-
-        $nutritionData = [];
-        $totalCalories = 0;
-        $totalProtein = 0;
-        $totalCarbs = 0;
-        $totalFat = 0;
-        $daysWithMeals = 0;
-        $daysAdherent = 0;
-        $daysWithGoal = 0;
-
-        foreach ($dates as $date) {
-            $dayLogs = $mealLogs->filter(fn ($l) => $l->date->format('Y-m-d') === $date);
-            $dayCals = (int) $dayLogs->sum('calories');
-            $dayProtein = (float) $dayLogs->sum('protein');
-            $dayCarbs = (float) $dayLogs->sum('carbs');
-            $dayFat = (float) $dayLogs->sum('fat');
-
-            $activeGoal = $macroGoals->filter(fn ($g) => $g->effective_date->format('Y-m-d') <= $date)
-                ->sortByDesc('effective_date')
-                ->first();
-
-            $goalCalories = $activeGoal?->calories;
-
-            if ($dayLogs->count() > 0) {
-                $daysWithMeals++;
-                $totalCalories += $dayCals;
-                $totalProtein += $dayProtein;
-                $totalCarbs += $dayCarbs;
-                $totalFat += $dayFat;
-
-                if ($goalCalories) {
-                    $daysWithGoal++;
-                    $deviation = abs($dayCals - $goalCalories) / $goalCalories;
-                    if ($deviation <= 0.10) {
-                        $daysAdherent++;
-                    }
-                }
-            }
-
-            $nutritionData[] = [
-                'date' => $date,
-                'calories' => $dayCals,
-                'protein' => round($dayProtein, 1),
-                'carbs' => round($dayCarbs, 1),
-                'fat' => round($dayFat, 1),
-                'goalCalories' => $goalCalories,
-            ];
-        }
-
-        $nutritionStats = [
-            'avgCalories' => $daysWithMeals > 0 ? round($totalCalories / $daysWithMeals) : 0,
-            'avgProtein' => $daysWithMeals > 0 ? round($totalProtein / $daysWithMeals, 1) : 0,
-            'avgCarbs' => $daysWithMeals > 0 ? round($totalCarbs / $daysWithMeals, 1) : 0,
-            'avgFat' => $daysWithMeals > 0 ? round($totalFat / $daysWithMeals, 1) : 0,
-            'adherenceRate' => $daysWithGoal > 0 ? round(($daysAdherent / $daysWithGoal) * 100) : null,
-            'daysLogged' => $daysWithMeals,
-        ];
-
-        // --- Progress Photos ---
-        $imageMetricData = [];
-        if ($imageMetrics->isNotEmpty()) {
-            $imageLogs = DailyLog::where('client_id', $client->id)
-                ->whereIn('tracking_metric_id', $imageMetrics->pluck('id'))
-                ->where('value', 'uploaded')
-                ->whereDate('date', '>=', $from)
-                ->whereDate('date', '<=', $to)
-                ->with('media')
-                ->orderByDesc('date')
-                ->get();
-
-            foreach ($imageMetrics as $metric) {
-                $metricLogs = $imageLogs->where('tracking_metric_id', $metric->id);
-                $photos = [];
-                foreach ($metricLogs as $log) {
-                    $media = $log->getFirstMedia('check-in-image');
-                    if ($media) {
-                        $photos[] = [
-                            'date' => $log->date->format('Y-m-d'),
-                            'thumbUrl' => route('media.daily-log', [$log, 'thumb']),
-                            'fullUrl' => route('media.daily-log', [$log, 'full']),
-                        ];
-                    }
-                }
-                $imageMetricData[] = [
-                    'id' => $metric->id,
-                    'name' => $metric->name,
-                    'photos' => $photos,
-                ];
-            }
-        }
-
-        // --- Exercise Progression ---
-        $workoutLogs = $client->workoutLogs()
-            ->whereDate('completed_at', '>=', $from)
-            ->whereDate('completed_at', '<=', $to)
-            ->with(['exerciseLogs.exercise'])
-            ->orderBy('completed_at')
-            ->get();
-
-        $exerciseProgressionData = [];
-        $exerciseList = [];
-
-        foreach ($workoutLogs as $workoutLog) {
-            foreach ($workoutLog->exerciseLogs as $exerciseLog) {
-                $exId = $exerciseLog->exercise_id;
-                $exercise = $exerciseLog->exercise;
-
-                if (! isset($exerciseList[$exId])) {
-                    $exerciseList[$exId] = [
-                        'id' => $exId,
-                        'name' => $exercise->name,
-                        'muscleGroup' => $exercise->muscle_group,
-                    ];
-                }
-
-                if (! isset($exerciseProgressionData[$exId])) {
-                    $exerciseProgressionData[$exId] = [];
-                }
-
-                $dateKey = $workoutLog->completed_at->format('Y-m-d');
-
-                if (! isset($exerciseProgressionData[$exId][$dateKey])
-                    || $exerciseLog->weight > $exerciseProgressionData[$exId][$dateKey]['weight']) {
-                    $exerciseProgressionData[$exId][$dateKey] = [
-                        'date' => $dateKey,
-                        'weight' => (float) $exerciseLog->weight,
-                        'reps' => $exerciseLog->reps,
-                    ];
-                }
-            }
-        }
-
-        foreach ($exerciseProgressionData as $exId => $sessions) {
-            ksort($sessions);
-            $exerciseProgressionData[$exId] = array_values($sessions);
-        }
-
-        $exercisesByMuscleGroup = collect($exerciseList)->groupBy('muscleGroup')->sortKeys();
-
-        // --- Exercise Target History ---
-        $exerciseTargetHistory = [];
-        $activeClientProgram = $client->activeProgram();
-
-        if ($activeClientProgram) {
-            $allTargets = $activeClientProgram->exerciseTargets()
-                ->with('workoutExercise')
-                ->orderBy('effective_date')
-                ->get();
-
-            foreach ($allTargets as $target) {
-                if ($target->effective_date === null) {
-                    continue;
-                }
-
-                $exerciseId = $target->workoutExercise->exercise_id;
-                $date = $target->effective_date->format('Y-m-d');
-
-                if (! isset($exerciseTargetHistory[$exerciseId][$date])) {
-                    $exerciseTargetHistory[$exerciseId][$date] = (float) $target->target_weight;
-                } else {
-                    $exerciseTargetHistory[$exerciseId][$date] = max(
-                        $exerciseTargetHistory[$exerciseId][$date],
-                        (float) $target->target_weight
-                    );
-                }
-            }
-
-            foreach ($exerciseTargetHistory as $exId => $dateMap) {
-                $points = [];
-                foreach ($dateMap as $date => $weight) {
-                    $points[] = ['date' => $date, 'target' => $weight];
-                }
-                $exerciseTargetHistory[$exId] = $points;
-            }
-        }
+        [
+            'exerciseProgressionData' => $exerciseProgressionData,
+            'exercisesByMuscleGroup' => $exercisesByMuscleGroup,
+            'exerciseTargetHistory' => $exerciseTargetHistory,
+        ] = $this->analyticsService->getExerciseProgressionData($client, $from, $to);
 
         return view('coach.clients.analytics', compact(
             'client',
             'range',
             'from',
             'to',
-            'dates',
             'checkInCharts',
             'chartMetrics',
             'tableMetrics',

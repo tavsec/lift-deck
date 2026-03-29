@@ -51,6 +51,10 @@ return [
         'unread_comments' => 'Neprebrani komentarji',
         'no_workouts' => 'Še ni zabeleženih treningov',
         'no_workouts_description' => 'Opravite trening iz zavihka Dnevnik, da ga vidite tukaj.',
+        'exercise_progress' => 'Napredek vaj',
+        'start_end' => 'Začetek → Konec',
+        'change' => 'Sprememba',
+        'sessions' => 'Treningi',
     ],
 
     'history_show' => [
@@ -59,6 +63,22 @@ return [
         'weight_kg' => 'Teža (kg)',
         'reps' => 'Ponovitve',
         'prescribed' => 'Predpisano: :sets serij × :reps ponovitev',
+    ],
+
+    'check_in_history' => [
+        'heading' => 'Zgodovina meritev',
+        'back' => 'Nazaj na prijavo',
+        'view_history' => 'Oglej si zgodovino',
+        'time_period' => 'Časovno obdobje',
+        'last_7_days' => 'Zadnjih 7 dni',
+        'last_14_days' => 'Zadnjih 14 dni',
+        'last_30_days' => 'Zadnjih 30 dni',
+        'last_90_days' => 'Zadnjih 90 dni',
+        'no_metrics' => 'Ni dodeljenih metrik.',
+        'no_data' => 'Ni podatkov za to obdobje.',
+        'date' => 'Datum',
+        'progress_photos' => 'Napredek v fotografijah',
+        'no_photos' => 'Ni fotografij za to obdobje.',
     ],
 
     'check_in' => [
@@ -116,6 +136,14 @@ return [
         'optional_notes' => 'Neobvezne opombe...',
         'meal_name_placeholder' => 'npr. Piščanec z rižem na žaru',
         'remove_meal_confirm' => 'Odstraniti ta obrok?',
+        'charts_heading' => 'Zadnjih 30 dni',
+        'avg_calories' => 'Povp. kalorije',
+        'avg_protein' => 'Povp. beljakovine',
+        'avg_carbs' => 'Povp. ogljikohidrati',
+        'avg_fat' => 'Povp. maščobe',
+        'adherence' => 'Doslednost',
+        'calories' => 'Kalorije',
+        'macros' => 'Makrohranila',
     ],
 
     'log' => [
@@ -244,6 +272,16 @@ return [
         'client' => 'Stranka',
         'placeholder' => 'Dodaj komentar...',
         'post' => 'Objavi komentar',
+    ],
+
+    'exercise_progress' => [
+        'heading' => 'Moj napredek',
+        'max_weight' => 'Največja teža',
+        'est_1rm' => 'Ocenjen 1RM',
+        'no_data' => 'Za to vajo še ni zabeleženih setov.',
+        'weight_chart' => 'Najboljši set (kg)',
+        'volume_chart' => 'Volumen treninga (kg)',
+        'all_time' => 'Vse',
     ],
 
     'settings' => [

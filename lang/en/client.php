@@ -51,6 +51,10 @@ return [
         'unread_comments' => 'Unread comments',
         'no_workouts' => 'No workouts logged yet',
         'no_workouts_description' => 'Complete a workout from the Log tab to see it here.',
+        'exercise_progress' => 'Exercise Progress',
+        'start_end' => 'Start → End',
+        'change' => 'Change',
+        'sessions' => 'Sessions',
     ],
 
     'history_show' => [
@@ -59,6 +63,22 @@ return [
         'weight_kg' => 'Weight (kg)',
         'reps' => 'Reps',
         'prescribed' => 'Prescribed: :sets sets × :reps reps',
+    ],
+
+    'check_in_history' => [
+        'heading' => 'My Metrics History',
+        'back' => 'Back to Check-in',
+        'view_history' => 'View history',
+        'time_period' => 'Time Period',
+        'last_7_days' => 'Last 7 days',
+        'last_14_days' => 'Last 14 days',
+        'last_30_days' => 'Last 30 days',
+        'last_90_days' => 'Last 90 days',
+        'no_metrics' => 'No metrics assigned yet.',
+        'no_data' => 'No check-in data for this period.',
+        'date' => 'Date',
+        'progress_photos' => 'Progress Photos',
+        'no_photos' => 'No progress photos for this period.',
     ],
 
     'check_in' => [
@@ -116,6 +136,14 @@ return [
         'optional_notes' => 'Optional notes...',
         'meal_name_placeholder' => 'e.g., Grilled chicken with rice',
         'remove_meal_confirm' => 'Remove this meal?',
+        'charts_heading' => 'Last 30 Days',
+        'avg_calories' => 'Avg Calories',
+        'avg_protein' => 'Avg Protein',
+        'avg_carbs' => 'Avg Carbs',
+        'avg_fat' => 'Avg Fat',
+        'adherence' => 'Adherence',
+        'calories' => 'Calories',
+        'macros' => 'Macros',
     ],
 
     'log' => [
@@ -244,6 +272,16 @@ return [
         'client' => 'Client',
         'placeholder' => 'Add a comment...',
         'post' => 'Post Comment',
+    ],
+
+    'exercise_progress' => [
+        'heading' => 'My Progress',
+        'max_weight' => 'Max Weight',
+        'est_1rm' => 'Est. 1RM',
+        'no_data' => 'No logged sets yet for this exercise.',
+        'weight_chart' => 'Best Set Weight (kg)',
+        'volume_chart' => 'Session Volume (kg)',
+        'all_time' => 'All',
     ],
 
     'settings' => [
