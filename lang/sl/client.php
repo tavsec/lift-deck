@@ -274,6 +274,16 @@ return [
         'post' => 'Objavi komentar',
     ],
 
+    'exercise_progress' => [
+        'heading' => 'Moj napredek',
+        'max_weight' => 'Največja teža',
+        'est_1rm' => 'Ocenjen 1RM',
+        'no_data' => 'Za to vajo še ni zabeleženih setov.',
+        'weight_chart' => 'Najboljši set (kg)',
+        'volume_chart' => 'Volumen treninga (kg)',
+        'all_time' => 'Vse',
+    ],
+
     'settings' => [
         'heading' => 'Nastavitve',
         'subtitle' => 'Upravljajte s svojimi podatki in geslom.',

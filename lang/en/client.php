@@ -274,6 +274,16 @@ return [
         'post' => 'Post Comment',
     ],
 
+    'exercise_progress' => [
+        'heading' => 'My Progress',
+        'max_weight' => 'Max Weight',
+        'est_1rm' => 'Est. 1RM',
+        'no_data' => 'No logged sets yet for this exercise.',
+        'weight_chart' => 'Best Set Weight (kg)',
+        'volume_chart' => 'Session Volume (kg)',
+        'all_time' => 'All',
+    ],
+
     'settings' => [
         'heading' => 'Settings',
         'subtitle' => 'Manage your account information and password.',

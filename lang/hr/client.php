@@ -274,6 +274,16 @@ return [
         'post' => 'Objavi komentar',
     ],
 
+    'exercise_progress' => [
+        'heading' => 'Moj napredak',
+        'max_weight' => 'Maksimalna težina',
+        'est_1rm' => 'Proc. 1RM',
+        'no_data' => 'Još nema zabilježenih setova za ovu vježbu.',
+        'weight_chart' => 'Najbolji set (kg)',
+        'volume_chart' => 'Volumen treninga (kg)',
+        'all_time' => 'Sve',
+    ],
+
     'settings' => [
         'heading' => 'Postavke',
         'subtitle' => 'Upravljajte svojim podacima i lozinkom.',
