@@ -70,7 +70,11 @@ Private — all rights reserved.
 
 ### Coach Sign-Up Flow
 
-1. Coach registers at `/register` (name, email, password)
+1. Coach registers at `/register` — a 3-step wizard:
+   - **Step 1:** Choose coaching type (solo / growing / gym)
+   - **Step 2:** Optional profile details (name, gym name, niche, client count, current tools)
+   - **Step 3:** Email and password
+   All text is localized in English, Croatian (`hr`), and Slovenian (`sl`) via `lang/{locale}/auth.php` under the `register.*` key.
 2. Redirected to `/coach/plan` — picks a plan:
    - **Basic (€2.50/mo)** — 7-day free trial, no credit card required. After trial ends, redirected to `/coach/subscription` to subscribe via Stripe Checkout.
    - **Advanced (€10/mo)** — redirected immediately to Stripe Checkout to pay before accessing the dashboard.
