@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\UpdateSettingsRequest;
+use App\Services\SubscriptionService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -11,9 +12,23 @@ use Illuminate\View\View;
 
 class SettingsController extends Controller
 {
+    public function __construct(private readonly SubscriptionService $subscriptionService) {}
+
     public function editCoach(): View
     {
-        return view('coach.settings.edit', ['user' => auth()->user()]);
+        $coach = auth()->user();
+
+        return view('coach.settings.edit', [
+            'user' => $coach,
+            'currentPlanKey' => $this->subscriptionService->currentPlanKey($coach),
+            'clientCount' => $coach->clients()->count(),
+            'clientLimit' => $this->subscriptionService->clientLimit($coach),
+            'isOnTrial' => $coach->onTrial(),
+            'trialEndsAt' => $coach->trial_ends_at,
+            'isInGracePeriod' => $this->subscriptionService->isInGracePeriod($coach),
+            'graceDaysRemaining' => $this->subscriptionService->graceDaysRemaining($coach),
+            'subscription' => $coach->subscription('default'),
+        ]);
     }
 
     public function editClient(): View
