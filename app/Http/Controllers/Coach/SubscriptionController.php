@@ -59,8 +59,8 @@ class SubscriptionController extends Controller
 
     /**
      * Redirects the coach to Stripe Checkout for their selected plan.
-     * Used both when a new coach picks Advanced/Professional and when a
-     * Basic trial coach needs to subscribe after the trial ends.
+     * All three plans go through Stripe Checkout. Basic includes a 7-day trial
+     * configured via config('plans.basic.trial_days').
      *
      * Stripe Checkout session creation makes a live API call — test the guard
      * conditions only (no selected_plan, already subscribed).
@@ -92,7 +92,12 @@ class SubscriptionController extends Controller
                 ->checkout($checkoutOptions);
         }
 
-        return $coach->newSubscription('default', $plan['stripe_price_id'])
-            ->checkout($checkoutOptions);
+        $builder = $coach->newSubscription('default', $plan['stripe_price_id']);
+
+        if (($plan['trial_days'] ?? 0) > 0) {
+            $builder->trialDays($plan['trial_days']);
+        }
+
+        return $builder->checkout($checkoutOptions);
     }
 }
