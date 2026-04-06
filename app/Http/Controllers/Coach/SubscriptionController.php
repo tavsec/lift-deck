@@ -89,7 +89,8 @@ class SubscriptionController extends Controller
         if ($coach->selected_plan === 'professional') {
             return $coach->newSubscription('default', $plan['stripe_price_flat_id'])
                 ->meteredPrice($plan['stripe_price_metered_id'])
-                ->checkout($checkoutOptions);
+                ->checkout($checkoutOptions)
+                ->toResponse(request());
         }
 
         $builder = $coach->newSubscription('default', $plan['stripe_price_id']);
@@ -98,6 +99,6 @@ class SubscriptionController extends Controller
             $builder->trialDays($plan['trial_days']);
         }
 
-        return $builder->checkout($checkoutOptions);
+        return $builder->checkout($checkoutOptions)->toResponse(request());
     }
 }
