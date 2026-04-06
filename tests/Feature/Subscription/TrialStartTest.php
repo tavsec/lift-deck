@@ -2,7 +2,7 @@
 
 use App\Models\User;
 
-it('starts a 7-day trial when coach selects basic plan', function (): void {
+it('selecting basic plan redirects to stripe checkout for trial', function (): void {
     $coach = User::factory()->state([
         'role' => 'coach',
         'trial_ends_at' => null,
@@ -11,26 +11,10 @@ it('starts a 7-day trial when coach selects basic plan', function (): void {
 
     $this->actingAs($coach)
         ->post(route('coach.plan.store'), ['plan' => 'basic'])
-        ->assertRedirect(route('coach.dashboard'));
+        ->assertRedirect(route('coach.subscription.checkout'));
 
     $coach->refresh();
 
-    expect($coach->trial_ends_at)->not->toBeNull();
-    expect($coach->trial_ends_at->isFuture())->toBeTrue();
-    expect($coach->onTrial())->toBeTrue();
-});
-
-it('trial lasts 7 days from plan selection', function (): void {
-    $coach = User::factory()->state([
-        'role' => 'coach',
-        'trial_ends_at' => null,
-        'selected_plan' => null,
-    ])->create();
-
-    $this->actingAs($coach)
-        ->post(route('coach.plan.store'), ['plan' => 'basic']);
-
-    $coach->refresh();
-
-    expect(now()->diffInDays($coach->trial_ends_at))->toBeBetween(6, 8);
+    expect($coach->selected_plan)->toBe('basic');
+    expect($coach->trial_ends_at)->toBeNull();
 });
