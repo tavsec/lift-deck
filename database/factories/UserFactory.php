@@ -24,6 +24,9 @@ class UserFactory extends Factory
      * This default ensures factory-created coaches pass the middleware in tests without needing
      * explicit subscription setup.
      *
+     * Similarly, `selected_plan` defaults to `'basic'` so factory-created coaches have a plan
+     * selected and bypass the plan-selection step in tests.
+     *
      * @return array<string, mixed>
      */
     public function definition(): array
