@@ -25,6 +25,17 @@ Route::middleware('guest')->group(function () {
     Route::post('join', [App\Http\Controllers\Auth\ClientRegistrationController::class, 'register'])->name('join.register');
 });
 
+// Coach plan selection — auth + role required, but NOT subscribed middleware
+Route::middleware(['auth', 'verified', 'role:coach'])
+    ->prefix('coach')
+    ->name('coach.')
+    ->group(function () {
+        Route::get('plan', [\App\Http\Controllers\Coach\PlanSelectionController::class, 'show'])->name('plan');
+        Route::post('plan', [\App\Http\Controllers\Coach\PlanSelectionController::class, 'store'])->name('plan.store');
+        Route::get('plan/success', [\App\Http\Controllers\Coach\PlanSelectionController::class, 'success'])->name('plan.success');
+        Route::get('subscription/checkout', [\App\Http\Controllers\Coach\SubscriptionController::class, 'checkout'])->name('subscription.checkout');
+    });
+
 // Coach routes
 Route::middleware(['auth', 'verified', 'role:coach', 'subscribed'])
     ->prefix('coach')
