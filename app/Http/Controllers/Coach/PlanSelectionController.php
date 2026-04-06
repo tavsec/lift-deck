@@ -28,19 +28,26 @@ class PlanSelectionController extends Controller
     public function store(StorePlanSelectionRequest $request): RedirectResponse
     {
         $coach = auth()->user();
-        $plan = $request->validated()['plan'];
-
-        $coach->update(['selected_plan' => $plan]);
+        $plan = $request->validated('plan');
 
         if ($plan === 'basic') {
-            $coach->update(['trial_ends_at' => now()->addDays(config('plans.basic.trial_days', 7))]);
+            $coach->update([
+                'selected_plan' => $plan,
+                'trial_ends_at' => now()->addDays(config('plans.basic.trial_days', 7)),
+            ]);
 
             return redirect()->route('coach.dashboard');
         }
 
+        $coach->update(['selected_plan' => $plan]);
+
         return redirect()->route('coach.subscription.checkout');
     }
 
+    /**
+     * Handles the Stripe Checkout return URL after a successful payment.
+     * Subscription activation is handled asynchronously by Cashier's webhook handler.
+     */
     public function success(): RedirectResponse
     {
         return redirect()->route('coach.dashboard');
