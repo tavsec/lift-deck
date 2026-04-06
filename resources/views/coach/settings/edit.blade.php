@@ -143,7 +143,7 @@
 
         <!-- Subscription Card -->
         <div class="bg-white dark:bg-gray-900 rounded-lg shadow-sm border border-gray-200 dark:border-gray-800 p-6">
-            <h2 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">Subscription</h2>
+            <h2 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">{{ __('coach.settings.subscription.heading') }}</h2>
 
             @if($isOnTrial)
                 {{-- State 1: Free trial --}}

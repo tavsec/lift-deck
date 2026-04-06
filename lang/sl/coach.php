@@ -765,6 +765,9 @@ return [
             'confirm' => 'Potrdi novo geslo',
             'update' => 'Posodobi geslo',
         ],
+        'subscription' => [
+            'heading' => 'Naročnina',
+        ],
     ],
 
     'redemptions' => [

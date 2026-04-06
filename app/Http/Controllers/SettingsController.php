@@ -27,7 +27,6 @@ class SettingsController extends Controller
             'trialEndsAt' => $coach->trial_ends_at,
             'isInGracePeriod' => $this->subscriptionService->isInGracePeriod($coach),
             'graceDaysRemaining' => $this->subscriptionService->graceDaysRemaining($coach),
-            'subscription' => $coach->subscription('default'),
         ]);
     }
 

@@ -765,6 +765,9 @@ return [
             'confirm' => 'Potvrdi novu lozinku',
             'update' => 'Ažuriraj lozinku',
         ],
+        'subscription' => [
+            'heading' => 'Pretplata',
+        ],
     ],
 
     'redemptions' => [

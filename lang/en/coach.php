@@ -768,6 +768,9 @@ return [
             'confirm' => 'Confirm New Password',
             'update' => 'Update Password',
         ],
+        'subscription' => [
+            'heading' => 'Subscription',
+        ],
     ],
 
     'redemptions' => [
