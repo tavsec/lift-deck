@@ -24,6 +24,7 @@ class SubscriptionController extends Controller
         $graceDaysRemaining = $this->subscriptionService->graceDaysRemaining($coach);
         $plans = config('plans');
         $subscription = $coach->subscription('default');
+        $selectedPlan = $coach->selected_plan;
 
         return view('coach.subscription', compact(
             'currentPlanKey',
@@ -35,6 +36,7 @@ class SubscriptionController extends Controller
             'graceDaysRemaining',
             'plans',
             'subscription',
+            'selectedPlan',
         ));
     }
 
@@ -76,6 +78,8 @@ class SubscriptionController extends Controller
         }
 
         $plan = config("plans.{$coach->selected_plan}");
+
+        abort_if($plan === null, 404);
 
         $checkoutOptions = [
             'success_url' => route('coach.plan.success'),
