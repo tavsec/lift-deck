@@ -45,6 +45,7 @@ class User extends Authenticatable implements FilamentUser
         'dark_mode',
         'is_track_only',
         'is_free_access',
+        'selected_plan',
         'trial_ends_at',
     ];
 
