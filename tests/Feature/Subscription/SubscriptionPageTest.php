@@ -103,6 +103,17 @@ it('checkout route redirects coach with no selected_plan to plan selection', fun
         ->assertRedirect(route('coach.plan'));
 });
 
+it('checkout route redirects coach on active trial to dashboard', function (): void {
+    $coach = User::factory()->state(['role' => 'coach'])->create([
+        'trial_ends_at' => now()->addDays(5),
+        'selected_plan' => 'basic',
+    ]);
+
+    $this->actingAs($coach)
+        ->get(route('coach.subscription.checkout'))
+        ->assertRedirect(route('coach.dashboard'));
+});
+
 it('checkout route redirects already subscribed coach to dashboard', function (): void {
     $coach = User::factory()->state(['role' => 'coach'])->create([
         'trial_ends_at' => null,

@@ -84,6 +84,17 @@ it('rejects invalid plan values', function (): void {
         ->assertSessionHasErrors('plan');
 });
 
+it('redirects to subscription page if coach already has selected_plan but is not active', function (): void {
+    $coach = User::factory()->state(['role' => 'coach'])->create([
+        'trial_ends_at' => null,
+        'selected_plan' => 'advanced',
+    ]);
+
+    $this->actingAs($coach)
+        ->get(route('coach.plan'))
+        ->assertRedirect(route('coach.subscription'));
+});
+
 it('success page redirects to dashboard', function (): void {
     $coach = User::factory()->state(['role' => 'coach'])->create([
         'trial_ends_at' => null,

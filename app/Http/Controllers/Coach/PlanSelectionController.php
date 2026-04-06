@@ -20,6 +20,10 @@ class PlanSelectionController extends Controller
             return redirect()->route('coach.dashboard');
         }
 
+        if ($coach->selected_plan) {
+            return redirect()->route('coach.subscription');
+        }
+
         return view('coach.plan', [
             'plans' => config('plans'),
         ]);

@@ -73,7 +73,7 @@ class SubscriptionController extends Controller
             return redirect()->route('coach.plan');
         }
 
-        if ($coach->subscribed('default')) {
+        if ($this->subscriptionService->isActive($coach)) {
             return redirect()->route('coach.dashboard');
         }
 
