@@ -28,7 +28,7 @@ it('redirects to dashboard if coach already has active trial', function (): void
         ->assertRedirect(route('coach.dashboard'));
 });
 
-it('selecting basic plan sets selected_plan and trial_ends_at and redirects to dashboard', function (): void {
+it('selecting basic plan sets selected_plan and redirects to checkout', function (): void {
     $coach = User::factory()->state(['role' => 'coach'])->create([
         'trial_ends_at' => null,
         'selected_plan' => null,
@@ -36,12 +36,11 @@ it('selecting basic plan sets selected_plan and trial_ends_at and redirects to d
 
     $this->actingAs($coach)
         ->post(route('coach.plan.store'), ['plan' => 'basic'])
-        ->assertRedirect(route('coach.dashboard'));
+        ->assertRedirect(route('coach.subscription.checkout'));
 
     $coach->refresh();
     expect($coach->selected_plan)->toBe('basic');
-    expect($coach->trial_ends_at)->not->toBeNull();
-    expect($coach->trial_ends_at->isFuture())->toBeTrue();
+    expect($coach->trial_ends_at)->toBeNull();
 });
 
 it('selecting advanced plan sets selected_plan and redirects to checkout', function (): void {

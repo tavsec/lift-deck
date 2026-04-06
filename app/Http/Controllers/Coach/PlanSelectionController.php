@@ -32,18 +32,8 @@ class PlanSelectionController extends Controller
     public function store(StorePlanSelectionRequest $request): RedirectResponse
     {
         $coach = auth()->user();
-        $plan = $request->validated('plan');
 
-        if ($plan === 'basic') {
-            $coach->update([
-                'selected_plan' => $plan,
-                'trial_ends_at' => now()->addDays(config('plans.basic.trial_days', 7)),
-            ]);
-
-            return redirect()->route('coach.dashboard');
-        }
-
-        $coach->update(['selected_plan' => $plan]);
+        $coach->update(['selected_plan' => $request->validated('plan')]);
 
         return redirect()->route('coach.subscription.checkout');
     }
