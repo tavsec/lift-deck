@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>
-        LiftDeck | Elevate your coaching experience!
+        LiftDeck | Coaching platform for fitness coaches
     </title>
     <link
         rel="shortcut icon"
@@ -72,24 +72,22 @@
                     <h1
                         class="mb-6 text-3xl font-bold leading-snug text-white sm:text-4xl sm:leading-snug lg:text-5xl lg:leading-[1.2]"
                     >
-                        LiftDeck
+                        Stop coaching from spreadsheets. Run everything in LiftDeck.
                     </h1>
                     <p
                         class="mx-auto mb-9 max-w-[600px] text-base font-medium text-white sm:text-lg sm:leading-[1.44]"
                     >
-                        Elevate your coaching experience to next level!
-                        <br>
-                        <i class="text-sm">Currently in closed beta</i>
+                        Build programs, track workouts, log nutrition, message clients, and monitor progress in one place — with launch pricing for founding coaches.
                     </p>
                     <ul
                         class="flex flex-wrap items-center justify-center gap-5 mb-10"
                     >
                         <li>
                             <a
-                                href="https://beta.liftdeck.io"
+                                href="{{ route('register') }}"
                                 class="inline-flex items-center justify-center rounded-md bg-white px-7 py-[14px] text-center text-base font-medium text-dark shadow-1 transition duration-300 ease-in-out hover:bg-gray-2 hover:text-body-color"
                             >
-                                Join beta testing
+                                Start free for 7 days
                             </a>
                         </li>
                     </ul>
@@ -1490,13 +1488,13 @@
                         <p
                             class="mx-auto mb-6 max-w-[515px] text-base leading-[1.5] text-white"
                         >
-                            LiftDeck is currently in closed beta. Join our select group of trainers testing the platform.
+                            Start a free 7-day trial — no credit card required. Use code <strong>FOUNDING70</strong> at checkout for 70% off your first 2 months.
                         </p>
                         <a
-                            href="https://beta.liftdeck.io"
+                            href="{{ route('register') }}"
                             class="inline-block rounded-md border border-transparent bg-secondary px-7 py-3 text-base font-medium text-white transition hover:bg-[#0BB489]"
                         >
-                            Join beta testing
+                            Claim founding coach pricing
                         </a>
                     </div>
                 </div>
@@ -1658,8 +1656,7 @@
                             How much does it cost?
                         </h3>
                         <p class="text-base text-body-color dark:text-dark-6">
-                            Currently, LiftDeck is in closed beta, but if you would like to test it, contact us at <a
-                                href="mailto:beta@liftdeck.io" class="text-blue-500">beta@liftdeck.io</a>
+                            Basic is €10/month for up to 5 clients. Advanced is €45/month for up to 30 clients and includes loyalty and gamification features. Professional is €79/month and adds custom gym branding. All plans include a 7-day free trial. Founding coaches get 70% off their first 2 months with promo code <strong>FOUNDING70</strong>.
                         </p>
                     </div>
                 </div>
@@ -1788,8 +1785,9 @@
                             How do I get started?
                         </h3>
                         <p class="text-base text-body-color dark:text-dark-6">
-                            Apply for closed beta! Fill out this <a
-                                href="https://beta.liftdeck.io" class="text-blue-500">short form</a> and our team will contact you within 24 hours to set up your account and walk you through onboarding.                    </div>
+                            <a href="{{ route('register') }}" class="text-blue-500 font-medium">Create your account</a> — it takes under a minute. Pick a plan, start your 7-day free trial (no card required on Basic), and get your first client active in the system on day one.
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
