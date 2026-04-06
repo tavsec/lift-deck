@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>{{ config('app.name') }}</title>
+    <title>{{ __('auth.register.step3.title') }} — {{ config('app.name') }}</title>
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600,700,800&display=swap" rel="stylesheet"/>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -134,7 +134,7 @@
                 </div>
 
                 {{-- STEP 2 --}}
-                <div x-show="step === 2" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 translate-x-2" x-transition:enter-end="opacity-100 translate-x-0" class="flex flex-col flex-1">
+                <div x-show="step === 2" x-cloak x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 translate-x-2" x-transition:enter-end="opacity-100 translate-x-0" class="flex flex-col flex-1">
                     <p class="text-xs font-semibold uppercase tracking-widest text-slate-400 mb-2">{{ __('auth.register.step2.label') }}</p>
                     <h1 class="text-2xl font-bold text-slate-900 mb-1">{{ __('auth.register.step2.title') }}</h1>
                     <p class="text-sm text-slate-500 mb-7">{{ __('auth.register.step2.subtitle') }}</p>
@@ -228,7 +228,7 @@
                 </div>
 
                 {{-- STEP 3 --}}
-                <div x-show="step === 3" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 translate-x-2" x-transition:enter-end="opacity-100 translate-x-0" class="flex flex-col flex-1">
+                <div x-show="step === 3" x-cloak x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 translate-x-2" x-transition:enter-end="opacity-100 translate-x-0" class="flex flex-col flex-1">
                     <p class="text-xs font-semibold uppercase tracking-widest text-slate-400 mb-2">{{ __('auth.register.step3.label') }}</p>
                     <h1 class="text-2xl font-bold text-slate-900 mb-1">{{ __('auth.register.step3.title') }}</h1>
                     <p class="text-sm text-slate-500 mb-7">{{ __('auth.register.step3.subtitle') }}</p>
