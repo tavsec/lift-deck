@@ -5,6 +5,7 @@ use App\Models\User;
 it('redirects to subscription page when coach has no subscription and trial expired', function (): void {
     $coach = User::factory()->state(['role' => 'coach'])->create([
         'trial_ends_at' => now()->subDay(),
+        'selected_plan' => 'basic',
     ]);
 
     $this->actingAs($coach)
@@ -54,6 +55,7 @@ it('allows access during grace period', function (): void {
 it('redirects to subscription page when grace period elapsed', function (): void {
     $coach = User::factory()->state(['role' => 'coach'])->create([
         'trial_ends_at' => now()->subDays(10),
+        'selected_plan' => 'basic',
     ]);
 
     $coach->subscriptions()->create([
@@ -92,6 +94,7 @@ it('flashes grace period days to session during grace period', function (): void
 it('redirects to subscription page when coach lacks required feature', function (): void {
     $coach = User::factory()->state(['role' => 'coach', 'is_free_access' => false])->create([
         'trial_ends_at' => now()->addDays(5),
+        'selected_plan' => 'basic',
     ]);
 
     // Basic plan has no features — simulate by creating a basic subscription
