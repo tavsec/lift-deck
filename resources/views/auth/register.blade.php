@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>{{ __('auth.register.step3.title') }} — {{ config('app.name') }}</title>
+    <title>{{ config('app.name') }}</title>
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600,700,800&display=swap" rel="stylesheet"/>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -16,9 +16,9 @@
     x-data="{
         step: {{ $errors->any() ? 3 : 1 }},
         coachingType: 'solo',
-        name: '{{ old('name') }}',
-        gymName: '{{ old('gym_name') }}',
-        bio: '{{ old('bio') }}',
+        name: @js(old('name', '')),
+        gymName: @js(old('gym_name', '')),
+        bio: @js(old('bio', '')),
         goTo(n) { this.step = n; },
         canAdvance1() { return this.coachingType !== ''; }
     }"
@@ -148,7 +148,7 @@
                             <input
                                 type="text"
                                 x-model="name"
-                                placeholder="{{ __('auth.register.step1.solo') }}"
+                                {{-- no placeholder: name is a free-text personal name --}}
                                 class="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm text-slate-900 focus:border-blue-500 focus:outline-none"
                             >
                         </div>
@@ -179,6 +179,7 @@
                             >
                         </div>
 
+                        {{-- client_count is a UX-only field — not submitted or persisted. It is used to help users self-identify before plan selection. --}}
                         <div>
                             <label class="block text-xs font-semibold text-slate-600 mb-1">
                                 {{ __('auth.register.step2.client_count') }}
@@ -192,6 +193,7 @@
                             >
                         </div>
 
+                        {{-- tools[] is submitted but not persisted. It is a UX signal for future onboarding personalization. --}}
                         <div>
                             <label class="block text-xs font-semibold text-slate-600 mb-2">
                                 {{ __('auth.register.step2.tools') }}
