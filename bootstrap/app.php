@@ -17,6 +17,9 @@ return Application::configure(basePath: dirname(__DIR__))
             'subscribed' => \App\Http\Middleware\EnsureCoachSubscribed::class,
             'subscription.feature' => \App\Http\Middleware\EnsureSubscriptionFeature::class,
         ]);
+        $middleware->web(append: [
+            \App\Http\Middleware\SetLocale::class,
+        ]);
         $middleware->trustProxies('*');
     })
     ->withExceptions(function (Exceptions $exceptions): void {

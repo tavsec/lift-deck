@@ -17,4 +17,18 @@ class UserPreferencesController extends Controller
 
         return back();
     }
+
+    /**
+     * Update the authenticated user's locale preference.
+     */
+    public function updateLocale(Request $request): RedirectResponse
+    {
+        $request->validate([
+            'locale' => ['required', 'string', 'in:en,sl,hr'],
+        ]);
+
+        $request->user()->update(['locale' => $request->locale]);
+
+        return back();
+    }
 }

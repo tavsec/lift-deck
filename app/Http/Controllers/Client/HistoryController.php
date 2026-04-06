@@ -7,11 +7,14 @@ use App\Http\Requests\StoreWorkoutLogCommentRequest;
 use App\Models\WorkoutLog;
 use App\Models\WorkoutLogComment;
 use App\Notifications\WorkoutLogCommented;
+use App\Services\AnalyticsService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 
 class HistoryController extends Controller
 {
+    public function __construct(private readonly AnalyticsService $analyticsService) {}
+
     public function index(): View
     {
         $user = auth()->user();
@@ -29,9 +32,22 @@ class HistoryController extends Controller
             ->filter()
             ->unique();
 
+        [
+            'exerciseProgressionData' => $exerciseProgressionData,
+            'exercisesByMuscleGroup' => $exercisesByMuscleGroup,
+            'exerciseTargetHistory' => $exerciseTargetHistory,
+        ] = $this->analyticsService->getExerciseProgressionData(
+            $user,
+            now()->subDays(89)->format('Y-m-d'),
+            now()->format('Y-m-d')
+        );
+
         return view('client.history', [
             'workoutLogs' => $workoutLogs,
             'unreadWorkoutLogIds' => $unreadWorkoutLogIds,
+            'exerciseProgressionData' => $exerciseProgressionData,
+            'exercisesByMuscleGroup' => $exercisesByMuscleGroup,
+            'exerciseTargetHistory' => $exerciseTargetHistory,
         ]);
     }
 

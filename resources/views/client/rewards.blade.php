@@ -1,11 +1,11 @@
 <x-layouts.client>
-    <x-slot:title>Rewards</x-slot:title>
+    <x-slot:title>{{ __('client.rewards.heading') }}</x-slot:title>
 
     <div class="py-6 space-y-6">
         <!-- Header -->
         <div>
-            <h1 class="text-3xl font-bold text-gray-900">Reward Shop</h1>
-            <p class="mt-1 text-sm text-gray-600">Spend your earned XP points on rewards</p>
+            <h1 class="text-3xl font-bold text-gray-900">{{ __('client.rewards.heading') }}</h1>
+            <p class="mt-1 text-sm text-gray-600">{{ __('client.rewards.subtitle') }}</p>
         </div>
 
         @if(session('success'))
@@ -34,7 +34,7 @@
                         </svg>
                     </div>
                     <div>
-                        <p class="text-sm font-medium text-gray-600">Available Points</p>
+                        <p class="text-sm font-medium text-gray-600">{{ __('client.rewards.available_points') }}</p>
                         <p class="text-3xl font-bold text-gray-900">{{ $xpSummary?->available_points ?? 0 }}</p>
                     </div>
                 </div>
@@ -42,16 +42,16 @@
                 @if($xpSummary?->currentLevel)
                     <div class="text-right">
                         <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800">
-                            Level {{ $xpSummary->currentLevel->level_number }}: {{ $xpSummary->currentLevel->name }}
+                            {{ __('client.rewards.level', ['n' => $xpSummary->currentLevel->level_number, 'name' => $xpSummary->currentLevel->name]) }}
                         </span>
-                        <p class="mt-1 text-xs text-gray-500">{{ number_format($xpSummary->total_xp) }} total XP</p>
+                        <p class="mt-1 text-xs text-gray-500">{{ __('client.rewards.total_xp', ['n' => number_format($xpSummary->total_xp)]) }}</p>
                     </div>
                 @endif
             </div>
         </x-bladewind::card>
 
         <div class="text-right -mt-2 mb-2">
-            <a href="{{ route('client.loyalty') }}" class="text-sm text-blue-600 hover:text-blue-800">View Points History &rarr;</a>
+            <a href="{{ route('client.loyalty') }}" class="text-sm text-blue-600 hover:text-blue-800">{{ __('client.rewards.view_history') }}</a>
         </div>
 
         <!-- Rewards Grid -->
@@ -61,8 +61,8 @@
                     <svg class="w-16 h-16 mx-auto mb-4 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"/>
                     </svg>
-                    <p class="text-base font-medium">No rewards available yet</p>
-                    <p class="mt-1 text-sm">Check back later for new rewards from your coach.</p>
+                    <p class="text-base font-medium">{{ __('client.rewards.no_rewards') }}</p>
+                    <p class="mt-1 text-sm">{{ __('client.rewards.no_rewards_description') }}</p>
                 </div>
             </x-bladewind::card>
         @else
@@ -86,7 +86,7 @@
                                     {{ number_format($reward->points_cost) }} pts
                                 </span>
                                 @if(is_null($reward->coach_id))
-                                    <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-800">System</span>
+                                    <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-800">{{ __('client.rewards.system') }}</span>
                                 @endif
                             </div>
                         </div>
@@ -99,11 +99,11 @@
                         <!-- Stock -->
                         <p class="text-xs text-gray-500">
                             @if(is_null($reward->stock))
-                                Unlimited availability
+                                {{ __('client.rewards.unlimited') }}
                             @elseif($reward->stock === 0)
-                                <span class="text-red-600 font-medium">Out of stock</span>
+                                <span class="text-red-600 font-medium">{{ __('client.rewards.out_of_stock') }}</span>
                             @else
-                                {{ $reward->stock }} available
+                                {{ __('client.rewards.n_available', ['n' => $reward->stock]) }}
                             @endif
                         </p>
 
@@ -113,14 +113,14 @@
                                 <form
                                     method="POST"
                                     action="{{ route('client.rewards.redeem', $reward) }}"
-                                    onsubmit="return confirm('Spend {{ $reward->points_cost }} points on {{ addslashes($reward->name) }}?')"
+                                    onsubmit="return confirm('{{ __('client.rewards.spend_confirm', ['points' => $reward->points_cost, 'name' => addslashes($reward->name)]) }}')"
                                 >
                                     @csrf
                                     <button
                                         type="submit"
                                         class="w-full inline-flex items-center justify-center px-4 py-2 rounded-md text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"
                                     >
-                                        Redeem
+                                        {{ __('client.rewards.redeem') }}
                                     </button>
                                 </form>
                             @else
@@ -130,11 +130,11 @@
                                     class="w-full inline-flex items-center justify-center px-4 py-2 rounded-md text-sm font-medium text-gray-400 bg-gray-100 cursor-not-allowed"
                                 >
                                     @if(!$hasStock)
-                                        Out of Stock
+                                        {{ __('client.rewards.out_of_stock_button') }}
                                     @elseif(!$xpSummary)
-                                        No XP Yet
+                                        {{ __('client.rewards.no_xp') }}
                                     @else
-                                        Not Enough Points
+                                        {{ __('client.rewards.not_enough_points') }}
                                     @endif
                                 </button>
                             @endif

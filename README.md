@@ -51,7 +51,7 @@ cp .env.example .env
 php artisan key:generate
 php artisan migrate --seed
 npm run build
-php artisan serve
+composer run dev
 ```
 
 Set your Stripe keys in `.env` (`STRIPE_KEY`, `STRIPE_SECRET`) before using payment features.
@@ -62,11 +62,11 @@ Set your Stripe keys in `.env` (`STRIPE_KEY`, `STRIPE_SECRET`) before using paym
 php artisan test --compact
 ```
 
+## License
+
+Private — all rights reserved.
+
 ---
-
-## LiftDeck
-
-A coaching platform for fitness coaches and their clients. Coaches manage clients, programs, workouts, nutrition, and more. Clients track their training and progress.
 
 ### Coach Sign-Up Flow
 

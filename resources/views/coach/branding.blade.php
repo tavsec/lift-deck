@@ -1,11 +1,11 @@
 <x-layouts.coach>
-    <x-slot:title>Branding</x-slot:title>
+    <x-slot:title>{{ __('coach.branding.heading') }}</x-slot:title>
 
     <div class="space-y-6">
         <!-- Header -->
         <div>
-            <h1 class="text-2xl font-bold text-gray-900 dark:text-gray-100">Branding</h1>
-            <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Customize how your coaching business appears to clients.</p>
+            <h1 class="text-2xl font-bold text-gray-900 dark:text-gray-100">{{ __('coach.branding.heading') }}</h1>
+            <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">{{ __('coach.branding.subtitle') }}</p>
         </div>
 
         @if(session('success'))
@@ -61,14 +61,14 @@
             <!-- Section 1: Identity -->
             <div class="bg-white dark:bg-gray-900 rounded-lg shadow">
                 <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-800">
-                    <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">Identity</h2>
-                    <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Your gym name, logo, and description.</p>
+                    <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">{{ __('coach.branding.identity') }}</h2>
+                    <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">{{ __('coach.branding.identity_description') }}</p>
                 </div>
 
                 <div class="px-6 py-4 space-y-4">
                     <!-- Gym Name -->
                     <div>
-                        <label for="gym_name" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Gym Name</label>
+                        <label for="gym_name" class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('coach.branding.gym_name') }}</label>
                         <input type="text" name="gym_name" id="gym_name" value="{{ old('gym_name', $coach->gym_name) }}"
                             class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
                             placeholder="e.g., Iron Forge Gym">
@@ -79,13 +79,13 @@
 
                     <!-- Logo -->
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Logo</label>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('coach.branding.logo') }}</label>
                         @if($coach->logo)
                             <div class="mt-2 flex items-center gap-4">
                                 <img src="{{ $coach->logo }}" alt="Current logo" class="h-16 w-16 rounded-md object-cover">
                                 <label class="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
                                     <input type="checkbox" name="remove_logo" value="1" class="rounded border-gray-300 dark:border-gray-700 text-blue-600 focus:ring-blue-500">
-                                    Remove logo
+                                    {{ __('coach.branding.remove_logo') }}
                                 </label>
                             </div>
                         @endif
@@ -98,7 +98,7 @@
 
                     <!-- Description -->
                     <div>
-                        <label for="description" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Description</label>
+                        <label for="description" class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('coach.branding.description') }}</label>
                         <textarea name="description" id="description" rows="3"
                             class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
                             placeholder="Tell clients about your coaching business">{{ old('description', $coach->description) }}</textarea>
@@ -112,14 +112,14 @@
             <!-- Section 2: Colors -->
             <div class="bg-white dark:bg-gray-900 rounded-lg shadow">
                 <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-800">
-                    <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">Colors</h2>
-                    <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Choose brand colors for your client-facing pages.</p>
+                    <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">{{ __('coach.branding.colors') }}</h2>
+                    <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">{{ __('coach.branding.colors_description') }}</p>
                 </div>
 
                 <div class="px-6 py-4 space-y-4">
                     <!-- Primary Color -->
                     <div>
-                        <label for="primary_color" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Primary Color</label>
+                        <label for="primary_color" class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('coach.branding.primary_color') }}</label>
                         <div class="mt-1 flex items-center gap-3">
                             <input type="color" x-model="primaryColor"
                                 class="h-10 w-14 cursor-pointer rounded border border-gray-300 dark:border-gray-700 p-0.5">
@@ -134,7 +134,7 @@
 
                     <!-- Secondary Color -->
                     <div>
-                        <label for="secondary_color" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Secondary Color</label>
+                        <label for="secondary_color" class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('coach.branding.secondary_color') }}</label>
                         <div class="mt-1 flex items-center gap-3">
                             <input type="color" x-model="secondaryColor"
                                 class="h-10 w-14 cursor-pointer rounded border border-gray-300 dark:border-gray-700 p-0.5">
@@ -152,14 +152,14 @@
             <!-- Section 3: Onboarding -->
             <div class="bg-white dark:bg-gray-900 rounded-lg shadow">
                 <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-800">
-                    <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">Onboarding</h2>
-                    <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Customize the onboarding experience for new clients.</p>
+                    <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">{{ __('coach.branding.onboarding') }}</h2>
+                    <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">{{ __('coach.branding.onboarding_description') }}</p>
                 </div>
 
                 <div class="px-6 py-4 space-y-4">
                     <!-- Welcome Text -->
                     <div>
-                        <label for="onboarding_welcome_text" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Welcome Text</label>
+                        <label for="onboarding_welcome_text" class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('coach.branding.welcome_text') }}</label>
                         <textarea name="onboarding_welcome_text" id="onboarding_welcome_text" rows="3"
                             class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
                             placeholder="Welcome message shown to clients during onboarding">{{ old('onboarding_welcome_text', $coach->onboarding_welcome_text) }}</textarea>
@@ -170,8 +170,8 @@
 
                     <!-- Custom Fields -->
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Custom Fields</label>
-                        <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Add fields that clients fill out during onboarding.</p>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('coach.branding.custom_fields') }}</label>
+                        <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">{{ __('coach.branding.custom_fields_description') }}</p>
 
                         <div class="mt-3 space-y-3">
                             <template x-for="(field, index) in fields" :key="index">
@@ -179,7 +179,7 @@
                                     <div class="grid grid-cols-1 sm:grid-cols-6 gap-3">
                                         <!-- Label -->
                                         <div class="sm:col-span-2">
-                                            <label class="block text-xs font-medium text-gray-700 dark:text-gray-300">Label</label>
+                                            <label class="block text-xs font-medium text-gray-700 dark:text-gray-300">{{ __('coach.branding.field_label') }}</label>
                                             <input type="text" x-model="field.label" :name="'fields[' + index + '][label]'"
                                                 class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
                                                 placeholder="e.g., Your goal?">
@@ -187,18 +187,18 @@
 
                                         <!-- Type -->
                                         <div class="sm:col-span-1">
-                                            <label class="block text-xs font-medium text-gray-700 dark:text-gray-300">Type</label>
+                                            <label class="block text-xs font-medium text-gray-700 dark:text-gray-300">{{ __('coach.branding.field_type') }}</label>
                                             <select x-model="field.type" :name="'fields[' + index + '][type]'"
                                                 class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
-                                                <option value="text">Text</option>
-                                                <option value="select">Select</option>
-                                                <option value="textarea">Textarea</option>
+                                                <option value="text">{{ __('coach.branding.field_type_text') }}</option>
+                                                <option value="select">{{ __('coach.branding.field_type_select') }}</option>
+                                                <option value="textarea">{{ __('coach.branding.field_type_textarea') }}</option>
                                             </select>
                                         </div>
 
                                         <!-- Options (shown only for select) -->
                                         <div class="sm:col-span-2" x-show="field.type === 'select'" x-cloak>
-                                            <label class="block text-xs font-medium text-gray-700 dark:text-gray-300">Options (one per line)</label>
+                                            <label class="block text-xs font-medium text-gray-700 dark:text-gray-300">{{ __('coach.branding.field_options') }}</label>
                                             <textarea x-model="field.options" :name="'fields[' + index + '][options]'" rows="2"
                                                 class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
                                                 placeholder="Option 1&#10;Option 2"></textarea>
@@ -215,7 +215,7 @@
                                                 <input type="hidden" :name="'fields[' + index + '][is_required]'" value="0">
                                                 <input type="checkbox" x-model="field.is_required" :name="'fields[' + index + '][is_required]'" value="1"
                                                     class="rounded border-gray-300 dark:border-gray-700 text-blue-600 focus:ring-blue-500">
-                                                Required
+                                                {{ __('coach.branding.field_required') }}
                                             </label>
                                         </div>
                                     </div>
@@ -257,7 +257,7 @@
                             <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
                             </svg>
-                            Add Field
+                            {{ __('coach.branding.add_field') }}
                         </button>
                     </div>
                 </div>
@@ -266,17 +266,17 @@
             <!-- Section 4: Welcome Email -->
             <div class="bg-white dark:bg-gray-900 rounded-lg shadow">
                 <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-800">
-                    <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">Welcome Email</h2>
-                    <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Customize the email sent to new clients.</p>
+                    <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">{{ __('coach.branding.welcome_email') }}</h2>
+                    <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">{{ __('coach.branding.welcome_email_description') }}</p>
                 </div>
 
                 <div class="px-6 py-4 space-y-4">
                     <div>
-                        <label for="welcome_email_text" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Email Text</label>
+                        <label for="welcome_email_text" class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('coach.branding.email_text') }}</label>
                         <textarea name="welcome_email_text" id="welcome_email_text" rows="4"
                             class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
                             placeholder="Write a personal welcome message for your clients">{{ old('welcome_email_text', $coach->welcome_email_text) }}</textarea>
-                        <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">This text will be included in the welcome email sent to clients after they register.</p>
+                        <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">{{ __('coach.branding.email_text_placeholder') }}</p>
                         @error('welcome_email_text')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                         @enderror
@@ -288,7 +288,7 @@
             <div>
                 <button type="submit"
                     class="w-full sm:w-auto inline-flex justify-center items-center px-6 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-700 focus:bg-blue-700 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition ease-in-out duration-150">
-                    Save Branding
+                    {{ __('coach.branding.save') }}
                 </button>
             </div>
         </form>

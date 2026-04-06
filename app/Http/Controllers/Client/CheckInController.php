@@ -5,12 +5,15 @@ namespace App\Http\Controllers\Client;
 use App\Http\Controllers\Controller;
 use App\Jobs\ProcessXpEvent;
 use App\Models\DailyLog;
+use App\Services\AnalyticsService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class CheckInController extends Controller
 {
+    public function __construct(private readonly AnalyticsService $analyticsService) {}
+
     public function index(Request $request): View
     {
         $user = auth()->user();
@@ -39,6 +42,35 @@ class CheckInController extends Controller
         }
 
         return view('client.check-in', compact('assignedMetrics', 'existingLogs', 'date'));
+    }
+
+    public function history(Request $request): View
+    {
+        $user = auth()->user();
+
+        $range = $request->get('range', '30');
+        $days = in_array((int) $range, [7, 14, 30, 90]) ? (int) $range : 30;
+        $from = now()->subDays($days - 1)->format('Y-m-d');
+        $to = now()->format('Y-m-d');
+
+        [
+            'checkInCharts' => $checkInCharts,
+            'tableMetrics' => $tableMetrics,
+            'checkInTableData' => $checkInTableData,
+            'imageMetrics' => $imageMetrics,
+            'imageMetricData' => $imageMetricData,
+        ] = $this->analyticsService->getCheckInChartData($user, $from, $to);
+
+        return view('client.check-in-history', compact(
+            'range',
+            'from',
+            'to',
+            'checkInCharts',
+            'tableMetrics',
+            'checkInTableData',
+            'imageMetrics',
+            'imageMetricData',
+        ));
     }
 
     public function store(Request $request): RedirectResponse

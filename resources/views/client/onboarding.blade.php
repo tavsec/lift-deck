@@ -1,7 +1,7 @@
 <x-guest-layout>
     <div class="mb-6">
-        <h1 class="text-2xl font-bold text-gray-900 dark:text-gray-100">Tell us about yourself</h1>
-        <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">This helps your coach create the perfect program for you.</p>
+        <h1 class="text-2xl font-bold text-gray-900 dark:text-gray-100">{{ __('client.onboarding.heading') }}</h1>
+        <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">{{ __('client.onboarding.subtitle') }}</p>
     </div>
 
     <form method="POST" action="{{ route('client.onboarding.store') }}">
@@ -9,7 +9,7 @@
 
         @forelse($fields as $field)
             <div class="mb-6">
-                <x-input-label :for="'field_' . $field->id" :value="$field->label . ($field->is_required ? '' : ' (optional)')" />
+                <x-input-label :for="'field_' . $field->id" :value="$field->label . ($field->is_required ? '' : ' ' . __('client.onboarding.optional'))" />
 
                 @if($field->type === 'select')
                     <div class="mt-2 space-y-2">
@@ -33,19 +33,19 @@
                 <x-input-error :messages="$errors->get('fields.' . $field->id)" class="mt-2" />
             </div>
         @empty
-            <p class="text-sm text-gray-500 dark:text-gray-400 mb-6">No onboarding questions have been set up yet.</p>
+            <p class="text-sm text-gray-500 dark:text-gray-400 mb-6">{{ __('client.onboarding.no_questions') }}</p>
         @endforelse
 
         <div class="flex items-center justify-between mt-8">
             <form method="POST" action="{{ route('client.onboarding.skip') }}" class="inline">
                 @csrf
                 <button type="submit" class="text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300">
-                    Skip for now
+                    {{ __('client.onboarding.skip') }}
                 </button>
             </form>
 
             <x-primary-button>
-                {{ __('Complete Setup') }}
+                {{ __('client.onboarding.complete') }}
             </x-primary-button>
         </div>
     </form>

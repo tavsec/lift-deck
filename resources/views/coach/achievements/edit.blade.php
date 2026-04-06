@@ -1,5 +1,5 @@
 <x-layouts.coach>
-    <x-slot:title>Edit {{ $achievement->name }}</x-slot:title>
+    <x-slot:title>{{ __('coach.achievements.edit.heading') }}</x-slot:title>
 
     <div class="space-y-6">
         <!-- Header -->
@@ -8,10 +8,10 @@
                 <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
                 </svg>
-                Back to Achievement Library
+                {{ __('coach.achievements.edit.back') }}
             </a>
-            <h1 class="text-2xl font-bold text-gray-900">Edit Achievement</h1>
-            <p class="mt-1 text-sm text-gray-500">Update achievement details.</p>
+            <h1 class="text-2xl font-bold text-gray-900">{{ __('coach.achievements.edit.heading') }}</h1>
+            <p class="mt-1 text-sm text-gray-500">{{ __('coach.achievements.edit.subtitle') }}</p>
         </div>
 
         <!-- Form -->
@@ -21,7 +21,7 @@
                 @method('PUT')
 
                 <div>
-                    <label for="name" class="block text-sm font-medium text-gray-700">Name <span class="text-red-500">*</span></label>
+                    <label for="name" class="block text-sm font-medium text-gray-700">{{ __('coach.achievements.edit.name') }} <span class="text-red-500">*</span></label>
                     <input type="text" name="name" id="name" value="{{ old('name', $achievement->name) }}" required
                         class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm @error('name') border-red-300 @enderror">
                     @error('name')
@@ -30,7 +30,7 @@
                 </div>
 
                 <div>
-                    <label for="description" class="block text-sm font-medium text-gray-700">Description</label>
+                    <label for="description" class="block text-sm font-medium text-gray-700">{{ __('coach.achievements.edit.description') }}</label>
                     <textarea name="description" id="description" rows="3"
                         class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm @error('description') border-red-300 @enderror">{{ old('description', $achievement->description) }}</textarea>
                     @error('description')
@@ -39,11 +39,11 @@
                 </div>
 
                 <div>
-                    <label for="type" class="block text-sm font-medium text-gray-700">Type <span class="text-red-500">*</span></label>
+                    <label for="type" class="block text-sm font-medium text-gray-700">{{ __('coach.achievements.edit.type') }} <span class="text-red-500">*</span></label>
                     <select name="type" id="type" required x-model="type"
                         class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm @error('type') border-red-300 @enderror">
-                        <option value="automatic" @selected(old('type', $achievement->type) === 'automatic')>Automatic</option>
-                        <option value="manual" @selected(old('type', $achievement->type) === 'manual')>Manual</option>
+                        <option value="automatic" @selected(old('type', $achievement->type) === 'automatic')>{{ __('coach.achievements.edit.type_automatic') }}</option>
+                        <option value="manual" @selected(old('type', $achievement->type) === 'manual')>{{ __('coach.achievements.edit.type_manual') }}</option>
                     </select>
                     @error('type')
                         <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
@@ -51,14 +51,14 @@
                 </div>
 
                 <div x-show="type === 'automatic'" x-cloak>
-                    <label for="condition_type" class="block text-sm font-medium text-gray-700">Condition Type</label>
+                    <label for="condition_type" class="block text-sm font-medium text-gray-700">{{ __('coach.achievements.edit.condition_type') }}</label>
                     <select name="condition_type" id="condition_type"
                         class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm @error('condition_type') border-red-300 @enderror">
-                        <option value="">Select a condition...</option>
-                        <option value="workout_count" @selected(old('condition_type', $achievement->condition_type) === 'workout_count')>Workout Count</option>
-                        <option value="checkin_count" @selected(old('condition_type', $achievement->condition_type) === 'checkin_count')>Check-in Count</option>
-                        <option value="xp_total" @selected(old('condition_type', $achievement->condition_type) === 'xp_total')>Total XP</option>
-                        <option value="streak_days" @selected(old('condition_type', $achievement->condition_type) === 'streak_days')>Streak Days</option>
+                        <option value="">{{ __('coach.achievements.edit.condition_placeholder') }}</option>
+                        <option value="workout_count" @selected(old('condition_type', $achievement->condition_type) === 'workout_count')>{{ __('coach.achievements.edit.condition_workout_count') }}</option>
+                        <option value="checkin_count" @selected(old('condition_type', $achievement->condition_type) === 'checkin_count')>{{ __('coach.achievements.edit.condition_checkin_count') }}</option>
+                        <option value="xp_total" @selected(old('condition_type', $achievement->condition_type) === 'xp_total')>{{ __('coach.achievements.edit.condition_xp_total') }}</option>
+                        <option value="streak_days" @selected(old('condition_type', $achievement->condition_type) === 'streak_days')>{{ __('coach.achievements.edit.condition_streak_days') }}</option>
                     </select>
                     @error('condition_type')
                         <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
@@ -66,7 +66,7 @@
                 </div>
 
                 <div x-show="type === 'automatic'" x-cloak>
-                    <label for="condition_value" class="block text-sm font-medium text-gray-700">Condition Value</label>
+                    <label for="condition_value" class="block text-sm font-medium text-gray-700">{{ __('coach.achievements.edit.condition_value') }}</label>
                     <input type="number" name="condition_value" id="condition_value" value="{{ old('condition_value', $achievement->condition_value) }}" min="1"
                         class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm @error('condition_value') border-red-300 @enderror">
                     @error('condition_value')
@@ -76,7 +76,7 @@
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                        <label for="xp_reward" class="block text-sm font-medium text-gray-700">XP Reward</label>
+                        <label for="xp_reward" class="block text-sm font-medium text-gray-700">{{ __('coach.achievements.edit.xp_reward') }}</label>
                         <input type="number" name="xp_reward" id="xp_reward" value="{{ old('xp_reward', $achievement->xp_reward) }}" min="0"
                             class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm @error('xp_reward') border-red-300 @enderror">
                         @error('xp_reward')
@@ -85,7 +85,7 @@
                     </div>
 
                     <div>
-                        <label for="points_reward" class="block text-sm font-medium text-gray-700">Points Reward</label>
+                        <label for="points_reward" class="block text-sm font-medium text-gray-700">{{ __('coach.achievements.edit.points_reward') }}</label>
                         <input type="number" name="points_reward" id="points_reward" value="{{ old('points_reward', $achievement->points_reward) }}" min="0"
                             class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm @error('points_reward') border-red-300 @enderror">
                         @error('points_reward')
@@ -95,7 +95,7 @@
                 </div>
 
                 <div>
-                    <label for="icon" class="block text-sm font-medium text-gray-700">Icon <span class="text-gray-400 font-normal">(optional — upload to replace)</span></label>
+                    <label for="icon" class="block text-sm font-medium text-gray-700">{{ __('coach.achievements.edit.icon') }} <span class="text-gray-400 font-normal">{{ __('coach.achievements.edit.icon_optional') }}</span></label>
                     @if($achievement->icon)
                         <div class="mt-1 mb-2">
                             <img src="{{ Storage::url($achievement->icon) }}" alt="Current icon" class="h-12 w-12 rounded object-cover">
@@ -110,10 +110,10 @@
 
                 <div class="flex items-center justify-end gap-4 pt-4 border-t border-gray-200">
                     <a href="{{ route('coach.achievements.index') }}" class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md font-medium text-sm text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition ease-in-out duration-150">
-                        Cancel
+                        {{ __('coach.achievements.edit.cancel') }}
                     </a>
                     <button type="submit" class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-700 focus:bg-blue-700 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition ease-in-out duration-150">
-                        Update Achievement
+                        {{ __('coach.achievements.edit.update') }}
                     </button>
                 </div>
             </form>
@@ -121,14 +121,14 @@
 
         <!-- Archive -->
         <div class="bg-white rounded-lg shadow p-6">
-            <h2 class="text-lg font-medium text-red-900">Archive Achievement</h2>
-            <p class="mt-1 text-sm text-gray-500">Archiving this achievement will deactivate it. Existing client records will not be affected.</p>
+            <h2 class="text-lg font-medium text-red-900">{{ __('coach.achievements.edit.archive_heading') }}</h2>
+            <p class="mt-1 text-sm text-gray-500">{{ __('coach.achievements.edit.archive_description') }}</p>
             <div class="mt-4">
-                <form method="POST" action="{{ route('coach.achievements.destroy', $achievement) }}" onsubmit="return confirm('Are you sure you want to archive this achievement?')">
+                <form method="POST" action="{{ route('coach.achievements.destroy', $achievement) }}" onsubmit="return confirm('{{ __('coach.achievements.edit.archive_confirm') }}')">
                     @csrf
                     @method('DELETE')
                     <button type="submit" class="inline-flex items-center px-4 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-700 focus:bg-red-700 active:bg-red-900 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition ease-in-out duration-150">
-                        Archive Achievement
+                        {{ __('coach.achievements.edit.archive') }}
                     </button>
                 </form>
             </div>

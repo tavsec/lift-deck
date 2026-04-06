@@ -1,18 +1,18 @@
 <x-layouts.coach>
-    <x-slot:title>Rewards</x-slot:title>
+    <x-slot:title>{{ __('coach.rewards.index.heading') }}</x-slot:title>
 
     <div class="space-y-6">
         <!-- Header -->
         <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div>
-                <h1 class="text-2xl font-bold text-gray-900">Reward Library</h1>
-                <p class="mt-1 text-sm text-gray-500">Browse and manage rewards for your clients</p>
+                <h1 class="text-2xl font-bold text-gray-900">{{ __('coach.rewards.index.heading') }}</h1>
+                <p class="mt-1 text-sm text-gray-500">{{ __('coach.rewards.index.subtitle') }}</p>
             </div>
             <a href="{{ route('coach.rewards.create') }}" class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-700 focus:bg-blue-700 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition ease-in-out duration-150">
                 <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
                 </svg>
-                Add Reward
+                {{ __('coach.rewards.index.add') }}
             </a>
         </div>
 
@@ -46,11 +46,11 @@
                                     <div class="flex items-center gap-2 flex-shrink-0">
                                         @if($reward->coach_id === null)
                                             <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-purple-100 text-purple-800">
-                                                System
+                                                {{ __('coach.rewards.index.system') }}
                                             </span>
                                         @endif
                                         <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-yellow-100 text-yellow-800">
-                                            {{ $reward->points_cost }} pts
+                                            {{ __('coach.rewards.index.pts', ['n' => $reward->points_cost]) }}
                                         </span>
                                     </div>
                                 </div>
@@ -58,9 +58,9 @@
                                 @if($reward->stock !== null)
                                     <div class="mt-2">
                                         @if($reward->stock === 0)
-                                            <span class="text-xs font-medium text-red-600">Out of stock</span>
+                                            <span class="text-xs font-medium text-red-600">{{ __('coach.rewards.index.out_of_stock') }}</span>
                                         @else
-                                            <span class="text-xs text-gray-500">{{ $reward->stock }} in stock</span>
+                                            <span class="text-xs text-gray-500">{{ __('coach.rewards.index.in_stock', ['n' => $reward->stock]) }}</span>
                                         @endif
                                     </div>
                                 @endif
@@ -82,14 +82,14 @@
                     <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"/>
                     </svg>
-                    <h3 class="mt-2 text-sm font-medium text-gray-900">No rewards found</h3>
-                    <p class="mt-1 text-sm text-gray-500">Get started by adding your first reward.</p>
+                    <h3 class="mt-2 text-sm font-medium text-gray-900">{{ __('coach.rewards.index.no_rewards') }}</h3>
+                    <p class="mt-1 text-sm text-gray-500">{{ __('coach.rewards.index.no_rewards_description') }}</p>
                     <div class="mt-6">
                         <a href="{{ route('coach.rewards.create') }}" class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-700">
                             <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
                             </svg>
-                            Add Reward
+                            {{ __('coach.rewards.index.add') }}
                         </a>
                     </div>
                 </div>

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Client;
 use App\Http\Controllers\Coach;
+use App\Http\Controllers\LandingLocaleController;
 use Illuminate\Support\Facades\Route;
 
 Route::post('cashier/webhook', '\Laravel\Cashier\Http\Controllers\WebhookController@handleWebhook')->name('cashier.webhook');
@@ -12,9 +13,7 @@ Route::domain('beta.liftdeck.io')->group(function () {
     });
 });
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [LandingLocaleController::class, 'index'])->name('landing.detect');
 
 Route::get('/offline', fn () => view('offline'))->name('offline');
 
@@ -76,6 +75,8 @@ Route::middleware(['auth', 'verified', 'role:coach', 'subscribed'])
         // Program assignment routes
         Route::get('programs/{program}/assign', [Coach\ProgramController::class, 'assignForm'])->name('programs.assign');
         Route::post('programs/{program}/assign', [Coach\ProgramController::class, 'assign'])->name('programs.assign.store');
+        Route::get('programs/{program}/assignments/{clientProgram}/targets', [Coach\ClientProgramTargetController::class, 'edit'])->name('programs.assignments.targets.edit');
+        Route::put('programs/{program}/assignments/{clientProgram}/targets', [Coach\ClientProgramTargetController::class, 'update'])->name('programs.assignments.targets.update');
 
         Route::post('clients/{client}/meal-logs', [Coach\ClientMealLogController::class, 'store'])->name('clients.meal-logs.store');
         Route::delete('clients/{client}/meal-logs/{mealLog}', [Coach\ClientMealLogController::class, 'destroy'])->name('clients.meal-logs.destroy');
@@ -109,6 +110,7 @@ Route::middleware(['auth', 'verified', 'role:coach', 'subscribed'])
         Route::post('tracking-metrics/{trackingMetric}/restore', [Coach\TrackingMetricController::class, 'restore'])->name('tracking-metrics.restore');
         Route::post('tracking-metrics/{trackingMetric}/move-up', [Coach\TrackingMetricController::class, 'moveUp'])->name('tracking-metrics.move-up');
         Route::post('tracking-metrics/{trackingMetric}/move-down', [Coach\TrackingMetricController::class, 'moveDown'])->name('tracking-metrics.move-down');
+        Route::post('metrics-setup', Coach\MetricsSetupController::class)->name('metrics-setup');
         Route::get('messages', [Coach\MessageController::class, 'index'])->name('messages.index');
         Route::get('messages/{user}', [Coach\MessageController::class, 'show'])->name('messages.show');
         Route::post('messages/{user}', [Coach\MessageController::class, 'store'])->name('messages.store');
@@ -119,6 +121,10 @@ Route::middleware(['auth', 'verified', 'role:coach', 'subscribed'])
             Route::get('branding', [Coach\BrandingController::class, 'edit'])->name('branding.edit');
             Route::put('branding', [Coach\BrandingController::class, 'update'])->name('branding.update');
         });
+
+        Route::get('settings', [App\Http\Controllers\SettingsController::class, 'editCoach'])->name('settings.edit');
+        Route::put('settings', [App\Http\Controllers\SettingsController::class, 'updateCoach'])->name('settings.update');
+        Route::put('settings/password', [App\Http\Controllers\SettingsController::class, 'updatePasswordCoach'])->name('settings.password');
     });
 
 // Client routes
@@ -131,6 +137,7 @@ Route::middleware(['auth', 'verified', 'role:client'])
         Route::get('onboarding', [Client\OnboardingController::class, 'show'])->name('onboarding');
         Route::post('onboarding', [Client\OnboardingController::class, 'store'])->name('onboarding.store');
         Route::post('onboarding/skip', [Client\OnboardingController::class, 'skip'])->name('onboarding.skip');
+        Route::get('check-in/history', [Client\CheckInController::class, 'history'])->name('check-in.history');
         Route::get('check-in', [Client\CheckInController::class, 'index'])->name('check-in');
         Route::post('check-in', [Client\CheckInController::class, 'store'])->name('check-in.store');
         Route::get('program', [Client\ProgramController::class, 'index'])->name('program');
@@ -142,6 +149,7 @@ Route::middleware(['auth', 'verified', 'role:client'])
         Route::get('history', [Client\HistoryController::class, 'index'])->name('history');
         Route::get('history/{workoutLog}', [Client\HistoryController::class, 'show'])->name('history.show');
         Route::post('history/{workoutLog}/comment', [Client\HistoryController::class, 'comment'])->name('history.comment');
+        Route::get('exercises/{exercise}/progress', Client\ExerciseProgressController::class)->name('exercises.progress');
         Route::get('nutrition', [Client\NutritionController::class, 'index'])->name('nutrition');
         Route::get('nutrition/meals', [Client\NutritionController::class, 'meals'])->name('nutrition.meals');
         Route::post('nutrition', [Client\NutritionController::class, 'store'])->name('nutrition.store');
@@ -155,12 +163,21 @@ Route::middleware(['auth', 'verified', 'role:client'])
             Route::post('rewards/{reward}/redeem', [Client\RewardController::class, 'redeem'])->name('rewards.redeem');
             Route::get('loyalty', [Client\LoyaltyController::class, 'index'])->name('loyalty');
         });
+
+        Route::get('settings', [App\Http\Controllers\SettingsController::class, 'editClient'])->name('settings.edit');
+        Route::put('settings', [App\Http\Controllers\SettingsController::class, 'updateClient'])->name('settings.update');
+        Route::put('settings/password', [App\Http\Controllers\SettingsController::class, 'updatePasswordClient'])->name('settings.password');
     });
 
 // Media serving (private, authorized)
 Route::middleware('auth')->group(function () {
     Route::get('media/daily-log/{dailyLog}/{conversion?}', [\App\Http\Controllers\MediaController::class, 'dailyLog'])->name('media.daily-log');
     Route::patch('user/dark-mode', [\App\Http\Controllers\UserPreferencesController::class, 'toggleDarkMode'])->name('user.dark-mode.toggle');
+    Route::patch('user/locale', [\App\Http\Controllers\UserPreferencesController::class, 'updateLocale'])->name('user.locale.update');
 });
 
 require __DIR__.'/auth.php';
+
+Route::get('/{locale}', [LandingLocaleController::class, 'show'])
+    ->where('locale', 'en|si|hr')
+    ->name('landing');

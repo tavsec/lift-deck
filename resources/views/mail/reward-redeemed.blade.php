@@ -1,12 +1,12 @@
 <x-mail::message>
-# Reward Redeemed
+# {{ __('emails.reward_redeemed.heading') }}
 
-**{{ $redemption->user->name }}** has redeemed the reward **"{{ $redemption->reward->name }}"** for **{{ $redemption->points_spent }} points**.
+{{ __('emails.reward_redeemed.body', ['name' => $redemption->user->name, 'reward' => $redemption->reward->name, 'points' => $redemption->points_spent]) }}
 
 <x-mail::button :url="url('/coach/redemptions')">
-View Redemptions
+{{ __('emails.reward_redeemed.view_redemptions') }}
 </x-mail::button>
 
-Thanks,<br>
+{{ __('emails.reward_redeemed.thanks') }}<br>
 {{ config('app.name') }}
 </x-mail::message>

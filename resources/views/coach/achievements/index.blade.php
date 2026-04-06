@@ -1,18 +1,18 @@
 <x-layouts.coach>
-    <x-slot:title>Achievements</x-slot:title>
+    <x-slot:title>{{ __('coach.achievements.index.heading') }}</x-slot:title>
 
     <div class="space-y-6">
         <!-- Header -->
         <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div>
-                <h1 class="text-2xl font-bold text-gray-900">Achievement Library</h1>
-                <p class="mt-1 text-sm text-gray-500">Manage achievements to reward your clients' progress.</p>
+                <h1 class="text-2xl font-bold text-gray-900">{{ __('coach.achievements.index.heading') }}</h1>
+                <p class="mt-1 text-sm text-gray-500">{{ __('coach.achievements.index.subtitle') }}</p>
             </div>
             <a href="{{ route('coach.achievements.create') }}" class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-700 focus:bg-blue-700 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition ease-in-out duration-150">
                 <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
                 </svg>
-                Create Achievement
+                {{ __('coach.achievements.index.create') }}
             </a>
         </div>
 
@@ -60,12 +60,12 @@
                                     <h3 class="text-sm font-medium text-gray-900">{{ $achievement->name }}</h3>
                                     <div class="flex items-center gap-1 flex-shrink-0">
                                         @if(is_null($achievement->coach_id))
-                                            <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-purple-100 text-purple-800">System</span>
+                                            <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-purple-100 text-purple-800">{{ __('coach.achievements.index.system') }}</span>
                                         @endif
                                         @if($achievement->type === 'automatic')
-                                            <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-blue-100 text-blue-800">Automatic</span>
+                                            <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-blue-100 text-blue-800">{{ __('coach.achievements.index.automatic') }}</span>
                                         @else
-                                            <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-gray-100 text-gray-800">Manual</span>
+                                            <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-gray-100 text-gray-800">{{ __('coach.achievements.index.manual') }}</span>
                                         @endif
                                     </div>
                                 </div>
@@ -76,7 +76,7 @@
 
                                 @if($achievement->type === 'automatic' && $achievement->condition_type)
                                     <div class="mt-3 text-xs text-gray-400">
-                                        <span class="font-medium text-gray-600">Condition:</span>
+                                        <span class="font-medium text-gray-600">{{ __('coach.achievements.index.condition') }}</span>
                                         {{ ucwords(str_replace('_', ' ', $achievement->condition_type)) }}
                                         @if($achievement->condition_value)
                                             &rarr; {{ $achievement->condition_value }}
@@ -110,14 +110,14 @@
                     <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/>
                     </svg>
-                    <h3 class="mt-2 text-sm font-medium text-gray-900">No achievements yet</h3>
-                    <p class="mt-1 text-sm text-gray-500">Get started by creating your first achievement.</p>
+                    <h3 class="mt-2 text-sm font-medium text-gray-900">{{ __('coach.achievements.index.no_achievements') }}</h3>
+                    <p class="mt-1 text-sm text-gray-500">{{ __('coach.achievements.index.no_achievements_description') }}</p>
                     <div class="mt-6">
                         <a href="{{ route('coach.achievements.create') }}" class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-700">
                             <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
                             </svg>
-                            Create Achievement
+                            {{ __('coach.achievements.index.create') }}
                         </a>
                     </div>
                 </div>

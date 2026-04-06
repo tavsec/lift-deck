@@ -15,14 +15,17 @@ class RewardRedeemedMail extends Mailable
 
     public function __construct(
         public RewardRedemption $redemption,
-    ) {}
+    ) {
+        $coachLocale = $this->redemption->user->coach?->locale ?? 'en';
+        $this->locale($coachLocale);
+    }
 
     public function envelope(): Envelope
     {
         $clientName = $this->redemption->user->name;
 
         return new Envelope(
-            subject: "{$clientName} redeemed a reward",
+            subject: __('emails.reward_redeemed.subject', ['name' => $clientName]),
         );
     }
 

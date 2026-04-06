@@ -24,6 +24,10 @@ class EnsureUserHasRole
                 return redirect()->route('client.dashboard');
             }
 
+            if ($request->user()?->isAdmin()) {
+                return redirect()->to('/admin');
+            }
+
             return redirect()->route('login');
         }
 

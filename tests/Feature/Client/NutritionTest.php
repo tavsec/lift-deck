@@ -134,3 +134,11 @@ it('validates required fields when logging', function () {
         ->post(route('client.nutrition.store'), [])
         ->assertSessionHasErrors(['date', 'meal_type', 'name', 'calories', 'protein', 'carbs', 'fat']);
 });
+
+it('passes nutrition chart data to the nutrition view', function () {
+    $this->actingAs($this->client)
+        ->get(route('client.nutrition'))
+        ->assertOk()
+        ->assertViewHas('nutritionData')
+        ->assertViewHas('nutritionStats');
+});

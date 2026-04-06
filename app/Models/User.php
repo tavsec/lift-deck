@@ -43,10 +43,12 @@ class User extends Authenticatable implements FilamentUser
         'primary_color',
         'secondary_color',
         'dark_mode',
+        'locale',
         'is_track_only',
         'is_free_access',
         'selected_plan',
         'trial_ends_at',
+        'metrics_onboarded_at',
     ];
 
     /**
@@ -73,10 +75,18 @@ class User extends Authenticatable implements FilamentUser
             'is_track_only' => 'boolean',
             'is_free_access' => 'boolean',
             'trial_ends_at' => 'datetime',
+            'metrics_onboarded_at' => 'datetime',
         ];
     }
 
     public function logo(): Attribute
+    {
+        return Attribute::make(
+            get: fn (?string $value) => $value ? Storage::temporaryUrl($value, now()->addDay()) : null
+        );
+    }
+
+    public function avatar(): Attribute
     {
         return Attribute::make(
             get: fn (?string $value) => $value ? Storage::temporaryUrl($value, now()->addDay()) : null

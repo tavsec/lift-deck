@@ -1,5 +1,5 @@
 <x-layouts.coach>
-    <x-slot:title>{{ $client->name }} — Nutrition</x-slot:title>
+    <x-slot:title>{{ __('coach.clients.nutrition.heading', ['name' => $client->name]) }}</x-slot:title>
 
     <div class="space-y-6">
         <!-- Header -->
@@ -8,9 +8,9 @@
                 <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
                 </svg>
-                Back to {{ $client->name }}
+                {{ __('coach.clients.nutrition.back', ['name' => $client->name]) }}
             </a>
-            <h1 class="text-2xl font-bold text-gray-900 dark:text-gray-100">{{ $client->name }} — Nutrition</h1>
+            <h1 class="text-2xl font-bold text-gray-900 dark:text-gray-100">{{ __('coach.clients.nutrition.heading', ['name' => $client->name]) }}</h1>
         </div>
 
         @if(session('success'))
@@ -33,12 +33,12 @@
             <div class="lg:col-span-1 space-y-6">
                 <!-- Set Macro Goal Form -->
                 <div class="bg-white dark:bg-gray-900 rounded-lg shadow p-6">
-                    <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100 mb-4">Set Macro Goal</h2>
+                    <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100 mb-4">{{ __('coach.clients.nutrition.set_macro_goal') }}</h2>
                     <form method="POST" action="{{ route('coach.clients.macro-goals.store', $client) }}" class="space-y-4">
                         @csrf
 
                         <div>
-                            <label for="calories" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Calories (kcal) <span class="text-red-500">*</span></label>
+                            <label for="calories" class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('coach.clients.nutrition.calories') }} <span class="text-red-500">*</span></label>
                             <input type="number" name="calories" id="calories" value="{{ old('calories', $currentGoal?->calories) }}" required min="0"
                                 class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm @error('calories') border-red-300 @enderror">
                             @error('calories')
@@ -48,7 +48,7 @@
 
                         <div class="grid grid-cols-3 gap-3">
                             <div>
-                                <label for="protein" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Protein (g) <span class="text-red-500">*</span></label>
+                                <label for="protein" class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('coach.clients.nutrition.protein') }} <span class="text-red-500">*</span></label>
                                 <input type="number" name="protein" id="protein" value="{{ old('protein', $currentGoal?->protein) }}" required min="0" step="0.1"
                                     class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm @error('protein') border-red-300 @enderror">
                                 @error('protein')
@@ -56,7 +56,7 @@
                                 @enderror
                             </div>
                             <div>
-                                <label for="carbs" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Carbs (g) <span class="text-red-500">*</span></label>
+                                <label for="carbs" class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('coach.clients.nutrition.carbs') }} <span class="text-red-500">*</span></label>
                                 <input type="number" name="carbs" id="carbs" value="{{ old('carbs', $currentGoal?->carbs) }}" required min="0" step="0.1"
                                     class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm @error('carbs') border-red-300 @enderror">
                                 @error('carbs')
@@ -64,7 +64,7 @@
                                 @enderror
                             </div>
                             <div>
-                                <label for="fat" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Fat (g) <span class="text-red-500">*</span></label>
+                                <label for="fat" class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('coach.clients.nutrition.fat') }} <span class="text-red-500">*</span></label>
                                 <input type="number" name="fat" id="fat" value="{{ old('fat', $currentGoal?->fat) }}" required min="0" step="0.1"
                                     class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm @error('fat') border-red-300 @enderror">
                                 @error('fat')
@@ -74,7 +74,7 @@
                         </div>
 
                         <div>
-                            <label for="effective_date" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Effective Date <span class="text-red-500">*</span></label>
+                            <label for="effective_date" class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('coach.clients.nutrition.effective_date') }} <span class="text-red-500">*</span></label>
                             <input type="date" name="effective_date" id="effective_date" value="{{ old('effective_date', now()->format('Y-m-d')) }}" required
                                 class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm @error('effective_date') border-red-300 @enderror">
                             @error('effective_date')
@@ -83,14 +83,14 @@
                         </div>
 
                         <div>
-                            <label for="notes" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Notes</label>
+                            <label for="notes" class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('coach.clients.nutrition.notes') }}</label>
                             <textarea name="notes" id="notes" rows="2"
                                 class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
-                                placeholder="Why the change?">{{ old('notes') }}</textarea>
+                                placeholder="{{ __('coach.clients.nutrition.notes_placeholder') }}">{{ old('notes') }}</textarea>
                         </div>
 
                         <button type="submit" class="w-full inline-flex items-center justify-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-700 focus:bg-blue-700 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition ease-in-out duration-150">
-                            Set Goal
+                            {{ __('coach.clients.nutrition.set_goal') }}
                         </button>
                     </form>
                 </div>
@@ -98,26 +98,26 @@
                 <!-- Current Goal -->
                 @if($currentGoal)
                 <div class="bg-white dark:bg-gray-900 rounded-lg shadow p-6">
-                    <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100 mb-4">Current Goal</h2>
+                    <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100 mb-4">{{ __('coach.clients.nutrition.current_goal') }}</h2>
                     <div class="space-y-2">
                         <div class="flex justify-between text-sm">
-                            <span class="text-gray-500 dark:text-gray-400">Calories</span>
+                            <span class="text-gray-500 dark:text-gray-400">{{ __('coach.clients.nutrition.calories') }}</span>
                             <span class="font-medium text-gray-900 dark:text-gray-100">{{ number_format($currentGoal->calories) }} kcal</span>
                         </div>
                         <div class="flex justify-between text-sm">
-                            <span class="text-gray-500 dark:text-gray-400">Protein</span>
+                            <span class="text-gray-500 dark:text-gray-400">{{ __('coach.clients.nutrition.protein') }}</span>
                             <span class="font-medium text-gray-900 dark:text-gray-100">{{ $currentGoal->protein }}g</span>
                         </div>
                         <div class="flex justify-between text-sm">
-                            <span class="text-gray-500 dark:text-gray-400">Carbs</span>
+                            <span class="text-gray-500 dark:text-gray-400">{{ __('coach.clients.nutrition.carbs') }}</span>
                             <span class="font-medium text-gray-900 dark:text-gray-100">{{ $currentGoal->carbs }}g</span>
                         </div>
                         <div class="flex justify-between text-sm">
-                            <span class="text-gray-500 dark:text-gray-400">Fat</span>
+                            <span class="text-gray-500 dark:text-gray-400">{{ __('coach.clients.nutrition.fat') }}</span>
                             <span class="font-medium text-gray-900 dark:text-gray-100">{{ $currentGoal->fat }}g</span>
                         </div>
                         <div class="pt-2 border-t border-gray-100 dark:border-gray-800">
-                            <span class="text-xs text-gray-400 dark:text-gray-500">Since {{ $currentGoal->effective_date->format('M d, Y') }}</span>
+                            <span class="text-xs text-gray-400 dark:text-gray-500">{{ __('coach.clients.nutrition.since', ['date' => $currentGoal->effective_date->format('M d, Y')]) }}</span>
                             @if($currentGoal->notes)
                                 <p class="mt-1 text-xs text-gray-500 dark:text-gray-400 italic">{{ $currentGoal->notes }}</p>
                             @endif
@@ -129,7 +129,7 @@
                 <!-- Goal History -->
                 @if($macroGoals->count() > 0)
                 <div class="bg-white dark:bg-gray-900 rounded-lg shadow p-6">
-                    <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100 mb-4">Goal History</h2>
+                    <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100 mb-4">{{ __('coach.clients.nutrition.goal_history') }}</h2>
                     <div class="space-y-3">
                         @foreach($macroGoals as $goal)
                             <div class="flex items-start justify-between p-3 rounded-md {{ $currentGoal && $goal->id === $currentGoal->id ? 'bg-blue-50 dark:bg-blue-900/30' : 'bg-gray-50 dark:bg-gray-950' }}">
@@ -162,9 +162,9 @@
                 <!-- Log Meal for Client -->
                 <div class="bg-white dark:bg-gray-900 rounded-lg shadow p-6" x-data="{ open: false }">
                     <div class="flex items-center justify-between">
-                        <h3 class="text-base font-medium text-gray-900 dark:text-gray-100">Log a Meal</h3>
+                        <h3 class="text-base font-medium text-gray-900 dark:text-gray-100">{{ __('coach.clients.nutrition.log_meal') }}</h3>
                         <button @click="open = !open" type="button" class="inline-flex items-center px-3 py-1.5 border border-blue-300 dark:border-blue-700 rounded-md text-sm font-medium text-blue-700 dark:text-blue-400 bg-white dark:bg-gray-900 hover:bg-blue-50 dark:hover:bg-gray-800 transition">
-                            <span x-text="open ? 'Cancel' : '+ Log Meal'"></span>
+                            <span x-text="open ? '{{ __('coach.clients.nutrition.cancel') }}' : '{{ __('coach.clients.nutrition.add_log') }}'"></span>
                         </button>
                     </div>
                     <div x-show="open" x-cloak class="mt-4">
@@ -173,40 +173,40 @@
                             <input type="hidden" name="date" value="{{ $from }}">
                             <div class="grid grid-cols-2 gap-4">
                                 <div>
-                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Meal Type</label>
+                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('coach.clients.nutrition.meal_type') }}</label>
                                     <select name="meal_type" class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
-                                        <option value="breakfast">Breakfast</option>
-                                        <option value="lunch">Lunch</option>
-                                        <option value="dinner">Dinner</option>
-                                        <option value="snack">Snack</option>
+                                        <option value="breakfast">{{ __('coach.clients.nutrition.breakfast') }}</option>
+                                        <option value="lunch">{{ __('coach.clients.nutrition.lunch') }}</option>
+                                        <option value="dinner">{{ __('coach.clients.nutrition.dinner') }}</option>
+                                        <option value="snack">{{ __('coach.clients.nutrition.snack') }}</option>
                                     </select>
                                 </div>
                                 <div>
-                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Name</label>
-                                    <input type="text" name="name" required placeholder="e.g. Chicken Breast" class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
+                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('coach.clients.nutrition.meal_name') }}</label>
+                                    <input type="text" name="name" required placeholder="{{ __('coach.clients.nutrition.meal_name_placeholder') }}" class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
                                 </div>
                             </div>
                             <div class="grid grid-cols-4 gap-4">
                                 <div>
-                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Calories</label>
+                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('coach.clients.nutrition.calories') }}</label>
                                     <input type="number" name="calories" min="0" required value="0" class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
                                 </div>
                                 <div>
-                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Protein (g)</label>
+                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('coach.clients.nutrition.protein') }}</label>
                                     <input type="number" name="protein" min="0" step="0.1" required value="0" class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
                                 </div>
                                 <div>
-                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Carbs (g)</label>
+                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('coach.clients.nutrition.carbs') }}</label>
                                     <input type="number" name="carbs" min="0" step="0.1" required value="0" class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
                                 </div>
                                 <div>
-                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Fat (g)</label>
+                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('coach.clients.nutrition.fat') }}</label>
                                     <input type="number" name="fat" min="0" step="0.1" required value="0" class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
                                 </div>
                             </div>
                             <div class="flex justify-end">
                                 <button type="submit" class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-medium text-sm text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition ease-in-out duration-150">
-                                    Log Meal
+                                    {{ __('coach.clients.nutrition.log_meal_button') }}
                                 </button>
                             </div>
                         </form>
@@ -215,31 +215,31 @@
 
                 <div class="bg-white dark:bg-gray-900 rounded-lg shadow p-6">
                     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-4">
-                        <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">Meal Logs</h2>
+                        <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">{{ __('coach.clients.nutrition.meal_logs') }}</h2>
 
                         <form method="GET" action="{{ route('coach.clients.nutrition', $client) }}" x-data="{ range: '{{ $range }}' }" class="flex flex-wrap items-end gap-2">
                             <div>
                                 <select name="range" x-model="range" @change="if (range !== 'custom') $el.closest('form').submit()"
                                     class="block w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm">
-                                    <option value="7">Last 7 days</option>
-                                    <option value="14">Last 14 days</option>
-                                    <option value="30">Last 30 days</option>
-                                    <option value="custom">Custom range</option>
+                                    <option value="7">{{ __('coach.clients.nutrition.last_7_days') }}</option>
+                                    <option value="14">{{ __('coach.clients.nutrition.last_14_days') }}</option>
+                                    <option value="30">{{ __('coach.clients.nutrition.last_30_days') }}</option>
+                                    <option value="custom">{{ __('coach.clients.nutrition.custom_range') }}</option>
                                 </select>
                             </div>
 
                             <template x-if="range === 'custom'">
                                 <div class="flex items-end gap-2">
                                     <div>
-                                        <label class="block text-xs text-gray-500 dark:text-gray-400">From</label>
+                                        <label class="block text-xs text-gray-500 dark:text-gray-400">{{ __('coach.clients.nutrition.from') }}</label>
                                         <input type="date" name="from" value="{{ $from }}" class="block rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm">
                                     </div>
                                     <div>
-                                        <label class="block text-xs text-gray-500 dark:text-gray-400">To</label>
+                                        <label class="block text-xs text-gray-500 dark:text-gray-400">{{ __('coach.clients.nutrition.to') }}</label>
                                         <input type="date" name="to" value="{{ $to }}" class="block rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm">
                                     </div>
                                     <button type="submit" class="inline-flex items-center px-3 py-2 bg-blue-600 border border-transparent rounded-md text-xs font-semibold text-white uppercase tracking-widest hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
-                                        Apply
+                                        {{ __('coach.clients.nutrition.apply') }}
                                     </button>
                                 </div>
                             </template>
@@ -269,7 +269,7 @@
                                         </p>
                                     </div>
                                     <div class="flex items-center gap-2">
-                                        <span class="text-xs text-gray-400 dark:text-gray-500">{{ $dayMeals->count() }} {{ Str::plural('meal', $dayMeals->count()) }}</span>
+                                        <span class="text-xs text-gray-400 dark:text-gray-500">{{ $dayMeals->count() }} {{ $dayMeals->count() === 1 ? __('coach.clients.nutrition.meal_singular') : __('coach.clients.nutrition.meal_plural') }}</span>
                                         <svg class="w-4 h-4 text-gray-400 dark:text-gray-500 transition-transform" :class="open ? 'rotate-180' : ''" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
                                         </svg>
@@ -288,10 +288,10 @@
                                                         </div>
                                                         <div class="flex items-center gap-3">
                                                             <span class="text-sm text-gray-500 dark:text-gray-400">{{ $log->calories }} kcal</span>
-                                                            <form method="POST" action="{{ route('coach.clients.meal-logs.destroy', [$client, $log]) }}" onsubmit="return confirm('Remove this meal?')" class="inline">
+                                                            <form method="POST" action="{{ route('coach.clients.meal-logs.destroy', [$client, $log]) }}" onsubmit="return confirm('{{ __('coach.clients.nutrition.remove_confirm') }}')" class="inline">
                                                                 @csrf
                                                                 @method('DELETE')
-                                                                <button type="submit" class="text-xs text-red-500 dark:text-red-400 hover:underline">Remove</button>
+                                                                <button type="submit" class="text-xs text-red-500 dark:text-red-400 hover:underline">{{ __('coach.clients.nutrition.remove') }}</button>
                                                             </form>
                                                         </div>
                                                     </div>
@@ -303,7 +303,7 @@
                                         </div>
                                     @else
                                         <div class="border-t border-gray-200 dark:border-gray-800 p-4 text-center">
-                                            <p class="text-sm text-gray-400 dark:text-gray-500">No meals logged</p>
+                                            <p class="text-sm text-gray-400 dark:text-gray-500">{{ __('coach.clients.nutrition.no_meals') }}</p>
                                         </div>
                                     @endif
                                 </div>

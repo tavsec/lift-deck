@@ -22,7 +22,7 @@
     }
     @endphp
 
-    <x-slot:title>{{ $isEdit ? 'Edit Workout for ' . $client->name : 'Log Workout for ' . $client->name }}</x-slot:title>
+    <x-slot:title>{{ $isEdit ? __('coach.clients.workout_log_form.heading_edit', ['name' => $client->name]) : __('coach.clients.workout_log_form.heading_create', ['name' => $client->name]) }}</x-slot:title>
 
     <div
         x-data="workoutLogger()"
@@ -35,19 +35,19 @@
                 <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
                 </svg>
-                Back to {{ $client->name }}
+                {{ __('coach.clients.workout_log_form.back', ['name' => $client->name]) }}
             </a>
             <h1 class="text-2xl font-bold text-gray-900 dark:text-gray-100">
-                {{ $isEdit ? 'Edit Workout for ' . $client->name : 'Log Workout for ' . $client->name }}
+                {{ $isEdit ? __('coach.clients.workout_log_form.heading_edit', ['name' => $client->name]) : __('coach.clients.workout_log_form.heading_create', ['name' => $client->name]) }}
             </h1>
             <p class="text-sm text-gray-500 dark:text-gray-400">
-                {{ $isEdit ? 'Update the workout details below.' : 'Build a workout log on behalf of your client.' }}
+                {{ $isEdit ? __('coach.clients.workout_log_form.subtitle_edit') : __('coach.clients.workout_log_form.subtitle_create') }}
             </p>
         </div>
 
         @if($errors->any())
             <div class="rounded-md bg-red-50 p-4">
-                <p class="text-sm font-medium text-red-800">Please fix the errors below.</p>
+                <p class="text-sm font-medium text-red-800">{{ __('coach.clients.workout_log_form.errors') }}</p>
                 <ul class="mt-2 text-sm text-red-700 list-disc list-inside">
                     @foreach($errors->all() as $error)
                         <li>{{ $error }}</li>
@@ -65,13 +65,13 @@
             <div class="space-y-4">
                 <!-- Workout Name -->
                 <x-bladewind::card class="!p-4">
-                    <label for="custom_name" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Workout Name</label>
+                    <label for="custom_name" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">{{ __('coach.clients.workout_log_form.workout_name') }}</label>
                     <input
                         type="text"
                         id="custom_name"
                         name="custom_name"
                         value="{{ old('custom_name', $isEdit ? $workoutLog->custom_name : '') }}"
-                        placeholder="e.g. Morning Cardio, Extra Arms Day"
+                        placeholder="{{ __('coach.clients.workout_log_form.workout_name_placeholder') }}"
                         class="w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm text-sm focus:border-blue-500 focus:ring-blue-500 @error('custom_name') border-red-300 @enderror"
                     >
                     @error('custom_name')
@@ -131,7 +131,7 @@
 
                             <!-- Previous Session Data -->
                             <div x-show="exercise.previous_sets && exercise.previous_sets.length > 0" class="text-xs text-gray-500 dark:text-gray-400">
-                                <span class="font-medium">Last session:</span>
+                                <span class="font-medium">{{ __('coach.clients.workout_log_form.last_session') }}</span>
                                 <template x-for="(prev, prevIndex) in (exercise.previous_sets || [])" :key="prevIndex">
                                     <span>
                                         <span x-text="`${prev.weight}kg × ${prev.reps}`"></span><span x-show="prevIndex < exercise.previous_sets.length - 1">, </span>
@@ -144,9 +144,9 @@
                                 <table class="w-full text-sm">
                                     <thead>
                                         <tr class="text-left text-xs text-gray-500 dark:text-gray-400 border-b border-gray-200 dark:border-gray-800">
-                                            <th class="pb-2 pr-3 w-12">Set</th>
-                                            <th class="pb-2 pr-3">Weight (kg)</th>
-                                            <th class="pb-2 pr-2">Reps</th>
+                                            <th class="pb-2 pr-3 w-12">{{ __('coach.clients.workout_log_form.set') }}</th>
+                                            <th class="pb-2 pr-3">{{ __('coach.clients.workout_log_form.weight_kg') }}</th>
+                                            <th class="pb-2 pr-2">{{ __('coach.clients.workout_log_form.reps') }}</th>
                                             <th class="pb-2 w-8"></th>
                                         </tr>
                                     </thead>
@@ -203,7 +203,7 @@
                                 <svg class="w-3.5 h-3.5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
                                 </svg>
-                                Add Set
+                                {{ __('coach.clients.workout_log_form.add_set') }}
                             </button>
                         </div>
                     </x-bladewind::card>
@@ -215,7 +215,7 @@
                     <svg class="mx-auto h-10 w-10 text-gray-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
                     </svg>
-                    <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">No exercises yet. Add one below.</p>
+                    <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">{{ __('coach.clients.workout_log_form.no_exercises') }}</p>
                 </div>
 
                 <!-- Add Exercise -->
@@ -229,14 +229,14 @@
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
                             </svg>
-                            Add Exercise
+                            {{ __('coach.clients.workout_log_form.add_exercise') }}
                         </button>
                     </div>
 
                     <div x-show="showExercisePicker" x-cloak>
                         <div class="space-y-3">
                             <div class="flex items-center justify-between">
-                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Select Exercise</label>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('coach.clients.workout_log_form.select_exercise') }}</label>
                                 <button type="button" @click="showExercisePicker = false" class="text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300">
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
@@ -246,7 +246,7 @@
                             <input
                                 type="text"
                                 x-model="exerciseSearch"
-                                placeholder="Search exercises..."
+                                placeholder="{{ __('coach.clients.workout_log_form.search_exercises') }}"
                                 class="w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm text-sm focus:border-blue-500 focus:ring-blue-500"
                                 x-ref="exerciseSearchInput"
                             >
@@ -267,7 +267,7 @@
                                     </button>
                                 </template>
                                 <div x-show="filteredExercises.length === 0" class="px-3 py-4 text-center text-sm text-gray-500 dark:text-gray-400">
-                                    No exercises found
+                                    {{ __('coach.clients.workout_log_form.no_exercises_found') }}
                                 </div>
                             </div>
                         </div>
@@ -276,7 +276,7 @@
 
                 <!-- Date & Time -->
                 <x-bladewind::card class="!p-4">
-                    <label for="completed_at" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Date & Time</label>
+                    <label for="completed_at" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">{{ __('coach.clients.workout_log_form.date_time') }}</label>
                     <input
                         type="datetime-local"
                         id="completed_at"
@@ -288,17 +288,17 @@
                     @error('completed_at')
                         <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
                     @enderror
-                    <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">Defaults to now. Change if logging a past workout.</p>
+                    <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">{{ __('coach.clients.workout_log_form.date_time_hint') }}</p>
                 </x-bladewind::card>
 
                 <!-- Notes -->
                 <x-bladewind::card class="!p-4">
-                    <label for="notes" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Notes (optional)</label>
+                    <label for="notes" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">{{ __('coach.clients.workout_log_form.notes') }}</label>
                     <textarea
                         id="notes"
                         name="notes"
                         rows="2"
-                        placeholder="How did the workout go?"
+                        placeholder="{{ __('coach.clients.workout_log_form.notes_placeholder') }}"
                         class="w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm text-sm focus:border-blue-500 focus:ring-blue-500"
                     >{{ old('notes', $isEdit ? $workoutLog->notes : '') }}</textarea>
                 </x-bladewind::card>
@@ -308,7 +308,7 @@
                     type="submit"
                     class="w-full inline-flex justify-center items-center px-6 py-3 bg-blue-600 border border-transparent rounded-lg font-semibold text-sm text-white uppercase tracking-widest hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition ease-in-out duration-150"
                 >
-                    {{ $isEdit ? 'Update Workout' : 'Save Workout Log' }}
+                    {{ $isEdit ? __('coach.clients.workout_log_form.update') : __('coach.clients.workout_log_form.save') }}
                 </button>
             </div>
         </form>
@@ -339,14 +339,14 @@
                             <svg class="mx-auto h-10 w-10 text-gray-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/>
                             </svg>
-                            <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">No video available</p>
+                            <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">{{ __('coach.clients.workout_log_form.no_video') }}</p>
                         </div>
                     </div>
                 </div>
                 <div class="px-5 pb-8">
-                    <h3 class="text-sm font-medium text-gray-500 dark:text-gray-400 mb-2">Description</h3>
+                    <h3 class="text-sm font-medium text-gray-500 dark:text-gray-400 mb-2">{{ __('coach.clients.workout_log_form.description') }}</h3>
                     <p x-show="selectedExercise && selectedExercise.description" class="text-sm text-gray-700 dark:text-gray-300 whitespace-pre-wrap" x-text="selectedExercise ? selectedExercise.description : ''"></p>
-                    <p x-show="!selectedExercise || !selectedExercise.description" class="text-sm text-gray-400 dark:text-gray-500 italic">No description provided</p>
+                    <p x-show="!selectedExercise || !selectedExercise.description" class="text-sm text-gray-400 dark:text-gray-500 italic">{{ __('coach.clients.workout_log_form.no_description') }}</p>
                 </div>
             </div>
         </div>

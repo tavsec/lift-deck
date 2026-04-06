@@ -1,5 +1,5 @@
 <x-layouts.coach>
-    <x-slot:title>Create Program</x-slot:title>
+    <x-slot:title>{{ __('coach.programs.create.heading') }}</x-slot:title>
 
     <div class="space-y-6">
         <!-- Header -->
@@ -8,10 +8,10 @@
                 <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
                 </svg>
-                Back to Programs
+                {{ __('coach.programs.create.back') }}
             </a>
-            <h1 class="text-2xl font-bold text-gray-900 dark:text-gray-100">Create Training Program</h1>
-            <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Start by defining the program basics. You can add workouts and exercises next.</p>
+            <h1 class="text-2xl font-bold text-gray-900 dark:text-gray-100">{{ __('coach.programs.create.heading') }}</h1>
+            <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">{{ __('coach.programs.create.subtitle') }}</p>
         </div>
 
         <!-- Form -->
@@ -20,7 +20,7 @@
                 @csrf
 
                 <div>
-                    <label for="name" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Program Name <span class="text-red-500">*</span></label>
+                    <label for="name" class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('coach.programs.create.name') }} <span class="text-red-500">*</span></label>
                     <input type="text" name="name" id="name" value="{{ old('name') }}" required
                         class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm @error('name') border-red-300 @enderror"
                         placeholder="e.g., 12-Week Strength Builder">
@@ -31,7 +31,7 @@
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
-                        <label for="type" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Program Type <span class="text-red-500">*</span></label>
+                        <label for="type" class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('coach.programs.create.type') }} <span class="text-red-500">*</span></label>
                         <select name="type" id="type" required
                             class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm @error('type') border-red-300 @enderror">
                             @foreach($typeOptions as $value => $label)
@@ -44,7 +44,7 @@
                     </div>
 
                     <div>
-                        <label for="duration_weeks" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Duration (weeks)</label>
+                        <label for="duration_weeks" class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('coach.programs.create.duration') }}</label>
                         <input type="number" name="duration_weeks" id="duration_weeks" value="{{ old('duration_weeks') }}" min="1" max="52"
                             class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm @error('duration_weeks') border-red-300 @enderror"
                             placeholder="e.g., 12">
@@ -55,7 +55,7 @@
                 </div>
 
                 <div>
-                    <label for="description" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Description</label>
+                    <label for="description" class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('coach.programs.create.description') }}</label>
                     <textarea name="description" id="description" rows="3"
                         class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm @error('description') border-red-300 @enderror"
                         placeholder="Describe the program goals, target audience, and what makes it unique...">{{ old('description') }}</textarea>
@@ -68,16 +68,16 @@
                     <input type="checkbox" name="is_template" id="is_template" value="1" {{ old('is_template') ? 'checked' : '' }}
                         class="h-4 w-4 rounded border-gray-300 dark:border-gray-700 text-blue-600 focus:ring-blue-500">
                     <label for="is_template" class="ml-2 block text-sm text-gray-700 dark:text-gray-300">
-                        Save as template (reusable for multiple clients)
+                        {{ __('coach.programs.create.is_template') }}
                     </label>
                 </div>
 
                 <div class="flex items-center justify-end gap-4 pt-4 border-t border-gray-200 dark:border-gray-800">
                     <a href="{{ route('coach.programs.index') }}" class="inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-md font-medium text-sm text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition ease-in-out duration-150">
-                        Cancel
+                        {{ __('coach.programs.create.cancel') }}
                     </a>
                     <button type="submit" class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-700 focus:bg-blue-700 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition ease-in-out duration-150">
-                        Create & Add Workouts
+                        {{ __('coach.programs.create.create') }}
                     </button>
                 </div>
             </form>

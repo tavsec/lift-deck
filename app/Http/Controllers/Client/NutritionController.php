@@ -8,6 +8,7 @@ use App\Jobs\ProcessXpEvent;
 use App\Models\MacroGoal;
 use App\Models\Meal;
 use App\Models\MealLog;
+use App\Services\AnalyticsService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -15,6 +16,8 @@ use Illuminate\View\View;
 
 class NutritionController extends Controller
 {
+    public function __construct(private readonly AnalyticsService $analyticsService) {}
+
     public function index(Request $request): View
     {
         $user = auth()->user();
@@ -34,7 +37,14 @@ class NutritionController extends Controller
             'fat' => $mealLogs->sum('fat'),
         ];
 
-        return view('client.nutrition', compact('date', 'macroGoal', 'mealLogs', 'totals'));
+        $from = now()->subDays(29)->format('Y-m-d');
+        $to = now()->format('Y-m-d');
+        [
+            'nutritionData' => $nutritionData,
+            'nutritionStats' => $nutritionStats,
+        ] = $this->analyticsService->getNutritionData($user, $from, $to);
+
+        return view('client.nutrition', compact('date', 'macroGoal', 'mealLogs', 'totals', 'nutritionData', 'nutritionStats'));
     }
 
     public function store(StoreMealLogRequest $request): RedirectResponse

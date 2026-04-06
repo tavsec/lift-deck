@@ -1,11 +1,11 @@
 <x-layouts.client>
-    <x-slot:title>Achievements</x-slot:title>
+    <x-slot:title>{{ __('client.achievements.heading') }}</x-slot:title>
 
     <div class="py-6 space-y-6">
         <!-- Header -->
         <div>
-            <h1 class="text-3xl font-bold text-gray-900">My Achievements</h1>
-            <p class="mt-1 text-sm text-gray-600">Track your milestones and accomplishments</p>
+            <h1 class="text-3xl font-bold text-gray-900">{{ __('client.achievements.heading') }}</h1>
+            <p class="mt-1 text-sm text-gray-600">{{ __('client.achievements.subtitle') }}</p>
         </div>
 
         <!-- XP Summary Bar -->
@@ -19,7 +19,7 @@
                             </svg>
                         </div>
                         <div>
-                            <p class="text-sm font-medium text-gray-600">Total XP Earned</p>
+                            <p class="text-sm font-medium text-gray-600">{{ __('client.achievements.total_xp') }}</p>
                             <p class="text-2xl font-bold text-gray-900">{{ number_format($xpSummary->total_xp) }}</p>
                         </div>
                     </div>
@@ -27,13 +27,13 @@
                     <div class="flex items-center gap-4">
                         @if($xpSummary->currentLevel)
                             <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800">
-                                Level {{ $xpSummary->currentLevel->level_number }}: {{ $xpSummary->currentLevel->name }}
+                                {{ __('client.achievements.level', ['n' => $xpSummary->currentLevel->level_number, 'name' => $xpSummary->currentLevel->name]) }}
                             </span>
                         @endif
 
                         <div class="text-center">
                             <p class="text-2xl font-bold text-gray-900">{{ $earnedAchievementIds->count() }} <span class="text-base font-normal text-gray-500">/ {{ $achievements->count() }}</span></p>
-                            <p class="text-xs text-gray-500">achievements earned</p>
+                            <p class="text-xs text-gray-500">{{ __('client.achievements.achievements_earned') }}</p>
                         </div>
                     </div>
                 </div>
@@ -42,8 +42,8 @@
             <!-- Stats without XP summary -->
             <x-bladewind::card>
                 <div class="flex items-center justify-between">
-                    <p class="text-sm text-gray-600">Achievements Progress</p>
-                    <p class="text-lg font-bold text-gray-900">{{ $earnedAchievementIds->count() }} / {{ $achievements->count() }} earned</p>
+                    <p class="text-sm text-gray-600">{{ __('client.achievements.progress') }}</p>
+                    <p class="text-lg font-bold text-gray-900">{{ __('client.achievements.n_earned', ['n' => $earnedAchievementIds->count(), 'total' => $achievements->count()]) }}</p>
                 </div>
             </x-bladewind::card>
         @endif
@@ -55,8 +55,8 @@
                     <svg class="w-16 h-16 mx-auto mb-4 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/>
                     </svg>
-                    <p class="text-base font-medium">No achievements available yet</p>
-                    <p class="mt-1 text-sm">Keep training — achievements will appear here.</p>
+                    <p class="text-base font-medium">{{ __('client.achievements.no_achievements') }}</p>
+                    <p class="mt-1 text-sm">{{ __('client.achievements.no_achievements_description') }}</p>
                 </div>
             </x-bladewind::card>
         @else
@@ -84,7 +84,7 @@
 
                         <!-- Type Badge -->
                         <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium {{ $achievement->type === 'automatic' ? 'bg-blue-100 text-blue-700' : 'bg-gray-100 text-gray-600' }}">
-                            {{ ucfirst($achievement->type) }}
+                            {{ $achievement->type === 'automatic' ? __('client.achievements.type_automatic') : __('client.achievements.type_manual') }}
                         </span>
 
                         <!-- Earned / Unearned Indicator -->
@@ -93,14 +93,14 @@
                                 <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                                     <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
                                 </svg>
-                                <span class="text-xs font-medium">Earned</span>
+                                <span class="text-xs font-medium">{{ __('client.achievements.earned') }}</span>
                             </div>
                         @else
                             <div class="flex items-center space-x-1 text-gray-400">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
                                 </svg>
-                                <span class="text-xs">Locked</span>
+                                <span class="text-xs">{{ __('client.achievements.locked') }}</span>
                             </div>
                         @endif
                     </div>

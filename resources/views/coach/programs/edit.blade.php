@@ -1,5 +1,5 @@
 <x-layouts.coach>
-    <x-slot:title>Edit {{ $program->name }}</x-slot:title>
+    <x-slot:title>{{ __('coach.programs.edit.heading') }}</x-slot:title>
 
     <div class="space-y-6">
         <!-- Header -->
@@ -9,10 +9,10 @@
                     <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
                     </svg>
-                    Back to Program
+                    {{ __('coach.programs.edit.back') }}
                 </a>
-                <h1 class="text-2xl font-bold text-gray-900 dark:text-gray-100">Edit Program</h1>
-                <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Update program details and manage workouts</p>
+                <h1 class="text-2xl font-bold text-gray-900 dark:text-gray-100">{{ __('coach.programs.edit.heading') }}</h1>
+                <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">{{ __('coach.programs.edit.subtitle') }}</p>
             </div>
         </div>
 
@@ -33,19 +33,19 @@
 
         <!-- Program Details Form -->
         <div class="bg-white dark:bg-gray-900 rounded-lg shadow p-6">
-            <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100 mb-4">Program Details</h2>
+            <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100 mb-4">{{ __('coach.programs.edit.program_details') }}</h2>
             <form method="POST" action="{{ route('coach.programs.update', $program) }}" class="space-y-4">
                 @csrf
                 @method('PUT')
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                        <label for="name" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Name <span class="text-red-500">*</span></label>
+                        <label for="name" class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('coach.programs.edit.name') }} <span class="text-red-500">*</span></label>
                         <input type="text" name="name" id="name" value="{{ old('name', $program->name) }}" required
                             class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
                     </div>
                     <div>
-                        <label for="type" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Type <span class="text-red-500">*</span></label>
+                        <label for="type" class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('coach.programs.edit.type') }} <span class="text-red-500">*</span></label>
                         <select name="type" id="type" required
                             class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
                             @foreach($typeOptions as $value => $label)
@@ -57,7 +57,7 @@
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                        <label for="duration_weeks" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Duration (weeks)</label>
+                        <label for="duration_weeks" class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('coach.programs.edit.duration') }}</label>
                         <input type="number" name="duration_weeks" id="duration_weeks" value="{{ old('duration_weeks', $program->duration_weeks) }}" min="1" max="52"
                             class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
                     </div>
@@ -65,20 +65,20 @@
                         <label class="inline-flex items-center">
                             <input type="checkbox" name="is_template" value="1" {{ old('is_template', $program->is_template) ? 'checked' : '' }}
                                 class="h-4 w-4 rounded border-gray-300 dark:border-gray-700 text-blue-600 focus:ring-blue-500">
-                            <span class="ml-2 text-sm text-gray-700 dark:text-gray-300">Save as template</span>
+                            <span class="ml-2 text-sm text-gray-700 dark:text-gray-300">{{ __('coach.programs.edit.is_template') }}</span>
                         </label>
                     </div>
                 </div>
 
                 <div>
-                    <label for="description" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Description</label>
+                    <label for="description" class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('coach.programs.edit.description') }}</label>
                     <textarea name="description" id="description" rows="2"
                         class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">{{ old('description', $program->description) }}</textarea>
                 </div>
 
                 <div class="flex justify-end">
                     <button type="submit" class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-700">
-                        Save Changes
+                        {{ __('coach.programs.edit.save') }}
                     </button>
                 </div>
             </form>
@@ -87,7 +87,7 @@
         <!-- Workouts Section -->
         <div class="space-y-4">
             <div class="flex items-center justify-between">
-                <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">Workouts</h2>
+                <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">{{ __('coach.programs.edit.workouts') }}</h2>
             </div>
 
             <!-- Add Workout Form -->
@@ -95,18 +95,18 @@
                 <form method="POST" action="{{ route('coach.programs.workouts.store', $program) }}" class="flex flex-col sm:flex-row gap-3">
                     @csrf
                     <div class="flex-1">
-                        <input type="text" name="name" required placeholder="Workout name (e.g., Push Day)"
+                        <input type="text" name="name" required placeholder="{{ __('coach.programs.edit.workout_name_placeholder') }}"
                             class="w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm">
                     </div>
                     <div class="w-24">
-                        <input type="number" name="day_number" required placeholder="Day #" min="1"
+                        <input type="number" name="day_number" required placeholder="{{ __('coach.programs.edit.day_placeholder') }}" min="1"
                             class="w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm">
                     </div>
                     <button type="submit" class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-700">
                         <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
                         </svg>
-                        Add Workout
+                        {{ __('coach.programs.edit.add_workout') }}
                     </button>
                 </form>
             </div>
@@ -135,21 +135,21 @@
                                             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
                                             </svg>
-                                            Locked
+                                            {{ __('coach.programs.edit.locked') }}
                                         @else
                                             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 11V7a4 4 0 118 0m-4 8v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2z"/>
                                             </svg>
-                                            Unlocked
+                                            {{ __('coach.programs.edit.unlocked') }}
                                         @endif
                                     </button>
                                 </form>
 
                                 <!-- Delete workout -->
-                                <form method="POST" action="{{ route('coach.programs.workouts.destroy', [$program, $workout]) }}" onsubmit="return confirm('Delete this workout and all its exercises?');">
+                                <form method="POST" action="{{ route('coach.programs.workouts.destroy', [$program, $workout]) }}" onsubmit="return confirm('{{ __('coach.programs.edit.delete_workout_confirm') }}');">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="text-red-600 hover:text-red-800 text-sm">Delete</button>
+                                    <button type="submit" class="text-red-600 hover:text-red-800 text-sm">{{ __('coach.programs.edit.delete') }}</button>
                                 </form>
                             </div>
                         </div>
@@ -200,7 +200,7 @@
 
                         @if($workout->exercises->count() === 0)
                             <div class="px-6 py-4 text-center text-sm text-gray-500 dark:text-gray-400">
-                                No exercises added yet
+                                {{ __('coach.programs.edit.no_exercises') }}
                             </div>
                         @endif
                     </div>
@@ -211,7 +211,7 @@
                             @csrf
                             <div class="flex-1">
                                 <select name="exercise_id" required class="w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm">
-                                    <option value="">Select exercise...</option>
+                                    <option value="">{{ __('coach.programs.edit.select_exercise') }}</option>
                                     @foreach($exercises->groupBy('muscle_group') as $muscleGroup => $groupExercises)
                                         <optgroup label="{{ ucfirst(str_replace('_', ' ', $muscleGroup)) }}">
                                             @foreach($groupExercises as $exercise)
@@ -222,15 +222,15 @@
                                 </select>
                             </div>
                             <div class="w-20">
-                                <input type="number" name="sets" required placeholder="Sets" min="1" max="20" value="3"
+                                <input type="number" name="sets" required placeholder="{{ __('coach.programs.edit.sets_placeholder') }}" min="1" max="20" value="3"
                                     class="w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm">
                             </div>
                             <div class="w-24">
-                                <input type="text" name="reps" required placeholder="Reps" value="8-12"
+                                <input type="text" name="reps" required placeholder="{{ __('coach.programs.edit.reps_placeholder') }}" value="8-12"
                                     class="w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm">
                             </div>
                             <div class="w-24">
-                                <input type="number" name="rest_seconds" placeholder="Rest (s)" min="0" max="600" value="90"
+                                <input type="number" name="rest_seconds" placeholder="{{ __('coach.programs.edit.rest_placeholder') }}" min="0" max="600" value="90"
                                     class="w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm">
                             </div>
                             <button type="submit" class="inline-flex items-center px-3 py-2 bg-green-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-green-700">
@@ -246,7 +246,7 @@
             @if($program->workouts->count() === 0)
                 <div class="bg-white dark:bg-gray-900 rounded-lg shadow">
                     <div class="text-center py-8 text-sm text-gray-500 dark:text-gray-400">
-                        <p>No workouts yet. Add your first workout above.</p>
+                        <p>{{ __('coach.programs.edit.no_workouts') }}</p>
                     </div>
                 </div>
             @endif

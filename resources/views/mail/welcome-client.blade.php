@@ -30,14 +30,14 @@
                                 @if($coach->welcome_email_text)
                                     {{ $coach->welcome_email_text }}
                                 @else
-                                    We're excited to have you on board! Your coach is ready to help you reach your fitness goals.
+                                    {{ __('emails.welcome_client.default_body') }}
                                 @endif
                             </p>
                             <table cellpadding="0" cellspacing="0" style="margin: 0 auto;">
                                 <tr>
                                     <td style="background-color: {{ $coach->primary_color ?? '#2563EB' }}; border-radius: 6px; padding: 12px 32px;">
                                         <a href="{{ route('login') }}" style="color: #ffffff; text-decoration: none; font-size: 16px; font-weight: bold;">
-                                            Get Started
+                                            {{ __('emails.welcome_client.get_started') }}
                                         </a>
                                     </td>
                                 </tr>

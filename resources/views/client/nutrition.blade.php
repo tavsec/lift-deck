@@ -1,10 +1,10 @@
 <x-layouts.client>
-    <x-slot:title>Nutrition</x-slot:title>
+    <x-slot:title>{{ __('client.nutrition.heading') }}</x-slot:title>
 
     <div class="py-6 space-y-6" x-data="nutritionLogger()">
         <!-- Header with Date Navigation -->
         <div>
-            <h1 class="text-2xl font-bold text-gray-900 dark:text-gray-100">Nutrition</h1>
+            <h1 class="text-2xl font-bold text-gray-900 dark:text-gray-100">{{ __('client.nutrition.heading') }}</h1>
             <div class="mt-3 flex items-center justify-between">
                 <a :href="prevUrl" class="p-2 rounded-md text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-800">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -17,7 +17,7 @@
                         class="rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm">
                     <button @click="goToToday()" x-show="currentDate !== today"
                         class="text-xs text-blue-600 hover:text-blue-800 font-medium">
-                        Today
+                        {{ __('client.nutrition.today') }}
                     </button>
                 </div>
 
@@ -76,7 +76,7 @@
                 @endforeach
             @else
                 <div class="text-center py-2">
-                    <p class="text-sm text-gray-500 dark:text-gray-400">No macro goals set by your coach yet.</p>
+                    <p class="text-sm text-gray-500 dark:text-gray-400">{{ __('client.nutrition.no_macro_goals') }}</p>
                     @if($totals['calories'] > 0)
                         <p class="text-sm text-gray-700 dark:text-gray-300 mt-2">
                             Today: {{ $totals['calories'] }} kcal &middot;
@@ -109,7 +109,7 @@
                                             F {{ $log->fat }}g
                                         </p>
                                     </div>
-                                    <form method="POST" action="{{ route('client.nutrition.destroy', $log) }}" onsubmit="return confirm('Remove this meal?');">
+                                    <form method="POST" action="{{ route('client.nutrition.destroy', $log) }}" onsubmit="return confirm('{{ __('client.nutrition.remove_meal_confirm') }}');">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="p-1 text-gray-400 dark:text-gray-500 hover:text-red-500">
@@ -126,17 +126,74 @@
             </div>
         @endif
 
+        <!-- Nutrition Charts (Last 30 Days) -->
+        @if($nutritionStats['daysLogged'] > 0)
+            <x-bladewind::card>
+                <h2 class="text-base font-semibold text-gray-900 dark:text-gray-100 mb-4">{{ __('client.nutrition.charts_heading') }}</h2>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                    <div>
+                        <h3 class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">{{ __('client.nutrition.calories') }}</h3>
+                        <div class="h-56">
+                            <canvas
+                                x-data="clientCaloriesChart({{ json_encode($nutritionData) }})"
+                                x-ref="canvas"
+                                x-init="renderChart()"
+                            ></canvas>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">{{ __('client.nutrition.macros') }}</h3>
+                        <div class="h-56">
+                            <canvas
+                                x-data="clientMacrosChart({{ json_encode($nutritionData) }})"
+                                x-ref="canvas"
+                                x-init="renderChart()"
+                            ></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 sm:grid-cols-5 gap-4 p-4 bg-gray-50 dark:bg-gray-950 rounded-lg">
+                    <div class="text-center">
+                        <p class="text-xs text-gray-500 dark:text-gray-400 uppercase">{{ __('client.nutrition.avg_calories') }}</p>
+                        <p class="text-lg font-bold text-gray-900 dark:text-gray-100">{{ number_format($nutritionStats['avgCalories']) }}</p>
+                    </div>
+                    <div class="text-center">
+                        <p class="text-xs text-gray-500 dark:text-gray-400 uppercase">{{ __('client.nutrition.avg_protein') }}</p>
+                        <p class="text-lg font-bold text-gray-900 dark:text-gray-100">{{ $nutritionStats['avgProtein'] }}g</p>
+                    </div>
+                    <div class="text-center">
+                        <p class="text-xs text-gray-500 dark:text-gray-400 uppercase">{{ __('client.nutrition.avg_carbs') }}</p>
+                        <p class="text-lg font-bold text-gray-900 dark:text-gray-100">{{ $nutritionStats['avgCarbs'] }}g</p>
+                    </div>
+                    <div class="text-center">
+                        <p class="text-xs text-gray-500 dark:text-gray-400 uppercase">{{ __('client.nutrition.avg_fat') }}</p>
+                        <p class="text-lg font-bold text-gray-900 dark:text-gray-100">{{ $nutritionStats['avgFat'] }}g</p>
+                    </div>
+                    <div class="text-center">
+                        <p class="text-xs text-gray-500 dark:text-gray-400 uppercase">{{ __('client.nutrition.adherence') }}</p>
+                        @if($nutritionStats['adherenceRate'] !== null)
+                            <p class="text-lg font-bold {{ $nutritionStats['adherenceRate'] >= 80 ? 'text-green-600' : ($nutritionStats['adherenceRate'] >= 50 ? 'text-yellow-600' : 'text-red-600') }}">{{ $nutritionStats['adherenceRate'] }}%</p>
+                        @else
+                            <p class="text-lg font-bold text-gray-400 dark:text-gray-500">—</p>
+                        @endif
+                    </div>
+                </div>
+            </x-bladewind::card>
+        @endif
+
         <!-- Add Meal Section -->
         <div class="bg-white dark:bg-gray-900 rounded-lg shadow">
             <div class="border-b border-gray-200 dark:border-gray-800">
                 <nav class="flex">
                     <button @click="mode = 'library'" :class="mode === 'library' ? 'border-blue-500 text-blue-600' : 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:border-gray-300 dark:hover:border-gray-600'"
                         class="flex-1 py-3 px-4 text-center text-sm font-medium border-b-2 transition-colors" type="button">
-                        Library
+                        {{ __('client.nutrition.library') }}
                     </button>
                     <button @click="mode = 'custom'" :class="mode === 'custom' ? 'border-blue-500 text-blue-600' : 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:border-gray-300 dark:hover:border-gray-600'"
                         class="flex-1 py-3 px-4 text-center text-sm font-medium border-b-2 transition-colors" type="button">
-                        Custom
+                        {{ __('client.nutrition.custom') }}
                     </button>
                 </nav>
             </div>
@@ -145,7 +202,7 @@
                 <!-- Library Mode -->
                 <div x-show="mode === 'library'" class="space-y-4">
                     <div>
-                        <input type="text" x-model="mealSearch" @input.debounce.300ms="searchMeals()" placeholder="Search meals..."
+                        <input type="text" x-model="mealSearch" @input.debounce.300ms="searchMeals()" placeholder="{{ __('client.nutrition.search_meals') }}"
                             class="w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
                     </div>
 
@@ -166,7 +223,7 @@
                     </div>
 
                     <div x-show="mealSearch && libraryMeals.length === 0 && !searching" class="text-center py-4">
-                        <p class="text-sm text-gray-500 dark:text-gray-400">No meals found. Try a different search or add a custom meal.</p>
+                        <p class="text-sm text-gray-500 dark:text-gray-400">{{ __('client.nutrition.no_meals_found') }}</p>
                     </div>
 
                     <div x-show="selectedMeal" class="pt-2 border-t border-gray-200 dark:border-gray-800">
@@ -182,7 +239,7 @@
 
                             <!-- Meal Type Selector -->
                             <div class="mb-3">
-                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Meal Type</label>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">{{ __('client.nutrition.meal_type') }}</label>
                                 <div class="flex flex-wrap gap-2">
                                     <template x-for="type in mealTypes" :key="type">
                                         <button type="button" @click="mealType = type; customMealType = ''"
@@ -191,14 +248,14 @@
                                         </button>
                                     </template>
                                 </div>
-                                <input type="text" x-model="customMealType" @input="if(customMealType) mealType = ''" placeholder="Or type custom..."
+                                <input type="text" x-model="customMealType" @input="if(customMealType) mealType = ''" placeholder="{{ __('client.nutrition.or_type_custom') }}"
                                     class="mt-2 w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
                                 <input type="hidden" name="meal_type" :value="customMealType || mealType">
                             </div>
 
                             <button type="submit" :disabled="!(mealType || customMealType)"
                                 class="w-full inline-flex items-center justify-center px-4 py-2.5 bg-blue-600 border border-transparent rounded-md font-semibold text-sm text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition ease-in-out duration-150 disabled:opacity-50 disabled:cursor-not-allowed">
-                                Log Meal
+                                {{ __('client.nutrition.log_meal') }}
                             </button>
                         </form>
                     </div>
@@ -211,10 +268,10 @@
                         <input type="hidden" name="date" value="{{ $date }}">
 
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Name <span class="text-red-500">*</span></label>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('client.nutrition.name') }} <span class="text-red-500">*</span></label>
                             <input type="text" name="name" required value="{{ old('name') }}"
                                 class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
-                                placeholder="e.g., Grilled chicken with rice">
+                                placeholder="{{ __('client.nutrition.meal_name_placeholder') }}">
                             @error('name')
                                 <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                             @enderror
@@ -222,7 +279,7 @@
 
                         <!-- Meal Type Selector -->
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Meal Type <span class="text-red-500">*</span></label>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">{{ __('client.nutrition.meal_type') }} <span class="text-red-500">*</span></label>
                             <div class="flex flex-wrap gap-2">
                                 <template x-for="type in mealTypes" :key="type">
                                     <button type="button" @click="customFormMealType = type; customFormCustomType = ''"
@@ -231,13 +288,13 @@
                                     </button>
                                 </template>
                             </div>
-                            <input type="text" x-model="customFormCustomType" @input="if(customFormCustomType) customFormMealType = ''" placeholder="Or type custom..."
+                            <input type="text" x-model="customFormCustomType" @input="if(customFormCustomType) customFormMealType = ''" placeholder="{{ __('client.nutrition.or_type_custom') }}"
                                 class="mt-2 w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
                             <input type="hidden" name="meal_type" :value="customFormCustomType || customFormMealType">
                         </div>
 
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Calories <span class="text-red-500">*</span></label>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('client.nutrition.calories') }} <span class="text-red-500">*</span></label>
                             <input type="number" name="calories" required min="0" value="{{ old('calories') }}"
                                 class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
                                 placeholder="0">
@@ -248,19 +305,19 @@
 
                         <div class="grid grid-cols-3 gap-3">
                             <div>
-                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Protein (g) <span class="text-red-500">*</span></label>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('client.nutrition.protein_g') }} <span class="text-red-500">*</span></label>
                                 <input type="number" name="protein" required min="0" step="0.1" value="{{ old('protein') }}"
                                     class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
                                     placeholder="0">
                             </div>
                             <div>
-                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Carbs (g) <span class="text-red-500">*</span></label>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('client.nutrition.carbs_g') }} <span class="text-red-500">*</span></label>
                                 <input type="number" name="carbs" required min="0" step="0.1" value="{{ old('carbs') }}"
                                     class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
                                     placeholder="0">
                             </div>
                             <div>
-                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Fat (g) <span class="text-red-500">*</span></label>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('client.nutrition.fat_g') }} <span class="text-red-500">*</span></label>
                                 <input type="number" name="fat" required min="0" step="0.1" value="{{ old('fat') }}"
                                     class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
                                     placeholder="0">
@@ -268,15 +325,15 @@
                         </div>
 
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Notes</label>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('client.nutrition.notes') }}</label>
                             <textarea name="notes" rows="2"
                                 class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
-                                placeholder="Optional notes...">{{ old('notes') }}</textarea>
+                                placeholder="{{ __('client.nutrition.optional_notes') }}">{{ old('notes') }}</textarea>
                         </div>
 
                         <button type="submit" :disabled="!(customFormMealType || customFormCustomType)"
                             class="w-full inline-flex items-center justify-center px-4 py-2.5 bg-blue-600 border border-transparent rounded-md font-semibold text-sm text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition ease-in-out duration-150 disabled:opacity-50 disabled:cursor-not-allowed">
-                            Log Meal
+                            {{ __('client.nutrition.log_meal') }}
                         </button>
                     </form>
                 </div>
@@ -285,7 +342,98 @@
     </div>
 
     @push('scripts')
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
     <script>
+        function chartTheme() {
+            const dark = document.documentElement.classList.contains('dark');
+            return {
+                tickColor:  dark ? '#9ca3af' : '#6b7280',
+                gridColor:  dark ? 'rgba(75, 85, 99, 0.25)' : 'rgba(229, 231, 235, 1)',
+                legendColor: dark ? '#d1d5db' : '#374151',
+            };
+        }
+
+        function clientCaloriesChart(nutritionData) {
+            return {
+                renderChart() {
+                    const existing = Chart.getChart(this.$refs.canvas);
+                    if (existing) existing.destroy();
+                    const ctx = this.$refs.canvas.getContext('2d');
+                    const theme = chartTheme();
+                    const labels = nutritionData.map(d => {
+                        const date = new Date(d.date + 'T00:00:00');
+                        return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+                    });
+                    const calories = nutritionData.map(d => d.calories);
+                    const goals = nutritionData.map(d => d.goalCalories);
+
+                    const bgColors = nutritionData.map(d => {
+                        if (!d.goalCalories || d.calories === 0) return 'rgba(209, 213, 219, 0.5)';
+                        const dev = Math.abs(d.calories - d.goalCalories) / d.goalCalories;
+                        if (dev <= 0.10) return 'rgba(34, 197, 94, 0.7)';
+                        if (dev <= 0.25) return 'rgba(234, 179, 8, 0.7)';
+                        return 'rgba(239, 68, 68, 0.7)';
+                    });
+
+                    new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels,
+                            datasets: [
+                                { label: 'Calories', data: calories, backgroundColor: bgColors, borderRadius: 3 },
+                                { label: 'Goal', data: goals, type: 'line', borderColor: 'rgba(107, 114, 128, 0.5)', borderDash: [5, 5], pointRadius: 0, fill: false, borderWidth: 2 }
+                            ]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            plugins: { legend: { display: true, position: 'bottom', labels: { boxWidth: 12, color: theme.legendColor } } },
+                            scales: {
+                                x: { ticks: { maxTicksLimit: 10, color: theme.tickColor }, grid: { color: theme.gridColor } },
+                                y: { beginAtZero: true, ticks: { color: theme.tickColor }, grid: { color: theme.gridColor } }
+                            }
+                        }
+                    });
+                }
+            };
+        }
+
+        function clientMacrosChart(nutritionData) {
+            return {
+                renderChart() {
+                    const existing = Chart.getChart(this.$refs.canvas);
+                    if (existing) existing.destroy();
+                    const ctx = this.$refs.canvas.getContext('2d');
+                    const theme = chartTheme();
+                    const labels = nutritionData.map(d => {
+                        const date = new Date(d.date + 'T00:00:00');
+                        return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+                    });
+
+                    new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels,
+                            datasets: [
+                                { label: 'Protein', data: nutritionData.map(d => d.protein), backgroundColor: 'rgba(59, 130, 246, 0.7)', borderRadius: 2 },
+                                { label: 'Carbs', data: nutritionData.map(d => d.carbs), backgroundColor: 'rgba(234, 179, 8, 0.7)', borderRadius: 2 },
+                                { label: 'Fat', data: nutritionData.map(d => d.fat), backgroundColor: 'rgba(239, 68, 68, 0.7)', borderRadius: 2 },
+                            ]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            plugins: { legend: { display: true, position: 'bottom', labels: { boxWidth: 12, color: theme.legendColor } } },
+                            scales: {
+                                x: { stacked: true, ticks: { maxTicksLimit: 10, color: theme.tickColor }, grid: { color: theme.gridColor } },
+                                y: { stacked: true, beginAtZero: true, ticks: { color: theme.tickColor }, grid: { color: theme.gridColor } }
+                            }
+                        }
+                    });
+                }
+            };
+        }
+
         function nutritionLogger() {
             const currentDate = '{{ $date }}';
             const today = '{{ now()->format("Y-m-d") }}';

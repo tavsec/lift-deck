@@ -50,20 +50,45 @@ class TrackingMetric extends Model
     }
 
     /**
-     * Preseed default metrics for a coach.
+     * Seed default metrics for a coach, using their locale for names.
      *
      * @return array<int, self>
      */
-    public static function seedDefaults(int $coachId): array
+    public static function seedDefaults(int $coachId, string $locale = 'en'): array
     {
         $defaults = [
-            ['name' => 'Body Weight', 'type' => 'number', 'unit' => 'kg', 'order' => 1],
-            ['name' => 'Steps', 'type' => 'number', 'unit' => 'steps', 'order' => 2],
-            ['name' => 'Sleep Quality', 'type' => 'scale', 'order' => 3],
-            ['name' => 'Energy Level', 'type' => 'scale', 'order' => 4],
-            ['name' => 'Mood', 'type' => 'scale', 'order' => 5],
-            ['name' => 'Took Supplements', 'type' => 'boolean', 'order' => 6],
-            ['name' => 'Daily Notes', 'type' => 'text', 'order' => 7],
+            [
+                'name' => __('coach.default_metrics.weight', locale: $locale),
+                'type' => 'number',
+                'unit' => 'kg',
+                'order' => 1,
+            ],
+            [
+                'name' => __('coach.default_metrics.steps', locale: $locale),
+                'type' => 'number',
+                'unit' => 'steps',
+                'order' => 2,
+            ],
+            [
+                'name' => __('coach.default_metrics.progress_image', locale: $locale),
+                'type' => 'image',
+                'order' => 3,
+            ],
+            [
+                'name' => __('coach.default_metrics.mood', locale: $locale),
+                'type' => 'scale',
+                'order' => 4,
+            ],
+            [
+                'name' => __('coach.default_metrics.energy', locale: $locale),
+                'type' => 'scale',
+                'order' => 5,
+            ],
+            [
+                'name' => __('coach.default_metrics.sleep', locale: $locale),
+                'type' => 'scale',
+                'order' => 6,
+            ],
         ];
 
         $metrics = [];
