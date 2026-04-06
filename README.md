@@ -80,11 +80,11 @@ A coaching platform for fitness coaches and their clients. Coaches manage client
 
 ### Subscription Plans
 
-| Plan         | Price         | Clients   | Features                            |
-|--------------|---------------|-----------|-------------------------------------|
-| Basic        | €2.50/mo      | Up to 5   | Programs, workout logs, nutrition   |
-| Advanced     | €10/mo        | Up to 15  | + Loyalty & achievements            |
-| Professional | €15/mo + per-client overage | 30 included (unlimited+) | + Custom branding |
+| Plan         | Price                       | Clients                  | Features                          |
+|--------------|-----------------------------|--------------------------|-----------------------------------|
+| Basic        | €2.50/mo                    | Up to 5                  | Programs, workout logs, nutrition |
+| Advanced     | €10/mo                      | Up to 15                 | + Loyalty & achievements          |
+| Professional | €15/mo + per-client overage | 30 included (unlimited+) | + Custom branding                 |
 
 Plans are configured in `config/plans.php`. Stripe price IDs are set via environment variables (`STRIPE_PRICE_BASIC`, `STRIPE_PRICE_ADVANCED`, `STRIPE_PRICE_PROFESSIONAL_FLAT`, `STRIPE_PRICE_PROFESSIONAL_METERED`).
 
