@@ -19,7 +19,8 @@ class EnsureCoachSubscribed
             return $next($request);
         }
 
-        if ($request->routeIs('coach.subscription') || $request->routeIs('coach.subscription.*')) {
+        // Allow plan selection and checkout routes through unconditionally
+        if ($request->routeIs('coach.plan', 'coach.plan.*', 'coach.subscription', 'coach.subscription.*')) {
             return $next($request);
         }
 
@@ -27,6 +28,12 @@ class EnsureCoachSubscribed
         $isInGracePeriod = $this->subscriptionService->isInGracePeriod($coach);
 
         if (! $isActive && ! $isInGracePeriod) {
+            // Coach has never chosen a plan — send to plan selection
+            if (! $coach->selected_plan) {
+                return redirect()->route('coach.plan');
+            }
+
+            // Coach chose a plan but hasn't paid / trial expired — send to subscription page
             return redirect()->route('coach.subscription');
         }
 

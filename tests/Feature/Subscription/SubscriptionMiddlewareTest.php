@@ -149,3 +149,36 @@ it('shows grace period toast in coach layout during grace period', function (): 
         ->assertSee('subscription has ended')
         ->assertSee('Manage subscription');
 });
+
+it('redirects coach with no selected_plan to plan selection page', function (): void {
+    $coach = User::factory()->state(['role' => 'coach'])->create([
+        'trial_ends_at' => null,
+        'selected_plan' => null,
+    ]);
+
+    $this->actingAs($coach)
+        ->get(route('coach.dashboard'))
+        ->assertRedirect(route('coach.plan'));
+});
+
+it('redirects coach with selected_plan but expired trial to subscription page', function (): void {
+    $coach = User::factory()->state(['role' => 'coach'])->create([
+        'trial_ends_at' => now()->subDay(),
+        'selected_plan' => 'basic',
+    ]);
+
+    $this->actingAs($coach)
+        ->get(route('coach.dashboard'))
+        ->assertRedirect(route('coach.subscription'));
+});
+
+it('allows coach to access plan selection page with no selected_plan', function (): void {
+    $coach = User::factory()->state(['role' => 'coach'])->create([
+        'trial_ends_at' => null,
+        'selected_plan' => null,
+    ]);
+
+    $this->actingAs($coach)
+        ->get(route('coach.plan'))
+        ->assertOk();
+});
