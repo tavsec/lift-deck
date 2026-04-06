@@ -39,15 +39,13 @@ class RegisteredUserController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'role' => 'coach', // Default to coach on registration
+            'role' => 'coach',
         ]);
 
         event(new Registered($user));
 
         Auth::login($user);
 
-        $user->update(['trial_ends_at' => now()->addDays(config('plans.basic.trial_days', 7))]);
-
-        return redirect(route('coach.dashboard', absolute: false));
+        return redirect(route('coach.plan', absolute: false));
     }
 }
