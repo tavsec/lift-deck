@@ -37,7 +37,7 @@ return [
             'solo' => 'Solo trener',
             'solo_sub' => 'Tek počinjete ili upravljate do 5 klijenata',
             'growing' => 'Rastući trener',
-            'growing_sub' => 'Skalirате, upravljate 5–30 klijenata',
+            'growing_sub' => 'Skalirate, upravljate 5–30 klijenata',
             'gym' => 'Teretana ili tim',
             'gym_sub' => 'Više trenera ili veća baza klijenata',
         ],
