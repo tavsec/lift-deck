@@ -7,12 +7,6 @@
             <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Select the plan that best fits your coaching needs. You can upgrade at any time.</p>
         </div>
 
-        <div class="rounded-md bg-blue-50 dark:bg-blue-900/20 p-4">
-            <p class="text-sm text-blue-800 dark:text-blue-200">
-                <strong>Basic plan includes a 7-day Free Trial</strong> — no credit card required. Advanced and Professional plans start immediately with payment.
-            </p>
-        </div>
-
         <div class="grid grid-cols-1 gap-6 sm:grid-cols-3">
             <!-- Basic Plan -->
             <div class="relative rounded-lg border border-gray-200 dark:border-gray-700 p-6 flex flex-col">
@@ -46,7 +40,7 @@
                             Start Free Trial
                         </button>
                     </form>
-                    <p class="mt-2 text-center text-xs text-gray-500 dark:text-gray-400">No credit card required</p>
+                    <p class="mt-2 text-center text-xs text-gray-500 dark:text-gray-400">7-day free trial, then €2.50/month</p>
                 </div>
             </div>
 
