@@ -1,59 +1,123 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# LiftDeck
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+**LiftDeck** is an all-in-one gym coaching platform that replaces spreadsheets and messaging apps. Coaches build personalized training programs, clients log workouts in real-time, and everyone stays connected through in-app messaging — all from any device, no app store required.
 
-## About Laravel
+## What It Does
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+LiftDeck connects fitness coaches with their clients through a single web platform. Coaches manage their entire client roster: create programs, track progress, log nutrition, and send messages. Clients get a clean, guided experience for logging workouts, checking in daily, and seeing their progress over time.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### For Coaches
+- Build reusable training programs with workouts, exercises, sets, reps, and notes
+- Invite clients via a unique code — no manual account setup needed
+- Track each client's workout logs, nutrition, body metrics, and progress photos
+- Communicate via in-app messaging with unread notification badges
+- Customize onboarding questions per client (goals, injuries, experience level)
+- Add your gym branding (logo, colors, welcome text) on paid plans
+- Export client analytics to Excel
+- Create "track-only" clients for in-person sessions where the coach logs everything
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### For Clients
+- Log completed workouts with weight, reps, and difficulty ratings
+- Track meals and daily nutrition against macro targets
+- Log custom metrics (weight, measurements) with optional progress photos
+- Earn XP, unlock levels, and redeem points for coach-defined rewards
+- Message your coach directly from the app
 
-## Learning Laravel
+## Subscription Plans
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+| Plan | Price | Clients | Highlights |
+|------|-------|---------|------------|
+| Basic | €2.50/month | Up to 5 | Core features, 7-day free trial |
+| Advanced | €10/month | Up to 15 | Core + loyalty/gamification |
+| Professional | €15/month + €0.50/client over 30 | Unlimited | Everything + custom branding |
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+No credit card required to start — coaches get a 7-day free trial on the Basic plan automatically.
 
-## Laravel Sponsors
+## Tech Stack
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+- **Backend**: Laravel 12, Livewire 4, Filament 5 (admin panel)
+- **Frontend**: Blade, Tailwind CSS v3, Alpine.js
+- **Payments**: Laravel Cashier + Stripe
+- **Auth**: Laravel Breeze with email verification
+- **Storage**: Spatie MediaLibrary (S3-compatible)
+- **Testing**: Pest 4
 
-### Premium Partners
+## Getting Started
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+```bash
+composer install
+npm install
+cp .env.example .env
+php artisan key:generate
+php artisan migrate --seed
+npm run build
+php artisan serve
+```
 
-## Contributing
+Set your Stripe keys in `.env` (`STRIPE_KEY`, `STRIPE_SECRET`) before using payment features.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## Running Tests
 
-## Code of Conduct
+```bash
+php artisan test --compact
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+---
 
-## Security Vulnerabilities
+## LiftDeck
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+A coaching platform for fitness coaches and their clients. Coaches manage clients, programs, workouts, nutrition, and more. Clients track their training and progress.
 
-## License
+### Coach Sign-Up Flow
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+1. Coach registers at `/register` (name, email, password)
+2. Redirected to `/coach/plan` — picks a plan:
+   - **Basic (€2.50/mo)** — 7-day free trial, no credit card required. After trial ends, redirected to `/coach/subscription` to subscribe via Stripe Checkout.
+   - **Advanced (€10/mo)** — redirected immediately to Stripe Checkout to pay before accessing the dashboard.
+   - **Professional (€15/mo + metered)** — redirected immediately to Stripe Checkout.
+3. After Stripe Checkout completes, Cashier webhook activates the subscription and the coach is redirected to the dashboard.
+4. Abandoned Stripe Checkout → coach lands on `/coach/subscription` with an option to complete payment or switch to the Basic trial.
+
+### Subscription Plans
+
+| Plan         | Price         | Clients   | Features                            |
+|--------------|---------------|-----------|-------------------------------------|
+| Basic        | €2.50/mo      | Up to 5   | Programs, workout logs, nutrition   |
+| Advanced     | €10/mo        | Up to 15  | + Loyalty & achievements            |
+| Professional | €15/mo + per-client overage | 30 included (unlimited+) | + Custom branding |
+
+Plans are configured in `config/plans.php`. Stripe price IDs are set via environment variables (`STRIPE_PRICE_BASIC`, `STRIPE_PRICE_ADVANCED`, `STRIPE_PRICE_PROFESSIONAL_FLAT`, `STRIPE_PRICE_PROFESSIONAL_METERED`).
+
+### Required Stripe Webhook Events
+
+The following events must be enabled in the Stripe dashboard and pointed at `/cashier/webhook`:
+
+- `customer.subscription.created`
+- `customer.subscription.updated`
+- `customer.subscription.deleted`
+- `checkout.session.completed`
+- `invoice.payment_succeeded`
+- `invoice.payment_failed`
+
+### Environment Variables
+
+```env
+STRIPE_KEY=pk_...
+STRIPE_SECRET=sk_...
+STRIPE_WEBHOOK_SECRET=whsec_...
+STRIPE_PRICE_BASIC=price_...
+STRIPE_PRICE_ADVANCED=price_...
+STRIPE_PRICE_PROFESSIONAL_FLAT=price_...
+STRIPE_PRICE_PROFESSIONAL_METERED=price_...
+```
+
+### Running Locally
+
+```bash
+composer install
+npm install
+cp .env.example .env
+php artisan key:generate
+php artisan migrate
+composer run dev
+```
