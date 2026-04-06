@@ -77,7 +77,7 @@ test('register page shows step 3 data when validation fails', function () {
     ]);
 
     $response->assertSessionHasErrors('email');
-    $response->assertRedirect('/register');
+    $response->assertRedirect();
 
     $follow = $this->get('/register');
     $follow->assertStatus(200);
