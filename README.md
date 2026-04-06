@@ -31,7 +31,7 @@ LiftDeck connects fitness coaches with their clients through a single web platfo
 | Advanced | €10/month | Up to 15 | Core + loyalty/gamification |
 | Professional | €15/month + €0.50/client over 30 | Unlimited | Everything + custom branding |
 
-No credit card required to start — coaches get a 7-day free trial on the Basic plan automatically.
+The Basic plan includes a 7-day free trial via Stripe — a credit card is required to start the trial.
 
 ## Tech Stack
 
@@ -76,11 +76,11 @@ Private — all rights reserved.
    - **Step 3:** Email and password
    All text is localized in English, Croatian (`hr`), and Slovenian (`sl`) via `lang/{locale}/auth.php` under the `register.*` key.
 2. Redirected to `/coach/plan` — picks a plan:
-   - **Basic (€2.50/mo)** — 7-day free trial, no credit card required. After trial ends, redirected to `/coach/subscription` to subscribe via Stripe Checkout.
-   - **Advanced (€10/mo)** — redirected immediately to Stripe Checkout to pay before accessing the dashboard.
+   - **Basic (€2.50/mo)** — redirected to Stripe Checkout with a 7-day trial. Card required. After trial, auto-charged €2.50/month.
+   - **Advanced (€10/mo)** — redirected immediately to Stripe Checkout.
    - **Professional (€15/mo + metered)** — redirected immediately to Stripe Checkout.
 3. After Stripe Checkout completes, Cashier webhook activates the subscription and the coach is redirected to the dashboard.
-4. Abandoned Stripe Checkout → coach lands on `/coach/subscription` with an option to complete payment or switch to the Basic trial.
+4. Abandoned Stripe Checkout → coach lands on `/coach/subscription` with an option to complete payment.
 
 ### Subscription Plans
 
@@ -125,3 +125,11 @@ php artisan key:generate
 php artisan migrate
 composer run dev
 ```
+
+To receive Stripe webhooks locally, run the Stripe CLI in a separate terminal:
+
+```bash
+stripe listen --forward-to localhost:8000/cashier/webhook
+```
+
+Copy the printed `whsec_...` key into `STRIPE_WEBHOOK_SECRET` in your `.env`.
