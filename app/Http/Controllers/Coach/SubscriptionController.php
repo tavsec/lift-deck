@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Services\SubscriptionService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
+use Symfony\Component\HttpFoundation\Response;
 
 class SubscriptionController extends Controller
 {
@@ -52,5 +53,42 @@ class SubscriptionController extends Controller
         }
 
         return $coach->redirectToBillingPortal(route('coach.subscription'));
+    }
+
+    /**
+     * Redirects the coach to Stripe Checkout for their selected plan.
+     * Used both when a new coach picks Advanced/Professional and when a
+     * Basic trial coach needs to subscribe after the trial ends.
+     *
+     * Stripe Checkout session creation makes a live API call — test the guard
+     * conditions only (no selected_plan, already subscribed).
+     */
+    public function checkout(): Response
+    {
+        $coach = auth()->user();
+
+        if (! $coach->selected_plan) {
+            return redirect()->route('coach.plan');
+        }
+
+        if ($coach->subscribed('default')) {
+            return redirect()->route('coach.dashboard');
+        }
+
+        $plan = config("plans.{$coach->selected_plan}");
+
+        $checkoutOptions = [
+            'success_url' => route('coach.plan.success'),
+            'cancel_url' => route('coach.subscription'),
+        ];
+
+        if ($coach->selected_plan === 'professional') {
+            return $coach->newSubscription('default', $plan['stripe_price_flat_id'])
+                ->meteredPrice($plan['stripe_price_metered_id'])
+                ->checkout($checkoutOptions);
+        }
+
+        return $coach->newSubscription('default', $plan['stripe_price_id'])
+            ->checkout($checkoutOptions);
     }
 }

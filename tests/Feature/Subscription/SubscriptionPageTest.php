@@ -67,3 +67,58 @@ it('shows manage subscription for coach with active subscription', function (): 
         ->assertOk()
         ->assertSee('Manage');
 });
+
+it('subscription page shows subscribe button with plan name when coach has selected_plan but no subscription', function (): void {
+    $coach = User::factory()->state(['role' => 'coach'])->create([
+        'trial_ends_at' => now()->subDay(),
+        'selected_plan' => 'advanced',
+    ]);
+
+    $this->actingAs($coach)
+        ->get(route('coach.subscription'))
+        ->assertOk()
+        ->assertSee('Subscribe to Advanced');
+});
+
+it('subscription page shows choose a plan link when coach has no selected_plan', function (): void {
+    $coach = User::factory()->state(['role' => 'coach'])->create([
+        'trial_ends_at' => now()->subDay(),
+        'selected_plan' => null,
+    ]);
+
+    $this->actingAs($coach)
+        ->get(route('coach.subscription'))
+        ->assertOk()
+        ->assertSee('Choose a Plan');
+});
+
+it('checkout route redirects coach with no selected_plan to plan selection', function (): void {
+    $coach = User::factory()->state(['role' => 'coach'])->create([
+        'trial_ends_at' => null,
+        'selected_plan' => null,
+    ]);
+
+    $this->actingAs($coach)
+        ->get(route('coach.subscription.checkout'))
+        ->assertRedirect(route('coach.plan'));
+});
+
+it('checkout route redirects already subscribed coach to dashboard', function (): void {
+    $coach = User::factory()->state(['role' => 'coach'])->create([
+        'trial_ends_at' => null,
+        'selected_plan' => 'basic',
+    ]);
+
+    $coach->subscriptions()->create([
+        'type' => 'default',
+        'stripe_id' => 'sub_already_active',
+        'stripe_status' => 'active',
+        'stripe_price' => config('plans.basic.stripe_price_id'),
+        'quantity' => 1,
+        'ends_at' => null,
+    ]);
+
+    $this->actingAs($coach)
+        ->get(route('coach.subscription.checkout'))
+        ->assertRedirect(route('coach.dashboard'));
+});
