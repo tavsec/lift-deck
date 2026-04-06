@@ -82,3 +82,28 @@ it('settings subscription card shows no subscription state', function (): void {
         ->assertSee('No active subscription')
         ->assertSee('Choose a plan');
 });
+
+it('settings subscription card shows trial end date from subscription when user trial_ends_at is null', function (): void {
+    $coach = User::factory()->create([
+        'role' => 'coach',
+        'trial_ends_at' => null,
+        'is_free_access' => false,
+    ]);
+
+    $trialEnd = now()->addDays(6);
+
+    $coach->subscriptions()->create([
+        'type' => 'default',
+        'stripe_id' => 'sub_test_trial',
+        'stripe_status' => 'trialing',
+        'stripe_price' => 'price_test',
+        'quantity' => 1,
+        'trial_ends_at' => $trialEnd,
+        'ends_at' => null,
+    ]);
+
+    $this->actingAs($coach)
+        ->get(route('coach.settings.edit'))
+        ->assertOk()
+        ->assertViewHas('trialEndsAt', fn ($v) => $v?->isSameDay($trialEnd));
+});

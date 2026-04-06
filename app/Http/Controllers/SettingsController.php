@@ -24,7 +24,7 @@ class SettingsController extends Controller
             'clientCount' => $coach->clients()->count(),
             'clientLimit' => $this->subscriptionService->clientLimit($coach),
             'isOnTrial' => $coach->onTrial(),
-            'trialEndsAt' => $coach->trial_ends_at,
+            'trialEndsAt' => $coach->trial_ends_at ?? $coach->subscription('default')?->trial_ends_at,
             'isInGracePeriod' => $this->subscriptionService->isInGracePeriod($coach),
             'graceDaysRemaining' => $this->subscriptionService->graceDaysRemaining($coach),
         ]);
