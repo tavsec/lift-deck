@@ -375,6 +375,6 @@ class ClientController extends Controller
         $this->subscriptionService->reportClientUsage(auth()->user());
 
         return redirect()->route('coach.clients.index')
-            ->with('success', 'Client removed successfully.');
+            ->with('success', __('coach.clients.show.removed'));
     }
 }

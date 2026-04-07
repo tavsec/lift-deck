@@ -80,6 +80,7 @@ return [
             'edit' => 'Uredi',
             'remove' => 'Odstrani',
             'remove_confirm' => 'Ali ste prepričani, da želite odstraniti to stranko?',
+            'removed' => 'Stranka uspešno odstranjena.',
             'invitation_code_hint' => 'Delite to povabilno kodo s svojo stranko: :code',
             'status' => 'Status',
             'onboarding' => 'Uvajanje',

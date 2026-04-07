@@ -80,6 +80,7 @@ return [
             'edit' => 'Edit',
             'remove' => 'Remove',
             'remove_confirm' => 'Are you sure you want to remove this client?',
+            'removed' => 'Client removed successfully.',
             'invitation_code_hint' => 'Share this invitation code with your client: :code',
             'status' => 'Status',
             'onboarding' => 'Onboarding',

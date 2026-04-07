@@ -186,7 +186,14 @@
                                     {{ $client->created_at->format('M d, Y') }}
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                    <a href="{{ route('coach.clients.show', $client) }}" class="text-blue-600 hover:text-blue-900">{{ __('coach.clients.index.view') }}</a>
+                                    <div class="flex items-center justify-end gap-4">
+                                        <a href="{{ route('coach.clients.show', $client) }}" class="text-blue-600 hover:text-blue-900">{{ __('coach.clients.index.view') }}</a>
+                                        <form method="POST" action="{{ route('coach.clients.destroy', $client) }}" onsubmit="return confirm('{{ __('coach.clients.show.remove_confirm') }}');">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="text-red-600 hover:text-red-900">{{ __('coach.clients.show.remove') }}</button>
+                                        </form>
+                                    </div>
                                 </td>
                             </tr>
                         @endforeach

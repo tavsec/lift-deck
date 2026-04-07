@@ -80,6 +80,7 @@ return [
             'edit' => 'Uredi',
             'remove' => 'Ukloni',
             'remove_confirm' => 'Jeste li sigurni da želite ukloniti ovog klijenta?',
+            'removed' => 'Klijent uspješno uklonjen.',
             'invitation_code_hint' => 'Podijelite ovaj pozivni kod s klijentom: :code',
             'status' => 'Status',
             'onboarding' => 'Uvođenje',
