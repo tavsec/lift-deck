@@ -263,7 +263,7 @@
                         </form>
                     </div>
                     <div class="px-4 pb-3">
-                        <x-locale-switcher />
+                        <x-locale-switcher direction="top" />
                     </div>
                 </div>
             </div>
