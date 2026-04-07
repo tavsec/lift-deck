@@ -26,7 +26,7 @@
             }
         </style>
     </head>
-    <body class="font-sans antialiased bg-gray-50 dark:bg-gray-950">
+    <body x-data="{ trialBanner: {{ auth()->user()?->onTrial() ? 'true' : 'false' }} }" class="font-sans antialiased bg-gray-50 dark:bg-gray-950">
         {{-- Trial Banner --}}
         @if(auth()->user()?->onTrial())
             @php
@@ -34,10 +34,9 @@
                 $trialDaysRemaining = $trialEndsAt ? max(0, (int) now()->diffInDays($trialEndsAt, false)) : null;
             @endphp
             <div
-                x-data="{ show: true }"
-                x-show="show"
+                x-show="trialBanner"
                 x-transition
-                class="fixed top-0 inset-x-0 z-50 bg-blue-600 text-white px-4 py-3 flex items-center justify-between text-sm"
+                class="fixed top-14 md:top-0 inset-x-0 z-50 bg-blue-600 text-white px-4 py-3 flex items-center justify-between text-sm"
             >
                 <span>
                     You're on a free trial.
@@ -50,7 +49,7 @@
                         <a href="{{ route('coach.plan') }}" class="underline ml-1 font-medium">Choose a plan →</a>
                     @endif
                 </span>
-                <button @click="show = false" class="ml-4 text-white hover:text-blue-200 flex-shrink-0" aria-label="Dismiss">✕</button>
+                <button @click="trialBanner = false" class="ml-4 text-white hover:text-blue-200 flex-shrink-0" aria-label="Dismiss">✕</button>
             </div>
         @endif
 
@@ -415,7 +414,7 @@
         </div>
 
         <!-- Main Content -->
-        <main class="mt-14 md:mt-0 md:ml-64 min-h-screen dark:bg-gray-950">
+        <main :class="{ 'pt-11': trialBanner }" class="mt-14 md:mt-0 md:ml-64 min-h-screen dark:bg-gray-950">
             <div class="p-4 sm:p-6 lg:p-8">
                 {{ $slot }}
             </div>
