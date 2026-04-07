@@ -153,7 +153,7 @@
                     </svg>
                     <div>
                         <p class="text-sm font-medium text-blue-800 dark:text-blue-200">
-                            Free trial{{ $trialEndsAt ? ' — ends ' . $trialEndsAt->format('M j, Y') : '' }}
+                            {{ $currentPlanKey ? ucfirst($currentPlanKey) . ' plan — ' : '' }}Free trial{{ $trialEndsAt ? ' — ends ' . $trialEndsAt->format('M j, Y') : '' }}
                         </p>
                         <p class="mt-1 text-sm text-blue-700 dark:text-blue-300">
                             {{ $clientCount }} / {{ $clientLimit ?? '∞' }} clients

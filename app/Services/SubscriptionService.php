@@ -68,6 +68,10 @@ class SubscriptionService
 
         $subscription = $coach->subscription('default');
         if (! $subscription) {
+            if ($coach->trial_ends_at?->isFuture() && $coach->selected_plan) {
+                return config("plans.{$coach->selected_plan}");
+            }
+
             return null;
         }
 
@@ -89,6 +93,10 @@ class SubscriptionService
 
         $subscription = $coach->subscription('default');
         if (! $subscription) {
+            if ($coach->trial_ends_at?->isFuture() && $coach->selected_plan) {
+                return $coach->selected_plan;
+            }
+
             return null;
         }
 

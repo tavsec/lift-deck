@@ -42,6 +42,15 @@ it('returns null plan for coach with no subscription', function (): void {
     expect($this->service->currentPlanKey($coach))->toBeNull();
 });
 
+it('generic trial coach uses selected_plan for plan key and client limit', function (): void {
+    $coach = User::factory()->state(['role' => 'coach'])->make([
+        'trial_ends_at' => now()->addDays(5),
+        'selected_plan' => 'basic',
+    ]);
+    expect($this->service->currentPlanKey($coach))->toBe('basic');
+    expect($this->service->clientLimit($coach))->toBe(config('plans.basic.client_limit'));
+});
+
 it('free access coach treated as professional for plan', function (): void {
     $coach = User::factory()->state(['role' => 'coach', 'is_free_access' => true])->make();
     expect($this->service->currentPlanKey($coach))->toBe('professional');
