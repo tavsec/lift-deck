@@ -370,6 +370,8 @@ class ClientController extends Controller
             abort(403);
         }
 
+        $client->email = $client->email.'__deleted_'.$client->id;
+        $client->save();
         $client->delete();
 
         $this->subscriptionService->reportClientUsage(auth()->user());
