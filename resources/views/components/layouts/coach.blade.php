@@ -414,7 +414,7 @@
         </div>
 
         <!-- Main Content -->
-        <main :class="{ 'pt-11': trialBanner }" class="mt-14 md:mt-0 md:ml-64 min-h-screen dark:bg-gray-950">
+        <main class="mt-14 md:mt-0 md:ml-64 min-h-screen dark:bg-gray-950 {{ auth()->user()?->onTrial() ? 'pt-11' : '' }}">
             <div class="p-4 sm:p-6 lg:p-8">
                 {{ $slot }}
             </div>
