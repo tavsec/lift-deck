@@ -4,13 +4,17 @@ namespace App\Http\Controllers\Coach;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StorePlanSelectionRequest;
+use App\Services\StripePriceService;
 use App\Services\SubscriptionService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 
 class PlanSelectionController extends Controller
 {
-    public function __construct(private readonly SubscriptionService $subscriptionService) {}
+    public function __construct(
+        private readonly SubscriptionService $subscriptionService,
+        private readonly StripePriceService $stripePriceService,
+    ) {}
 
     public function show(): View|RedirectResponse
     {
@@ -28,6 +32,7 @@ class PlanSelectionController extends Controller
 
         return view('coach.plan', [
             'plans' => config('plans'),
+            'stripePrices' => $this->stripePriceService->forPlans(),
         ]);
     }
 

@@ -14,7 +14,7 @@
                     <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100">Basic</h3>
                     <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">For coaches just getting started.</p>
                     <p class="mt-4">
-                        <span class="text-3xl font-bold text-gray-900 dark:text-gray-100">€2.50</span>
+                        <span class="text-3xl font-bold text-gray-900 dark:text-gray-100">€{{ $stripePrices['basic']['formatted'] ?? '—' }}</span>
                         <span class="text-sm text-gray-500 dark:text-gray-400">/mo</span>
                     </p>
                 </div>
@@ -40,7 +40,7 @@
                             Start Free Trial
                         </button>
                     </form>
-                    <p class="mt-2 text-center text-xs text-gray-500 dark:text-gray-400">7-day free trial, then €2.50/month</p>
+                    <p class="mt-2 text-center text-xs text-gray-500 dark:text-gray-400">7-day free trial, then €{{ $stripePrices['basic']['formatted'] ?? '—' }}/month</p>
                 </div>
             </div>
 
@@ -50,7 +50,7 @@
                     <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100">Advanced</h3>
                     <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">For growing coaches.</p>
                     <p class="mt-4">
-                        <span class="text-3xl font-bold text-gray-900 dark:text-gray-100">€10</span>
+                        <span class="text-3xl font-bold text-gray-900 dark:text-gray-100">€{{ $stripePrices['advanced']['formatted'] ?? '—' }}</span>
                         <span class="text-sm text-gray-500 dark:text-gray-400">/mo</span>
                     </p>
                 </div>
@@ -85,8 +85,8 @@
                     <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100">Professional</h3>
                     <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">For professional coaches at scale.</p>
                     <p class="mt-4">
-                        <span class="text-3xl font-bold text-gray-900 dark:text-gray-100">€15</span>
-                        <span class="text-sm text-gray-500 dark:text-gray-400">/mo + metered</span>
+                        <span class="text-3xl font-bold text-gray-900 dark:text-gray-100">€{{ $stripePrices['professional']['formatted'] ?? '—' }}</span>
+                        <span class="text-sm text-gray-500 dark:text-gray-400">/mo{{ isset($stripePrices['professional']['metered_formatted']) ? ' + €' . $stripePrices['professional']['metered_formatted'] . '/client' : ' + metered' }}</span>
                     </p>
                 </div>
                 <ul class="mt-6 space-y-2 flex-1">
