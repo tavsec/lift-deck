@@ -800,6 +800,38 @@ return [
         'sleep' => 'Kakovost spanja',
     ],
 
+    'plan' => [
+        'title' => 'Izberite načrt',
+        'subtitle' => 'Izberite načrt, ki najbolje ustreza vašim potrebam. Kadarkoli ga lahko nadgradite.',
+        'per_month' => '/mes',
+        'per_client' => '/stranka',
+        'metered' => 'merjeno',
+        'cta_subscribe' => 'Naroči se',
+        'basic' => [
+            'name' => 'Basic',
+            'description' => 'Za trenerje, ki šele začenjajo.',
+            'feature_clients' => 'Do 5 strank',
+            'feature_programs' => 'Programi in dnevniki treningov',
+            'feature_nutrition' => 'Sledenje prehrani',
+            'cta' => 'Začni brezplačno preskusno obdobje',
+            'trial_note' => '7-dnevno brezplačno preskusno obdobje, nato €:price/mesec',
+        ],
+        'advanced' => [
+            'name' => 'Advanced',
+            'description' => 'Za rastoče trenerje.',
+            'feature_clients' => 'Do 15 strank',
+            'feature_basic' => 'Vse iz načrta Basic',
+            'feature_loyalty' => 'Zvestoba in dosežki',
+        ],
+        'professional' => [
+            'name' => 'Professional',
+            'description' => 'Za profesionalne trenerje v velikem obsegu.',
+            'feature_clients' => '30 strank vključenih',
+            'feature_advanced' => 'Vse iz načrta Advanced',
+            'feature_branding' => 'Prilagojeno oglaševanje',
+        ],
+    ],
+
     'metrics_setup' => [
         'title' => 'Nastavi metrike sledenja',
         'description' => 'Ali želite, da dodamo nekaj privzetih metrik sledenja na vaš račun? Dodali bomo: telesno težo, korake, sliko napredka, razpoloženje, raven energije in kakovost spanja.',

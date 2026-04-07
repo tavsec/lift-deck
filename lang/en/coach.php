@@ -803,6 +803,38 @@ return [
         'sleep' => 'Sleep Quality',
     ],
 
+    'plan' => [
+        'title' => 'Choose Your Plan',
+        'subtitle' => 'Select the plan that best fits your coaching needs. You can upgrade at any time.',
+        'per_month' => '/mo',
+        'per_client' => '/client',
+        'metered' => 'metered',
+        'cta_subscribe' => 'Subscribe Now',
+        'basic' => [
+            'name' => 'Basic',
+            'description' => 'For coaches just getting started.',
+            'feature_clients' => 'Up to 5 clients',
+            'feature_programs' => 'Programs & workout logs',
+            'feature_nutrition' => 'Nutrition tracking',
+            'cta' => 'Start Free Trial',
+            'trial_note' => '7-day free trial, then €:price/month',
+        ],
+        'advanced' => [
+            'name' => 'Advanced',
+            'description' => 'For growing coaches.',
+            'feature_clients' => 'Up to 15 clients',
+            'feature_basic' => 'Everything in Basic',
+            'feature_loyalty' => 'Loyalty & achievements',
+        ],
+        'professional' => [
+            'name' => 'Professional',
+            'description' => 'For professional coaches at scale.',
+            'feature_clients' => '30 clients included',
+            'feature_advanced' => 'Everything in Advanced',
+            'feature_branding' => 'Custom branding',
+        ],
+    ],
+
     'metrics_setup' => [
         'title' => 'Set Up Your Tracking Metrics',
         'description' => 'Would you like us to add some default tracking metrics to your account? We\'ll add: Body Weight, Steps, Progress Image, Mood, Energy Level, and Sleep Quality.',

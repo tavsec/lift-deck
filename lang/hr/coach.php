@@ -800,6 +800,38 @@ return [
         'sleep' => 'Kvaliteta sna',
     ],
 
+    'plan' => [
+        'title' => 'Odaberite plan',
+        'subtitle' => 'Odaberite plan koji najbolje odgovara vašim potrebama. Možete nadograditi u bilo koje vrijeme.',
+        'per_month' => '/mj',
+        'per_client' => '/klijent',
+        'metered' => 'mjereno',
+        'cta_subscribe' => 'Pretplati se',
+        'basic' => [
+            'name' => 'Basic',
+            'description' => 'Za trenere koji tek počinju.',
+            'feature_clients' => 'Do 5 klijenata',
+            'feature_programs' => 'Programi i dnevnici treninga',
+            'feature_nutrition' => 'Praćenje prehrane',
+            'cta' => 'Započni besplatno probno razdoblje',
+            'trial_note' => '7-dnevno besplatno probno razdoblje, zatim €:price/mjesec',
+        ],
+        'advanced' => [
+            'name' => 'Advanced',
+            'description' => 'Za trenere u razvoju.',
+            'feature_clients' => 'Do 15 klijenata',
+            'feature_basic' => 'Sve iz Basic plana',
+            'feature_loyalty' => 'Lojalnost i postignuća',
+        ],
+        'professional' => [
+            'name' => 'Professional',
+            'description' => 'Za profesionalne trenere u velikom opsegu.',
+            'feature_clients' => '30 klijenata uključeno',
+            'feature_advanced' => 'Sve iz Advanced plana',
+            'feature_branding' => 'Prilagođeni branding',
+        ],
+    ],
+
     'metrics_setup' => [
         'title' => 'Postavi metrike praćenja',
         'description' => 'Želite li da dodamo neke zadane metrike praćenja na vaš račun? Dodat ćemo: tjelesnu težinu, korake, sliku napretka, raspoloženje, razinu energije i kvalitetu sna.',

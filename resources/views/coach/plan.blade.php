@@ -1,35 +1,35 @@
 <x-layouts.coach>
-    <x-slot:title>Choose Your Plan</x-slot:title>
+    <x-slot:title>{{ __('coach.plan.title') }}</x-slot:title>
 
     <div class="space-y-6">
         <div>
-            <h1 class="text-2xl font-bold text-gray-900 dark:text-gray-100">Choose Your Plan</h1>
-            <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Select the plan that best fits your coaching needs. You can upgrade at any time.</p>
+            <h1 class="text-2xl font-bold text-gray-900 dark:text-gray-100">{{ __('coach.plan.title') }}</h1>
+            <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">{{ __('coach.plan.subtitle') }}</p>
         </div>
 
         <div class="grid grid-cols-1 gap-6 sm:grid-cols-3">
             <!-- Basic Plan -->
             <div class="relative rounded-lg border border-gray-200 dark:border-gray-700 p-6 flex flex-col">
                 <div>
-                    <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100">Basic</h3>
-                    <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">For coaches just getting started.</p>
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100">{{ __('coach.plan.basic.name') }}</h3>
+                    <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">{{ __('coach.plan.basic.description') }}</p>
                     <p class="mt-4">
                         <span class="text-3xl font-bold text-gray-900 dark:text-gray-100">€{{ $stripePrices['basic']['formatted'] ?? '—' }}</span>
-                        <span class="text-sm text-gray-500 dark:text-gray-400">/mo</span>
+                        <span class="text-sm text-gray-500 dark:text-gray-400">{{ __('coach.plan.per_month') }}</span>
                     </p>
                 </div>
                 <ul class="mt-6 space-y-2 flex-1">
                     <li class="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
                         <svg class="h-4 w-4 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                        Up to 5 clients
+                        {{ __('coach.plan.basic.feature_clients') }}
                     </li>
                     <li class="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
                         <svg class="h-4 w-4 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                        Programs &amp; workout logs
+                        {{ __('coach.plan.basic.feature_programs') }}
                     </li>
                     <li class="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
                         <svg class="h-4 w-4 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                        Nutrition tracking
+                        {{ __('coach.plan.basic.feature_nutrition') }}
                     </li>
                 </ul>
                 <div class="mt-6">
@@ -37,35 +37,35 @@
                         @csrf
                         <input type="hidden" name="plan" value="basic">
                         <button type="submit" class="w-full inline-flex justify-center items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-sm text-white uppercase tracking-widest hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition ease-in-out duration-150">
-                            Start Free Trial
+                            {{ __('coach.plan.basic.cta') }}
                         </button>
                     </form>
-                    <p class="mt-2 text-center text-xs text-gray-500 dark:text-gray-400">7-day free trial, then €{{ $stripePrices['basic']['formatted'] ?? '—' }}/month</p>
+                    <p class="mt-2 text-center text-xs text-gray-500 dark:text-gray-400">{{ __('coach.plan.basic.trial_note', ['price' => $stripePrices['basic']['formatted'] ?? '—']) }}</p>
                 </div>
             </div>
 
             <!-- Advanced Plan -->
             <div class="relative rounded-lg border border-gray-200 dark:border-gray-700 p-6 flex flex-col">
                 <div>
-                    <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100">Advanced</h3>
-                    <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">For growing coaches.</p>
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100">{{ __('coach.plan.advanced.name') }}</h3>
+                    <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">{{ __('coach.plan.advanced.description') }}</p>
                     <p class="mt-4">
                         <span class="text-3xl font-bold text-gray-900 dark:text-gray-100">€{{ $stripePrices['advanced']['formatted'] ?? '—' }}</span>
-                        <span class="text-sm text-gray-500 dark:text-gray-400">/mo</span>
+                        <span class="text-sm text-gray-500 dark:text-gray-400">{{ __('coach.plan.per_month') }}</span>
                     </p>
                 </div>
                 <ul class="mt-6 space-y-2 flex-1">
                     <li class="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
                         <svg class="h-4 w-4 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                        Up to 15 clients
+                        {{ __('coach.plan.advanced.feature_clients') }}
                     </li>
                     <li class="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
                         <svg class="h-4 w-4 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                        Everything in Basic
+                        {{ __('coach.plan.advanced.feature_basic') }}
                     </li>
                     <li class="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
                         <svg class="h-4 w-4 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                        Loyalty &amp; achievements
+                        {{ __('coach.plan.advanced.feature_loyalty') }}
                     </li>
                 </ul>
                 <div class="mt-6">
@@ -73,7 +73,7 @@
                         @csrf
                         <input type="hidden" name="plan" value="advanced">
                         <button type="submit" class="w-full inline-flex justify-center items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-sm text-white uppercase tracking-widest hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition ease-in-out duration-150">
-                            Subscribe Now
+                            {{ __('coach.plan.cta_subscribe') }}
                         </button>
                     </form>
                 </div>
@@ -82,25 +82,25 @@
             <!-- Professional Plan -->
             <div class="relative rounded-lg border border-gray-200 dark:border-gray-700 p-6 flex flex-col">
                 <div>
-                    <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100">Professional</h3>
-                    <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">For professional coaches at scale.</p>
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100">{{ __('coach.plan.professional.name') }}</h3>
+                    <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">{{ __('coach.plan.professional.description') }}</p>
                     <p class="mt-4">
                         <span class="text-3xl font-bold text-gray-900 dark:text-gray-100">€{{ $stripePrices['professional']['formatted'] ?? '—' }}</span>
-                        <span class="text-sm text-gray-500 dark:text-gray-400">/mo{{ isset($stripePrices['professional']['metered_formatted']) ? ' + €' . $stripePrices['professional']['metered_formatted'] . '/client' : ' + metered' }}</span>
+                        <span class="text-sm text-gray-500 dark:text-gray-400">{{ __('coach.plan.per_month') }}{{ isset($stripePrices['professional']['metered_formatted']) ? ' + €' . $stripePrices['professional']['metered_formatted'] . __('coach.plan.per_client') : ' + ' . __('coach.plan.metered') }}</span>
                     </p>
                 </div>
                 <ul class="mt-6 space-y-2 flex-1">
                     <li class="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
                         <svg class="h-4 w-4 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                        30 clients included
+                        {{ __('coach.plan.professional.feature_clients') }}
                     </li>
                     <li class="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
                         <svg class="h-4 w-4 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                        Everything in Advanced
+                        {{ __('coach.plan.professional.feature_advanced') }}
                     </li>
                     <li class="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
                         <svg class="h-4 w-4 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                        Custom branding
+                        {{ __('coach.plan.professional.feature_branding') }}
                     </li>
                 </ul>
                 <div class="mt-6">
@@ -108,7 +108,7 @@
                         @csrf
                         <input type="hidden" name="plan" value="professional">
                         <button type="submit" class="w-full inline-flex justify-center items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-sm text-white uppercase tracking-widest hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition ease-in-out duration-150">
-                            Subscribe Now
+                            {{ __('coach.plan.cta_subscribe') }}
                         </button>
                     </form>
                 </div>
