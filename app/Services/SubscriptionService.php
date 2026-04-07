@@ -133,6 +133,21 @@ class SubscriptionService
     }
 
     /**
+     * Returns the number of clients beyond the included threshold for metered plans, or null for non-metered plans.
+     */
+    public function meteredClientCount(User $coach, ?int $clientCount = null): ?int
+    {
+        if ($this->currentPlanKey($coach) !== 'professional') {
+            return null;
+        }
+
+        $included = config('plans.professional.included_clients', 30);
+        $count = $clientCount ?? $coach->clients()->count();
+
+        return max(0, $count - $included);
+    }
+
+    /**
      * Whether the coach can add another client.
      */
     public function canAddClient(User $coach): bool

@@ -203,10 +203,13 @@
                             {{ ucfirst($currentPlanKey) }} plan — Active
                         </p>
                         <p class="mt-1 text-sm text-green-700 dark:text-green-300">
-                            @if($clientLimit !== null)
+                            @if($meteredClientCount !== null)
+                                {{ $clientCount }} clients
+                                ({{ $meteredClientCount }} metered @ €{{ $stripePrices['professional']['metered_formatted'] ?? '?' }}/client)
+                            @elseif($clientLimit !== null)
                                 {{ $clientCount }} / {{ $clientLimit }} clients
                             @else
-                                {{ $clientCount }} clients (unlimited)
+                                {{ $clientCount }} clients
                             @endif
                         </p>
                     </div>

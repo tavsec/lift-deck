@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\UpdateSettingsRequest;
+use App\Services\StripePriceService;
 use App\Services\SubscriptionService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -12,7 +13,10 @@ use Illuminate\View\View;
 
 class SettingsController extends Controller
 {
-    public function __construct(private readonly SubscriptionService $subscriptionService) {}
+    public function __construct(
+        private readonly SubscriptionService $subscriptionService,
+        private readonly StripePriceService $stripePriceService,
+    ) {}
 
     public function editCoach(): View
     {
@@ -21,13 +25,15 @@ class SettingsController extends Controller
         return view('coach.settings.edit', [
             'user' => $coach,
             'currentPlanKey' => $this->subscriptionService->currentPlanKey($coach),
-            'clientCount' => $coach->clients()->count(),
+            'clientCount' => $clientCount = $coach->clients()->count(),
             'clientLimit' => $this->subscriptionService->clientLimit($coach),
+            'meteredClientCount' => $this->subscriptionService->meteredClientCount($coach, $clientCount),
             'isOnTrial' => $coach->onTrial(),
             'trialEndsAt' => $coach->trial_ends_at ?? $coach->subscription('default')?->trial_ends_at,
             'isInGracePeriod' => $this->subscriptionService->isInGracePeriod($coach),
             'graceDaysRemaining' => $this->subscriptionService->graceDaysRemaining($coach),
             'hasStripeSubscription' => $coach->subscription('default') !== null,
+            'stripePrices' => $this->stripePriceService->forPlans(),
         ]);
     }
 
