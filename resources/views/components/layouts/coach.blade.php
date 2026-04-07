@@ -26,7 +26,7 @@
             }
         </style>
     </head>
-    <body x-data="{ trialBanner: {{ auth()->user()?->onTrial() ? 'true' : 'false' }} }" class="font-sans antialiased bg-gray-50 dark:bg-gray-950">
+    <body x-data="{ trialBanner: {{ auth()->user()?->onTrial() ? 'true' : 'false' }}, graceBanner: {{ session('subscription_grace_days') !== null ? 'true' : 'false' }} }" class="font-sans antialiased bg-gray-50 dark:bg-gray-950">
         {{-- Trial Banner --}}
         @if(auth()->user()?->onTrial())
             @php
@@ -56,17 +56,16 @@
         {{-- Grace Period Alert --}}
         @if(session('subscription_grace_days') !== null)
             <div
-                x-data="{ show: true }"
-                x-show="show"
+                x-show="graceBanner"
                 x-transition
-                class="fixed top-0 inset-x-0 z-50 bg-amber-500 text-white px-4 py-3 flex items-center justify-between text-sm"
+                class="fixed top-14 md:top-0 inset-x-0 z-50 bg-amber-500 text-white px-4 py-3 flex items-center justify-between text-sm"
             >
                 <span>
                     Your subscription has ended. You have
                     <strong>{{ session('subscription_grace_days') }} day(s)</strong> remaining.
                     <a href="{{ route('coach.subscription.portal') }}" class="underline ml-1 font-medium">Manage subscription →</a>
                 </span>
-                <button @click="show = false" class="ml-4 text-white hover:text-amber-100 flex-shrink-0" aria-label="Dismiss">✕</button>
+                <button @click="graceBanner = false" class="ml-4 text-white hover:text-amber-100 flex-shrink-0" aria-label="Dismiss">✕</button>
             </div>
         @endif
         <!-- Mobile Header -->
@@ -107,8 +106,8 @@
 
         <!-- Desktop Sidebar -->
         <aside
-            class="hidden md:flex md:flex-col md:fixed md:bottom-0 md:left-0 md:w-64 md:bg-white md:border-r md:border-gray-200 dark:bg-gray-900 dark:border-gray-800 {{ auth()->user()?->onTrial() ? 'md:top-11' : 'md:top-0' }}"
-            :class="{ 'md:!top-0': !trialBanner }"
+            class="hidden md:flex md:flex-col md:fixed md:bottom-0 md:left-0 md:w-64 md:bg-white md:border-r md:border-gray-200 dark:bg-gray-900 dark:border-gray-800 {{ (auth()->user()?->onTrial() || session('subscription_grace_days') !== null) ? 'md:top-11' : 'md:top-0' }}"
+            :class="{ 'md:!top-0': !trialBanner && !graceBanner }"
         >
             <div class="flex flex-col flex-1 min-h-0">
                 <!-- Brand -->
@@ -418,8 +417,8 @@
 
         <!-- Main Content -->
         <main
-            class="mt-14 md:mt-0 md:ml-64 min-h-screen dark:bg-gray-950 {{ auth()->user()?->onTrial() ? 'pt-11' : '' }}"
-            :class="{ '!pt-0': !trialBanner }"
+            class="mt-14 md:mt-0 md:ml-64 min-h-screen dark:bg-gray-950 {{ (auth()->user()?->onTrial() || session('subscription_grace_days') !== null) ? 'pt-11' : '' }}"
+            :class="{ '!pt-0': !trialBanner && !graceBanner }"
         >
             <div class="p-4 sm:p-6 lg:p-8">
                 {{ $slot }}
