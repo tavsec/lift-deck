@@ -810,6 +810,7 @@ return [
         'per_client' => '/client',
         'metered' => 'metered',
         'cta_subscribe' => 'Subscribe Now',
+        'current_plan' => 'Current Plan',
         'basic' => [
             'name' => 'Basic',
             'description' => 'For coaches just getting started.',

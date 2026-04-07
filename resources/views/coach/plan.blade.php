@@ -36,8 +36,8 @@
                     <form method="POST" action="{{ route('coach.plan.store') }}">
                         @csrf
                         <input type="hidden" name="plan" value="basic">
-                        <button type="submit" class="w-full inline-flex justify-center items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-sm text-white uppercase tracking-widest hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition ease-in-out duration-150">
-                            {{ __('coach.plan.basic.cta') }}
+                        <button type="submit" @disabled($currentPlanKey === 'basic') class="w-full inline-flex justify-center items-center px-4 py-2 border border-transparent rounded-md font-semibold text-sm text-white uppercase tracking-widest transition ease-in-out duration-150 {{ $currentPlanKey === 'basic' ? 'bg-gray-400 dark:bg-gray-600 cursor-not-allowed' : 'bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2' }}">
+                            {{ $currentPlanKey === 'basic' ? __('coach.plan.current_plan') : __('coach.plan.basic.cta') }}
                         </button>
                     </form>
                     <p class="mt-2 text-center text-xs text-gray-500 dark:text-gray-400">{{ __('coach.plan.basic.trial_note', ['price' => $stripePrices['basic']['formatted'] ?? '—']) }}</p>
@@ -72,8 +72,8 @@
                     <form method="POST" action="{{ route('coach.plan.store') }}">
                         @csrf
                         <input type="hidden" name="plan" value="advanced">
-                        <button type="submit" class="w-full inline-flex justify-center items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-sm text-white uppercase tracking-widest hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition ease-in-out duration-150">
-                            {{ __('coach.plan.cta_subscribe') }}
+                        <button type="submit" @disabled($currentPlanKey === 'advanced') class="w-full inline-flex justify-center items-center px-4 py-2 border border-transparent rounded-md font-semibold text-sm text-white uppercase tracking-widest transition ease-in-out duration-150 {{ $currentPlanKey === 'advanced' ? 'bg-gray-400 dark:bg-gray-600 cursor-not-allowed' : 'bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2' }}">
+                            {{ $currentPlanKey === 'advanced' ? __('coach.plan.current_plan') : __('coach.plan.cta_subscribe') }}
                         </button>
                     </form>
                 </div>
@@ -107,8 +107,8 @@
                     <form method="POST" action="{{ route('coach.plan.store') }}">
                         @csrf
                         <input type="hidden" name="plan" value="professional">
-                        <button type="submit" class="w-full inline-flex justify-center items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-sm text-white uppercase tracking-widest hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition ease-in-out duration-150">
-                            {{ __('coach.plan.cta_subscribe') }}
+                        <button type="submit" @disabled($currentPlanKey === 'professional') class="w-full inline-flex justify-center items-center px-4 py-2 border border-transparent rounded-md font-semibold text-sm text-white uppercase tracking-widest transition ease-in-out duration-150 {{ $currentPlanKey === 'professional' ? 'bg-gray-400 dark:bg-gray-600 cursor-not-allowed' : 'bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2' }}">
+                            {{ $currentPlanKey === 'professional' ? __('coach.plan.current_plan') : __('coach.plan.cta_subscribe') }}
                         </button>
                     </form>
                 </div>

@@ -807,6 +807,7 @@ return [
         'per_client' => '/stranka',
         'metered' => 'merjeno',
         'cta_subscribe' => 'Naroči se',
+        'current_plan' => 'Trenutni načrt',
         'basic' => [
             'name' => 'Basic',
             'description' => 'Za trenerje, ki šele začenjajo.',

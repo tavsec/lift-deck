@@ -33,6 +33,7 @@ class PlanSelectionController extends Controller
         return view('coach.plan', [
             'plans' => config('plans'),
             'stripePrices' => $this->stripePriceService->forPlans(),
+            'currentPlanKey' => $this->subscriptionService->currentPlanKey($coach),
         ]);
     }
 
