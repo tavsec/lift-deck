@@ -164,6 +164,7 @@ return [
             'name_placeholder' => 'Polno ime stranke',
             'add' => 'Dodaj stranko',
             'cancel' => 'Prekliči',
+            'added' => 'Stranka uspešno dodana.',
         ],
 
         'analytics' => [

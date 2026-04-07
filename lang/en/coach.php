@@ -164,6 +164,7 @@ return [
             'name_placeholder' => "Client's full name",
             'add' => 'Add Client',
             'cancel' => 'Cancel',
+            'added' => 'Client added successfully.',
         ],
 
         'analytics' => [

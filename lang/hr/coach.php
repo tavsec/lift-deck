@@ -164,6 +164,7 @@ return [
             'name_placeholder' => 'Puno ime klijenta',
             'add' => 'Dodaj klijenta',
             'cancel' => 'Odustani',
+            'added' => 'Klijent uspješno dodan.',
         ],
 
         'analytics' => [

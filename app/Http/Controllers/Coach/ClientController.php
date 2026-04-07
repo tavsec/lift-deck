@@ -326,7 +326,7 @@ class ClientController extends Controller
         $this->subscriptionService->reportClientUsage($coach);
 
         return redirect()->route('coach.clients.index')
-            ->with('success', 'Client added successfully.');
+            ->with('success', __('coach.clients.create_track_only.added'));
     }
 
     /**

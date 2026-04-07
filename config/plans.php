@@ -16,6 +16,7 @@ return [
     'professional' => [
         'stripe_price_flat_id' => env('STRIPE_PRICE_PROFESSIONAL_FLAT'),
         'stripe_price_metered_id' => env('STRIPE_PRICE_PROFESSIONAL_METERED'),
+        'stripe_meter_event' => env('STRIPE_METER_EVENT_PROFESSIONAL', 'clients'),
         'client_limit' => null,
         'included_clients' => 30,
         'features' => ['loyalty', 'custom_branding'],

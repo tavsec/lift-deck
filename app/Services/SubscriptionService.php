@@ -75,9 +75,7 @@ class SubscriptionService
             return null;
         }
 
-        $priceId = $subscription->stripe_price;
-
-        $planKey = $this->findPlanKeyByPriceId($priceId);
+        $planKey = $this->currentPlanKey($coach);
 
         return $planKey ? config("plans.{$planKey}") : null;
     }
@@ -100,9 +98,20 @@ class SubscriptionService
             return null;
         }
 
-        $priceId = $subscription->stripe_price;
+        // Single-price subscription
+        if ($subscription->stripe_price) {
+            return $this->findPlanKeyByPriceId($subscription->stripe_price);
+        }
 
-        return $this->findPlanKeyByPriceId($priceId);
+        // Multi-price subscription (e.g. professional flat + metered) — check items
+        foreach ($subscription->items as $item) {
+            $key = $this->findPlanKeyByPriceId($item->stripe_price);
+            if ($key) {
+                return $key;
+            }
+        }
+
+        return null;
     }
 
     /**
@@ -190,20 +199,16 @@ class SubscriptionService
             return;
         }
 
+        if (! $coach->subscription('default')) {
+            return;
+        }
+
         $includedClients = config('plans.professional.included_clients', 30);
         $totalClients = $coach->clients()->count();
         $overageClients = max(0, $totalClients - $includedClients);
 
-        $meteredPriceId = config('plans.professional.stripe_price_metered_id');
-        $subscriptionItem = $coach->subscription('default')
-            ?->items()
-            ->where('stripe_price', $meteredPriceId)
-            ->first();
+        $meterEvent = config('plans.professional.stripe_meter_event', 'clients');
 
-        if (! $subscriptionItem) {
-            return;
-        }
-
-        $coach->reportUsage($subscriptionItem->stripe_id, $overageClients);
+        $coach->reportMeterEvent($meterEvent, quantity: $overageClients);
     }
 }
