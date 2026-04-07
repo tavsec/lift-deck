@@ -106,7 +106,7 @@
         </div>
 
         <!-- Desktop Sidebar -->
-        <aside class="hidden md:flex md:flex-col md:fixed md:inset-y-0 md:left-0 md:w-64 md:bg-white md:border-r md:border-gray-200 dark:bg-gray-900 dark:border-gray-800">
+        <aside class="hidden md:flex md:flex-col md:fixed md:bottom-0 md:left-0 md:w-64 md:bg-white md:border-r md:border-gray-200 dark:bg-gray-900 dark:border-gray-800 {{ auth()->user()?->onTrial() ? 'md:top-11' : 'md:top-0' }}">
             <div class="flex flex-col flex-1 min-h-0">
                 <!-- Brand -->
                 <div class="flex items-center h-16 px-6 border-b border-gray-200 dark:border-gray-800">
