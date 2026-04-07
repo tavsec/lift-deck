@@ -21,6 +21,9 @@ return Application::configure(basePath: dirname(__DIR__))
             \App\Http\Middleware\SetLocale::class,
         ]);
         $middleware->trustProxies('*');
+        $middleware->validateCsrfTokens(except: [
+            'cashier/webhook',
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //
