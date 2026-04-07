@@ -17,7 +17,7 @@ it('settings page passes subscription data to view for trial coach', function ()
         ->assertViewHas('isInGracePeriod', false);
 });
 
-it('settings subscription card shows trial state with manage link', function (): void {
+it('settings trial card shows choose a plan for generic trial coach without stripe subscription', function (): void {
     $coach = User::factory()->create([
         'role' => 'coach',
         'trial_ends_at' => now()->addDays(5),
@@ -28,7 +28,33 @@ it('settings subscription card shows trial state with manage link', function ():
         ->get(route('coach.settings.edit'))
         ->assertOk()
         ->assertSee('Free trial')
-        ->assertSee('Manage on Stripe');
+        ->assertSee('Choose a plan')
+        ->assertDontSee('Manage on Stripe');
+});
+
+it('settings trial card shows manage on stripe for stripe-subscribed trial coach', function (): void {
+    $coach = User::factory()->create([
+        'role' => 'coach',
+        'trial_ends_at' => null,
+        'is_free_access' => false,
+    ]);
+
+    $coach->subscriptions()->create([
+        'type' => 'default',
+        'stripe_id' => 'sub_test_trialing',
+        'stripe_status' => 'trialing',
+        'stripe_price' => 'price_test',
+        'quantity' => 1,
+        'trial_ends_at' => now()->addDays(5),
+        'ends_at' => null,
+    ]);
+
+    $this->actingAs($coach)
+        ->get(route('coach.settings.edit'))
+        ->assertOk()
+        ->assertSee('Free trial')
+        ->assertSee('Manage on Stripe')
+        ->assertDontSee('Choose a plan');
 });
 
 it('settings subscription card shows active plan for free access coach', function (): void {

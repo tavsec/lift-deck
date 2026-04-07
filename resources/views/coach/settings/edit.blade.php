@@ -160,10 +160,17 @@
                         </p>
                     </div>
                 </div>
-                <a href="{{ route('coach.subscription.portal') }}"
-                   class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition ease-in-out duration-150">
-                    Manage on Stripe
-                </a>
+                @if($hasStripeSubscription)
+                    <a href="{{ route('coach.subscription.portal') }}"
+                       class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition ease-in-out duration-150">
+                        Manage on Stripe
+                    </a>
+                @else
+                    <a href="{{ route('coach.plan') }}"
+                       class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition ease-in-out duration-150">
+                        Choose a plan
+                    </a>
+                @endif
 
             @elseif($isInGracePeriod)
                 {{-- State 2: Grace period --}}
