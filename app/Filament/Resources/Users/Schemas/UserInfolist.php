@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\Users\Schemas;
 
 use App\Features\Loyalty;
+use App\Services\SubscriptionService;
 use Filament\Actions\Action;
 use Filament\Infolists\Components\ColorEntry;
 use Filament\Infolists\Components\ImageEntry;
@@ -47,16 +48,71 @@ class UserInfolist
                 TextEntry::make('onboarding_welcome_text')
                     ->placeholder('-')
                     ->columnSpanFull(),
-                TextEntry::make('stripe_id')
-                    ->label('Stripe Customer ID')
-                    ->placeholder('Not yet created'),
-                TextEntry::make('trial_ends_at')
-                    ->label('Trial Ends At')
-                    ->dateTime()
-                    ->placeholder('No trial'),
-                TextEntry::make('is_free_access')
-                    ->label('Free Access')
-                    ->formatStateUsing(fn (bool $state): string => $state ? 'Yes' : 'No'),
+
+                Section::make('Subscription')
+                    ->schema([
+                        TextEntry::make('subscription_plan')
+                            ->label('Plan')
+                            ->state(fn ($record): string => ucfirst(app(SubscriptionService::class)->currentPlanKey($record) ?? 'None'))
+                            ->badge()
+                            ->color(fn (string $state): string => match ($state) {
+                                'Basic' => 'info',
+                                'Advanced' => 'warning',
+                                'Professional' => 'success',
+                                default => 'gray',
+                            }),
+                        TextEntry::make('subscription_status')
+                            ->label('Status')
+                            ->state(function ($record): string {
+                                $sub = $record->subscription('default');
+                                if ($sub) {
+                                    return $sub->stripe_status;
+                                }
+
+                                return $record->onTrial() ? 'trial' : 'none';
+                            })
+                            ->badge()
+                            ->color(fn (string $state): string => match ($state) {
+                                'active' => 'success',
+                                'trialing', 'trial' => 'info',
+                                'past_due', 'unpaid' => 'warning',
+                                'canceled', 'none' => 'danger',
+                                default => 'gray',
+                            }),
+                        TextEntry::make('trial_ends_at')
+                            ->label('Trial Ends At')
+                            ->state(fn ($record) => $record->trial_ends_at ?? $record->subscription('default')?->trial_ends_at)
+                            ->dateTime()
+                            ->placeholder('-'),
+                        TextEntry::make('subscription_ends_at')
+                            ->label('Subscription Ends At')
+                            ->state(fn ($record) => $record->subscription('default')?->ends_at)
+                            ->dateTime()
+                            ->placeholder('-'),
+                        TextEntry::make('stripe_id')
+                            ->label('Stripe Customer ID')
+                            ->copyable()
+                            ->placeholder('-'),
+                        TextEntry::make('stripe_subscription_id')
+                            ->label('Stripe Subscription ID')
+                            ->state(fn ($record) => $record->subscription('default')?->stripe_id)
+                            ->copyable()
+                            ->placeholder('-'),
+                        TextEntry::make('is_free_access')
+                            ->label('Free Access')
+                            ->state(fn ($record): string => $record->is_free_access ? 'Granted' : 'Not granted')
+                            ->badge()
+                            ->color(fn (string $state): string => $state === 'Granted' ? 'success' : 'gray')
+                            ->helperText('Full Professional access without a subscription (ambassadors, friends, etc.)')
+                            ->suffixAction(
+                                Action::make('toggle_free_access')
+                                    ->label(fn (TextEntry $component): string => $component->getState() === 'Granted' ? 'Revoke' : 'Grant')
+                                    ->color(fn (TextEntry $component): string => $component->getState() === 'Granted' ? 'danger' : 'success')
+                                    ->button()
+                                    ->action(fn ($record): mixed => $record->update(['is_free_access' => ! $record->is_free_access])),
+                            ),
+                    ]),
+
                 Section::make('Features')
                     ->schema([
                         TextEntry::make('loyalty_feature_status')
