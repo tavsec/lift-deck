@@ -27,6 +27,33 @@
         </style>
     </head>
     <body class="font-sans antialiased bg-gray-50 dark:bg-gray-950">
+        {{-- Trial Banner --}}
+        @if(auth()->user()?->onTrial())
+            @php
+                $trialEndsAt = auth()->user()->trial_ends_at ?? auth()->user()->subscription('default')?->trial_ends_at;
+                $trialDaysRemaining = $trialEndsAt ? max(0, (int) now()->diffInDays($trialEndsAt, false)) : null;
+            @endphp
+            <div
+                x-data="{ show: true }"
+                x-show="show"
+                x-transition
+                class="fixed top-0 inset-x-0 z-50 bg-blue-600 text-white px-4 py-3 flex items-center justify-between text-sm"
+            >
+                <span>
+                    You're on a free trial.
+                    @if($trialDaysRemaining !== null)
+                        <strong>{{ $trialDaysRemaining }} {{ $trialDaysRemaining === 1 ? 'day' : 'days' }}</strong> remaining.
+                    @endif
+                    @if(auth()->user()->subscribed('default'))
+                        <a href="{{ route('coach.subscription.portal') }}" class="underline ml-1 font-medium">Manage subscription →</a>
+                    @else
+                        <a href="{{ route('coach.plan') }}" class="underline ml-1 font-medium">Choose a plan →</a>
+                    @endif
+                </span>
+                <button @click="show = false" class="ml-4 text-white hover:text-blue-200 flex-shrink-0" aria-label="Dismiss">✕</button>
+            </div>
+        @endif
+
         {{-- Grace Period Alert --}}
         @if(session('subscription_grace_days') !== null)
             <div

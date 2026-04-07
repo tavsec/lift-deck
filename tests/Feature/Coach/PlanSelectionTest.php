@@ -17,7 +17,7 @@ it('renders the plan selection page for a new coach', function (): void {
         ->assertSee('Free Trial');
 });
 
-it('redirects to dashboard if coach already has active trial', function (): void {
+it('allows generic trial coach to visit plan page to switch plans', function (): void {
     $coach = User::factory()->state(['role' => 'coach'])->create([
         'trial_ends_at' => now()->addDays(5),
         'selected_plan' => 'basic',
@@ -25,7 +25,7 @@ it('redirects to dashboard if coach already has active trial', function (): void
 
     $this->actingAs($coach)
         ->get(route('coach.plan'))
-        ->assertRedirect(route('coach.dashboard'));
+        ->assertOk();
 });
 
 it('selecting basic plan sets selected_plan and redirects to checkout', function (): void {

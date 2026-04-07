@@ -16,11 +16,13 @@ class PlanSelectionController extends Controller
     {
         $coach = auth()->user();
 
-        if ($this->subscriptionService->isActive($coach)) {
+        // Free access and coaches with an active Stripe subscription don't need to select a plan
+        if ($coach->is_free_access || $coach->subscribed('default')) {
             return redirect()->route('coach.dashboard');
         }
 
-        if ($coach->selected_plan) {
+        // Coach abandoned checkout (selected a plan, not on trial, no subscription yet)
+        if ($coach->selected_plan && ! $coach->onTrial()) {
             return redirect()->route('coach.subscription');
         }
 
