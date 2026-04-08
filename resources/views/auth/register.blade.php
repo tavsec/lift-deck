@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="h-full">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="h-full {{ auth()->check() && auth()->user()->dark_mode ? 'dark' : '' }}">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -56,7 +56,7 @@
         <div class="mx-auto flex w-full max-w-lg flex-1 flex-col px-8 py-10 md:px-14 md:py-12">
 
             {{-- Mobile wordmark --}}
-            <div class="mb-8 font-display text-lg font-extrabold text-[#222222] md:hidden">LiftDeck</div>
+            <div class="mb-8 font-display text-lg font-extrabold text-[#222222] dark:text-gray-100 md:hidden">LiftDeck</div>
 
             {{-- Step indicator --}}
             <div class="mb-10 flex items-center gap-0">
@@ -66,7 +66,7 @@
                         :class="{
                             'bg-[#1456f0] text-white shadow-[0_0_0_3px_#bfdbfe]': step === {{ $s }},
                             'bg-[#1456f0] text-white': step > {{ $s }},
-                            'bg-slate-200 text-slate-400': step < {{ $s }}
+                            'bg-gray-200 text-gray-400 dark:bg-gray-700 dark:text-gray-500': step < {{ $s }}
                         }"
                     >
                         <span x-show="step <= {{ $s }}">{{ $s }}</span>
@@ -77,7 +77,7 @@
                         </span>
                     </div>
                     @if ($s < 3)
-                        <div class="h-0.5 flex-1 transition-colors" :class="step > {{ $s }} ? 'bg-[#1456f0]' : 'bg-slate-200'"></div>
+                        <div class="h-0.5 flex-1 transition-colors" :class="step > {{ $s }} ? 'bg-[#1456f0]' : 'bg-gray-200 dark:bg-gray-700'"></div>
                     @endif
                 @endforeach
             </div>
@@ -105,7 +105,7 @@
                             >
                                 <span class="text-2xl">{{ $icon }}</span>
                                 <div>
-                                    <div class="text-sm font-semibold" :class="coachingType === '{{ $type }}' ? 'text-[#1456f0]' : 'text-[#222222]'">
+                                    <div class="text-sm font-semibold dark:text-gray-100" :class="coachingType === '{{ $type }}' ? 'text-[#1456f0] dark:text-blue-400' : 'text-[#222222]'">
                                         {{ __('auth.register.step1.'.$type) }}
                                     </div>
                                     <div class="mt-0.5 text-xs text-[#8e8e93]">{{ __('auth.register.step1.'.$type.'_sub') }}</div>
