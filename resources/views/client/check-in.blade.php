@@ -76,7 +76,7 @@
                                     @for($i = $metric->scale_min; $i <= $metric->scale_max; $i++)
                                         <button type="button" @click="value = value === '{{ $i }}' ? '' : '{{ $i }}'"
                                             :class="value === '{{ $i }}' ? 'text-white border-[#1456f0]' : 'bg-white dark:bg-gray-800 text-[#45515e] dark:text-gray-300 border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700'"
-                                            :style="value === '{{ $i }}' ? 'background-color: #1456f0' : ''"
+                                            :style="value === '{{ $i }}' ? 'background-color: var(--color-primary)' : ''"
                                             class="flex-1 py-2 text-sm font-medium border rounded-lg transition-colors">
                                             {{ $i }}
                                         </button>

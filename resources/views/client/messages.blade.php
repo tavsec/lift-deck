@@ -12,7 +12,7 @@
                 @endif
             </div>
             <div class="ml-3">
-                <h1 class="text-base font-semibold text-[#222222] dark:text-gray-100">{{ $coach->name }}</h1>
+                <h1 class="font-display text-base font-semibold text-[#222222] dark:text-gray-100">{{ $coach->name }}</h1>
                 <p class="text-xs text-[#8e8e93] dark:text-gray-500">{{ __('client.messages.your_coach') }}</p>
             </div>
         </div>
