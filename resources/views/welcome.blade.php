@@ -128,42 +128,42 @@
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
                 <div class="rounded-2xl p-7 text-white shadow-brand" style="background: linear-gradient(135deg, #1456f0 0%, #3b82f6 100%);">
                     <div class="w-10 h-10 rounded-xl bg-white/20 mb-5 flex items-center justify-center">
-                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                        <svg class="w-5 h-5 text-white" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
                     </div>
                     <h3 class="font-display text-lg font-semibold mb-2">Training Programs</h3>
                     <p class="text-sm text-white/80 leading-relaxed">Build and assign custom programs with exercise libraries, sets, reps, and progression tracking.</p>
                 </div>
                 <div class="rounded-2xl p-7 text-white shadow-brand" style="background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);">
                     <div class="w-10 h-10 rounded-xl bg-white/20 mb-5 flex items-center justify-center">
-                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+                        <svg class="w-5 h-5 text-white" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
                     </div>
                     <h3 class="font-display text-lg font-semibold mb-2">Client Check-ins</h3>
                     <p class="text-sm text-white/80 leading-relaxed">Collect weekly check-ins with photos, metrics, and mood tracking — all in one dashboard.</p>
                 </div>
                 <div class="rounded-2xl p-7 text-white shadow-brand" style="background: linear-gradient(135deg, #181e25 0%, #2d3a4a 100%);">
                     <div class="w-10 h-10 rounded-xl bg-white/20 mb-5 flex items-center justify-center">
-                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+                        <svg class="w-5 h-5 text-white" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
                     </div>
                     <h3 class="font-display text-lg font-semibold mb-2">Workout Logging</h3>
                     <p class="text-sm text-white/80 leading-relaxed">Clients log workouts from their phone. You see every rep, set, and personal best in real time.</p>
                 </div>
                 <div class="rounded-2xl p-7 text-white shadow-brand" style="background: linear-gradient(135deg, #0891b2 0%, #06b6d4 100%);">
                     <div class="w-10 h-10 rounded-xl bg-white/20 mb-5 flex items-center justify-center">
-                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+                        <svg class="w-5 h-5 text-white" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
                     </div>
                     <h3 class="font-display text-lg font-semibold mb-2">Nutrition Plans</h3>
                     <p class="text-sm text-white/80 leading-relaxed">Create meal plans and track macros. Keep nutrition and training aligned for every client.</p>
                 </div>
                 <div class="rounded-2xl p-7 text-white shadow-brand" style="background: linear-gradient(135deg, #ea580c 0%, #f97316 100%);">
                     <div class="w-10 h-10 rounded-xl bg-white/20 mb-5 flex items-center justify-center">
-                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/></svg>
+                        <svg class="w-5 h-5 text-white" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/></svg>
                     </div>
                     <h3 class="font-display text-lg font-semibold mb-2">Messaging</h3>
                     <p class="text-sm text-white/80 leading-relaxed">Direct messaging between coach and client — no switching apps, no lost threads.</p>
                 </div>
                 <div class="rounded-2xl p-7 text-white shadow-brand" style="background: linear-gradient(135deg, #059669 0%, #10b981 100%);">
                     <div class="w-10 h-10 rounded-xl bg-white/20 mb-5 flex items-center justify-center">
-                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"/></svg>
+                        <svg class="w-5 h-5 text-white" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"/></svg>
                     </div>
                     <h3 class="font-display text-lg font-semibold mb-2">Loyalty & Rewards</h3>
                     <p class="text-sm text-white/80 leading-relaxed">Motivate clients with points, achievements, and redeemable rewards tied to their progress.</p>
@@ -213,16 +213,16 @@
             <div>
                 <div class="text-xs font-bold uppercase tracking-widest text-white/40 mb-4">Company</div>
                 <div class="space-y-3">
-                    <span class="block text-sm text-white/50">About</span>
-                    <span class="block text-sm text-white/50">Blog</span>
-                    <span class="block text-sm text-white/50">Contact</span>
+                    <a href="#" class="block text-sm text-white/50 hover:text-white/70 transition-colors">About</a>
+                    <a href="#" class="block text-sm text-white/50 hover:text-white/70 transition-colors">Blog</a>
+                    <a href="#" class="block text-sm text-white/50 hover:text-white/70 transition-colors">Contact</a>
                 </div>
             </div>
             <div>
                 <div class="text-xs font-bold uppercase tracking-widest text-white/40 mb-4">Legal</div>
                 <div class="space-y-3">
-                    <span class="block text-sm text-white/50">Privacy</span>
-                    <span class="block text-sm text-white/50">Terms</span>
+                    <a href="#" class="block text-sm text-white/50 hover:text-white/70 transition-colors">Privacy</a>
+                    <a href="#" class="block text-sm text-white/50 hover:text-white/70 transition-colors">Terms</a>
                 </div>
             </div>
         </div>
