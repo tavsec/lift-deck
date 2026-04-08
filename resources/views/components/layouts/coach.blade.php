@@ -102,7 +102,7 @@
 
         <!-- Desktop Sidebar -->
         <aside
-            class="hidden md:flex md:flex-col md:fixed md:bottom-0 md:left-0 md:w-56 bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-800 {{ (auth()->user()?->onTrial() || session('subscription_grace_days') !== null) ? 'md:top-11' : 'md:top-0' }}"
+            class="hidden md:flex md:flex-col md:fixed md:bottom-0 md:left-0 md:w-56 md:bg-white md:dark:bg-gray-900 md:border-r md:border-gray-200 md:dark:border-gray-800 {{ (auth()->user()?->onTrial() || session('subscription_grace_days') !== null) ? 'md:top-11' : 'md:top-0' }}"
             :class="{ 'md:!top-0': !trialBanner && !graceBanner }"
         >
             <div class="flex flex-col flex-1 min-h-0">
@@ -413,7 +413,7 @@
 
         <!-- Main Content -->
         <div
-            class="mt-14 md:mt-0 md:pl-56 {{ (auth()->user()?->onTrial() || session('subscription_grace_days') !== null) ? 'pt-11' : '' }}"
+            class="mt-14 md:mt-0 md:pl-56 flex flex-col flex-1 {{ (auth()->user()?->onTrial() || session('subscription_grace_days') !== null) ? 'pt-11' : '' }}"
             :class="{ '!pt-0': !trialBanner && !graceBanner }"
         >
             <main class="flex-1 min-h-screen bg-gray-50 dark:bg-gray-950 p-6">
