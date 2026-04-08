@@ -1,25 +1,25 @@
 <x-layouts.client>
     <x-slot:title>{{ __('client.check_in_history.heading') }}</x-slot:title>
 
-    <div class="py-6 space-y-6">
+    <div class="px-4 py-5 space-y-4">
         <!-- Header -->
-        <div>
-            <a href="{{ route('client.check-in') }}" class="inline-flex items-center text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-100 mb-4">
+        <div class="mb-5">
+            <a href="{{ route('client.check-in') }}" class="inline-flex items-center text-sm text-[#8e8e93] dark:text-gray-500 hover:text-[#222222] dark:hover:text-gray-100 mb-3">
                 <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
                 </svg>
                 {{ __('client.check_in_history.back') }}
             </a>
-            <h1 class="text-2xl font-bold text-gray-900 dark:text-gray-100">{{ __('client.check_in_history.heading') }}</h1>
+            <h1 class="font-display text-xl font-semibold text-[#222222] dark:text-gray-100">{{ __('client.check_in_history.heading') }}</h1>
         </div>
 
         <!-- Date Range Filter -->
-        <x-bladewind::card>
+        <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 shadow-card p-5">
             <form method="GET" action="{{ route('client.check-in.history') }}">
                 <div>
-                    <label class="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">{{ __('client.check_in_history.time_period') }}</label>
+                    <label class="block text-xs font-medium text-[#8e8e93] dark:text-gray-500 mb-1">{{ __('client.check_in_history.time_period') }}</label>
                     <select name="range" onchange="this.form.submit()"
-                        class="block rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm">
+                        class="block rounded-lg border-gray-200 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-[#1456f0] focus:ring-[#1456f0] text-sm text-[#222222]">
                         <option value="7" @selected($range == '7')>{{ __('client.check_in_history.last_7_days') }}</option>
                         <option value="14" @selected($range == '14')>{{ __('client.check_in_history.last_14_days') }}</option>
                         <option value="30" @selected($range == '30')>{{ __('client.check_in_history.last_30_days') }}</option>
@@ -27,27 +27,27 @@
                     </select>
                 </div>
             </form>
-        </x-bladewind::card>
+        </div>
 
         @if(count($checkInCharts) === 0 && $tableMetrics->count() === 0 && $imageMetrics->isEmpty())
             <!-- No metrics assigned -->
-            <x-bladewind::card>
+            <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 shadow-card p-5">
                 <div class="text-center py-12">
-                    <svg class="mx-auto h-12 w-12 text-gray-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg class="mx-auto h-12 w-12 text-gray-300 dark:text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
                     </svg>
-                    <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">{{ __('client.check_in_history.no_metrics') }}</p>
+                    <p class="mt-3 text-sm text-[#8e8e93] dark:text-gray-500">{{ __('client.check_in_history.no_metrics') }}</p>
                 </div>
-            </x-bladewind::card>
+            </div>
         @else
             <!-- Check-in Charts & Table -->
-            <x-bladewind::card>
+            <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 shadow-card p-5">
                 <div class="space-y-6">
                     @if(count($checkInCharts) > 0)
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                             @foreach($checkInCharts as $chart)
-                                <div class="border border-gray-200 dark:border-gray-800 rounded-lg p-3">
-                                    <h3 class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">{{ $chart['name'] }} @if($chart['unit'])({{ $chart['unit'] }})@endif</h3>
+                                <div class="border border-gray-100 dark:border-gray-800 rounded-xl p-3">
+                                    <h3 class="text-sm font-semibold text-[#222222] dark:text-gray-100 mb-2">{{ $chart['name'] }} @if($chart['unit'])({{ $chart['unit'] }})@endif</h3>
                                     <div x-data="clientCheckInChart({{ json_encode($chart) }})" x-init="init()">
                                         <canvas x-ref="canvas" height="200"></canvas>
                                     </div>
@@ -58,23 +58,23 @@
 
                     @if($tableMetrics->count() > 0)
                         <div class="overflow-x-auto">
-                            <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-800 text-sm">
-                                <thead class="bg-gray-50 dark:bg-gray-800">
+                            <table class="min-w-full divide-y divide-gray-100 dark:divide-gray-800 text-sm">
+                                <thead class="bg-gray-50 dark:bg-gray-800/50">
                                     <tr>
-                                        <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">{{ __('client.check_in_history.date') }}</th>
+                                        <th class="px-3 py-2 text-left text-xs font-medium text-[#8e8e93] dark:text-gray-500 uppercase">{{ __('client.check_in_history.date') }}</th>
                                         @foreach($tableMetrics as $metric)
-                                            <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">{{ $metric->name }}</th>
+                                            <th class="px-3 py-2 text-left text-xs font-medium text-[#8e8e93] dark:text-gray-500 uppercase">{{ $metric->name }}</th>
                                         @endforeach
                                     </tr>
                                 </thead>
-                                <tbody class="divide-y divide-gray-200 dark:divide-gray-800">
+                                <tbody class="divide-y divide-gray-100 dark:divide-gray-800">
                                     @foreach($checkInTableData as $row)
                                         @php
                                             $hasValue = collect($tableMetrics)->contains(fn ($m) => $row['metric_' . $m->id] !== null);
                                         @endphp
                                         @if($hasValue)
                                             <tr>
-                                                <td class="px-3 py-2 text-gray-700 dark:text-gray-300 whitespace-nowrap">{{ \Carbon\Carbon::parse($row['date'])->format('M j') }}</td>
+                                                <td class="px-3 py-2 text-[#45515e] dark:text-gray-300 whitespace-nowrap">{{ \Carbon\Carbon::parse($row['date'])->format('M j') }}</td>
                                                 @foreach($tableMetrics as $metric)
                                                     <td class="px-3 py-2">
                                                         @if($row['metric_' . $metric->id] === null)
@@ -90,7 +90,7 @@
                                                                 </svg>
                                                             @endif
                                                         @else
-                                                            <span title="{{ $row['metric_' . $metric->id] }}">{{ Str::limit($row['metric_' . $metric->id], 30) }}</span>
+                                                            <span class="text-[#222222] dark:text-gray-100" title="{{ $row['metric_' . $metric->id] }}">{{ Str::limit($row['metric_' . $metric->id], 30) }}</span>
                                                         @endif
                                                     </td>
                                                 @endforeach
@@ -103,15 +103,15 @@
                     @endif
 
                     @if(count($checkInCharts) === 0 && $tableMetrics->count() === 0)
-                        <p class="text-sm text-gray-500 dark:text-gray-400 text-center py-8">{{ __('client.check_in_history.no_data') }}</p>
+                        <p class="text-sm text-[#8e8e93] dark:text-gray-500 text-center py-8">{{ __('client.check_in_history.no_data') }}</p>
                     @endif
                 </div>
-            </x-bladewind::card>
+            </div>
 
             @if($imageMetrics->isNotEmpty())
                 <!-- Progress Photos -->
-                <x-bladewind::card>
-                    <h2 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">{{ __('client.check_in_history.progress_photos') }}</h2>
+                <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 shadow-card p-5">
+                    <h2 class="font-display text-base font-semibold text-[#222222] dark:text-gray-100 mb-4">{{ __('client.check_in_history.progress_photos') }}</h2>
 
                     <div class="space-y-6">
                         @php $hasAnyPhotos = collect($imageMetricData)->contains(fn ($m) => count($m['photos']) > 0); @endphp
@@ -120,14 +120,14 @@
                             @foreach($imageMetricData as $metricData)
                                 @if(count($metricData['photos']) > 0)
                                     <div>
-                                        <h3 class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">{{ $metricData['name'] }}</h3>
+                                        <h3 class="text-sm font-semibold text-[#45515e] dark:text-gray-400 mb-2">{{ $metricData['name'] }}</h3>
                                         <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-2">
                                             @foreach($metricData['photos'] as $photo)
                                                 <div x-data="{ showLightbox: false }" class="relative">
-                                                    <button @click="showLightbox = true" class="block w-full aspect-square rounded-lg overflow-hidden border border-gray-200 dark:border-gray-800 hover:border-blue-400 transition-colors">
+                                                    <button @click="showLightbox = true" class="block w-full aspect-square rounded-lg overflow-hidden border border-gray-200 dark:border-gray-800 hover:border-[#1456f0] transition-colors">
                                                         <img src="{{ $photo['thumbUrl'] }}" alt="{{ $metricData['name'] }} - {{ $photo['date'] }}" class="w-full h-full object-cover">
                                                     </button>
-                                                    <p class="text-xs text-gray-500 dark:text-gray-400 text-center mt-1">{{ \Carbon\Carbon::parse($photo['date'])->format('M j') }}</p>
+                                                    <p class="text-xs text-[#8e8e93] dark:text-gray-500 text-center mt-1">{{ \Carbon\Carbon::parse($photo['date'])->format('M j') }}</p>
 
                                                     {{-- Lightbox --}}
                                                     <div x-show="showLightbox" x-cloak @click.self="showLightbox = false" @keydown.escape.window="showLightbox = false"
@@ -147,10 +147,10 @@
                                 @endif
                             @endforeach
                         @else
-                            <p class="text-sm text-gray-500 dark:text-gray-400 text-center py-8">{{ __('client.check_in_history.no_photos') }}</p>
+                            <p class="text-sm text-[#8e8e93] dark:text-gray-500 text-center py-8">{{ __('client.check_in_history.no_photos') }}</p>
                         @endif
                     </div>
-                </x-bladewind::card>
+                </div>
             @endif
         @endif
     </div>
@@ -194,8 +194,8 @@
                             labels: labels,
                             datasets: [{
                                 data: values,
-                                borderColor: '#3B82F6',
-                                backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                                borderColor: '#1456f0',
+                                backgroundColor: 'rgba(20, 86, 240, 0.1)',
                                 fill: true,
                                 tension: 0.3,
                                 spanGaps: false,
