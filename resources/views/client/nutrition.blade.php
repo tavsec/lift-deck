@@ -239,7 +239,7 @@
                                     <template x-for="type in mealTypes" :key="type">
                                         <button type="button" @click="mealType = type; customMealType = ''"
                                             :class="mealType === type && !customMealType ? 'text-white border-[#1456f0]' : 'bg-white dark:bg-gray-800 text-[#45515e] dark:text-gray-300 border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700'"
-                                            :style="mealType === type && !customMealType ? 'background-color: #1456f0' : ''"
+                                            :style="mealType === type && !customMealType ? 'background-color: var(--color-primary)' : ''"
                                             class="px-3 py-1.5 text-sm font-medium border rounded-lg transition-colors" x-text="type">
                                         </button>
                                     </template>
@@ -280,7 +280,7 @@
                                 <template x-for="type in mealTypes" :key="type">
                                     <button type="button" @click="customFormMealType = type; customFormCustomType = ''"
                                         :class="customFormMealType === type && !customFormCustomType ? 'text-white border-[#1456f0]' : 'bg-white dark:bg-gray-800 text-[#45515e] dark:text-gray-300 border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700'"
-                                        :style="customFormMealType === type && !customFormCustomType ? 'background-color: #1456f0' : ''"
+                                        :style="customFormMealType === type && !customFormCustomType ? 'background-color: var(--color-primary)' : ''"
                                         class="px-3 py-1.5 text-sm font-medium border rounded-lg transition-colors" x-text="type">
                                     </button>
                                 </template>
