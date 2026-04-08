@@ -65,7 +65,8 @@ $maxWidth = [
 
     <div
         x-show="show"
-        class="mb-6 bg-white dark:bg-gray-900 rounded-2xl overflow-hidden border border-gray-100 dark:border-gray-800 shadow-brand transform transition-all sm:w-full {{ $maxWidth }} sm:mx-auto"
+        class="mb-6 bg-white dark:bg-gray-900 rounded-2xl overflow-hidden border border-gray-100 dark:border-gray-800 transform transition-all sm:w-full {{ $maxWidth }} sm:mx-auto"
+        style="box-shadow: rgba(44, 30, 116, 0.12) 0px 0px 24px;"
         x-transition:enter="ease-out duration-300"
         x-transition:enter-start="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
         x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"
