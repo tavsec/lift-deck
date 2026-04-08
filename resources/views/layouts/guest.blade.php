@@ -12,7 +12,8 @@
             <a href="/" class="mb-8">
                 <x-application-logo />
             </a>
-            <div class="w-full max-w-md bg-white dark:bg-gray-900 rounded-2xl border border-gray-100 dark:border-gray-800 shadow-brand p-8">
+            <div class="w-full max-w-md bg-white dark:bg-gray-900 rounded-2xl border border-gray-100 dark:border-gray-800 p-8"
+                 style="box-shadow: rgba(44, 30, 116, 0.12) 0px 0px 24px;">
                 {{ $slot }}
             </div>
         </div>
