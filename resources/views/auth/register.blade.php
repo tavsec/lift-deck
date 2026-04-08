@@ -5,8 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ __('auth.register.step3.title') }} — {{ config('app.name') }}</title>
-    <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600,700,800&display=swap" rel="stylesheet"/>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="h-full font-sans antialiased">
@@ -54,7 +52,7 @@
     </div>
 
     {{-- RIGHT PANEL --}}
-    <div class="flex flex-1 flex-col overflow-y-auto bg-slate-50">
+    <div class="flex flex-1 flex-col overflow-y-auto bg-gray-50 dark:bg-gray-950">
         <div class="mx-auto flex w-full max-w-lg flex-1 flex-col px-8 py-10 md:px-14 md:py-12">
 
             {{-- Mobile wordmark --}}
@@ -103,7 +101,7 @@
                                 type="button"
                                 @click="coachingType = '{{ $type }}'"
                                 class="w-full flex items-center gap-4 rounded-xl border-2 px-4 py-3.5 text-left transition-colors"
-                                :class="coachingType === '{{ $type }}' ? 'border-[#1456f0] bg-blue-50' : 'border-slate-200 bg-white hover:border-slate-300'"
+                                :class="coachingType === '{{ $type }}' ? 'border-[#1456f0] bg-blue-50' : 'border-gray-200 bg-white hover:border-gray-300 dark:border-gray-700 dark:bg-gray-900'"
                             >
                                 <span class="text-2xl">{{ $icon }}</span>
                                 <div>
@@ -149,7 +147,7 @@
                                 type="text"
                                 x-model="name"
                                 {{-- no placeholder: name is a free-text personal name --}}
-                                class="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm text-[#222222] focus:border-[#1456f0] focus:outline-none"
+                                class="w-full rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 px-3 py-2 text-sm text-[#222222] dark:text-gray-100 focus:border-[#1456f0] focus:outline-none focus:ring-2 focus:ring-[#1456f0]/20"
                             >
                         </div>
 
@@ -162,7 +160,7 @@
                                 type="text"
                                 x-model="gymName"
                                 placeholder="{{ __('auth.register.step2.gym_name_ph') }}"
-                                class="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm text-[#222222] focus:border-[#1456f0] focus:outline-none"
+                                class="w-full rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 px-3 py-2 text-sm text-[#222222] dark:text-gray-100 focus:border-[#1456f0] focus:outline-none focus:ring-2 focus:ring-[#1456f0]/20"
                             >
                         </div>
 
@@ -175,7 +173,7 @@
                                 type="text"
                                 x-model="bio"
                                 placeholder="{{ __('auth.register.step2.bio_ph') }}"
-                                class="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm text-[#222222] focus:border-[#1456f0] focus:outline-none"
+                                class="w-full rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 px-3 py-2 text-sm text-[#222222] dark:text-gray-100 focus:border-[#1456f0] focus:outline-none focus:ring-2 focus:ring-[#1456f0]/20"
                             >
                         </div>
 
@@ -188,7 +186,7 @@
                             <input
                                 type="number"
                                 min="0"
-                                class="w-28 rounded-lg border border-slate-300 px-3 py-2 text-sm text-[#222222] focus:border-[#1456f0] focus:outline-none"
+                                class="w-28 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 px-3 py-2 text-sm text-[#222222] dark:text-gray-100 focus:border-[#1456f0] focus:outline-none focus:ring-2 focus:ring-[#1456f0]/20"
                                 placeholder="0"
                             >
                         </div>
@@ -203,7 +201,7 @@
                                 @foreach (['tool_sheets', 'tool_excel', 'tool_whatsapp', 'tool_other'] as $tool)
                                     <label class="flex cursor-pointer items-center">
                                         <input type="checkbox" name="tools[]" value="{{ $tool }}" class="peer sr-only">
-                                        <span class="rounded-full border border-slate-300 bg-white px-3 py-1 text-xs text-[#45515e] transition-colors peer-checked:border-[#1456f0] peer-checked:bg-blue-50 peer-checked:text-[#1456f0]">
+                                        <span class="rounded-full border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 px-3 py-1 text-xs text-[#45515e] dark:text-gray-300 transition-colors peer-checked:border-[#1456f0] peer-checked:bg-blue-50 peer-checked:text-[#1456f0]">
                                             {{ __('auth.register.step2.'.$tool) }}
                                         </span>
                                     </label>
@@ -244,7 +242,7 @@
                                 required
                                 autocomplete="username"
                                 placeholder="{{ __('auth.register.step3.email_ph') }}"
-                                class="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm text-[#222222] focus:border-[#1456f0] focus:outline-none @error('email') border-red-400 @enderror"
+                                class="w-full rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 px-3 py-2 text-sm text-[#222222] dark:text-gray-100 focus:border-[#1456f0] focus:outline-none focus:ring-2 focus:ring-[#1456f0]/20 @error('email') border-red-400 @enderror"
                             >
                             @error('email')
                                 <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
@@ -260,7 +258,7 @@
                                 required
                                 autocomplete="new-password"
                                 placeholder="{{ __('auth.register.step3.password_ph') }}"
-                                class="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm text-[#222222] focus:border-[#1456f0] focus:outline-none @error('password') border-red-400 @enderror"
+                                class="w-full rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 px-3 py-2 text-sm text-[#222222] dark:text-gray-100 focus:border-[#1456f0] focus:outline-none focus:ring-2 focus:ring-[#1456f0]/20 @error('password') border-red-400 @enderror"
                             >
                             @error('password')
                                 <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
@@ -276,7 +274,7 @@
                                 required
                                 autocomplete="new-password"
                                 placeholder="{{ __('auth.register.step3.confirm_ph') }}"
-                                class="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm text-[#222222] focus:border-[#1456f0] focus:outline-none @error('password_confirmation') border-red-400 @enderror"
+                                class="w-full rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 px-3 py-2 text-sm text-[#222222] dark:text-gray-100 focus:border-[#1456f0] focus:outline-none focus:ring-2 focus:ring-[#1456f0]/20 @error('password_confirmation') border-red-400 @enderror"
                             >
                             @error('password_confirmation')
                                 <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
