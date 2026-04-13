@@ -42,7 +42,7 @@
                             <input type="file" name="avatar" accept="image/*" class="text-sm text-[#45515e] dark:text-gray-400 file:mr-3 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-gray-100 dark:file:bg-gray-800 file:text-[#45515e] dark:file:text-gray-300 hover:file:bg-gray-200 dark:hover:file:bg-gray-700">
                             @if($user->avatar)
                                 <label class="flex items-center gap-1.5 text-sm text-red-600 dark:text-red-400 cursor-pointer">
-                                    <input type="checkbox" name="remove_avatar" value="1" class="rounded border-gray-300 text-red-600 focus:ring-red-500">
+                                    <input type="checkbox" name="remove_avatar" value="1" class="rounded border-gray-300 dark:border-gray-700 text-red-600 focus:ring-red-500">
                                     {{ __('coach.settings.profile.remove_photo') }}
                                 </label>
                             @endif

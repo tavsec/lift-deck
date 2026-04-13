@@ -210,7 +210,7 @@
                         @foreach($imageMetricData as $metricData)
                             @if(count($metricData['photos']) > 0)
                                 <div>
-                                    <h3 class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">{{ $metricData['name'] }}</h3>
+                                    <h3 class="text-sm font-medium text-[#45515e] dark:text-gray-300 mb-2">{{ $metricData['name'] }}</h3>
                                     <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-2">
                                         @foreach($metricData['photos'] as $photo)
                                             <div x-data="{ showLightbox: false }" class="relative">

@@ -100,17 +100,17 @@
                                     </div>
                                 </div>
                                 <div class="flex items-center gap-1">
-                                    <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-300" x-text="exercise.muscle_group.replace('_', ' ')"></span>
+                                    <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-gray-100 text-[#45515e] dark:bg-gray-800 dark:text-gray-300" x-text="exercise.muscle_group.replace('_', ' ')"></span>
                                     <!-- Move Up -->
                                     <button type="button" @click="moveExerciseUp(exerciseIndex)" :disabled="exerciseIndex === 0"
-                                        class="p-1 text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 rounded hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors disabled:opacity-30 disabled:cursor-not-allowed" title="Move up">
+                                        class="p-1 text-[#8e8e93] dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 rounded hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors disabled:opacity-30 disabled:cursor-not-allowed" title="Move up">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"/>
                                         </svg>
                                     </button>
                                     <!-- Move Down -->
                                     <button type="button" @click="moveExerciseDown(exerciseIndex)" :disabled="exerciseIndex === exercises.length - 1"
-                                        class="p-1 text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 rounded hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors disabled:opacity-30 disabled:cursor-not-allowed" title="Move down">
+                                        class="p-1 text-[#8e8e93] dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 rounded hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors disabled:opacity-30 disabled:cursor-not-allowed" title="Move down">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
                                         </svg>
@@ -180,7 +180,7 @@
                                                         type="button"
                                                         @click="removeSet(exerciseIndex, setIndex)"
                                                         x-show="exercise.sets.length > 1"
-                                                        class="p-1 text-gray-400 dark:text-gray-500 hover:text-red-500 transition-colors"
+                                                        class="p-1 text-[#8e8e93] dark:text-gray-500 hover:text-red-500 transition-colors"
                                                         title="Remove set"
                                                     >
                                                         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
