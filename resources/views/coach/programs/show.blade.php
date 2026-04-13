@@ -5,43 +5,43 @@
         <!-- Header -->
         <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
             <div>
-                <a href="{{ route('coach.programs.index') }}" class="inline-flex items-center text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-100 mb-4">
-                    <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <a href="{{ route('coach.programs.index') }}" class="inline-flex items-center text-sm text-[#8e8e93] dark:text-gray-400 hover:text-[#45515e] dark:hover:text-gray-100 mb-4">
+                    <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
                     </svg>
                     {{ __('coach.programs.show.back') }}
                 </a>
                 <div class="flex items-center gap-3">
-                    <h1 class="text-2xl font-bold text-gray-900 dark:text-gray-100">{{ $program->name }}</h1>
+                    <h1 class="font-display text-2xl font-semibold text-[#222222] dark:text-gray-100">{{ $program->name }}</h1>
                     @if($program->is_template)
-                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-800">
+                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-400">
                             {{ __('coach.programs.show.template') }}
                         </span>
                     @endif
                 </div>
                 <div class="flex flex-wrap gap-2 mt-2">
-                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200">
+                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 dark:bg-gray-800 text-[#45515e] dark:text-gray-300">
                         {{ ucfirst(str_replace('_', ' ', $program->type)) }}
                     </span>
                     @if($program->duration_weeks)
-                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400">
                             {{ __('coach.programs.show.n_weeks', ['n' => $program->duration_weeks]) }}
                         </span>
                     @endif
-                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400">
                         {{ __('coach.programs.show.n_workouts', ['n' => $program->workouts->count()]) }}
                     </span>
                 </div>
             </div>
             <div class="flex gap-2">
-                <a href="{{ route('coach.programs.assign', $program) }}" class="inline-flex items-center px-4 py-2 bg-green-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition ease-in-out duration-150">
-                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <a href="{{ route('coach.programs.assign', $program) }}" class="inline-flex items-center px-4 py-2.5 bg-[#181e25] dark:bg-gray-700 border border-transparent rounded-lg font-semibold text-sm text-white hover:bg-[#2d3748] dark:hover:bg-gray-600 focus:outline-none transition ease-in-out duration-150">
+                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"/>
                     </svg>
                     {{ __('coach.programs.show.assign') }}
                 </a>
-                <a href="{{ route('coach.programs.edit', $program) }}" class="inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-md font-medium text-sm text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition ease-in-out duration-150">
-                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <a href="{{ route('coach.programs.edit', $program) }}" class="inline-flex items-center px-4 py-2.5 border border-gray-200 dark:border-gray-700 rounded-lg font-medium text-sm text-[#45515e] dark:text-gray-300 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none transition ease-in-out duration-150">
+                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
                     </svg>
                     {{ __('coach.programs.show.edit') }}
@@ -49,8 +49,8 @@
                 <form method="POST" action="{{ route('coach.programs.destroy', $program) }}" onsubmit="return confirm('{{ __('coach.programs.show.delete_confirm') }}');">
                     @csrf
                     @method('DELETE')
-                    <button type="submit" class="inline-flex items-center px-4 py-2 border border-red-300 rounded-md font-medium text-sm text-red-700 bg-white dark:bg-gray-800 hover:bg-red-50 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition ease-in-out duration-150">
-                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <button type="submit" class="inline-flex items-center px-4 py-2.5 border border-red-200 dark:border-red-800 rounded-lg font-medium text-sm text-red-600 dark:text-red-400 bg-white dark:bg-gray-800 hover:bg-red-50 dark:hover:bg-red-900/20 focus:outline-none transition ease-in-out duration-150">
+                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
                         </svg>
                         {{ __('coach.programs.show.delete') }}
@@ -60,58 +60,58 @@
         </div>
 
         @if(session('success'))
-            <div class="rounded-md bg-green-50 p-4">
+            <div class="rounded-xl bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 p-4">
                 <div class="flex">
                     <div class="flex-shrink-0">
-                        <svg class="h-5 w-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="h-5 w-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
                         </svg>
                     </div>
                     <div class="ml-3">
-                        <p class="text-sm font-medium text-green-800">{{ session('success') }}</p>
+                        <p class="text-sm font-medium text-green-800 dark:text-green-300">{{ session('success') }}</p>
                     </div>
                 </div>
             </div>
         @endif
 
         @if($program->description)
-            <div class="bg-white dark:bg-gray-900 rounded-lg shadow p-6">
-                <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100 mb-2">{{ __('coach.programs.show.description') }}</h2>
-                <p class="text-gray-700 dark:text-gray-300">{{ $program->description }}</p>
+            <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 shadow-card p-6">
+                <h2 class="text-xs font-medium text-[#8e8e93] dark:text-gray-400 uppercase tracking-wide mb-2">{{ __('coach.programs.show.description') }}</h2>
+                <p class="text-sm text-[#45515e] dark:text-gray-300">{{ $program->description }}</p>
             </div>
         @endif
 
         <!-- Assigned Clients -->
         @if($assignedClients->count() > 0)
-            <div class="bg-white dark:bg-gray-900 rounded-lg shadow p-6">
-                <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100 mb-4">{{ __('coach.programs.show.assigned_clients', ['n' => $assignedClients->count()]) }}</h2>
+            <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 shadow-card p-6">
+                <h2 class="font-display text-base font-semibold text-[#222222] dark:text-gray-100 mb-4">{{ __('coach.programs.show.assigned_clients', ['n' => $assignedClients->count()]) }}</h2>
                 <div class="flex flex-wrap gap-3">
                     @foreach($assignedClients as $assignment)
                         <div class="inline-flex items-center gap-2">
-                            <a href="{{ route('coach.clients.show', $assignment->client) }}" class="inline-flex items-center px-3 py-2 rounded-lg bg-gray-50 dark:bg-gray-950 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
-                                <div class="h-8 w-8 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center overflow-hidden mr-2">
+                            <a href="{{ route('coach.clients.show', $assignment->client) }}" class="inline-flex items-center px-3 py-2 rounded-lg bg-gray-50 dark:bg-gray-800/50 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+                                <div class="h-8 w-8 rounded-full flex items-center justify-center overflow-hidden mr-2" style="background-color: var(--color-primary)">
                                     @if($assignment->client->avatar)
                                         <img src="{{ $assignment->client->avatar }}" alt="{{ $assignment->client->name }}" class="w-full h-full object-cover">
                                     @else
-                                        <span class="text-sm font-medium text-blue-700 dark:text-blue-300">{{ strtoupper(substr($assignment->client->name, 0, 1)) }}</span>
+                                        <span class="text-sm font-medium text-white">{{ strtoupper(substr($assignment->client->name, 0, 1)) }}</span>
                                     @endif
                                 </div>
                                 <div>
-                                    <p class="text-sm font-medium text-gray-900 dark:text-gray-100">{{ $assignment->client->name }}</p>
-                                    <p class="text-xs text-gray-500 dark:text-gray-400">
+                                    <p class="text-sm font-medium text-[#222222] dark:text-gray-100">{{ $assignment->client->name }}</p>
+                                    <p class="text-xs text-[#8e8e93] dark:text-gray-400">
                                         @if($assignment->isActive())
-                                            <span class="text-green-600">{{ __('coach.programs.show.active') }}</span>
+                                            <span class="text-green-600 dark:text-green-400">{{ __('coach.programs.show.active') }}</span>
                                         @elseif($assignment->isPaused())
-                                            <span class="text-yellow-600">{{ __('coach.programs.show.paused') }}</span>
+                                            <span class="text-yellow-600 dark:text-yellow-400">{{ __('coach.programs.show.paused') }}</span>
                                         @else
-                                            <span class="text-gray-600 dark:text-gray-400">{{ __('coach.programs.show.completed') }}</span>
+                                            <span class="text-[#8e8e93] dark:text-gray-400">{{ __('coach.programs.show.completed') }}</span>
                                         @endif
                                         - {{ __('coach.programs.show.started') }} {{ $assignment->started_at->format('M d, Y') }}
                                     </p>
                                 </div>
                             </a>
-                            <a href="{{ route('coach.programs.assignments.targets.edit', [$program, $assignment]) }}" class="inline-flex items-center px-2.5 py-1.5 border border-gray-300 dark:border-gray-700 rounded-md text-xs font-medium text-gray-600 dark:text-gray-400 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
-                                <svg class="w-3.5 h-3.5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <a href="{{ route('coach.programs.assignments.targets.edit', [$program, $assignment]) }}" class="inline-flex items-center px-2.5 py-1.5 border border-gray-200 dark:border-gray-700 rounded-lg text-xs font-medium text-[#45515e] dark:text-gray-400 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                                <svg class="w-3.5 h-3.5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3"/>
                                 </svg>
                                 {{ __('coach.programs.show.targets') }}
@@ -124,62 +124,64 @@
 
         <!-- Workouts -->
         <div class="space-y-4">
-            <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">{{ __('coach.programs.show.workouts') }}</h2>
+            <h2 class="font-display text-base font-semibold text-[#222222] dark:text-gray-100">{{ __('coach.programs.show.workouts') }}</h2>
 
             @if($program->workouts->count() > 0)
                 @foreach($program->workouts as $workout)
-                    <div class="bg-white dark:bg-gray-900 rounded-lg shadow overflow-hidden">
-                        <div class="px-6 py-4 bg-gray-50 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-800">
+                    <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 shadow-card overflow-hidden">
+                        <div class="px-6 py-4 bg-gray-50 dark:bg-gray-800/50 border-b border-gray-100 dark:border-gray-800">
                             <div class="flex items-center justify-between">
                                 <div>
-                                    <h3 class="text-md font-medium text-gray-900 dark:text-gray-100">{{ $workout->name }}</h3>
-                                    <p class="text-sm text-gray-500 dark:text-gray-400">Day {{ $workout->day_number }} &middot; {{ $workout->exercises->count() }} exercises</p>
+                                    <h3 class="text-base font-semibold text-[#222222] dark:text-gray-100">{{ $workout->name }}</h3>
+                                    <p class="text-sm text-[#8e8e93] dark:text-gray-400">Day {{ $workout->day_number }} &middot; {{ $workout->exercises->count() }} exercises</p>
                                 </div>
                             </div>
                             @if($workout->notes)
-                                <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">{{ $workout->notes }}</p>
+                                <p class="mt-2 text-sm text-[#45515e] dark:text-gray-400">{{ $workout->notes }}</p>
                             @endif
                         </div>
 
                         @if($workout->exercises->count() > 0)
-                            <div class="divide-y divide-gray-200 dark:divide-gray-800">
+                            <div class="divide-y divide-gray-100 dark:divide-gray-800">
                                 @foreach($workout->exercises as $workoutExercise)
                                     <div class="px-6 py-4 flex items-center justify-between">
                                         <div class="flex-1">
-                                            <p class="text-sm font-medium text-gray-900 dark:text-gray-100">{{ $workoutExercise->exercise->name }}</p>
-                                            <p class="text-sm text-gray-500 dark:text-gray-400">
+                                            <p class="text-sm font-medium text-[#222222] dark:text-gray-100">{{ $workoutExercise->exercise->name }}</p>
+                                            <p class="text-sm text-[#8e8e93] dark:text-gray-400">
                                                 {{ $workoutExercise->sets }} sets &times; {{ $workoutExercise->reps }} reps
                                                 @if($workoutExercise->formatted_rest)
                                                     &middot; {{ $workoutExercise->formatted_rest }} rest
                                                 @endif
                                             </p>
                                             @if($workoutExercise->notes)
-                                                <p class="text-xs text-gray-400 dark:text-gray-500 mt-1">{{ $workoutExercise->notes }}</p>
+                                                <p class="text-xs text-[#8e8e93] dark:text-gray-500 mt-1">{{ $workoutExercise->notes }}</p>
                                             @endif
                                         </div>
-                                        <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400">
+                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 dark:bg-gray-800 text-[#45515e] dark:text-gray-400">
                                             {{ ucfirst(str_replace('_', ' ', $workoutExercise->exercise->muscle_group)) }}
                                         </span>
                                     </div>
                                 @endforeach
                             </div>
                         @else
-                            <div class="px-6 py-8 text-center text-sm text-gray-500 dark:text-gray-400">
+                            <div class="px-6 py-8 text-center text-sm text-[#8e8e93] dark:text-gray-400">
                                 {{ __('coach.programs.show.no_exercises') }}
                             </div>
                         @endif
                     </div>
                 @endforeach
             @else
-                <div class="bg-white dark:bg-gray-900 rounded-lg shadow">
+                <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 shadow-card">
                     <div class="text-center py-12">
-                        <svg class="mx-auto h-12 w-12 text-gray-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
-                        </svg>
-                        <h3 class="mt-2 text-sm font-medium text-gray-900 dark:text-gray-100">{{ __('coach.programs.show.no_workouts') }}</h3>
-                        <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">{{ __('coach.programs.show.no_workouts_description') }}</p>
+                        <div class="w-12 h-12 rounded-2xl bg-gray-100 dark:bg-gray-800 flex items-center justify-center mx-auto mb-3">
+                            <svg class="h-6 w-6 text-[#8e8e93]" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-sm font-semibold text-[#222222] dark:text-gray-100">{{ __('coach.programs.show.no_workouts') }}</h3>
+                        <p class="mt-1 text-sm text-[#8e8e93] dark:text-gray-400">{{ __('coach.programs.show.no_workouts_description') }}</p>
                         <div class="mt-6">
-                            <a href="{{ route('coach.programs.edit', $program) }}" class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-700">
+                            <a href="{{ route('coach.programs.edit', $program) }}" class="inline-flex items-center px-4 py-2.5 bg-[#181e25] dark:bg-gray-700 border border-transparent rounded-lg font-semibold text-sm text-white hover:bg-[#2d3748] transition ease-in-out duration-150">
                                 {{ __('coach.programs.show.edit_program') }}
                             </a>
                         </div>
