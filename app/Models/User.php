@@ -11,14 +11,16 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Storage;
+use Laravel\Cashier\Billable;
 
 class User extends Authenticatable implements FilamentUser
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable;
+    use Billable, HasFactory, Notifiable, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -44,6 +46,9 @@ class User extends Authenticatable implements FilamentUser
         'dark_mode',
         'locale',
         'is_track_only',
+        'is_free_access',
+        'selected_plan',
+        'trial_ends_at',
         'metrics_onboarded_at',
     ];
 
@@ -69,6 +74,8 @@ class User extends Authenticatable implements FilamentUser
             'password' => 'hashed',
             'dark_mode' => 'boolean',
             'is_track_only' => 'boolean',
+            'is_free_access' => 'boolean',
+            'trial_ends_at' => 'datetime',
             'metrics_onboarded_at' => 'datetime',
         ];
     }

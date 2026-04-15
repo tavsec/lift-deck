@@ -80,6 +80,7 @@ return [
             'edit' => 'Edit',
             'remove' => 'Remove',
             'remove_confirm' => 'Are you sure you want to remove this client?',
+            'removed' => 'Client removed successfully.',
             'invitation_code_hint' => 'Share this invitation code with your client: :code',
             'status' => 'Status',
             'onboarding' => 'Onboarding',
@@ -164,6 +165,7 @@ return [
             'name_placeholder' => "Client's full name",
             'add' => 'Add Client',
             'cancel' => 'Cancel',
+            'added' => 'Client added successfully.',
         ],
 
         'analytics' => [
@@ -768,6 +770,9 @@ return [
             'confirm' => 'Confirm New Password',
             'update' => 'Update Password',
         ],
+        'subscription' => [
+            'heading' => 'Subscription',
+        ],
     ],
 
     'redemptions' => [
@@ -798,6 +803,39 @@ return [
         'mood' => 'Mood',
         'energy' => 'Energy Level',
         'sleep' => 'Sleep Quality',
+    ],
+
+    'plan' => [
+        'title' => 'Choose Your Plan',
+        'subtitle' => 'Select the plan that best fits your coaching needs. You can upgrade at any time.',
+        'per_month' => '/mo',
+        'per_client' => '/client',
+        'metered' => 'metered',
+        'cta_subscribe' => 'Subscribe Now',
+        'current_plan' => 'Current Plan',
+        'basic' => [
+            'name' => 'Basic',
+            'description' => 'For coaches just getting started.',
+            'feature_clients' => 'Up to 5 clients',
+            'feature_programs' => 'Programs & workout logs',
+            'feature_nutrition' => 'Nutrition tracking',
+            'cta' => 'Start Free Trial',
+            'trial_note' => '7-day free trial, then €:price/month',
+        ],
+        'advanced' => [
+            'name' => 'Advanced',
+            'description' => 'For growing coaches.',
+            'feature_clients' => 'Up to 15 clients',
+            'feature_basic' => 'Everything in Basic',
+            'feature_loyalty' => 'Loyalty & achievements',
+        ],
+        'professional' => [
+            'name' => 'Professional',
+            'description' => 'For professional coaches at scale.',
+            'feature_clients' => '30 clients included',
+            'feature_advanced' => 'Everything in Advanced',
+            'feature_branding' => 'Custom branding',
+        ],
     ],
 
     'metrics_setup' => [

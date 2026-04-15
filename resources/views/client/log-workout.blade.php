@@ -3,30 +3,30 @@
 
     <div
         x-data="workoutLogger()"
-        class="space-y-6"
+        class="px-4 py-5 space-y-4"
         @keydown.escape.window="selectedExercise = null"
     >
         <!-- Header -->
-        <div>
-            <a href="{{ route('client.log') }}" class="inline-flex items-center text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 mb-3">
+        <div class="mb-5">
+            <a href="{{ route('client.log') }}" class="inline-flex items-center text-sm text-[#8e8e93] dark:text-gray-500 hover:text-[#222222] dark:hover:text-gray-300 mb-3">
                 <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
                 </svg>
                 {{ __('client.log_workout.back') }}
             </a>
             @if($isCustom)
-                <h1 class="text-2xl font-bold text-gray-900 dark:text-gray-100">{{ __('client.log_workout.custom_workout') }}</h1>
-                <p class="text-sm text-gray-500 dark:text-gray-400">{{ __('client.log_workout.custom_workout_description') }}</p>
+                <h1 class="font-display text-xl font-semibold text-[#222222] dark:text-gray-100">{{ __('client.log_workout.custom_workout') }}</h1>
+                <p class="text-sm text-[#8e8e93] dark:text-gray-500 mt-0.5">{{ __('client.log_workout.custom_workout_description') }}</p>
             @else
-                <h1 class="text-2xl font-bold text-gray-900 dark:text-gray-100">{{ $workout->name }}</h1>
-                <p class="text-sm text-gray-500 dark:text-gray-400">{{ __('client.program.day_n', ['n' => $workout->day_number]) }} &middot; <span x-text="exercises.length"></span> {{ __('client.log_workout.exercises_label') }}</p>
+                <h1 class="font-display text-xl font-semibold text-[#222222] dark:text-gray-100">{{ $workout->name }}</h1>
+                <p class="text-sm text-[#8e8e93] dark:text-gray-500 mt-0.5">{{ __('client.program.day_n', ['n' => $workout->day_number]) }} &middot; <span x-text="exercises.length"></span> {{ __('client.log_workout.exercises_label') }}</p>
             @endif
         </div>
 
         @if($errors->any())
-            <div class="rounded-md bg-red-50 p-4">
-                <p class="text-sm font-medium text-red-800">{{ __('client.log_workout.errors') }}</p>
-                <ul class="mt-2 text-sm text-red-700 list-disc list-inside">
+            <div class="rounded-lg bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 p-4 mb-4">
+                <p class="text-sm font-semibold text-red-800 dark:text-red-200">{{ __('client.log_workout.errors') }}</p>
+                <ul class="mt-2 text-sm text-red-700 dark:text-red-300 list-disc list-inside">
                     @foreach($errors->all() as $error)
                         <li>{{ $error }}</li>
                     @endforeach
@@ -39,18 +39,18 @@
             class="rounded-lg bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 p-4">
             <div class="flex items-start justify-between gap-3">
                 <div>
-                    <p class="text-sm font-medium text-blue-800 dark:text-blue-300">{{ __('client.log_workout.restore_banner_title') }}</p>
+                    <p class="text-sm font-semibold text-blue-800 dark:text-blue-300">{{ __('client.log_workout.restore_banner_title') }}</p>
                     <p class="text-xs text-blue-600 dark:text-blue-400 mt-0.5">
                         {{ str_replace(':time', '', __('client.log_workout.restore_banner_description')) }}<span x-text="_savedAtFormatted"></span>{{ Str::after(__('client.log_workout.restore_banner_description'), ':time') }}
                     </p>
                 </div>
                 <div class="flex gap-2 shrink-0">
                     <button type="button" @click="confirmRestore()"
-                        class="text-xs font-semibold px-3 py-1.5 bg-blue-600 text-white rounded-md hover:bg-blue-700">
+                        class="text-xs font-semibold px-3 py-1.5 bg-[#1456f0] text-white rounded-lg hover:bg-[#2563eb] transition-colors">
                         {{ __('client.log_workout.restore') }}
                     </button>
                     <button type="button" @click="discardRestore()"
-                        class="text-xs font-medium px-3 py-1.5 bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-400 border border-gray-300 dark:border-gray-700 rounded-md hover:bg-gray-50">
+                        class="text-xs font-medium px-3 py-1.5 bg-white dark:bg-gray-800 text-[#45515e] dark:text-gray-400 border border-gray-200 dark:border-gray-700 rounded-lg hover:bg-gray-50 transition-colors">
                         {{ __('client.log_workout.start_fresh') }}
                     </button>
                 </div>
@@ -70,7 +70,7 @@
 
         <!-- Offline submission banner -->
         <div x-show="showOfflineSubmitBanner" x-cloak
-            class="rounded-lg bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 p-3">
+            class="rounded-lg bg-[#e8ffea] dark:bg-green-900/20 border border-green-200 dark:border-green-800 p-3">
             <p class="text-sm text-green-700 dark:text-green-400 flex items-center gap-2">
                 <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
@@ -89,8 +89,8 @@
             <div class="space-y-4">
                 <!-- Custom Workout Name -->
                 @if($isCustom)
-                    <x-bladewind::card class="!p-4">
-                        <label for="custom_name" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">{{ __('client.log_workout.workout_name') }}</label>
+                    <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 shadow-card p-5">
+                        <label for="custom_name" class="block text-sm font-medium text-[#222222] dark:text-gray-100 mb-1">{{ __('client.log_workout.workout_name') }}</label>
                         <input
                             type="text"
                             id="custom_name"
@@ -98,18 +98,18 @@
                             value="{{ old('custom_name') }}"
                             placeholder="{{ __('client.log_workout.workout_name_placeholder') }}"
                             required
-                            class="w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm text-sm focus:border-blue-500 focus:ring-blue-500 @error('custom_name') border-red-300 @enderror"
+                            class="w-full rounded-lg border-gray-200 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm text-sm focus:border-[#1456f0] focus:ring-[#1456f0] @error('custom_name') border-red-300 @enderror"
                         >
                         @error('custom_name')
                             <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
                         @enderror
-                    </x-bladewind::card>
+                    </div>
                 @endif
 
                 <!-- Exercises -->
                 <div x-ref="exerciseList" x-init="initSortable()" class="space-y-4">
                 <template x-for="(exercise, exerciseIndex) in exercises" :key="exercise.exercise_id">
-                    <x-bladewind::card class="!p-4">
+                    <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 shadow-card p-5">
                         <div class="space-y-3">
                             <div class="flex items-center justify-between">
                                 <div class="flex items-center gap-2">
@@ -120,24 +120,24 @@
                                         </svg>
                                     </div>
                                     <div>
-                                        <button type="button" class="text-base font-semibold text-gray-900 dark:text-gray-100 text-left hover:underline focus:outline-none" @click="selectedExercise = exercise" x-text="exercise.name"></button>
-                                        <p class="text-xs text-gray-500 dark:text-gray-400" x-show="exercise.prescribed_sets">
+                                        <button type="button" class="text-sm font-semibold text-[#222222] dark:text-gray-100 text-left hover:underline focus:outline-none" @click="selectedExercise = exercise" x-text="exercise.name"></button>
+                                        <p class="text-xs text-[#8e8e93] dark:text-gray-500" x-show="exercise.prescribed_sets">
                                             {{ Str::before(__('client.log_workout.prescribed'), ':sets') }}<span x-text="exercise.prescribed_sets"></span>{{ Str::between(__('client.log_workout.prescribed'), ':sets', ':reps') }}<span x-text="exercise.prescribed_reps"></span>{{ Str::after(__('client.log_workout.prescribed'), ':reps') }}
                                         </p>
                                     </div>
                                 </div>
                                 <div class="flex items-center gap-1">
-                                    <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-300" x-text="exercise.muscle_group.replace('_', ' ')"></span>
+                                    <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-blue-50 text-[#1456f0] dark:bg-blue-900/30 dark:text-blue-400" x-text="exercise.muscle_group.replace('_', ' ')"></span>
                                     <!-- Move Up -->
                                     <button type="button" @click="moveExerciseUp(exerciseIndex)" :disabled="exerciseIndex === 0"
-                                        class="p-1 text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 rounded hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors disabled:opacity-30 disabled:cursor-not-allowed" title="Move up">
+                                        class="p-1 text-[#8e8e93] dark:text-gray-500 hover:text-[#222222] dark:hover:text-gray-300 rounded hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors disabled:opacity-30 disabled:cursor-not-allowed" title="Move up">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"/>
                                         </svg>
                                     </button>
                                     <!-- Move Down -->
                                     <button type="button" @click="moveExerciseDown(exerciseIndex)" :disabled="exerciseIndex === exercises.length - 1"
-                                        class="p-1 text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 rounded hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors disabled:opacity-30 disabled:cursor-not-allowed" title="Move down">
+                                        class="p-1 text-[#8e8e93] dark:text-gray-500 hover:text-[#222222] dark:hover:text-gray-300 rounded hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors disabled:opacity-30 disabled:cursor-not-allowed" title="Move down">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
                                         </svg>
@@ -157,7 +157,7 @@
                             <input type="hidden" :name="`exercises[${exerciseIndex}][exercise_id]`" :value="exercise.exercise_id">
 
                             <!-- Previous Session Data -->
-                            <div x-show="exercise.previous_sets && exercise.previous_sets.length > 0" class="text-xs text-gray-500 dark:text-gray-400">
+                            <div x-show="exercise.previous_sets && exercise.previous_sets.length > 0" class="text-xs text-[#8e8e93] dark:text-gray-500">
                                 <span class="font-medium">{{ __('client.log_workout.last_session') }}</span>
                                 <template x-for="(prev, prevIndex) in (exercise.previous_sets || [])" :key="prevIndex">
                                     <span>
@@ -170,7 +170,7 @@
                             <div class="overflow-x-auto">
                                 <table class="w-full text-sm">
                                     <thead>
-                                        <tr class="text-left text-xs text-gray-500 dark:text-gray-400 border-b border-gray-200 dark:border-gray-800">
+                                        <tr class="text-left text-xs text-[#8e8e93] dark:text-gray-500 border-b border-gray-100 dark:border-gray-800">
                                             <th class="pb-2 pr-3 w-12">{{ __('client.log_workout.set') }}</th>
                                             <th class="pb-2 pr-3">{{ __('client.log_workout.weight_kg') }}</th>
                                             <th class="pb-2 pr-2">{{ __('client.log_workout.reps') }}</th>
@@ -180,7 +180,7 @@
                                     <tbody>
                                         <template x-for="(set, setIndex) in exercise.sets" :key="setIndex">
                                             <tr>
-                                                <td class="py-1.5 pr-3 text-gray-600 dark:text-gray-400 font-medium" x-text="setIndex + 1"></td>
+                                                <td class="py-1.5 pr-3 text-[#45515e] dark:text-gray-400 font-medium" x-text="setIndex + 1"></td>
                                                 <td class="py-1.5 pr-3">
                                                     <input
                                                         type="number"
@@ -189,7 +189,7 @@
                                                         :name="`exercises[${exerciseIndex}][sets][${setIndex}][weight]`"
                                                         x-model="set.weight"
                                                         placeholder="0"
-                                                        class="w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm text-sm focus:border-blue-500 focus:ring-blue-500"
+                                                        class="w-full rounded-lg border-gray-200 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm text-sm focus:border-[#1456f0] focus:ring-[#1456f0]"
                                                     >
                                                 </td>
                                                 <td class="py-1.5 pr-2">
@@ -199,7 +199,7 @@
                                                         :name="`exercises[${exerciseIndex}][sets][${setIndex}][reps]`"
                                                         x-model="set.reps"
                                                         :placeholder="exercise.prescribed_reps || '0'"
-                                                        class="w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm text-sm focus:border-blue-500 focus:ring-blue-500"
+                                                        class="w-full rounded-lg border-gray-200 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm text-sm focus:border-[#1456f0] focus:ring-[#1456f0]"
                                                     >
                                                 </td>
                                                 <td class="py-1.5">
@@ -207,7 +207,7 @@
                                                         type="button"
                                                         @click="removeSet(exerciseIndex, setIndex)"
                                                         x-show="exercise.sets.length > 1"
-                                                        class="p-1 text-gray-400 dark:text-gray-500 hover:text-red-500 transition-colors"
+                                                        class="p-1 text-[#8e8e93] dark:text-gray-500 hover:text-red-500 transition-colors"
                                                         title="Remove set"
                                                     >
                                                         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -225,7 +225,7 @@
                             <button
                                 type="button"
                                 @click="addSet(exerciseIndex)"
-                                class="inline-flex items-center text-xs text-blue-600 hover:text-blue-800 font-medium"
+                                class="inline-flex items-center text-xs text-[#1456f0] hover:opacity-80 font-medium"
                             >
                                 <svg class="w-3.5 h-3.5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
@@ -233,25 +233,25 @@
                                 {{ __('client.log_workout.add_set') }}
                             </button>
                         </div>
-                    </x-bladewind::card>
+                    </div>
                 </template>
                 </div>
 
                 <!-- Empty State -->
                 <div x-show="exercises.length === 0" class="text-center py-8">
-                    <svg class="mx-auto h-10 w-10 text-gray-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg class="mx-auto h-10 w-10 text-gray-300 dark:text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
                     </svg>
-                    <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">{{ __('client.log_workout.no_exercises') }}</p>
+                    <p class="mt-2 text-sm text-[#8e8e93] dark:text-gray-500">{{ __('client.log_workout.no_exercises') }}</p>
                 </div>
 
                 <!-- Add Exercise -->
-                <x-bladewind::card class="!p-4">
+                <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 shadow-card p-5">
                     <div x-show="!showExercisePicker">
                         <button
                             type="button"
                             @click="openExercisePicker()"
-                            class="w-full inline-flex justify-center items-center gap-2 px-4 py-2.5 border-2 border-dashed border-gray-300 dark:border-gray-700 rounded-lg text-sm font-medium text-gray-600 dark:text-gray-400 hover:border-blue-400 hover:text-blue-600 transition-colors"
+                            class="w-full inline-flex justify-center items-center gap-2 px-4 py-2.5 border-2 border-dashed border-gray-200 dark:border-gray-700 rounded-xl text-sm font-medium text-[#45515e] dark:text-gray-400 hover:border-[#1456f0] hover:text-[#1456f0] transition-colors"
                         >
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
@@ -263,8 +263,8 @@
                     <div x-show="showExercisePicker" x-cloak>
                         <div class="space-y-3">
                             <div class="flex items-center justify-between">
-                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('client.log_workout.select_exercise') }}</label>
-                                <button type="button" @click="showExercisePicker = false" class="text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300">
+                                <label class="block text-sm font-semibold text-[#222222] dark:text-gray-100">{{ __('client.log_workout.select_exercise') }}</label>
+                                <button type="button" @click="showExercisePicker = false" class="text-[#8e8e93] dark:text-gray-500 hover:text-[#222222] dark:hover:text-gray-300">
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
                                     </svg>
@@ -274,10 +274,10 @@
                                 type="text"
                                 x-model="exerciseSearch"
                                 placeholder="{{ __('client.log_workout.search_exercises') }}"
-                                class="w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm text-sm focus:border-blue-500 focus:ring-blue-500"
+                                class="w-full rounded-lg border-gray-200 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm text-sm focus:border-[#1456f0] focus:ring-[#1456f0]"
                                 x-ref="exerciseSearchInput"
                             >
-                            <div class="max-h-48 overflow-y-auto border border-gray-200 dark:border-gray-800 rounded-md divide-y divide-gray-100 dark:divide-gray-800">
+                            <div class="max-h-48 overflow-y-auto border border-gray-100 dark:border-gray-800 rounded-xl divide-y divide-gray-100 dark:divide-gray-800">
                                 <template x-for="exercise in filteredExercises" :key="exercise.id">
                                     <button
                                         type="button"
@@ -285,57 +285,57 @@
                                         class="w-full text-left px-3 py-2 hover:bg-blue-50 dark:hover:bg-gray-800 transition-colors flex items-center justify-between"
                                     >
                                         <div>
-                                            <span class="text-sm font-medium text-gray-900 dark:text-gray-100" x-text="exercise.name"></span>
-                                            <span class="text-xs text-gray-500 dark:text-gray-400 ml-2" x-text="exercise.muscle_group.replace('_', ' ')"></span>
+                                            <span class="text-sm font-medium text-[#222222] dark:text-gray-100" x-text="exercise.name"></span>
+                                            <span class="text-xs text-[#8e8e93] dark:text-gray-500 ml-2" x-text="exercise.muscle_group.replace('_', ' ')"></span>
                                         </div>
-                                        <svg class="w-4 h-4 text-gray-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <svg class="w-4 h-4 text-[#8e8e93] dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
                                         </svg>
                                     </button>
                                 </template>
-                                <div x-show="filteredExercises.length === 0" class="px-3 py-4 text-center text-sm text-gray-500 dark:text-gray-400">
+                                <div x-show="filteredExercises.length === 0" class="px-3 py-4 text-center text-sm text-[#8e8e93] dark:text-gray-500">
                                     {{ __('client.log_workout.no_exercises_found') }}
                                 </div>
                             </div>
                         </div>
                     </div>
-                </x-bladewind::card>
+                </div>
 
                 <!-- Date & Time -->
-                <x-bladewind::card class="!p-4">
-                    <label for="completed_at" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">{{ __('client.log_workout.date_time') }}</label>
+                <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 shadow-card p-5">
+                    <label for="completed_at" class="block text-sm font-medium text-[#222222] dark:text-gray-100 mb-1">{{ __('client.log_workout.date_time') }}</label>
                     <input
                         type="datetime-local"
                         id="completed_at"
                         name="completed_at"
                         value="{{ old('completed_at', now()->format('Y-m-d\TH:i')) }}"
                         max="{{ now()->format('Y-m-d\TH:i') }}"
-                        class="w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm text-sm focus:border-blue-500 focus:ring-blue-500 @error('completed_at') border-red-300 @enderror"
+                        class="w-full rounded-lg border-gray-200 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm text-sm focus:border-[#1456f0] focus:ring-[#1456f0] @error('completed_at') border-red-300 @enderror"
                     >
                     @error('completed_at')
                         <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
                     @enderror
-                    <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">{{ __('client.log_workout.date_time_hint') }}</p>
-                </x-bladewind::card>
+                    <p class="mt-1 text-xs text-[#8e8e93] dark:text-gray-500">{{ __('client.log_workout.date_time_hint') }}</p>
+                </div>
 
                 <!-- Notes -->
-                <x-bladewind::card class="!p-4">
-                    <label for="notes" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">{{ __('client.log_workout.notes_optional') }}</label>
+                <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 shadow-card p-5">
+                    <label for="notes" class="block text-sm font-medium text-[#222222] dark:text-gray-100 mb-1">{{ __('client.log_workout.notes_optional') }}</label>
                     <textarea
                         id="notes"
                         name="notes"
                         rows="2"
                         placeholder="{{ __('client.log_workout.notes_placeholder') }}"
                         x-model="notes"
-                        class="w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm text-sm focus:border-blue-500 focus:ring-blue-500"
+                        class="w-full rounded-lg border-gray-200 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm text-sm focus:border-[#1456f0] focus:ring-[#1456f0]"
                     >{{ old('notes') }}</textarea>
-                </x-bladewind::card>
+                </div>
 
                 <!-- Submit -->
                 <button
                     type="submit"
                     x-bind:disabled="exercises.length === 0"
-                    class="w-full inline-flex justify-center items-center px-6 py-3 bg-blue-600 border border-transparent rounded-lg font-semibold text-sm text-white uppercase tracking-widest hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition ease-in-out duration-150 disabled:opacity-50 disabled:cursor-not-allowed"
+                    class="w-full inline-flex justify-center items-center px-6 py-3 bg-[#181e25] dark:bg-gray-700 text-white text-sm font-semibold rounded-xl hover:bg-gray-800 dark:hover:bg-gray-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                     {{ __('client.log_workout.complete_workout') }}
                 </button>
@@ -348,10 +348,10 @@
             <div class="relative w-full max-w-2xl bg-white dark:bg-gray-900 rounded-2xl shadow-xl overflow-y-auto max-h-[85vh]">
                 <div class="flex items-start justify-between px-5 pt-5 pb-4">
                     <div>
-                        <h2 class="text-lg font-semibold text-gray-900 dark:text-gray-100" x-text="selectedExercise ? selectedExercise.name : ''"></h2>
-                        <span class="inline-flex items-center mt-1 px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-300" x-text="selectedExercise ? selectedExercise.muscle_group.replace('_', ' ') : ''"></span>
+                        <h2 class="font-display text-lg font-semibold text-[#222222] dark:text-gray-100" x-text="selectedExercise ? selectedExercise.name : ''"></h2>
+                        <span class="inline-flex items-center mt-1 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-blue-50 text-[#1456f0] dark:bg-blue-900/30 dark:text-blue-400" x-text="selectedExercise ? selectedExercise.muscle_group.replace('_', ' ') : ''"></span>
                     </div>
-                    <button type="button" @click="selectedExercise = null" class="p-2 -mr-1 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 rounded-md" aria-label="Close">
+                    <button type="button" @click="selectedExercise = null" class="p-2 -mr-1 text-[#8e8e93] hover:text-[#222222] dark:hover:text-gray-300 rounded-lg" aria-label="Close">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
                         </svg>
@@ -368,19 +368,19 @@
                             <svg class="mx-auto h-10 w-10 text-gray-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/>
                             </svg>
-                            <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">{{ __('client.log_workout.no_video') }}</p>
+                            <p class="mt-2 text-sm text-[#8e8e93] dark:text-gray-500">{{ __('client.log_workout.no_video') }}</p>
                         </div>
                     </div>
                 </div>
                 <div class="px-5 pb-8">
-                    <h3 class="text-sm font-medium text-gray-500 dark:text-gray-400 mb-2">{{ __('client.log_workout.description') }}</h3>
-                    <p x-show="selectedExercise && selectedExercise.description" class="text-sm text-gray-700 dark:text-gray-300 whitespace-pre-wrap" x-text="selectedExercise ? selectedExercise.description : ''"></p>
-                    <p x-show="!selectedExercise || !selectedExercise.description" class="text-sm text-gray-400 dark:text-gray-500 italic">{{ __('client.log_workout.no_description') }}</p>
+                    <h3 class="text-sm font-medium text-[#8e8e93] dark:text-gray-500 mb-2">{{ __('client.log_workout.description') }}</h3>
+                    <p x-show="selectedExercise && selectedExercise.description" class="text-sm text-[#45515e] dark:text-gray-300 whitespace-pre-wrap" x-text="selectedExercise ? selectedExercise.description : ''"></p>
+                    <p x-show="!selectedExercise || !selectedExercise.description" class="text-sm text-[#8e8e93] dark:text-gray-500 italic">{{ __('client.log_workout.no_description') }}</p>
                 </div>
 
                 <!-- Progress Section -->
                 <div class="px-5 pb-8 border-t border-gray-100 dark:border-gray-800 pt-5">
-                    <h3 class="text-sm font-medium text-gray-500 dark:text-gray-400 mb-3">{{ __('client.exercise_progress.heading') }}</h3>
+                    <h3 class="text-sm font-medium text-[#8e8e93] dark:text-gray-500 mb-3">{{ __('client.exercise_progress.heading') }}</h3>
 
                     <!-- Range selector -->
                     <div class="flex gap-1 mb-4">
@@ -388,7 +388,8 @@
                             <button
                                 type="button"
                                 @click="progressRange = r; selectedExercise && loadProgress(selectedExercise.exercise_id, r)"
-                                :class="progressRange === r ? 'bg-blue-600 text-white' : 'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300'"
+                                :class="progressRange === r ? 'text-white' : 'bg-gray-100 dark:bg-gray-800 text-[#45515e] dark:text-gray-300'"
+                                :style="progressRange === r ? 'background-color: var(--color-primary)' : ''"
                                 class="px-2.5 py-1 rounded text-xs font-medium transition-colors"
                                 x-text="r === 30 ? '30d' : r === 90 ? '90d' : r === 365 ? '1yr' : '{{ __('client.exercise_progress.all_time') }}'"
                             ></button>
@@ -397,7 +398,7 @@
 
                     <!-- Loading spinner -->
                     <div x-show="progressLoading" class="flex items-center justify-center py-8">
-                        <svg class="animate-spin h-6 w-6 text-blue-500" fill="none" viewBox="0 0 24 24">
+                        <svg class="animate-spin h-6 w-6 text-[#1456f0]" fill="none" viewBox="0 0 24 24">
                             <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                             <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
                         </svg>
@@ -408,28 +409,28 @@
                         <div class="space-y-4">
                             <!-- PR stats -->
                             <div class="grid grid-cols-2 gap-3">
-                                <div class="bg-gray-50 dark:bg-gray-800 rounded-lg p-3 text-center">
-                                    <p class="text-xs text-gray-500 dark:text-gray-400">{{ __('client.exercise_progress.max_weight') }}</p>
-                                    <p class="text-lg font-semibold text-gray-900 dark:text-gray-100 mt-1" x-text="progressData.maxWeight !== null ? progressData.maxWeight + ' kg' : '—'"></p>
+                                <div class="bg-gray-50 dark:bg-gray-800 rounded-xl p-3 text-center">
+                                    <p class="text-xs text-[#8e8e93] dark:text-gray-500">{{ __('client.exercise_progress.max_weight') }}</p>
+                                    <p class="text-lg font-semibold text-[#222222] dark:text-gray-100 mt-1" x-text="progressData.maxWeight !== null ? progressData.maxWeight + ' kg' : '—'"></p>
                                 </div>
-                                <div class="bg-gray-50 dark:bg-gray-800 rounded-lg p-3 text-center">
-                                    <p class="text-xs text-gray-500 dark:text-gray-400">{{ __('client.exercise_progress.est_1rm') }}</p>
-                                    <p class="text-lg font-semibold text-gray-900 dark:text-gray-100 mt-1" x-text="progressData.estimated1rm !== null ? progressData.estimated1rm + ' kg' : '—'"></p>
+                                <div class="bg-gray-50 dark:bg-gray-800 rounded-xl p-3 text-center">
+                                    <p class="text-xs text-[#8e8e93] dark:text-gray-500">{{ __('client.exercise_progress.est_1rm') }}</p>
+                                    <p class="text-lg font-semibold text-[#222222] dark:text-gray-100 mt-1" x-text="progressData.estimated1rm !== null ? progressData.estimated1rm + ' kg' : '—'"></p>
                                 </div>
                             </div>
 
                             <!-- No chart data -->
-                            <p x-show="progressData.weightChart.length === 0" class="text-sm text-gray-400 dark:text-gray-500 italic text-center py-4">{{ __('client.exercise_progress.no_data') }}</p>
+                            <p x-show="progressData.weightChart.length === 0" class="text-sm text-[#8e8e93] dark:text-gray-500 italic text-center py-4">{{ __('client.exercise_progress.no_data') }}</p>
 
                             <!-- Charts -->
                             <template x-if="progressData.weightChart.length > 0">
                                 <div class="space-y-4">
                                     <div>
-                                        <p class="text-xs text-gray-500 dark:text-gray-400 mb-1">{{ __('client.exercise_progress.weight_chart') }}</p>
+                                        <p class="text-xs text-[#8e8e93] dark:text-gray-500 mb-1">{{ __('client.exercise_progress.weight_chart') }}</p>
                                         <canvas id="logProgressWeightChart" height="120"></canvas>
                                     </div>
                                     <div>
-                                        <p class="text-xs text-gray-500 dark:text-gray-400 mb-1">{{ __('client.exercise_progress.volume_chart') }}</p>
+                                        <p class="text-xs text-[#8e8e93] dark:text-gray-500 mb-1">{{ __('client.exercise_progress.volume_chart') }}</p>
                                         <canvas id="logProgressVolumeChart" height="120"></canvas>
                                     </div>
                                 </div>

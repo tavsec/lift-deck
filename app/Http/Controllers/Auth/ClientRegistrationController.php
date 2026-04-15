@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Mail\WelcomeClientMail;
 use App\Models\ClientInvitation;
 use App\Models\User;
+use App\Services\SubscriptionService;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -17,6 +18,8 @@ use Illuminate\View\View;
 
 class ClientRegistrationController extends Controller
 {
+    public function __construct(private readonly SubscriptionService $subscriptionService) {}
+
     /**
      * Show the code entry form.
      */
@@ -80,6 +83,10 @@ class ClientRegistrationController extends Controller
                 'coach_id' => $invitation->coach_id,
             ]);
             event(new Registered($user));
+
+            // Track-only clients are already counted in the coach's client list, so upgrading
+            // them does not add a new client — only genuinely new clients trigger usage reporting.
+            $this->subscriptionService->reportClientUsage($invitation->coach);
         }
 
         $invitation->update(['accepted_at' => now()]);

@@ -14,11 +14,16 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'role' => \App\Http\Middleware\EnsureUserHasRole::class,
             'feature' => \App\Http\Middleware\EnsureFeatureActive::class,
+            'subscribed' => \App\Http\Middleware\EnsureCoachSubscribed::class,
+            'subscription.feature' => \App\Http\Middleware\EnsureSubscriptionFeature::class,
         ]);
         $middleware->web(append: [
             \App\Http\Middleware\SetLocale::class,
         ]);
         $middleware->trustProxies('*');
+        $middleware->validateCsrfTokens(except: [
+            'cashier/webhook',
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //

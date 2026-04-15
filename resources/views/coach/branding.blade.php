@@ -4,20 +4,20 @@
     <div class="space-y-6">
         <!-- Header -->
         <div>
-            <h1 class="text-2xl font-bold text-gray-900 dark:text-gray-100">{{ __('coach.branding.heading') }}</h1>
-            <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">{{ __('coach.branding.subtitle') }}</p>
+            <h1 class="font-display text-2xl font-semibold text-[#222222] dark:text-gray-100">{{ __('coach.branding.heading') }}</h1>
+            <p class="text-sm text-[#8e8e93] dark:text-gray-500 mt-0.5">{{ __('coach.branding.subtitle') }}</p>
         </div>
 
         @if(session('success'))
-            <div class="rounded-md bg-green-50 p-4">
+            <div class="rounded-xl bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 p-4">
                 <div class="flex">
                     <div class="flex-shrink-0">
-                        <svg class="h-5 w-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="h-5 w-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
                         </svg>
                     </div>
                     <div class="ml-3">
-                        <p class="text-sm font-medium text-green-800">{{ session('success') }}</p>
+                        <p class="text-sm font-medium text-green-800 dark:text-green-200">{{ session('success') }}</p>
                     </div>
                 </div>
             </div>
@@ -59,137 +59,137 @@
             @method('PUT')
 
             <!-- Section 1: Identity -->
-            <div class="bg-white dark:bg-gray-900 rounded-lg shadow">
-                <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-800">
-                    <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">{{ __('coach.branding.identity') }}</h2>
-                    <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">{{ __('coach.branding.identity_description') }}</p>
+            <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 shadow-card">
+                <div class="px-6 py-4 border-b border-gray-100 dark:border-gray-800">
+                    <h2 class="font-display text-base font-semibold text-[#222222] dark:text-gray-100">{{ __('coach.branding.identity') }}</h2>
+                    <p class="text-sm text-[#8e8e93] dark:text-gray-500 mt-0.5">{{ __('coach.branding.identity_description') }}</p>
                 </div>
 
-                <div class="px-6 py-4 space-y-4">
+                <div class="px-6 py-5 space-y-5">
                     <!-- Gym Name -->
                     <div>
-                        <label for="gym_name" class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('coach.branding.gym_name') }}</label>
+                        <label for="gym_name" class="block text-sm font-medium text-[#45515e] dark:text-gray-300 mb-1.5">{{ __('coach.branding.gym_name') }}</label>
                         <input type="text" name="gym_name" id="gym_name" value="{{ old('gym_name', $coach->gym_name) }}"
-                            class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                            class="w-full border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-[#222222] dark:text-gray-100 placeholder-[#8e8e93] dark:placeholder-gray-500 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-[#1456f0] focus:ring-2 focus:ring-[#1456f0]/20 transition-colors duration-150"
                             placeholder="e.g., Iron Forge Gym">
                         @error('gym_name')
-                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                            <p class="mt-1.5 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
                         @enderror
                     </div>
 
                     <!-- Logo -->
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('coach.branding.logo') }}</label>
+                        <label class="block text-sm font-medium text-[#45515e] dark:text-gray-300 mb-1.5">{{ __('coach.branding.logo') }}</label>
                         @if($coach->logo)
                             <div class="mt-2 flex items-center gap-4">
-                                <img src="{{ $coach->logo }}" alt="Current logo" class="h-16 w-16 rounded-md object-cover">
-                                <label class="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
-                                    <input type="checkbox" name="remove_logo" value="1" class="rounded border-gray-300 dark:border-gray-700 text-blue-600 focus:ring-blue-500">
+                                <img src="{{ $coach->logo }}" alt="Current logo" class="h-16 w-16 rounded-xl object-cover border border-gray-200 dark:border-gray-700">
+                                <label class="flex items-center gap-2 text-sm text-[#45515e] dark:text-gray-300 cursor-pointer">
+                                    <input type="checkbox" name="remove_logo" value="1" class="rounded border-gray-300 dark:border-gray-700 text-red-600 focus:ring-red-500">
                                     {{ __('coach.branding.remove_logo') }}
                                 </label>
                             </div>
                         @endif
                         <input type="file" name="logo" accept="image/*"
-                            class="mt-2 block w-full text-sm text-gray-500 dark:text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+                            class="mt-2 w-full text-sm text-[#45515e] dark:text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-gray-100 dark:file:bg-gray-800 file:text-[#45515e] dark:file:text-gray-300 hover:file:bg-gray-200 dark:hover:file:bg-gray-700">
                         @error('logo')
-                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                            <p class="mt-1.5 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
                         @enderror
                     </div>
 
                     <!-- Description -->
                     <div>
-                        <label for="description" class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('coach.branding.description') }}</label>
+                        <label for="description" class="block text-sm font-medium text-[#45515e] dark:text-gray-300 mb-1.5">{{ __('coach.branding.description') }}</label>
                         <textarea name="description" id="description" rows="3"
-                            class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                            class="w-full border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-[#222222] dark:text-gray-100 placeholder-[#8e8e93] dark:placeholder-gray-500 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-[#1456f0] focus:ring-2 focus:ring-[#1456f0]/20 transition-colors duration-150"
                             placeholder="Tell clients about your coaching business">{{ old('description', $coach->description) }}</textarea>
                         @error('description')
-                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                            <p class="mt-1.5 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
                         @enderror
                     </div>
                 </div>
             </div>
 
             <!-- Section 2: Colors -->
-            <div class="bg-white dark:bg-gray-900 rounded-lg shadow">
-                <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-800">
-                    <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">{{ __('coach.branding.colors') }}</h2>
-                    <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">{{ __('coach.branding.colors_description') }}</p>
+            <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 shadow-card">
+                <div class="px-6 py-4 border-b border-gray-100 dark:border-gray-800">
+                    <h2 class="font-display text-base font-semibold text-[#222222] dark:text-gray-100">{{ __('coach.branding.colors') }}</h2>
+                    <p class="text-sm text-[#8e8e93] dark:text-gray-500 mt-0.5">{{ __('coach.branding.colors_description') }}</p>
                 </div>
 
-                <div class="px-6 py-4 space-y-4">
+                <div class="px-6 py-5 space-y-5">
                     <!-- Primary Color -->
                     <div>
-                        <label for="primary_color" class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('coach.branding.primary_color') }}</label>
-                        <div class="mt-1 flex items-center gap-3">
+                        <label for="primary_color" class="block text-sm font-medium text-[#45515e] dark:text-gray-300 mb-1.5">{{ __('coach.branding.primary_color') }}</label>
+                        <div class="flex items-center gap-3">
                             <input type="color" x-model="primaryColor"
-                                class="h-10 w-14 cursor-pointer rounded border border-gray-300 dark:border-gray-700 p-0.5">
+                                class="h-10 w-14 cursor-pointer rounded-lg border border-gray-200 dark:border-gray-700 p-0.5 bg-white dark:bg-gray-800">
                             <input type="text" name="primary_color" id="primary_color" x-model="primaryColor"
-                                class="block w-32 rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                                class="w-32 border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-[#222222] dark:text-gray-100 placeholder-[#8e8e93] dark:placeholder-gray-500 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-[#1456f0] focus:ring-2 focus:ring-[#1456f0]/20 transition-colors duration-150"
                                 placeholder="#2563EB">
                         </div>
                         @error('primary_color')
-                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                            <p class="mt-1.5 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
                         @enderror
                     </div>
 
                     <!-- Secondary Color -->
                     <div>
-                        <label for="secondary_color" class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('coach.branding.secondary_color') }}</label>
-                        <div class="mt-1 flex items-center gap-3">
+                        <label for="secondary_color" class="block text-sm font-medium text-[#45515e] dark:text-gray-300 mb-1.5">{{ __('coach.branding.secondary_color') }}</label>
+                        <div class="flex items-center gap-3">
                             <input type="color" x-model="secondaryColor"
-                                class="h-10 w-14 cursor-pointer rounded border border-gray-300 dark:border-gray-700 p-0.5">
+                                class="h-10 w-14 cursor-pointer rounded-lg border border-gray-200 dark:border-gray-700 p-0.5 bg-white dark:bg-gray-800">
                             <input type="text" name="secondary_color" id="secondary_color" x-model="secondaryColor"
-                                class="block w-32 rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                                class="w-32 border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-[#222222] dark:text-gray-100 placeholder-[#8e8e93] dark:placeholder-gray-500 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-[#1456f0] focus:ring-2 focus:ring-[#1456f0]/20 transition-colors duration-150"
                                 placeholder="#1E40AF">
                         </div>
                         @error('secondary_color')
-                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                            <p class="mt-1.5 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
                         @enderror
                     </div>
                 </div>
             </div>
 
             <!-- Section 3: Onboarding -->
-            <div class="bg-white dark:bg-gray-900 rounded-lg shadow">
-                <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-800">
-                    <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">{{ __('coach.branding.onboarding') }}</h2>
-                    <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">{{ __('coach.branding.onboarding_description') }}</p>
+            <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 shadow-card">
+                <div class="px-6 py-4 border-b border-gray-100 dark:border-gray-800">
+                    <h2 class="font-display text-base font-semibold text-[#222222] dark:text-gray-100">{{ __('coach.branding.onboarding') }}</h2>
+                    <p class="text-sm text-[#8e8e93] dark:text-gray-500 mt-0.5">{{ __('coach.branding.onboarding_description') }}</p>
                 </div>
 
-                <div class="px-6 py-4 space-y-4">
+                <div class="px-6 py-5 space-y-5">
                     <!-- Welcome Text -->
                     <div>
-                        <label for="onboarding_welcome_text" class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('coach.branding.welcome_text') }}</label>
+                        <label for="onboarding_welcome_text" class="block text-sm font-medium text-[#45515e] dark:text-gray-300 mb-1.5">{{ __('coach.branding.welcome_text') }}</label>
                         <textarea name="onboarding_welcome_text" id="onboarding_welcome_text" rows="3"
-                            class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                            class="w-full border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-[#222222] dark:text-gray-100 placeholder-[#8e8e93] dark:placeholder-gray-500 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-[#1456f0] focus:ring-2 focus:ring-[#1456f0]/20 transition-colors duration-150"
                             placeholder="Welcome message shown to clients during onboarding">{{ old('onboarding_welcome_text', $coach->onboarding_welcome_text) }}</textarea>
                         @error('onboarding_welcome_text')
-                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                            <p class="mt-1.5 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
                         @enderror
                     </div>
 
                     <!-- Custom Fields -->
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('coach.branding.custom_fields') }}</label>
-                        <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">{{ __('coach.branding.custom_fields_description') }}</p>
+                        <label class="block text-sm font-medium text-[#45515e] dark:text-gray-300 mb-1.5">{{ __('coach.branding.custom_fields') }}</label>
+                        <p class="text-sm text-[#8e8e93] dark:text-gray-500">{{ __('coach.branding.custom_fields_description') }}</p>
 
                         <div class="mt-3 space-y-3">
                             <template x-for="(field, index) in fields" :key="index">
-                                <div class="rounded-md border border-gray-200 dark:border-gray-800 p-4">
+                                <div class="rounded-xl border border-gray-200 dark:border-gray-800 p-4 bg-gray-50 dark:bg-gray-800/50">
                                     <div class="grid grid-cols-1 sm:grid-cols-6 gap-3">
                                         <!-- Label -->
                                         <div class="sm:col-span-2">
-                                            <label class="block text-xs font-medium text-gray-700 dark:text-gray-300">{{ __('coach.branding.field_label') }}</label>
+                                            <label class="block text-xs font-medium text-[#45515e] dark:text-gray-300 mb-1">{{ __('coach.branding.field_label') }}</label>
                                             <input type="text" x-model="field.label" :name="'fields[' + index + '][label]'"
-                                                class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                                                class="w-full border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-[#222222] dark:text-gray-100 placeholder-[#8e8e93] dark:placeholder-gray-500 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[#1456f0] focus:ring-2 focus:ring-[#1456f0]/20 transition-colors duration-150"
                                                 placeholder="e.g., Your goal?">
                                         </div>
 
                                         <!-- Type -->
                                         <div class="sm:col-span-1">
-                                            <label class="block text-xs font-medium text-gray-700 dark:text-gray-300">{{ __('coach.branding.field_type') }}</label>
+                                            <label class="block text-xs font-medium text-[#45515e] dark:text-gray-300 mb-1">{{ __('coach.branding.field_type') }}</label>
                                             <select x-model="field.type" :name="'fields[' + index + '][type]'"
-                                                class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
+                                                class="w-full border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-[#222222] dark:text-gray-100 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[#1456f0] focus:ring-2 focus:ring-[#1456f0]/20 transition-colors duration-150">
                                                 <option value="text">{{ __('coach.branding.field_type_text') }}</option>
                                                 <option value="select">{{ __('coach.branding.field_type_select') }}</option>
                                                 <option value="textarea">{{ __('coach.branding.field_type_textarea') }}</option>
@@ -198,9 +198,9 @@
 
                                         <!-- Options (shown only for select) -->
                                         <div class="sm:col-span-2" x-show="field.type === 'select'" x-cloak>
-                                            <label class="block text-xs font-medium text-gray-700 dark:text-gray-300">{{ __('coach.branding.field_options') }}</label>
+                                            <label class="block text-xs font-medium text-[#45515e] dark:text-gray-300 mb-1">{{ __('coach.branding.field_options') }}</label>
                                             <textarea x-model="field.options" :name="'fields[' + index + '][options]'" rows="2"
-                                                class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                                                class="w-full border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-[#222222] dark:text-gray-100 placeholder-[#8e8e93] dark:placeholder-gray-500 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[#1456f0] focus:ring-2 focus:ring-[#1456f0]/20 transition-colors duration-150"
                                                 placeholder="Option 1&#10;Option 2"></textarea>
                                         </div>
 
@@ -211,10 +211,10 @@
 
                                         <!-- Required + Actions -->
                                         <div class="sm:col-span-1 flex items-end gap-2">
-                                            <label class="flex items-center gap-1.5 text-xs text-gray-600 dark:text-gray-400 pb-2">
+                                            <label class="flex items-center gap-1.5 text-xs text-[#45515e] dark:text-gray-400 pb-2">
                                                 <input type="hidden" :name="'fields[' + index + '][is_required]'" value="0">
                                                 <input type="checkbox" x-model="field.is_required" :name="'fields[' + index + '][is_required]'" value="1"
-                                                    class="rounded border-gray-300 dark:border-gray-700 text-blue-600 focus:ring-blue-500">
+                                                    class="rounded border-gray-300 dark:border-gray-700 text-[#1456f0] focus:ring-[#1456f0]">
                                                 {{ __('coach.branding.field_required') }}
                                             </label>
                                         </div>
@@ -223,20 +223,20 @@
                                     <!-- Row Actions -->
                                     <div class="mt-3 flex items-center gap-1">
                                         <button type="button" @click="moveUp(index)" x-show="index > 0"
-                                            class="p-1.5 text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 rounded" title="Move up">
-                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            class="p-1.5 text-[#8e8e93] dark:text-gray-500 hover:text-[#45515e] dark:hover:text-gray-300 rounded transition-colors" title="Move up">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"/>
                                             </svg>
                                         </button>
                                         <button type="button" @click="moveDown(index)" x-show="index < fields.length - 1"
-                                            class="p-1.5 text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 rounded" title="Move down">
-                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            class="p-1.5 text-[#8e8e93] dark:text-gray-500 hover:text-[#45515e] dark:hover:text-gray-300 rounded transition-colors" title="Move down">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
                                             </svg>
                                         </button>
                                         <button type="button" @click="removeField(index)"
-                                            class="p-1.5 text-gray-400 dark:text-gray-500 hover:text-red-600 rounded" title="Remove field">
-                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            class="p-1.5 text-[#8e8e93] dark:text-gray-500 hover:text-red-600 dark:hover:text-red-400 rounded transition-colors" title="Remove field">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
                                             </svg>
                                         </button>
@@ -246,15 +246,15 @@
                         </div>
 
                         @error('fields')
-                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                            <p class="mt-1.5 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
                         @enderror
                         @error('fields.*.label')
-                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                            <p class="mt-1.5 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
                         @enderror
 
                         <button type="button" @click="addField()"
-                            class="mt-3 inline-flex items-center text-sm font-medium text-blue-600 hover:text-blue-700">
-                            <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            class="mt-3 inline-flex items-center text-sm font-semibold text-[#45515e] dark:text-gray-300 hover:text-[#222222] dark:hover:text-gray-100 transition-colors">
+                            <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
                             </svg>
                             {{ __('coach.branding.add_field') }}
@@ -264,21 +264,21 @@
             </div>
 
             <!-- Section 4: Welcome Email -->
-            <div class="bg-white dark:bg-gray-900 rounded-lg shadow">
-                <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-800">
-                    <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">{{ __('coach.branding.welcome_email') }}</h2>
-                    <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">{{ __('coach.branding.welcome_email_description') }}</p>
+            <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 shadow-card">
+                <div class="px-6 py-4 border-b border-gray-100 dark:border-gray-800">
+                    <h2 class="font-display text-base font-semibold text-[#222222] dark:text-gray-100">{{ __('coach.branding.welcome_email') }}</h2>
+                    <p class="text-sm text-[#8e8e93] dark:text-gray-500 mt-0.5">{{ __('coach.branding.welcome_email_description') }}</p>
                 </div>
 
-                <div class="px-6 py-4 space-y-4">
+                <div class="px-6 py-5 space-y-5">
                     <div>
-                        <label for="welcome_email_text" class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('coach.branding.email_text') }}</label>
+                        <label for="welcome_email_text" class="block text-sm font-medium text-[#45515e] dark:text-gray-300 mb-1.5">{{ __('coach.branding.email_text') }}</label>
                         <textarea name="welcome_email_text" id="welcome_email_text" rows="4"
-                            class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                            class="w-full border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-[#222222] dark:text-gray-100 placeholder-[#8e8e93] dark:placeholder-gray-500 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-[#1456f0] focus:ring-2 focus:ring-[#1456f0]/20 transition-colors duration-150"
                             placeholder="Write a personal welcome message for your clients">{{ old('welcome_email_text', $coach->welcome_email_text) }}</textarea>
-                        <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">{{ __('coach.branding.email_text_placeholder') }}</p>
+                        <p class="mt-1.5 text-sm text-[#8e8e93] dark:text-gray-500">{{ __('coach.branding.email_text_placeholder') }}</p>
                         @error('welcome_email_text')
-                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                            <p class="mt-1.5 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
                         @enderror
                     </div>
                 </div>
@@ -286,8 +286,7 @@
 
             <!-- Save Button -->
             <div>
-                <button type="submit"
-                    class="w-full sm:w-auto inline-flex justify-center items-center px-6 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-700 focus:bg-blue-700 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition ease-in-out duration-150">
+                <button type="submit" class="inline-flex items-center px-6 py-2.5 bg-[#181e25] dark:bg-gray-700 text-white text-sm font-semibold rounded-lg hover:bg-gray-800 transition-colors">
                     {{ __('coach.branding.save') }}
                 </button>
             </div>

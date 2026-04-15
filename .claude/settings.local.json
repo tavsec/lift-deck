@@ -44,7 +44,8 @@
       "Bash(echo \"Exit: $?\")",
       "Bash(echo \"exit:$?\")",
       "Bash(./vendor/bin/pest tests/Feature/Auth/AuthenticatedRedirectTest.php 2>&1)",
-      "Bash(./vendor/bin/pest tests/Feature/Auth/AuthenticatedRedirectTest.php --colors=never)"
+      "Bash(./vendor/bin/pest tests/Feature/Auth/AuthenticatedRedirectTest.php --colors=never)",
+      "Bash(git ls-tree:*)"
     ]
   },
   "enabledMcpjsonServers": [

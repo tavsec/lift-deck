@@ -80,6 +80,7 @@ return [
             'edit' => 'Uredi',
             'remove' => 'Odstrani',
             'remove_confirm' => 'Ali ste prepričani, da želite odstraniti to stranko?',
+            'removed' => 'Stranka uspešno odstranjena.',
             'invitation_code_hint' => 'Delite to povabilno kodo s svojo stranko: :code',
             'status' => 'Status',
             'onboarding' => 'Uvajanje',
@@ -164,6 +165,7 @@ return [
             'name_placeholder' => 'Polno ime stranke',
             'add' => 'Dodaj stranko',
             'cancel' => 'Prekliči',
+            'added' => 'Stranka uspešno dodana.',
         ],
 
         'analytics' => [
@@ -765,6 +767,9 @@ return [
             'confirm' => 'Potrdi novo geslo',
             'update' => 'Posodobi geslo',
         ],
+        'subscription' => [
+            'heading' => 'Naročnina',
+        ],
     ],
 
     'redemptions' => [
@@ -795,6 +800,39 @@ return [
         'mood' => 'Razpoloženje',
         'energy' => 'Raven energije',
         'sleep' => 'Kakovost spanja',
+    ],
+
+    'plan' => [
+        'title' => 'Izberite načrt',
+        'subtitle' => 'Izberite načrt, ki najbolje ustreza vašim potrebam. Kadarkoli ga lahko nadgradite.',
+        'per_month' => '/mes',
+        'per_client' => '/stranka',
+        'metered' => 'merjeno',
+        'cta_subscribe' => 'Naroči se',
+        'current_plan' => 'Trenutni načrt',
+        'basic' => [
+            'name' => 'Basic',
+            'description' => 'Za trenerje, ki šele začenjajo.',
+            'feature_clients' => 'Do 5 strank',
+            'feature_programs' => 'Programi in dnevniki treningov',
+            'feature_nutrition' => 'Sledenje prehrani',
+            'cta' => 'Začni brezplačno preskusno obdobje',
+            'trial_note' => '7-dnevno brezplačno preskusno obdobje, nato €:price/mesec',
+        ],
+        'advanced' => [
+            'name' => 'Advanced',
+            'description' => 'Za rastoče trenerje.',
+            'feature_clients' => 'Do 15 strank',
+            'feature_basic' => 'Vse iz načrta Basic',
+            'feature_loyalty' => 'Zvestoba in dosežki',
+        ],
+        'professional' => [
+            'name' => 'Professional',
+            'description' => 'Za profesionalne trenerje v velikem obsegu.',
+            'feature_clients' => '30 strank vključenih',
+            'feature_advanced' => 'Vse iz načrta Advanced',
+            'feature_branding' => 'Prilagojeno oglaševanje',
+        ],
     ],
 
     'metrics_setup' => [

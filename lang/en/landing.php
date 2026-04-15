@@ -1,17 +1,16 @@
 <?php
 
 return [
-    'title' => 'LiftDeck | Elevate your coaching experience!',
+    'title' => 'LiftDeck | Coaching platform for fitness coaches',
 
     'nav' => [
         'sign_in' => 'Sign In',
     ],
 
     'hero' => [
-        'heading' => 'LiftDeck',
-        'subheading' => 'Elevate your coaching experience to next level!',
-        'beta_notice' => 'Currently in closed beta',
-        'join_beta' => 'Join beta testing',
+        'heading' => 'Stop coaching from spreadsheets. Run everything in LiftDeck.',
+        'subheading' => 'Build programs, track workouts, log nutrition, message clients, and monitor progress in one place — with launch pricing for founding coaches.',
+        'cta' => 'Start free for 7 days',
     ],
 
     'features' => [
@@ -43,8 +42,8 @@ return [
     'cta' => [
         'what_looking_for' => 'What Are You Looking For?',
         'heading' => 'Get Started Now',
-        'description' => 'LiftDeck is currently in closed beta. Join our select group of trainers testing the platform.',
-        'join_beta' => 'Join beta testing',
+        'description' => 'Start a free 7-day trial — no credit card required. Use code FOUNDING70 at checkout for 70% off your first 2 months.',
+        'join_beta' => 'Claim founding coach pricing',
     ],
 
     'faq' => [
@@ -57,7 +56,7 @@ return [
             ],
             'cost' => [
                 'question' => 'How much does it cost?',
-                'answer' => 'Currently, LiftDeck is in closed beta, but if you would like to test it, contact us at',
+                'answer' => 'Basic is €10/month for up to 5 clients. Advanced is €45/month for up to 30 clients and includes loyalty and gamification features. Professional is €79/month and adds custom gym branding. All plans include a 7-day free trial. Founding coaches get 70% off their first 2 months with promo code FOUNDING70.',
             ],
             'nutrition' => [
                 'question' => 'What about nutrition tracking?',
@@ -65,17 +64,15 @@ return [
             ],
             'branding' => [
                 'question' => 'Can I customize it for my brand?',
-                'answer' => 'Yes! Add your logo, colors, and gym name. Clients see your branded app, not a generic tool. Full white-label coming in V2.',
+                'answer' => 'Yes! Add your logo, colors, and gym name. Clients see your branded app, not a generic tool.',
             ],
             'app' => [
                 'question' => 'Do clients need to download an app?',
-                'answer' => 'Clients can access their portal on mobile-friendly website portal, so they do not need to download any additional applications.',
+                'answer' => 'No app download needed. LiftDeck is a mobile-friendly web app that works on any device, right from the browser.',
             ],
             'get_started' => [
                 'question' => 'How do I get started?',
-                'answer' => 'Apply for closed beta! Fill out this',
-                'short_form' => 'short form',
-                'answer_suffix' => 'and our team will contact you within 24 hours to set up your account and walk you through onboarding.',
+                'answer' => 'Create your account — it takes under a minute. Pick a plan, start your 7-day free trial (no card required on Basic), and get your first client active in the system on day one.',
             ],
         ],
     ],

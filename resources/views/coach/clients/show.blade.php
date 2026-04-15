@@ -5,43 +5,43 @@
         <!-- Header -->
         <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div>
-                <a href="{{ route('coach.clients.index') }}" class="inline-flex items-center text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-100 mb-4">
-                    <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <a href="{{ route('coach.clients.index') }}" class="inline-flex items-center text-sm text-[#8e8e93] dark:text-gray-400 hover:text-[#45515e] dark:hover:text-gray-100 mb-4">
+                    <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
                     </svg>
                     {{ __('coach.clients.show.back') }}
                 </a>
                 <div class="flex items-center gap-4">
-                    <div class="h-16 w-16 rounded-full bg-blue-100 flex items-center justify-center overflow-hidden">
+                    <div class="h-16 w-16 rounded-full flex items-center justify-center overflow-hidden" style="background-color: var(--color-primary)">
                         @if($client->avatar)
                             <img src="{{ $client->avatar }}" alt="{{ $client->name }}" class="w-full h-full object-cover">
                         @else
-                            <span class="text-2xl font-bold text-blue-700">{{ strtoupper(substr($client->name, 0, 1)) }}</span>
+                            <span class="text-2xl font-bold text-white">{{ strtoupper(substr($client->name, 0, 1)) }}</span>
                         @endif
                     </div>
                     <div>
-                        <h1 class="text-2xl font-bold text-gray-900 dark:text-gray-100">{{ $client->name }}</h1>
-                        <p class="text-sm text-gray-500 dark:text-gray-400">{{ $client->email }}</p>
+                        <h1 class="font-display text-2xl font-semibold text-[#222222] dark:text-gray-100">{{ $client->name }}</h1>
+                        <p class="text-sm text-[#8e8e93] dark:text-gray-400">{{ $client->email }}</p>
                     </div>
                 </div>
             </div>
-            <div class="flex gap-2">
+            <div class="flex flex-wrap gap-2">
                 @if($client->isTrackOnly())
                     <form method="POST" action="{{ route('coach.clients.enable-app-access', $client) }}">
                         @csrf
-                        <button type="submit" class="inline-flex items-center px-4 py-2 border border-green-300 dark:border-green-700 rounded-md font-medium text-sm text-green-700 dark:text-green-400 bg-white dark:bg-gray-900 hover:bg-green-50 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition ease-in-out duration-150">
+                        <button type="submit" class="inline-flex items-center px-4 py-2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg text-sm font-semibold text-green-700 dark:text-green-400 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
                             {{ __('coach.clients.show.enable_app_access') }}
                         </button>
                     </form>
                 @endif
-                <a href="{{ route('coach.clients.analytics', $client) }}" class="inline-flex items-center px-4 py-2 border border-blue-300 dark:border-blue-700 rounded-md font-medium text-sm text-blue-700 dark:text-blue-400 bg-white dark:bg-gray-900 hover:bg-blue-50 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition ease-in-out duration-150">
-                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <a href="{{ route('coach.clients.analytics', $client) }}" class="inline-flex items-center px-4 py-2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg text-sm font-semibold text-[#45515e] dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
                     </svg>
                     {{ __('coach.clients.show.analytics') }}
                 </a>
-                <a href="{{ route('coach.clients.edit', $client) }}" class="inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-md font-medium text-sm text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition ease-in-out duration-150">
-                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <a href="{{ route('coach.clients.edit', $client) }}" class="inline-flex items-center px-4 py-2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg text-sm font-semibold text-[#45515e] dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
                     </svg>
                     {{ __('coach.clients.show.edit') }}
@@ -49,8 +49,8 @@
                 <form method="POST" action="{{ route('coach.clients.destroy', $client) }}" onsubmit="return confirm('{{ __('coach.clients.show.remove_confirm') }}');">
                     @csrf
                     @method('DELETE')
-                    <button type="submit" class="inline-flex items-center px-4 py-2 border border-red-300 dark:border-red-800 rounded-md font-medium text-sm text-red-700 dark:text-red-400 bg-white dark:bg-gray-900 hover:bg-red-50 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition ease-in-out duration-150">
-                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <button type="submit" class="inline-flex items-center px-4 py-2 text-sm font-medium text-red-600 dark:text-red-400 hover:text-red-700 transition-colors">
+                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
                         </svg>
                         {{ __('coach.clients.show.remove') }}
@@ -60,22 +60,22 @@
         </div>
 
         @if(session('success'))
-            <div class="rounded-md bg-green-50 p-4">
+            <div class="rounded-xl bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 p-4">
                 <div class="flex">
                     <div class="flex-shrink-0">
-                        <svg class="h-5 w-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="h-5 w-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
                         </svg>
                     </div>
                     <div class="ml-3">
-                        <p class="text-sm font-medium text-green-800">{{ session('success') }}</p>
+                        <p class="text-sm font-medium text-green-800 dark:text-green-200">{{ session('success') }}</p>
                     </div>
                 </div>
             </div>
         @endif
 
         @if(session('invitation_code'))
-            <div class="rounded-md bg-blue-50 dark:bg-blue-900/20 p-4">
+            <div class="rounded-xl bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 p-4">
                 <p class="text-sm text-blue-800 dark:text-blue-300">{{ __('coach.clients.show.invitation_code_hint', ['code' => session('invitation_code')]) }}</p>
                 <p class="text-xs text-blue-600 dark:text-blue-400 mt-1">{{ __('coach.clients.show.join_hint', ['url' => url('join')]) }}</p>
             </div>
@@ -85,22 +85,22 @@
             <!-- Client Info -->
             <div class="lg:col-span-1 space-y-6">
                 <!-- Status Card -->
-                <div class="bg-white dark:bg-gray-900 rounded-lg shadow p-6">
-                    <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100 mb-4">{{ __('coach.clients.show.status') }}</h2>
+                <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 shadow-card p-6">
+                    <h2 class="font-display text-base font-semibold text-[#222222] dark:text-gray-100 mb-4">{{ __('coach.clients.show.status') }}</h2>
                     <div class="space-y-4">
                         <div>
-                            <span class="text-sm text-gray-500 dark:text-gray-400">{{ __('coach.clients.show.onboarding') }}</span>
+                            <span class="text-sm text-[#8e8e93] dark:text-gray-400">{{ __('coach.clients.show.onboarding') }}</span>
                             <div class="mt-1">
                                 @if($client->clientProfile?->isOnboardingComplete())
-                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                                        <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400">
+                                        <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
                                             <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
                                         </svg>
                                         {{ __('coach.clients.show.complete') }}
                                     </span>
                                 @else
-                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
-                                        <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-400">
+                                        <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
                                             <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/>
                                         </svg>
                                         {{ __('coach.clients.show.pending') }}
@@ -109,13 +109,13 @@
                             </div>
                         </div>
                         <div>
-                            <span class="text-sm text-gray-500 dark:text-gray-400">{{ __('coach.clients.show.member_since') }}</span>
-                            <p class="mt-1 text-sm font-medium text-gray-900 dark:text-gray-100">{{ $client->created_at->format('M d, Y') }}</p>
+                            <span class="text-sm text-[#8e8e93] dark:text-gray-400">{{ __('coach.clients.show.member_since') }}</span>
+                            <p class="mt-1 text-sm font-medium text-[#222222] dark:text-gray-100">{{ $client->created_at->format('M d, Y') }}</p>
                         </div>
                         @if($client->phone)
                         <div>
-                            <span class="text-sm text-gray-500 dark:text-gray-400">{{ __('coach.clients.show.phone') }}</span>
-                            <p class="mt-1 text-sm font-medium text-gray-900 dark:text-gray-100">{{ $client->phone }}</p>
+                            <span class="text-sm text-[#8e8e93] dark:text-gray-400">{{ __('coach.clients.show.phone') }}</span>
+                            <p class="mt-1 text-sm font-medium text-[#222222] dark:text-gray-100">{{ $client->phone }}</p>
                         </div>
                         @endif
                     </div>
@@ -123,16 +123,16 @@
 
                 <!-- Onboarding Info -->
                 @if($client->onboardingResponses->isNotEmpty())
-                <div class="bg-white dark:bg-gray-900 rounded-lg shadow">
-                    <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-800">
-                        <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">{{ __('coach.clients.show.onboarding_info') }}</h2>
+                <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 shadow-card overflow-hidden">
+                    <div class="px-6 py-4 border-b border-gray-100 dark:border-gray-800">
+                        <h2 class="font-display text-base font-semibold text-[#222222] dark:text-gray-100">{{ __('coach.clients.show.onboarding_info') }}</h2>
                     </div>
-                    <dl class="divide-y divide-gray-200 dark:divide-gray-800">
+                    <dl class="divide-y divide-gray-100 dark:divide-gray-800">
                         @foreach($client->onboardingResponses->sortBy('onboardingField.order') as $response)
                             @if($response->onboardingField)
                             <div class="px-6 py-3">
-                                <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">{{ $response->onboardingField->label }}</dt>
-                                <dd class="mt-1 text-sm text-gray-900 dark:text-gray-100">{{ $response->value }}</dd>
+                                <dt class="text-sm text-[#8e8e93] dark:text-gray-400">{{ $response->onboardingField->label }}</dt>
+                                <dd class="mt-1 text-sm text-[#222222] dark:text-gray-100">{{ $response->value }}</dd>
                             </div>
                             @endif
                         @endforeach
@@ -140,17 +140,17 @@
                 </div>
                 @elseif($client->clientProfile)
                 <!-- Fallback: Legacy Profile Card -->
-                <div class="bg-white dark:bg-gray-900 rounded-lg shadow p-6">
-                    <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100 mb-4">{{ __('coach.clients.show.profile') }}</h2>
+                <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 shadow-card p-6">
+                    <h2 class="font-display text-base font-semibold text-[#222222] dark:text-gray-100 mb-4">{{ __('coach.clients.show.profile') }}</h2>
                     <div class="space-y-4">
                         @if($client->clientProfile->goal)
                         <div>
-                            <span class="text-sm text-gray-500 dark:text-gray-400">{{ __('coach.clients.show.goal') }}</span>
+                            <span class="text-sm text-[#8e8e93] dark:text-gray-400">{{ __('coach.clients.show.goal') }}</span>
                             <p class="mt-1">
                                 <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium
-                                    @if($client->clientProfile->goal === 'fat_loss') bg-orange-100 text-orange-800
-                                    @elseif($client->clientProfile->goal === 'strength') bg-blue-100 text-blue-800
-                                    @else bg-green-100 text-green-800 @endif">
+                                    @if($client->clientProfile->goal === 'fat_loss') bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-400
+                                    @elseif($client->clientProfile->goal === 'strength') bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400
+                                    @else bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 @endif">
                                     {{ str_replace('_', ' ', ucfirst($client->clientProfile->goal)) }}
                                 </span>
                             </p>
@@ -158,44 +158,43 @@
                         @endif
                         @if($client->clientProfile->experience_level)
                         <div>
-                            <span class="text-sm text-gray-500 dark:text-gray-400">{{ __('coach.clients.show.experience_level') }}</span>
-                            <p class="mt-1 text-sm font-medium text-gray-900 dark:text-gray-100">{{ ucfirst($client->clientProfile->experience_level) }}</p>
+                            <span class="text-sm text-[#8e8e93] dark:text-gray-400">{{ __('coach.clients.show.experience_level') }}</span>
+                            <p class="mt-1 text-sm font-medium text-[#222222] dark:text-gray-100">{{ ucfirst($client->clientProfile->experience_level) }}</p>
                         </div>
                         @endif
                         @if($client->clientProfile->injuries)
                         <div>
-                            <span class="text-sm text-gray-500 dark:text-gray-400">{{ __('coach.clients.show.injuries') }}</span>
-                            <p class="mt-1 text-sm text-gray-900 dark:text-gray-100">{{ $client->clientProfile->injuries }}</p>
+                            <span class="text-sm text-[#8e8e93] dark:text-gray-400">{{ __('coach.clients.show.injuries') }}</span>
+                            <p class="mt-1 text-sm text-[#222222] dark:text-gray-100">{{ $client->clientProfile->injuries }}</p>
                         </div>
                         @endif
                         @if($client->clientProfile->equipment_access)
                         <div>
-                            <span class="text-sm text-gray-500 dark:text-gray-400">{{ __('coach.clients.show.equipment') }}</span>
-                            <p class="mt-1 text-sm text-gray-900 dark:text-gray-100">{{ $client->clientProfile->equipment_access }}</p>
+                            <span class="text-sm text-[#8e8e93] dark:text-gray-400">{{ __('coach.clients.show.equipment') }}</span>
+                            <p class="mt-1 text-sm text-[#222222] dark:text-gray-100">{{ $client->clientProfile->equipment_access }}</p>
                         </div>
                         @endif
                     </div>
                 </div>
                 @endif
-            </div>
 
                 <!-- Tracking Metrics Assignment -->
                 @if($coachMetrics->count() > 0)
-                <div class="bg-white dark:bg-gray-900 rounded-lg shadow p-6">
-                    <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100 mb-4">{{ __('coach.clients.show.tracking_metrics') }}</h2>
+                <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 shadow-card p-6">
+                    <h2 class="font-display text-base font-semibold text-[#222222] dark:text-gray-100 mb-4">{{ __('coach.clients.show.tracking_metrics') }}</h2>
                     <div class="space-y-2">
                         @foreach($coachMetrics as $metric)
                             <form method="POST" action="{{ route('coach.clients.toggle-metric', $client) }}">
                                 @csrf
                                 <input type="hidden" name="tracking_metric_id" value="{{ $metric->id }}">
-                                <button type="submit" class="w-full flex items-center justify-between px-3 py-2 rounded-md hover:bg-gray-50 dark:hover:bg-gray-800 text-left transition-colors">
-                                    <span class="text-sm text-gray-700 dark:text-gray-300">{{ $metric->name }}</span>
+                                <button type="submit" class="w-full flex items-center justify-between px-3 py-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 text-left transition-colors">
+                                    <span class="text-sm text-[#45515e] dark:text-gray-300">{{ $metric->name }}</span>
                                     @if($assignedMetricIds->contains($metric->id))
-                                        <span class="flex-shrink-0 w-8 h-5 bg-blue-600 rounded-full relative">
+                                        <span class="flex-shrink-0 w-8 h-5 rounded-full relative" style="background-color: var(--color-primary)">
                                             <span class="absolute right-0.5 top-0.5 w-4 h-4 bg-white rounded-full shadow"></span>
                                         </span>
                                     @else
-                                        <span class="flex-shrink-0 w-8 h-5 bg-gray-300 rounded-full relative">
+                                        <span class="flex-shrink-0 w-8 h-5 bg-gray-300 dark:bg-gray-600 rounded-full relative">
                                             <span class="absolute left-0.5 top-0.5 w-4 h-4 bg-white rounded-full shadow"></span>
                                         </span>
                                     @endif
@@ -210,88 +209,90 @@
             <!-- Main Content -->
             <div class="lg:col-span-2 space-y-6">
                 <!-- Active Program -->
-                <div class="bg-white dark:bg-gray-900 rounded-lg shadow p-6">
+                <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 shadow-card p-6">
                     <div class="flex items-center justify-between mb-4">
-                        <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">{{ __('coach.clients.show.active_program') }}</h2>
+                        <h2 class="font-display text-base font-semibold text-[#222222] dark:text-gray-100">{{ __('coach.clients.show.active_program') }}</h2>
                         @if($activeProgram)
                             <div class="flex items-center gap-3">
-                                <a href="{{ route('coach.programs.assignments.targets.edit', [$activeProgram->program, $activeProgram]) }}" class="inline-flex items-center text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200">
-                                    <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <a href="{{ route('coach.programs.assignments.targets.edit', [$activeProgram->program, $activeProgram]) }}" class="inline-flex items-center text-sm text-[#8e8e93] dark:text-gray-400 hover:text-[#45515e] dark:hover:text-gray-200">
+                                    <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3"/>
                                     </svg>
                                     {{ __('coach.clients.show.set_targets') }}
                                 </a>
-                                <a href="{{ route('coach.programs.show', $activeProgram->program) }}" class="text-sm text-blue-600 hover:text-blue-800">{{ __('coach.clients.show.view_program') }}</a>
+                                <a href="{{ route('coach.programs.show', $activeProgram->program) }}" class="text-sm font-medium text-[#1456f0] hover:underline">{{ __('coach.clients.show.view_program') }}</a>
                             </div>
                         @endif
                     </div>
                     @if($activeProgram)
                         <div class="space-y-3">
                             <div>
-                                <h3 class="text-base font-semibold text-gray-900 dark:text-gray-100">{{ $activeProgram->program->name }}</h3>
+                                <h3 class="text-base font-semibold text-[#222222] dark:text-gray-100">{{ $activeProgram->program->name }}</h3>
                                 @if($activeProgram->program->description)
-                                    <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">{{ Str::limit($activeProgram->program->description, 120) }}</p>
+                                    <p class="mt-1 text-sm text-[#45515e] dark:text-gray-400">{{ Str::limit($activeProgram->program->description, 120) }}</p>
                                 @endif
                             </div>
-                            <div class="flex flex-wrap gap-3 text-sm text-gray-500 dark:text-gray-400">
+                            <div class="flex flex-wrap gap-3 text-sm text-[#8e8e93] dark:text-gray-400">
                                 @if($activeProgram->program->duration_weeks)
                                     <span>{{ __('coach.clients.show.n_weeks', ['n' => $activeProgram->program->duration_weeks]) }}</span>
                                 @endif
                                 @if($activeProgram->program->type)
-                                    <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">{{ ucfirst($activeProgram->program->type) }}</span>
+                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400">{{ ucfirst($activeProgram->program->type) }}</span>
                                 @endif
                             </div>
-                            <div class="text-xs text-gray-400 dark:text-gray-500">
+                            <div class="text-xs text-[#8e8e93] dark:text-gray-500">
                                 {{ __('coach.clients.show.started') }} {{ $activeProgram->started_at->format('M d, Y') }}
                             </div>
                         </div>
                     @else
                         <div class="text-center py-8">
-                            <svg class="mx-auto h-12 w-12 text-gray-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
-                            </svg>
-                            <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">{{ __('coach.clients.show.no_program') }}</p>
+                            <div class="w-12 h-12 rounded-2xl bg-gray-100 dark:bg-gray-800 flex items-center justify-center mx-auto mb-3">
+                                <svg class="h-6 w-6 text-[#8e8e93]" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+                                </svg>
+                            </div>
+                            <p class="text-sm text-[#8e8e93] dark:text-gray-500">{{ __('coach.clients.show.no_program') }}</p>
                         </div>
                     @endif
                 </div>
 
                 <!-- Recent Workouts -->
-                <div class="bg-white dark:bg-gray-900 rounded-lg shadow p-6">
+                <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 shadow-card p-6">
                     <div class="flex items-center justify-between mb-4">
-                        <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">{{ __('coach.clients.show.recent_workouts') }}</h2>
-                        <a href="{{ route('coach.clients.workout-logs.create', $client) }}" class="inline-flex items-center px-3 py-1.5 border border-blue-300 dark:border-blue-700 rounded-md text-sm font-medium text-blue-700 dark:text-blue-400 bg-white dark:bg-gray-900 hover:bg-blue-50 dark:hover:bg-gray-800 transition ease-in-out duration-150">
+                        <h2 class="font-display text-base font-semibold text-[#222222] dark:text-gray-100">{{ __('coach.clients.show.recent_workouts') }}</h2>
+                        <a href="{{ route('coach.clients.workout-logs.create', $client) }}" class="inline-flex items-center px-4 py-2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg text-sm font-semibold text-[#45515e] dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
                             {{ __('coach.clients.show.log_workout') }}
                         </a>
                     </div>
                     @if($recentWorkoutLogs->count() > 0)
-                        <div class="divide-y divide-gray-200 dark:divide-gray-800">
+                        <div class="divide-y divide-gray-100 dark:divide-gray-800">
                             @foreach($recentWorkoutLogs as $log)
-                                <a href="{{ route('coach.clients.workout-log', [$client, $log]) }}" class="flex items-center justify-between py-3 hover:bg-gray-50 dark:hover:bg-gray-800 -mx-2 px-2 rounded transition-colors">
+                                <a href="{{ route('coach.clients.workout-log', [$client, $log]) }}" class="flex items-center justify-between py-3 hover:bg-gray-50 dark:hover:bg-gray-800/40 -mx-2 px-2 rounded-lg transition-colors">
                                     <div>
                                         <div class="flex items-center gap-2">
-                                            <p class="text-sm font-medium text-gray-900 dark:text-gray-100">{{ $log->displayName() }}</p>
+                                            <p class="text-sm font-medium text-[#222222] dark:text-gray-100">{{ $log->displayName() }}</p>
                                             @if($unreadWorkoutLogIds->contains($log->id))
-                                                <span class="flex h-2 w-2 rounded-full bg-blue-500" title="Unread comments"></span>
+                                                <span class="flex h-2 w-2 rounded-full" style="background-color: var(--color-primary)" title="Unread comments"></span>
                                             @endif
                                         </div>
-                                        <p class="text-xs text-gray-500 dark:text-gray-400">{{ $log->completed_at->format('M j, Y \a\t g:i A') }}</p>
+                                        <p class="text-xs text-[#8e8e93] dark:text-gray-500">{{ $log->completed_at->format('M j, Y \a\t g:i A') }}</p>
                                     </div>
                                     <div class="flex items-center gap-2">
                                         @if($log->comments_count > 0)
-                                            <span class="inline-flex items-center gap-1 text-xs text-gray-500 dark:text-gray-400">
-                                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <span class="inline-flex items-center gap-1 text-xs text-[#8e8e93] dark:text-gray-400">
+                                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
                                                 </svg>
                                                 {{ $log->comments_count }}
                                             </span>
                                         @endif
-                                        <a href="{{ route('coach.clients.workout-logs.edit', [$client, $log]) }}" class="text-xs text-blue-600 dark:text-blue-400 hover:underline" onclick="event.stopPropagation()">{{ __('coach.clients.show.edit_log') }}</a>
+                                        <a href="{{ route('coach.clients.workout-logs.edit', [$client, $log]) }}" class="text-xs font-medium text-[#1456f0] hover:underline" onclick="event.stopPropagation()">{{ __('coach.clients.show.edit_log') }}</a>
                                         <form method="POST" action="{{ route('coach.clients.workout-logs.destroy', [$client, $log]) }}" onsubmit="return confirm('{{ __('coach.clients.show.delete_log_confirm') }}')" onclick="event.stopPropagation()">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="text-xs text-red-500 dark:text-red-400 hover:underline">{{ __('coach.clients.show.delete_log') }}</button>
+                                            <button type="submit" class="text-xs font-medium text-red-500 dark:text-red-400 hover:underline">{{ __('coach.clients.show.delete_log') }}</button>
                                         </form>
-                                        <svg class="w-4 h-4 text-gray-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <svg class="w-4 h-4 text-[#8e8e93] dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
                                         </svg>
                                     </div>
@@ -300,48 +301,51 @@
                         </div>
                     @else
                         <div class="text-center py-8">
-                            <svg class="mx-auto h-12 w-12 text-gray-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
-                            </svg>
-                            <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">{{ __('coach.clients.show.no_workouts') }}</p>
+                            <div class="w-12 h-12 rounded-2xl bg-gray-100 dark:bg-gray-800 flex items-center justify-center mx-auto mb-3">
+                                <svg class="h-6 w-6 text-[#8e8e93]" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                                </svg>
+                            </div>
+                            <p class="text-sm text-[#8e8e93] dark:text-gray-500">{{ __('coach.clients.show.no_workouts') }}</p>
                         </div>
                     @endif
                 </div>
+
                 <!-- Nutrition Summary -->
-                <div class="bg-white dark:bg-gray-900 rounded-lg shadow p-6">
+                <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 shadow-card p-6">
                     <div class="flex items-center justify-between mb-4">
-                        <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">{{ __('coach.clients.show.nutrition') }}</h2>
-                        <a href="{{ route('coach.clients.nutrition', $client) }}" class="text-sm text-blue-600 hover:text-blue-800">{{ __('coach.clients.show.view_details') }}</a>
+                        <h2 class="font-display text-base font-semibold text-[#222222] dark:text-gray-100">{{ __('coach.clients.show.nutrition') }}</h2>
+                        <a href="{{ route('coach.clients.nutrition', $client) }}" class="text-sm font-medium text-[#1456f0] hover:underline">{{ __('coach.clients.show.view_details') }}</a>
                     </div>
                     @if($currentMacroGoal)
                         <div class="grid grid-cols-4 gap-4">
                             <div class="text-center">
-                                <p class="text-xs text-gray-500 dark:text-gray-400 uppercase">{{ __('coach.clients.show.calories') }}</p>
-                                <p class="text-lg font-bold text-gray-900 dark:text-gray-100">{{ number_format($todayMealTotals->calories) }}</p>
-                                <p class="text-xs text-gray-400 dark:text-gray-500">/ {{ number_format($currentMacroGoal->calories) }}</p>
+                                <p class="text-xs font-medium text-[#8e8e93] dark:text-gray-400 uppercase tracking-wide">{{ __('coach.clients.show.calories') }}</p>
+                                <p class="text-lg font-bold text-[#222222] dark:text-gray-100">{{ number_format($todayMealTotals->calories) }}</p>
+                                <p class="text-xs text-[#8e8e93] dark:text-gray-500">/ {{ number_format($currentMacroGoal->calories) }}</p>
                             </div>
                             <div class="text-center">
-                                <p class="text-xs text-gray-500 dark:text-gray-400 uppercase">{{ __('coach.clients.show.protein') }}</p>
-                                <p class="text-lg font-bold text-gray-900 dark:text-gray-100">{{ number_format($todayMealTotals->protein, 1) }}g</p>
-                                <p class="text-xs text-gray-400 dark:text-gray-500">/ {{ $currentMacroGoal->protein }}g</p>
+                                <p class="text-xs font-medium text-[#8e8e93] dark:text-gray-400 uppercase tracking-wide">{{ __('coach.clients.show.protein') }}</p>
+                                <p class="text-lg font-bold text-[#222222] dark:text-gray-100">{{ number_format($todayMealTotals->protein, 1) }}g</p>
+                                <p class="text-xs text-[#8e8e93] dark:text-gray-500">/ {{ $currentMacroGoal->protein }}g</p>
                             </div>
                             <div class="text-center">
-                                <p class="text-xs text-gray-500 dark:text-gray-400 uppercase">{{ __('coach.clients.show.carbs') }}</p>
-                                <p class="text-lg font-bold text-gray-900 dark:text-gray-100">{{ number_format($todayMealTotals->carbs, 1) }}g</p>
-                                <p class="text-xs text-gray-400 dark:text-gray-500">/ {{ $currentMacroGoal->carbs }}g</p>
+                                <p class="text-xs font-medium text-[#8e8e93] dark:text-gray-400 uppercase tracking-wide">{{ __('coach.clients.show.carbs') }}</p>
+                                <p class="text-lg font-bold text-[#222222] dark:text-gray-100">{{ number_format($todayMealTotals->carbs, 1) }}g</p>
+                                <p class="text-xs text-[#8e8e93] dark:text-gray-500">/ {{ $currentMacroGoal->carbs }}g</p>
                             </div>
                             <div class="text-center">
-                                <p class="text-xs text-gray-500 dark:text-gray-400 uppercase">{{ __('coach.clients.show.fat') }}</p>
-                                <p class="text-lg font-bold text-gray-900 dark:text-gray-100">{{ number_format($todayMealTotals->fat, 1) }}g</p>
-                                <p class="text-xs text-gray-400 dark:text-gray-500">/ {{ $currentMacroGoal->fat }}g</p>
+                                <p class="text-xs font-medium text-[#8e8e93] dark:text-gray-400 uppercase tracking-wide">{{ __('coach.clients.show.fat') }}</p>
+                                <p class="text-lg font-bold text-[#222222] dark:text-gray-100">{{ number_format($todayMealTotals->fat, 1) }}g</p>
+                                <p class="text-xs text-[#8e8e93] dark:text-gray-500">/ {{ $currentMacroGoal->fat }}g</p>
                             </div>
                         </div>
                     @else
                         <div class="text-center py-4">
-                            <p class="text-sm text-gray-500 dark:text-gray-400">{{ __('coach.clients.show.no_macro_goals') }}</p>
-                            <a href="{{ route('coach.clients.nutrition', $client) }}" class="mt-2 inline-flex items-center text-sm text-blue-600 hover:text-blue-800">
+                            <p class="text-sm text-[#8e8e93] dark:text-gray-400">{{ __('coach.clients.show.no_macro_goals') }}</p>
+                            <a href="{{ route('coach.clients.nutrition', $client) }}" class="mt-2 inline-flex items-center text-sm font-medium text-[#1456f0] hover:underline">
                                 {{ __('coach.clients.show.set_macro_goals') }}
-                                <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
                                 </svg>
                             </a>
@@ -351,10 +355,10 @@
 
                 <!-- Daily Check-in Logs (Last 7 Days) -->
                 @if($assignedMetricIds->count() > 0)
-                <div class="bg-white dark:bg-gray-900 rounded-lg shadow p-6">
+                <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 shadow-card p-6">
                     <div class="flex items-center justify-between mb-4">
-                        <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">{{ __('coach.clients.show.check_ins_last_7_days') }}</h2>
-                        <a href="{{ route('coach.clients.check-in.show', $client) }}" class="inline-flex items-center px-3 py-1.5 border border-blue-300 dark:border-blue-700 rounded-md text-sm font-medium text-blue-700 dark:text-blue-400 bg-white dark:bg-gray-900 hover:bg-blue-50 dark:hover:bg-gray-800 transition ease-in-out duration-150">
+                        <h2 class="font-display text-base font-semibold text-[#222222] dark:text-gray-100">{{ __('coach.clients.show.check_ins_last_7_days') }}</h2>
+                        <a href="{{ route('coach.clients.check-in.show', $client) }}" class="inline-flex items-center px-4 py-2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg text-sm font-semibold text-[#45515e] dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
                             {{ __('coach.clients.show.log_check_in') }}
                         </a>
                     </div>
@@ -370,20 +374,20 @@
                     <div class="overflow-x-auto -mx-6 px-6">
                         <table class="min-w-full text-sm">
                             <thead>
-                                <tr class="border-b border-gray-200 dark:border-gray-800">
-                                    <th class="text-left py-2 pr-4 font-medium text-gray-500 dark:text-gray-400 text-xs uppercase">{{ __('coach.clients.show.metric') }}</th>
+                                <tr class="border-b border-gray-100 dark:border-gray-800">
+                                    <th class="text-left py-2 pr-4 text-xs font-medium text-[#8e8e93] dark:text-gray-400 uppercase tracking-wide">{{ __('coach.clients.show.metric') }}</th>
                                     @foreach($dates as $date)
-                                        <th class="text-center py-2 px-2 font-medium text-gray-500 dark:text-gray-400 text-xs">
+                                        <th class="text-center py-2 px-2 text-xs font-medium text-[#8e8e93] dark:text-gray-400">
                                             {{ \Carbon\Carbon::parse($date)->format('D') }}<br>
-                                            <span class="text-gray-400 dark:text-gray-500">{{ \Carbon\Carbon::parse($date)->format('j') }}</span>
+                                            <span class="text-[#8e8e93] dark:text-gray-500">{{ \Carbon\Carbon::parse($date)->format('j') }}</span>
                                         </th>
                                     @endforeach
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-gray-100 dark:divide-gray-800">
                                 @foreach($assignedMetrics as $metric)
-                                    <tr>
-                                        <td class="py-2 pr-4 text-gray-700 dark:text-gray-300 whitespace-nowrap">{{ $metric->name }}</td>
+                                    <tr class="hover:bg-gray-50 dark:hover:bg-gray-800/40 transition-colors">
+                                        <td class="py-2 pr-4 text-sm text-[#45515e] dark:text-gray-300 whitespace-nowrap">{{ $metric->name }}</td>
                                         @foreach($dates as $date)
                                             @php
                                                 $log = $recentDailyLogs->get($date)?->firstWhere('tracking_metric_id', $metric->id);
@@ -393,19 +397,19 @@
                                                     @if($metric->type === 'boolean')
                                                         @if($log->value === '1' || $log->value === 'true')
                                                             <span class="text-green-600">
-                                                                <svg class="w-4 h-4 inline" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                                                                <svg class="w-4 h-4 inline" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
                                                             </span>
                                                         @else
                                                             <span class="text-red-400">
-                                                                <svg class="w-4 h-4 inline" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+                                                                <svg class="w-4 h-4 inline" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
                                                             </span>
                                                         @endif
                                                     @elseif($metric->type === 'text')
-                                                        <span class="text-blue-600 cursor-help" title="{{ $log->value }}">
-                                                            <svg class="w-4 h-4 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                                                        <span class="text-[#1456f0] cursor-help" title="{{ $log->value }}">
+                                                            <svg class="w-4 h-4 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
                                                         </span>
                                                     @else
-                                                        <span class="text-gray-900 dark:text-gray-100 font-medium">{{ $log->value }}</span>
+                                                        <span class="text-sm font-medium text-[#222222] dark:text-gray-100">{{ $log->value }}</span>
                                                     @endif
                                                 @else
                                                     <span class="text-gray-300 dark:text-gray-600">&mdash;</span>
@@ -421,32 +425,32 @@
                 @endif
 
                 <!-- Loyalty Section -->
-                <div class="bg-white rounded-lg shadow p-6">
+                <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 shadow-card p-6">
                     <div class="flex items-center justify-between mb-4">
                         <div class="flex items-center gap-3">
-                            <h2 class="text-lg font-medium text-gray-900">{{ __('coach.clients.show.loyalty') }}</h2>
-                            <a href="{{ route('coach.clients.loyalty', $client) }}" class="text-sm text-blue-600 hover:text-blue-800">{{ __('coach.clients.show.view_full_history') }}</a>
+                            <h2 class="font-display text-base font-semibold text-[#222222] dark:text-gray-100">{{ __('coach.clients.show.loyalty') }}</h2>
+                            <a href="{{ route('coach.clients.loyalty', $client) }}" class="text-sm font-medium text-[#1456f0] hover:underline">{{ __('coach.clients.show.view_full_history') }}</a>
                         </div>
                         @if($manualAchievements->isNotEmpty())
                             <div x-data="{ open: false }" class="relative">
-                                <button @click="open = !open" type="button" class="inline-flex items-center px-3 py-1.5 border border-blue-300 rounded-md text-sm font-medium text-blue-700 bg-white hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-blue-500 transition ease-in-out duration-150">
-                                    <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <button @click="open = !open" type="button" class="inline-flex items-center px-4 py-2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg text-sm font-semibold text-[#45515e] dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                                    <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
                                     </svg>
                                     {{ __('coach.clients.show.award_achievement') }}
                                 </button>
                                 <div x-show="open" @click.outside="open = false" x-cloak
-                                    class="absolute right-0 mt-2 w-72 bg-white border border-gray-200 rounded-lg shadow-lg z-10">
-                                    <div class="px-4 py-3 border-b border-gray-100">
-                                        <p class="text-sm font-medium text-gray-900">{{ __('coach.clients.show.award_achievement_heading') }}</p>
+                                    class="absolute right-0 mt-2 w-72 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl shadow-card z-10">
+                                    <div class="px-4 py-3 border-b border-gray-100 dark:border-gray-800">
+                                        <p class="text-sm font-semibold text-[#222222] dark:text-gray-100">{{ __('coach.clients.show.award_achievement_heading') }}</p>
                                     </div>
-                                    <ul class="max-h-64 overflow-y-auto divide-y divide-gray-100">
+                                    <ul class="max-h-64 overflow-y-auto divide-y divide-gray-100 dark:divide-gray-800">
                                         @foreach($manualAchievements as $achievement)
                                             <li class="flex items-center justify-between px-4 py-3">
                                                 <div>
-                                                    <p class="text-sm font-medium text-gray-800">{{ $achievement->name }}</p>
+                                                    <p class="text-sm font-medium text-[#222222] dark:text-gray-100">{{ $achievement->name }}</p>
                                                     @if($achievement->xp_reward || $achievement->points_reward)
-                                                        <p class="text-xs text-gray-500">
+                                                        <p class="text-xs text-[#8e8e93] dark:text-gray-400">
                                                             @if($achievement->xp_reward) {{ $achievement->xp_reward }} XP @endif
                                                             @if($achievement->xp_reward && $achievement->points_reward) &middot; @endif
                                                             @if($achievement->points_reward) {{ $achievement->points_reward }} pts @endif
@@ -455,7 +459,7 @@
                                                 </div>
                                                 <form method="POST" action="{{ route('coach.clients.achievements.award', [$client, $achievement]) }}">
                                                     @csrf
-                                                    <button type="submit" class="ml-3 inline-flex items-center px-2.5 py-1 border border-green-300 rounded text-xs font-medium text-green-700 bg-white hover:bg-green-50 transition ease-in-out duration-150">
+                                                    <button type="submit" class="ml-3 inline-flex items-center px-2.5 py-1 border border-green-300 dark:border-green-700 rounded-lg text-xs font-medium text-green-700 dark:text-green-400 bg-white dark:bg-gray-800 hover:bg-green-50 dark:hover:bg-green-900/20 transition-colors">
                                                         {{ __('coach.clients.show.award') }}
                                                     </button>
                                                 </form>
@@ -472,25 +476,25 @@
                         <div class="space-y-3 mb-4">
                             <div class="flex items-center gap-3">
                                 @if($xpSummary->currentLevel)
-                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-yellow-100 text-yellow-800">
+                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-400">
                                         {{ $xpSummary->currentLevel->name }}
                                     </span>
                                 @endif
-                                <span class="text-sm text-gray-600">{{ number_format($xpSummary->total_xp) }} {{ __('coach.clients.loyalty.total_xp') }}</span>
-                                <span class="text-sm font-semibold text-blue-600">{{ number_format($xpSummary->available_points) }} {{ __('coach.clients.loyalty.pts_available') }}</span>
+                                <span class="text-sm text-[#45515e] dark:text-gray-400">{{ number_format($xpSummary->total_xp) }} {{ __('coach.clients.loyalty.total_xp') }}</span>
+                                <span class="text-sm font-semibold text-[#1456f0]">{{ number_format($xpSummary->available_points) }} {{ __('coach.clients.loyalty.pts_available') }}</span>
                             </div>
                         </div>
                     @else
-                        <p class="text-sm text-gray-400 mb-4">{{ __('coach.clients.show.no_xp_activity') }}</p>
+                        <p class="text-sm text-[#8e8e93] dark:text-gray-500 mb-4">{{ __('coach.clients.show.no_xp_activity') }}</p>
                     @endif
 
                     <!-- Earned Achievements -->
                     @if($clientAchievements->isNotEmpty())
                         <div class="mb-4">
-                            <h3 class="text-sm font-medium text-gray-700 mb-2">{{ __('coach.clients.show.earned_achievements') }}</h3>
+                            <h3 class="text-sm font-medium text-[#45515e] dark:text-gray-300 mb-2">{{ __('coach.clients.show.earned_achievements') }}</h3>
                             <div class="flex flex-wrap gap-2">
                                 @foreach($clientAchievements as $achievement)
-                                    <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800" title="{{ $achievement->description }}">
+                                    <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400" title="{{ $achievement->description }}">
                                         🏆 {{ $achievement->name }}
                                     </span>
                                 @endforeach
@@ -501,19 +505,19 @@
                     <!-- Recent Redemptions -->
                     @if($recentRedemptions->isNotEmpty())
                         <div>
-                            <h3 class="text-sm font-medium text-gray-700 mb-2">{{ __('coach.clients.show.recent_redemptions') }}</h3>
-                            <ul class="divide-y divide-gray-100">
+                            <h3 class="text-sm font-medium text-[#45515e] dark:text-gray-300 mb-2">{{ __('coach.clients.show.recent_redemptions') }}</h3>
+                            <ul class="divide-y divide-gray-100 dark:divide-gray-800">
                                 @foreach($recentRedemptions as $redemption)
                                     <li class="py-2 flex items-center justify-between">
                                         <div>
-                                            <p class="text-sm text-gray-800">{{ $redemption->reward?->name ?? __('coach.clients.loyalty.deleted_reward') }}</p>
-                                            <p class="text-xs text-gray-400">{{ $redemption->created_at->format('M j, Y') }} &middot; {{ $redemption->points_spent }} pts</p>
+                                            <p class="text-sm text-[#222222] dark:text-gray-100">{{ $redemption->reward?->name ?? __('coach.clients.loyalty.deleted_reward') }}</p>
+                                            <p class="text-xs text-[#8e8e93] dark:text-gray-500">{{ $redemption->created_at->format('M j, Y') }} &middot; {{ $redemption->points_spent }} pts</p>
                                         </div>
                                         @php
                                             $statusColors = ['pending' => 'yellow', 'fulfilled' => 'green', 'rejected' => 'red'];
                                             $color = $statusColors[$redemption->status] ?? 'gray';
                                         @endphp
-                                        <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-{{ $color }}-100 text-{{ $color }}-800">
+                                        <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-{{ $color }}-100 dark:bg-{{ $color }}-900/30 text-{{ $color }}-700 dark:text-{{ $color }}-400">
                                             {{ ucfirst($redemption->status) }}
                                         </span>
                                     </li>

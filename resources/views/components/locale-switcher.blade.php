@@ -1,3 +1,4 @@
+@props(['direction' => 'bottom'])
 @php
     $currentLocale = auth()->user()->locale ?? 'en';
     $locales = [
@@ -23,7 +24,7 @@
     <div
         x-show="open"
         x-transition
-        class="absolute right-0 top-full mt-1 w-40 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-100 dark:border-gray-700 py-1 z-50"
+        class="absolute right-0 w-40 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-100 dark:border-gray-700 py-1 z-50 {{ $direction === 'top' ? 'bottom-full mb-1' : 'top-full mt-1' }}"
     >
         @foreach($locales as $locale => $meta)
             <form method="POST" action="{{ route('user.locale.update') }}">
