@@ -18,7 +18,7 @@ return new class extends Migration
             $table->decimal('target_weight', 8, 2);
             $table->timestamps();
 
-            $table->unique(['client_program_id', 'workout_exercise_id']);
+            $table->unique(['client_program_id', 'workout_exercise_id'], 'cpet_program_exercise_unique');
         });
     }
 
