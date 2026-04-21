@@ -45,7 +45,11 @@
       "Bash(echo \"exit:$?\")",
       "Bash(./vendor/bin/pest tests/Feature/Auth/AuthenticatedRedirectTest.php 2>&1)",
       "Bash(./vendor/bin/pest tests/Feature/Auth/AuthenticatedRedirectTest.php --colors=never)",
-      "Bash(git ls-tree:*)"
+      "Bash(git ls-tree:*)",
+      "Bash(docker exec *)",
+      "Bash(awk '{print $3, $4, $5}')",
+      "Bash(docker stop *)",
+      "Bash(docker rm *)"
     ]
   },
   "enabledMcpjsonServers": [

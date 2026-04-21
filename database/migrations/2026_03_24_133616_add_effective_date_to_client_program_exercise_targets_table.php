@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::table('client_program_exercise_targets', function (Blueprint $table) {
             $table->date('effective_date')->nullable()->after('set_number');
 
-            $table->dropUnique(['client_program_id', 'workout_exercise_id', 'set_number']);
-            $table->unique(['client_program_id', 'workout_exercise_id', 'set_number', 'effective_date']);
+            $table->dropUnique('cpet_program_exercise_set_unique');
+            $table->unique(['client_program_id', 'workout_exercise_id', 'set_number', 'effective_date'], 'cpet_program_exercise_set_date_unique');
         });
     }
 
@@ -25,9 +25,9 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('client_program_exercise_targets', function (Blueprint $table) {
-            $table->dropUnique(['client_program_id', 'workout_exercise_id', 'set_number', 'effective_date']);
+            $table->dropUnique('cpet_program_exercise_set_date_unique');
             $table->dropColumn('effective_date');
-            $table->unique(['client_program_id', 'workout_exercise_id', 'set_number']);
+            $table->unique(['client_program_id', 'workout_exercise_id', 'set_number'], 'cpet_program_exercise_set_unique');
         });
     }
 };
