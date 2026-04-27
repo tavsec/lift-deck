@@ -19,7 +19,7 @@ return [
 
         'panel' => [
             'heading' => 'Stop coaching from spreadsheets. Run everything in LiftDeck.',
-            'trial_note' => '7-day free trial · No credit card required',
+            'trial_note' => '7-day free trial',
             'feature_1' => 'Programs & workout logging',
             'feature_1_sub' => 'Build plans, clients log in real-time',
             'feature_2' => 'Nutrition & metrics',

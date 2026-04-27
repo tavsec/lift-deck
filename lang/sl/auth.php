@@ -19,7 +19,7 @@ return [
 
         'panel' => [
             'heading' => 'Nehajte trenirati iz tabel. Vse vodite v LiftDecku.',
-            'trial_note' => '7 dni brezplačno · Kreditna kartica ni potrebna',
+            'trial_note' => '7 dni brezplačno',
             'feature_1' => 'Programi in beleženje treningov',
             'feature_1_sub' => 'Gradite načrte, stranke beležijo v realnem času',
             'feature_2' => 'Prehrana in metrike',

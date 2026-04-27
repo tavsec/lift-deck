@@ -3,6 +3,8 @@
 use App\Http\Controllers\Client;
 use App\Http\Controllers\Coach;
 use App\Http\Controllers\LandingLocaleController;
+use App\Http\Controllers\SitemapController;
+use App\Http\Controllers\TermsController;
 use Illuminate\Support\Facades\Route;
 
 Route::domain('beta.liftdeck.io')->group(function () {
@@ -12,6 +14,8 @@ Route::domain('beta.liftdeck.io')->group(function () {
 });
 
 Route::get('/', [LandingLocaleController::class, 'index'])->name('landing.detect');
+Route::get('/sitemap.xml', [SitemapController::class, 'sitemap'])->name('sitemap');
+Route::get('/robots.txt', [SitemapController::class, 'robots'])->name('robots');
 
 Route::get('/offline', fn () => view('offline'))->name('offline');
 
@@ -179,3 +183,7 @@ require __DIR__.'/auth.php';
 Route::get('/{locale}', [LandingLocaleController::class, 'show'])
     ->where('locale', 'en|si|hr')
     ->name('landing');
+
+Route::get('/{locale}/terms', [TermsController::class, 'show'])
+    ->where('locale', 'en|si|hr')
+    ->name('terms');

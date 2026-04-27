@@ -1,62 +1,128 @@
 <?php
 
 return [
-    'title' => 'LiftDeck | Platforma za fitness trenere',
+    'meta' => [
+        'title' => 'LiftDeck — Platforma za fitness trenere',
+        'description' => 'LiftDeck daje fitness trenerima potpunu platformu — programe, provjere, prehranu, dopisivanje i nagrade — sve na jednom mjestu. Pokrenite 7-dnevno besplatno probno razdoblje.',
+    ],
 
     'nav' => [
+        'features' => 'Značajke',
+        'pricing' => 'Cijene',
         'sign_in' => 'Prijava',
+        'get_started' => 'Počnite besplatno',
     ],
 
     'hero' => [
-        'heading' => 'Prestanite trenirati iz tablica. Sve vodite u LiftDecku.',
-        'subheading' => 'Kreirajte programe, pratite treninge, bilježite prehranu, dopisujte se s klijentima i pratite napredak — na jednom mjestu, po promotivnim cijenama za osnivačke trenere.',
-        'cta' => 'Počnite besplatno 7 dana',
+        'badge' => 'Napravljeno za fitness trenere',
+        'heading_1' => 'Vaš trening.',
+        'heading_2' => 'Njihov napredak.',
+        'subheading' => 'LiftDeck daje fitness trenerima potpunu platformu — programe, provjere, prehranu, dopisivanje i nagrade — sve na jednom mjestu, dostupno s bilo kojeg uređaja.',
+        'cta_primary' => 'Pokrenite besplatno probno razdoblje',
+        'cta_secondary' => 'Pogledajte kako funkcionira',
+    ],
+
+    'stats' => [
+        'trial_value' => '7 dana',
+        'trial_label' => 'Besplatno probno razdoblje',
+        'exercises_value' => '100+',
+        'exercises_label' => 'Uključenih predložaka vježbi',
+        'setup_value' => '0 €',
+        'setup_label' => 'Troška postavljanja — nikada',
     ],
 
     'features' => [
-        'label' => 'Značajke',
-        'heading' => 'Glavne značajke LiftDecka',
-        'onboarding' => [
-            'title' => 'Pametno uvođenje klijenata',
-            'description' => 'Uvedite klijente za nekoliko minuta uz vođene obrasce za unos koji bilježe ciljeve, zdravstvenu povijest i opremu. Treneri odmah dobivaju profile klijenata s automatski označenim rizicima i ograničenjima.',
+        'label' => 'Sve što trebate',
+        'heading_1' => 'Potpuni set alata',
+        'heading_2' => 'za moderne trenere',
+        'programs' => [
+            'title' => 'Programi treninga',
+            'description' => 'Izradite i dodijelite prilagođene programe s bibliotekama vježbi, setovima, ponavljanjima i praćenjem napretka.',
         ],
-        'training' => [
-            'title' => 'Trening povlačenjem i ispuštanjem',
-            'description' => 'Izradite i dodijelite personalizirane programe treninga pomoću treninga s povlačenjem i ispuštanjem te više od 100 predložaka vježbi. Pravila automatskog napredovanja osiguravaju napredak klijenata bez ručnih podešavanja.',
+        'check_ins' => [
+            'title' => 'Provjere klijenata',
+            'description' => 'Prikupite tjedne provjere s fotografijama, mjerama i praćenjem raspoloženja — sve u jednoj nadzornoj ploči.',
+        ],
+        'workout_log' => [
+            'title' => 'Bilježenje treninga',
+            'description' => 'Klijenti bilježe treninge s telefona. Vidite svaki set i osobni rekord u stvarnom vremenu.',
         ],
         'nutrition' => [
-            'title' => 'Prilagođeno planiranje obroka',
-            'description' => 'Izradite prilagođene planove obroka s kalkulatorima makronutrijenata i predlošcima za višekratnu upotrebu. Klijenti bilježe obroke putem fotografija za jednostavno praćenje pridržavanja i tjednih ocjena prehrane.',
+            'title' => 'Planovi prehrane',
+            'description' => 'Izradite planove obroka i pratite makronutrijente. Prehrana i trening su usklađeni za svakog klijenta.',
         ],
-        'tracking' => [
-            'title' => 'Praćenje napretka',
-            'description' => 'Pratite stvarne rezultate jednostavnim grafikonima za dizanje, mjere tijela i nizove pridržavanja. Klijenti vide "pobjede" poput osobnih rekorda i prekretnica navika kako bi ostali motivirani.',
+        'messaging' => [
+            'title' => 'Dopisivanje',
+            'description' => 'Izravno dopisivanje između trenera i klijenta — bez mijenjanja aplikacija, bez izgubljenih razgovora.',
+        ],
+        'rewards' => [
+            'title' => 'Lojalnost i nagrade',
+            'description' => 'Motivirajte klijente bodovima, dostignućima i nagradama koje se mogu zamijeniti, vezanim uz njihov napredak.',
         ],
     ],
 
-    'about' => [
-        'heading' => 'Sve-u-jednom platforma za pametnije treniranje',
-        'description' => 'LiftDeck daje osobnim trenerima sve što je potrebno za uvođenje klijenata, izradu programa, praćenje prehrane i razvoj poslovanja — u jednoj brendiranoj aplikaciji.',
+    'pricing' => [
+        'label' => 'Jednostavne cijene',
+        'heading' => 'Planovi koji rastu s vama',
+        'subheading' => 'Svi planovi uključuju 7-dnevno besplatno probno razdoblje.',
+        'founding_offer' => 'Ponuda za osnivačke trenere: koristite kod FOUNDING70 za 70% popusta na prva 2 mjeseca.',
+        'per_month' => '/mj',
+        'get_started' => 'Pokrenite besplatno probno razdoblje',
+        'popular' => 'Najpopularnije',
+        'basic' => [
+            'name' => 'Basic',
+            'price' => '€10',
+            'clients' => 'Do 5 klijenata',
+            'description' => 'Za trenere koji tek počinju.',
+            'features' => [
+                'Do 5 klijenata',
+                'Programi treninga',
+                'Bilježenje treninga',
+                'Provjere klijenata',
+            ],
+        ],
+        'advanced' => [
+            'name' => 'Advanced',
+            'price' => '€45',
+            'clients' => 'Do 30 klijenata',
+            'description' => 'Za rastuće trenerske tvrtke.',
+            'features' => [
+                'Sve iz plana Basic',
+                'Planiranje prehrane',
+                'Lojalnost i nagrade',
+                'Dopisivanje',
+            ],
+        ],
+        'professional' => [
+            'name' => 'Professional',
+            'price' => '€79',
+            'clients' => 'Neograničeni klijenti',
+            'description' => 'Za etablirane trenere i teretane.',
+            'features' => [
+                'Sve iz plana Advanced',
+                'Prilagođeni brending teretane',
+                'Prioritetna podrška',
+            ],
+        ],
     ],
 
     'cta' => [
-        'what_looking_for' => 'Što tražite?',
-        'heading' => 'Počnite odmah',
-        'description' => 'Pokrenite besplatno probno razdoblje od 7 dana — nije potrebna kreditna kartica. Koristite kod FOUNDING70 pri plaćanju za 70% popusta na prva 2 mjeseca.',
-        'join_beta' => 'Preuzmite cijene osnivačkog trenera',
+        'heading' => 'Jeste li spremni za rast svog trenerskog posla?',
+        'description' => 'Pokrenite besplatno probno razdoblje od 7 dana već danas.',
+        'button' => 'Pokrenite besplatno probno razdoblje',
     ],
 
     'faq' => [
         'label' => 'Česta pitanja',
-        'heading' => 'Imate pitanja? Pogledajte ovdje',
+        'heading' => 'Često postavljana pitanja',
         'questions' => [
             'right_for_me' => [
                 'question' => 'Je li LiftDeck pravi za mene?',
-                'answer' => 'LiftDeck je savršen za osobne trenere i gym trenere s 5–50 klijenata koji žele zamijeniti tablice, WhatsApp i više aplikacija jednom profesionalnom platformom. Idealno za hibridno ili online treniranje.',
+                'answer' => 'LiftDeck je namijenjen osobnim trenerima i gym trenerima koji žele zamijeniti tablice, WhatsApp i više aplikacija jednom profesionalnom platformom. Odlično funkcionira i za online i za osobni trening.',
             ],
             'cost' => [
                 'question' => 'Koliko košta?',
-                'answer' => 'Basic je 10€/mjesečno za do 5 klijenata. Advanced je 45€/mjesečno za do 30 klijenata i uključuje lojalnost i gamifikacijske značajke. Professional je 79€/mjesečno i dodaje prilagođeni brendiranje teretane. Svi planovi uključuju 7-dnevno besplatno probno razdoblje. Osnivački treneri dobivaju 70% popusta na prva 2 mjeseca s promo kodom FOUNDING70.',
+                'answer' => 'Basic je 10€/mjesečno za do 5 klijenata. Advanced je 45€/mjesečno za do 30 klijenata i uključuje lojalnost i gamifikacijske značajke. Professional je 79€/mjesečno i dodaje prilagođeni brending teretane. Svi planovi uključuju 7-dnevno besplatno probno razdoblje. Osnivački treneri dobivaju 70% popusta na prva 2 mjeseca s kodom FOUNDING70.',
             ],
             'nutrition' => [
                 'question' => 'Što je s praćenjem prehrane?',
@@ -64,16 +130,29 @@ return [
             ],
             'branding' => [
                 'question' => 'Mogu li ga prilagoditi svom brendu?',
-                'answer' => 'Da! Dodajte logo, boje i naziv teretane. Klijenti vide vašu brendiranu aplikaciju, ne generički alat.',
+                'answer' => 'Da — dodajte logo, boje i naziv teretane. Klijenti vide vašu brendiranu aplikaciju, ne generički alat.',
             ],
             'app' => [
                 'question' => 'Trebaju li klijenti preuzeti aplikaciju?',
-                'answer' => 'Nije potrebno preuzimanje aplikacije. LiftDeck je mobilno prilagođena web aplikacija koja radi na bilo kojem uređaju, izravno iz preglednika.',
+                'answer' => 'Nije potrebno preuzimanje. LiftDeck je mobilno prilagođena web aplikacija koja radi na bilo kojem uređaju, izravno iz preglednika.',
             ],
             'get_started' => [
                 'question' => 'Kako mogu početi?',
-                'answer' => 'Izradite račun — traje manje od minute. Odaberite plan, pokrenite 7-dnevno besplatno probno razdoblje (nije potrebna kartica za Basic) i aktivirajte prvog klijenta u sustavu već prvog dana.',
+                'answer' => 'Izradite račun za manje od minute. Odaberite plan, pokrenite 7-dnevno besplatno probno razdoblje i aktivirajte prvog klijenta u sustavu već prvog dana.',
             ],
         ],
+    ],
+
+    'footer' => [
+        'tagline' => 'Potpuna platforma za fitness trenere koji žele isporučiti rezultate u velikom opsegu.',
+        'product_label' => 'Aplikacija',
+        'company_label' => 'Tvrtka',
+        'legal_label' => 'Pravno',
+        'features_link' => 'Značajke',
+        'pricing_link' => 'Cijene',
+        'sign_in_link' => 'Prijava',
+        'contact_link' => 'Kontakt',
+        'terms_link' => 'Uvjeti korištenja',
+        'copyright' => '© :year LiftDeck. Sva prava pridržana.',
     ],
 ];
