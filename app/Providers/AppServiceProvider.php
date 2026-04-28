@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use Illuminate\Auth\Middleware\RedirectIfAuthenticated;
 use Illuminate\Console\Events\CommandStarting;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Nightwatch\Facades\Nightwatch;
@@ -22,6 +24,20 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        RedirectIfAuthenticated::redirectUsing(function (Request $request) {
+            $user = $request->user();
+
+            if ($user->isAdmin()) {
+                return route('filament.admin.pages.dashboard');
+            }
+
+            if ($user->isClient()) {
+                return route('client.dashboard');
+            }
+
+            return route('coach.dashboard');
+        });
+
         Event::listen(function (CommandStarting $event) {
             if (in_array($event->command, [
                 'octane:status',
