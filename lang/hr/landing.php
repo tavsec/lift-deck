@@ -64,10 +64,11 @@ return [
     'pricing' => [
         'label' => 'Jednostavne cijene',
         'heading' => 'Planovi koji rastu s vama',
-        'subheading' => 'Svi planovi uključuju 7-dnevno besplatno probno razdoblje.',
+        'subheading' => 'Basic plan uključuje 7-dnevno besplatno probno razdoblje.',
         'founding_offer' => 'Ponuda za osnivačke trenere: koristite kod FOUNDING70 za 70% popusta na prva 2 mjeseca.',
         'per_month' => '/mj',
         'get_started' => 'Pokrenite besplatno probno razdoblje',
+        'subscribe' => 'Pretplatite se',
         'popular' => 'Najpopularnije',
         'basic' => [
             'name' => 'Basic',
@@ -122,7 +123,7 @@ return [
             ],
             'cost' => [
                 'question' => 'Koliko košta?',
-                'answer' => 'Basic je 10€/mjesečno za do 5 klijenata. Advanced je 45€/mjesečno za do 30 klijenata i uključuje lojalnost i gamifikacijske značajke. Professional je 79€/mjesečno i dodaje prilagođeni brending teretane. Svi planovi uključuju 7-dnevno besplatno probno razdoblje. Osnivački treneri dobivaju 70% popusta na prva 2 mjeseca s kodom FOUNDING70.',
+                'answer' => 'Basic je 10€/mjesečno za do 5 klijenata i uključuje 7-dnevno besplatno probno razdoblje. Advanced je 45€/mjesečno za do 30 klijenata i uključuje lojalnost i gamifikacijske značajke. Professional je 79€/mjesečno i dodaje prilagođeni brending teretane. Osnivački treneri dobivaju 70% popusta na prva 2 mjeseca s kodom FOUNDING70.',
             ],
             'nutrition' => [
                 'question' => 'Što je s praćenjem prehrane?',
@@ -138,7 +139,7 @@ return [
             ],
             'get_started' => [
                 'question' => 'Kako mogu početi?',
-                'answer' => 'Izradite račun za manje od minute. Odaberite plan, pokrenite 7-dnevno besplatno probno razdoblje i aktivirajte prvog klijenta u sustavu već prvog dana.',
+                'answer' => 'Izradite račun za manje od minute. Odaberite plan i aktivirajte prvog klijenta u sustavu već prvog dana. Basic plan uključuje 7-dnevno besplatno probno razdoblje.',
             ],
         ],
     ],

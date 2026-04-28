@@ -19,7 +19,7 @@ return [
 
         'panel' => [
             'heading' => 'Nehajte trenirati iz tabel. Vse vodite v LiftDecku.',
-            'trial_note' => '7 dni brezplačno',
+            'trial_note' => 'Paket Basic vključuje 7-dnevno brezplačno preizkusno obdobje.',
             'feature_1' => 'Programi in beleženje treningov',
             'feature_1_sub' => 'Gradite načrte, stranke beležijo v realnem času',
             'feature_2' => 'Prehrana in metrike',
@@ -32,6 +32,14 @@ return [
 
         'step1' => [
             'label' => '1. korak od 3',
+            'title' => 'Začnimo',
+            'subtitle' => 'Vnesite e-pošto za ustvaritev vašega LiftDeck računa.',
+            'email' => 'E-poštni naslov',
+            'email_ph' => 'vi@primer.com',
+        ],
+
+        'step2' => [
+            'label' => '2. korak od 3',
             'title' => 'Koga trenirate?',
             'subtitle' => 'Izberite možnost, ki vam najbolj ustreza — pozneje jo lahko spremenite.',
             'solo' => 'Solo trener',
@@ -42,36 +50,17 @@ return [
             'gym_sub' => 'Več trenerjev ali večja baza strank',
         ],
 
-        'step2' => [
-            'label' => '2. korak od 3',
-            'title' => 'Povejte nam o sebi',
-            'subtitle' => 'Vsa polja so neobvezna — izpolnite jih lahko pozneje.',
-            'name' => 'Vaše ime',
-            'gym_name' => 'Ime telovadnice ali podjetja',
-            'gym_name_ph' => 'npr. Iron Peak Fitness',
-            'bio' => 'Niša treniranja',
-            'bio_ph' => 'npr. moč, hujšanje, rehabilitacija',
-            'client_count' => 'Trenutno število strank',
-            'tools' => 'Orodja, ki jih trenutno uporabljate',
-            'tool_sheets' => 'Google preglednice',
-            'tool_excel' => 'Excel',
-            'tool_whatsapp' => 'WhatsApp',
-            'tool_other' => 'Drugo',
-            'optional' => 'neobvezno',
-            'skip' => 'Preskoči ta korak',
-        ],
-
         'step3' => [
             'label' => '3. korak od 3',
-            'title' => 'Ustvarite račun',
-            'subtitle' => 'Skoraj ste — le vaša e-pošta in geslo.',
-            'email' => 'E-poštni naslov',
-            'email_ph' => 'vi@primer.com',
+            'title' => 'Nastavite geslo',
+            'subtitle' => 'Skoraj ste — dodajte ime in izberite geslo.',
+            'name' => 'Vaše ime',
+            'optional' => 'neobvezno',
             'password' => 'Geslo',
             'password_ph' => 'Min. 8 znakov',
             'confirm' => 'Potrdi geslo',
             'confirm_ph' => 'Ponovite geslo',
-            'submit' => 'Ustvari račun',
+            'submit' => 'Začni s treningom',
         ],
 
         'actions' => [

@@ -64,10 +64,11 @@ return [
     'pricing' => [
         'label' => 'Simple pricing',
         'heading' => 'Plans that grow with you',
-        'subheading' => 'All plans include a 7-day free trial.',
+        'subheading' => 'Basic plan includes a 7-day free trial.',
         'founding_offer' => 'Founding coach offer: use code FOUNDING70 for 70% off your first 2 months.',
         'per_month' => '/mo',
         'get_started' => 'Start free trial',
+        'subscribe' => 'Subscribe',
         'popular' => 'Most popular',
         'basic' => [
             'name' => 'Basic',
@@ -122,7 +123,7 @@ return [
             ],
             'cost' => [
                 'question' => 'How much does it cost?',
-                'answer' => 'Basic is €10/month for up to 5 clients. Advanced is €45/month for up to 30 clients and includes loyalty and gamification features. Professional is €79/month and adds custom gym branding. All plans include a 7-day free trial. Founding coaches get 70% off their first 2 months with promo code FOUNDING70.',
+                'answer' => 'Basic is €10/month for up to 5 clients and includes a 7-day free trial. Advanced is €45/month for up to 30 clients and includes loyalty and gamification features. Professional is €79/month and adds custom gym branding. Founding coaches get 70% off their first 2 months with promo code FOUNDING70.',
             ],
             'nutrition' => [
                 'question' => 'What about nutrition tracking?',
@@ -138,7 +139,7 @@ return [
             ],
             'get_started' => [
                 'question' => 'How do I get started?',
-                'answer' => 'Create your account in under a minute. Pick a plan, start your 7-day free trial, and get your first client active in the system on day one.',
+                'answer' => 'Create your account in under a minute. Pick a plan and get your first client active in the system on day one. The Basic plan includes a 7-day free trial.',
             ],
         ],
     ],

@@ -295,7 +295,7 @@
                         </div>
                         @if(Route::has('register'))
                             <a href="{{ route('register') }}" class="block w-full py-3 text-center bg-[#1456f0] text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors mb-6">
-                                {{ __('landing.pricing.get_started') }}
+                                {{ __('landing.pricing.subscribe') }}
                             </a>
                         @endif
                         <ul class="space-y-3 mt-auto">
@@ -320,7 +320,7 @@
                         </div>
                         @if(Route::has('register'))
                             <a href="{{ route('register') }}" class="block w-full py-3 text-center bg-gray-100 text-[#181e25] font-semibold rounded-lg hover:bg-gray-200 transition-colors mb-6">
-                                {{ __('landing.pricing.get_started') }}
+                                {{ __('landing.pricing.subscribe') }}
                             </a>
                         @endif
                         <ul class="space-y-3 mt-auto">

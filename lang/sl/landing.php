@@ -64,10 +64,11 @@ return [
     'pricing' => [
         'label' => 'Preprosta cena',
         'heading' => 'Paketi, ki rastejo z vami',
-        'subheading' => 'Vsi paketi vključujejo 7-dnevno brezplačno preizkusno obdobje.',
+        'subheading' => 'Paket Basic vključuje 7-dnevno brezplačno preizkusno obdobje.',
         'founding_offer' => 'Ponudba za prve trenerje: uporabite kodo FOUNDING70 za 70% popust na prva 2 meseca.',
         'per_month' => '/mes',
         'get_started' => 'Začnite brezplačno preizkusno obdobje',
+        'subscribe' => 'Naročite se',
         'popular' => 'Najbolj priljubljen',
         'basic' => [
             'name' => 'Basic',
@@ -122,7 +123,7 @@ return [
             ],
             'cost' => [
                 'question' => 'Koliko stane?',
-                'answer' => 'Basic je 10€/mesečno za do 5 strank. Advanced je 45€/mesečno za do 30 strank in vključuje zvestobo in gamifikacijske funkcije. Professional je 79€/mesečno in doda prilagojeno blagovno znamko telovadnice. Vsi paketi vključujejo 7-dnevno brezplačno preizkusno obdobje. Ustanovni trenerji dobijo 70% popust na prva 2 meseca s kodo FOUNDING70.',
+                'answer' => 'Basic je 10€/mesečno za do 5 strank in vključuje 7-dnevno brezplačno preizkusno obdobje. Advanced je 45€/mesečno za do 30 strank in vključuje zvestobo in gamifikacijske funkcije. Professional je 79€/mesečno in doda prilagojeno blagovno znamko telovadnice. Ustanovni trenerji dobijo 70% popust na prva 2 meseca s kodo FOUNDING70.',
             ],
             'nutrition' => [
                 'question' => 'Kaj pa sledenje prehrani?',
@@ -138,7 +139,7 @@ return [
             ],
             'get_started' => [
                 'question' => 'Kako začnem?',
-                'answer' => 'Ustvarite račun v manj kot minuti. Izberite paket, začnite 7-dnevno brezplačno preizkusno obdobje in aktivirajte prvo stranko v sistemu že prvi dan.',
+                'answer' => 'Ustvarite račun v manj kot minuti. Izberite paket in aktivirajte prvo stranko v sistemu že prvi dan. Paket Basic vključuje 7-dnevno brezplačno preizkusno obdobje.',
             ],
         ],
     ],

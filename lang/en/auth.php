@@ -19,7 +19,7 @@ return [
 
         'panel' => [
             'heading' => 'Stop coaching from spreadsheets. Run everything in LiftDeck.',
-            'trial_note' => '7-day free trial',
+            'trial_note' => 'Basic plan includes a 7-day free trial.',
             'feature_1' => 'Programs & workout logging',
             'feature_1_sub' => 'Build plans, clients log in real-time',
             'feature_2' => 'Nutrition & metrics',
@@ -32,6 +32,14 @@ return [
 
         'step1' => [
             'label' => 'Step 1 of 3',
+            'title' => 'Let\'s get started',
+            'subtitle' => 'Enter your email to create your LiftDeck account.',
+            'email' => 'Email address',
+            'email_ph' => 'you@example.com',
+        ],
+
+        'step2' => [
+            'label' => 'Step 2 of 3',
             'title' => 'Who are you coaching?',
             'subtitle' => 'Pick the option that best fits you — you can change it later.',
             'solo' => 'Solo coach',
@@ -42,36 +50,17 @@ return [
             'gym_sub' => 'Multiple coaches or a larger client base',
         ],
 
-        'step2' => [
-            'label' => 'Step 2 of 3',
-            'title' => 'Tell us about yourself',
-            'subtitle' => 'All fields are optional — you can fill these in later.',
-            'name' => 'Your name',
-            'gym_name' => 'Gym or business name',
-            'gym_name_ph' => 'e.g. Iron Peak Fitness',
-            'bio' => 'Coaching niche',
-            'bio_ph' => 'e.g. strength, weight loss, rehab',
-            'client_count' => 'Current number of clients',
-            'tools' => 'Tools you currently use',
-            'tool_sheets' => 'Google Sheets',
-            'tool_excel' => 'Excel',
-            'tool_whatsapp' => 'WhatsApp',
-            'tool_other' => 'Other',
-            'optional' => 'optional',
-            'skip' => 'Skip this step',
-        ],
-
         'step3' => [
             'label' => 'Step 3 of 3',
-            'title' => 'Create your account',
-            'subtitle' => 'Almost there — just your email and a password.',
-            'email' => 'Email address',
-            'email_ph' => 'you@example.com',
+            'title' => 'Set your password',
+            'subtitle' => 'Almost there — add your name and choose a password.',
+            'name' => 'Your name',
+            'optional' => 'optional',
             'password' => 'Password',
             'password_ph' => 'Min. 8 characters',
             'confirm' => 'Confirm password',
             'confirm_ph' => 'Repeat your password',
-            'submit' => 'Create account',
+            'submit' => 'Start coaching',
         ],
 
         'actions' => [
