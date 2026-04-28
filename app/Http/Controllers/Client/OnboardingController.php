@@ -80,7 +80,8 @@ class OnboardingController extends Controller
         );
 
         return redirect()->route('client.dashboard')
-            ->with('success', 'Welcome! Your profile has been set up.');
+            ->with('success', 'Welcome! Your profile has been set up.')
+            ->with('ga_event', ['name' => 'onboarding_completed']);
     }
 
     /**
@@ -95,6 +96,7 @@ class OnboardingController extends Controller
             []
         );
 
-        return redirect()->route('client.dashboard');
+        return redirect()->route('client.dashboard')
+            ->with('ga_event', ['name' => 'onboarding_skipped']);
     }
 }

@@ -51,4 +51,7 @@
             </a>
         </div>
     </form>
+    @push('scripts')
+    <script>gtag('event', 'signup_started', { role: 'client' });</script>
+    @endpush
 </x-guest-layout>

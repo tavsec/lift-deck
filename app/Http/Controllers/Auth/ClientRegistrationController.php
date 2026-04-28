@@ -95,7 +95,8 @@ class ClientRegistrationController extends Controller
 
         Mail::to($user)->send(new WelcomeClientMail($user, $invitation->coach));
 
-        return redirect()->route('client.welcome');
+        return redirect()->route('client.welcome')
+            ->with('ga_event', ['name' => 'signup_completed', 'params' => ['role' => 'client']]);
     }
 
     /**

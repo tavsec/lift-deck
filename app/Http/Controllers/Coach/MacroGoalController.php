@@ -23,7 +23,8 @@ class MacroGoalController extends Controller
         ]);
 
         return redirect()->route('coach.clients.nutrition', $client)
-            ->with('success', 'Macro goal set successfully!');
+            ->with('success', 'Macro goal set successfully!')
+            ->with('ga_event', ['name' => 'macro_goal_set']);
     }
 
     public function destroy(MacroGoal $macroGoal): RedirectResponse

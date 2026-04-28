@@ -67,7 +67,8 @@ class NutritionController extends Controller
         ProcessXpEvent::dispatch(auth()->id(), 'meal_logged', ['meal_log_id' => $mealLog->id]);
 
         return redirect()->route('client.nutrition', ['date' => $validated['date']])
-            ->with('success', 'Meal logged!');
+            ->with('success', 'Meal logged!')
+            ->with('ga_event', ['name' => 'meal_logged']);
     }
 
     public function destroy(MealLog $mealLog): RedirectResponse

@@ -51,6 +51,7 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
-        return redirect(route('coach.plan', absolute: false));
+        return redirect(route('coach.plan', absolute: false))
+            ->with('ga_event', ['name' => 'signup_completed', 'params' => ['role' => 'coach']]);
     }
 }

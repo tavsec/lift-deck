@@ -70,7 +70,8 @@ class ProgramController extends Controller
         $program = Program::create($validated);
 
         return redirect()->route('coach.programs.edit', $program)
-            ->with('success', 'Program created! Now add workouts and exercises.');
+            ->with('success', 'Program created! Now add workouts and exercises.')
+            ->with('ga_event', ['name' => 'program_created', 'params' => ['type' => $program->type]]);
     }
 
     /**
@@ -160,7 +161,8 @@ class ProgramController extends Controller
         $program->workouts()->create($validated);
 
         return redirect()->route('coach.programs.edit', $program)
-            ->with('success', 'Workout added successfully!');
+            ->with('success', 'Workout added successfully!')
+            ->with('ga_event', ['name' => 'workout_created']);
     }
 
     /**
@@ -370,7 +372,8 @@ class ProgramController extends Controller
         ]);
 
         return redirect()->route('coach.programs.show', $program)
-            ->with('success', "Program assigned to {$client->name}!");
+            ->with('success', "Program assigned to {$client->name}!")
+            ->with('ga_event', ['name' => 'program_assigned']);
     }
 
     /**

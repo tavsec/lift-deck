@@ -41,9 +41,12 @@ class PlanSelectionController extends Controller
     {
         $coach = auth()->user();
 
-        $coach->update(['selected_plan' => $request->validated('plan')]);
+        $plan = $request->validated('plan');
 
-        return redirect()->route('coach.subscription.checkout');
+        $coach->update(['selected_plan' => $plan]);
+
+        return redirect()->route('coach.subscription.checkout')
+            ->with('ga_event', ['name' => 'plan_selected', 'params' => ['plan' => $plan]]);
     }
 
     /**
@@ -52,6 +55,18 @@ class PlanSelectionController extends Controller
      */
     public function success(): RedirectResponse
     {
-        return redirect()->route('coach.dashboard');
+        $coach = auth()->user();
+        $plan = $coach->selected_plan;
+        $planConfig = $plan ? config("plans.{$plan}") : null;
+
+        return redirect()->route('coach.dashboard')
+            ->with('ga_event', [
+                'name' => 'subscription_started',
+                'params' => [
+                    'plan' => $plan,
+                    'value' => $planConfig['monthly_price'] ?? 0,
+                    'currency' => 'USD',
+                ],
+            ]);
     }
 }

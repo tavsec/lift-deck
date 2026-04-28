@@ -246,6 +246,7 @@ class LogController extends Controller
         }
 
         return redirect()->route('client.history')
-            ->with('success', 'Workout logged!');
+            ->with('success', 'Workout logged!')
+            ->with('ga_event', ['name' => 'workout_logged']);
     }
 }

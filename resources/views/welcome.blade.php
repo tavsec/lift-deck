@@ -88,6 +88,22 @@
     {{-- JSON-LD Structured Data --}}
     <script type="application/ld+json">{!! json_encode($schema, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) !!}</script>
 
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-4NVX4MTRKN"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('consent', 'default', {
+            analytics_storage: 'denied',
+            ad_storage: 'denied',
+            ad_user_data: 'denied',
+            ad_personalization: 'denied',
+            wait_for_update: 500,
+        });
+        gtag('js', new Date());
+        gtag('config', 'G-4NVX4MTRKN');
+    </script>
+
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="font-sans antialiased bg-white text-[#222222]">
@@ -420,5 +436,6 @@
         </div>
     </footer>
 
+    @include('components.cookie-banner')
 </body>
 </html>

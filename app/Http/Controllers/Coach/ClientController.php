@@ -88,7 +88,8 @@ class ClientController extends Controller
 
         return redirect()->route('coach.clients.index')
             ->with('success', 'Invitation code generated!')
-            ->with('invitation_code', $invitation->token);
+            ->with('invitation_code', $invitation->token)
+            ->with('ga_event', ['name' => 'client_invited']);
     }
 
     /**

@@ -49,7 +49,8 @@ class MealController extends Controller
         Meal::create($validated);
 
         return redirect()->route('coach.meals.index')
-            ->with('success', 'Meal created successfully!');
+            ->with('success', 'Meal created successfully!')
+            ->with('ga_event', ['name' => 'meal_created']);
     }
 
     /**
