@@ -6,10 +6,13 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\WorkoutLog;
 use App\Models\WorkoutLogComment;
+use App\Services\SubscriptionService;
 use Illuminate\View\View;
 
 class DashboardController extends Controller
 {
+    public function __construct(private readonly SubscriptionService $subscriptionService) {}
+
     /**
      * @return array{
      *   show: bool,
@@ -39,13 +42,19 @@ class DashboardController extends Controller
                 'route' => route('coach.programs.create'),
                 'action_label' => __('coach.onboarding_checklist.actions.create_program'),
             ],
-            [
+        ];
+
+        // Branding is gated by the custom_branding feature (Professional only).
+        // Hide the step entirely for plans without it so we don't dangle a
+        // disabled action that would just bounce off the feature middleware.
+        if ($this->subscriptionService->hasFeature($user, 'custom_branding')) {
+            $steps[] = [
                 'label' => __('coach.onboarding_checklist.steps.setup_branding'),
                 'complete' => filled($user->getRawOriginal('gym_name')),
                 'route' => route('coach.branding.edit'),
                 'action_label' => __('coach.onboarding_checklist.actions.setup_branding'),
-            ],
-        ];
+            ];
+        }
 
         $completedCount = collect($steps)->filter(fn (array $step) => $step['complete'])->count();
         $allComplete = $completedCount === count($steps);

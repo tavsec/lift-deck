@@ -4,9 +4,12 @@ use App\Models\Program;
 use App\Models\User;
 
 beforeEach(function () {
+    // Professional plan so the branding step is included; non-Pro coverage is
+    // exercised explicitly in the dedicated tests below.
     $this->coach = User::factory()->coach()->create([
         'onboarding_checklist_dismissed_at' => null,
         'gym_name' => null,
+        'selected_plan' => 'professional',
     ]);
 });
 
@@ -112,4 +115,49 @@ test('client cannot access coach dismiss route', function () {
     $this->actingAs($client)
         ->post(route('coach.onboarding-checklist.dismiss'))
         ->assertRedirect(route('client.dashboard'));
+});
+
+test('branding step is hidden for coaches on Basic plan', function () {
+    $basicCoach = User::factory()->coach()->create([
+        'onboarding_checklist_dismissed_at' => null,
+        'gym_name' => null,
+        'selected_plan' => 'basic',
+    ]);
+
+    $this->actingAs($basicCoach)
+        ->get(route('coach.dashboard'))
+        ->assertOk()
+        ->assertSee(__('coach.onboarding_checklist.heading'))
+        ->assertDontSee(__('coach.onboarding_checklist.steps.setup_branding'))
+        ->assertDontSee(__('coach.onboarding_checklist.actions.setup_branding'));
+});
+
+test('branding step is hidden for coaches on Advanced plan', function () {
+    $advancedCoach = User::factory()->coach()->create([
+        'onboarding_checklist_dismissed_at' => null,
+        'gym_name' => null,
+        'selected_plan' => 'advanced',
+    ]);
+
+    $this->actingAs($advancedCoach)
+        ->get(route('coach.dashboard'))
+        ->assertOk()
+        ->assertSee(__('coach.onboarding_checklist.heading'))
+        ->assertDontSee(__('coach.onboarding_checklist.steps.setup_branding'));
+});
+
+test('checklist hides for Basic coaches once non-branding steps are complete', function () {
+    $basicCoach = User::factory()->coach()->create([
+        'onboarding_checklist_dismissed_at' => null,
+        'gym_name' => null,
+        'selected_plan' => 'basic',
+    ]);
+
+    User::factory()->client()->create(['coach_id' => $basicCoach->id]);
+    \App\Models\Program::factory()->create(['coach_id' => $basicCoach->id]);
+
+    $this->actingAs($basicCoach)
+        ->get(route('coach.dashboard'))
+        ->assertOk()
+        ->assertDontSee(__('coach.onboarding_checklist.heading'));
 });
