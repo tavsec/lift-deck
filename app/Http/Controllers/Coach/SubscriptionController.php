@@ -102,6 +102,18 @@ class SubscriptionController extends Controller
 
         if (($plan['trial_days'] ?? 0) > 0) {
             $builder->trialDays($plan['trial_days']);
+
+            // No-credit-card trial: don't ask for payment method up-front.
+            // If the customer hasn't added one by trial end, Stripe cancels
+            // the subscription automatically.
+            $checkoutOptions['payment_method_collection'] = 'if_required';
+            $checkoutOptions['subscription_data'] = [
+                'trial_settings' => [
+                    'end_behavior' => [
+                        'missing_payment_method' => 'cancel',
+                    ],
+                ],
+            ];
         }
 
         return $builder->allowPromotionCodes()->checkout($checkoutOptions)->toResponse(request());
