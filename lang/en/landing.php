@@ -139,8 +139,10 @@ return [
             'price' => '€79',
             'clients' => 'Unlimited clients',
             'description' => 'For established coaches & gyms.',
+            'metered_note' => '+ €0.50 per client over 30',
             'features' => [
                 'Everything in Advanced',
+                '30 clients included',
                 'Custom gym branding',
                 'Priority support',
             ],

@@ -22,7 +22,7 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
         $middleware->trustProxies('*');
         $middleware->validateCsrfTokens(except: [
-            'cashier/webhook',
+            'stripe/webhook',
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {

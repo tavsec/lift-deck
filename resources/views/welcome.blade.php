@@ -526,6 +526,7 @@
                                 <span class="font-display text-4xl font-bold text-[#181e25]">{{ __('landing.pricing.professional.price') }}</span>
                                 <span class="text-sm text-[#8e8e93] mb-1">{{ __('landing.pricing.per_month') }}</span>
                             </div>
+                            <div class="text-xs font-medium text-[#1456f0] mb-2">{{ __('landing.pricing.professional.metered_note') }}</div>
                             <div class="text-sm text-[#8e8e93]">{{ __('landing.pricing.professional.description') }}</div>
                         </div>
                         @if(Route::has('register'))

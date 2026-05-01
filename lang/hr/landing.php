@@ -139,8 +139,10 @@ return [
             'price' => '€79',
             'clients' => 'Neograničeni klijenti',
             'description' => 'Za etablirane trenere i teretane.',
+            'metered_note' => '+ €0,50 po klijentu iznad 30',
             'features' => [
                 'Sve iz plana Advanced',
+                '30 klijenata uključeno',
                 'Prilagođeni brending teretane',
                 'Prioritetna podrška',
             ],

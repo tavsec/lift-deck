@@ -172,8 +172,9 @@
                             <p class="mt-1 text-sm text-[#8e8e93] dark:text-gray-500">For professional coaches at scale.</p>
                             <p class="mt-4">
                                 <span class="text-3xl font-bold text-[#222222] dark:text-gray-100">€79</span>
-                                <span class="text-sm text-[#8e8e93] dark:text-gray-500">/mo + metered</span>
+                                <span class="text-sm text-[#8e8e93] dark:text-gray-500">/mo</span>
                             </p>
+                            <p class="mt-1 text-xs font-medium text-[#1456f0]">+ €0.50 per client over 30</p>
                         </div>
                         <ul class="mt-6 space-y-2">
                             <li class="flex items-center gap-2 text-sm text-[#45515e] dark:text-gray-400">

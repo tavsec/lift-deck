@@ -2,11 +2,13 @@
 
 namespace App\Providers;
 
+use App\Listeners\EnsureProfessionalMeteredItem;
 use Illuminate\Auth\Middleware\RedirectIfAuthenticated;
 use Illuminate\Console\Events\CommandStarting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider;
+use Laravel\Cashier\Events\WebhookHandled;
 use Laravel\Nightwatch\Facades\Nightwatch;
 
 class AppServiceProvider extends ServiceProvider
@@ -45,5 +47,7 @@ class AppServiceProvider extends ServiceProvider
                 Nightwatch::dontSample();
             }
         });
+
+        Event::listen(WebhookHandled::class, EnsureProfessionalMeteredItem::class);
     }
 }

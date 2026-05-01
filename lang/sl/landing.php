@@ -139,8 +139,10 @@ return [
             'price' => '€79',
             'clients' => 'Neomejene stranke',
             'description' => 'Za uveljavljena podjetja in telovadnice.',
+            'metered_note' => '+ €0,50 za vsako stranko nad 30',
             'features' => [
                 'Vse iz paketa Advanced',
+                '30 strank vključeno',
                 'Prilagoditev blagovne znamke',
                 'Prednostna podpora',
             ],
