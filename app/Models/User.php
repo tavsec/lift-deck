@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Filament\Models\Contracts\FilamentUser;
 use Filament\Panel;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -17,7 +17,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Storage;
 use Laravel\Cashier\Billable;
 
-class User extends Authenticatable implements FilamentUser
+class User extends Authenticatable implements FilamentUser, MustVerifyEmail
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use Billable, HasFactory, Notifiable, SoftDeletes;
@@ -50,6 +50,7 @@ class User extends Authenticatable implements FilamentUser
         'selected_plan',
         'trial_ends_at',
         'metrics_onboarded_at',
+        'onboarding_checklist_dismissed_at',
     ];
 
     /**
@@ -77,6 +78,7 @@ class User extends Authenticatable implements FilamentUser
             'is_free_access' => 'boolean',
             'trial_ends_at' => 'datetime',
             'metrics_onboarded_at' => 'datetime',
+            'onboarding_checklist_dismissed_at' => 'datetime',
         ];
     }
 

@@ -13,22 +13,60 @@ return [
         'get_started' => 'Začnite brezplačno',
     ],
 
+    'announcement' => [
+        'prefix' => 'Ponudba za prve trenerje:',
+        'body' => '70% popust na prva 2 meseca s kodo',
+        'code' => 'FOUNDING70',
+        'cta' => 'Izkoristite →',
+    ],
+
     'hero' => [
         'badge' => 'Ustvarjeno za fitnes trenerje',
         'heading_1' => 'Vaše treniranje.',
         'heading_2' => 'Njihov napredek.',
-        'subheading' => 'LiftDeck daje fitnes trenerjem popolno platformo — programe, redne preglede, prehrano, sporočanje in nagrade — vse na enem mestu, dostopno z vsake naprave.',
+        'subheading' => 'Nehajte se boriti s preglednicami, WhatsAppom in petimi različnimi aplikacijami. Programi, redni pregledi, prehrana in sporočanje na eni platformi z vašo blagovno znamko — strankam pa ponudite izkušnjo, zaradi katere bodo ostale.',
         'cta_primary' => 'Začnite brezplačno preizkusno obdobje',
-        'cta_secondary' => 'Poglejte, kako deluje',
+        'cta_secondary' => 'Raziščite funkcije →',
+        'cta_reassurance' => 'Brez kartice · 7-dnevni brezplačni preizkus · Prekličete lahko kadarkoli',
+    ],
+
+    'how_it_works' => [
+        'label' => 'Kako deluje',
+        'heading' => 'Od prijave do prve seje v manj kot 10 minutah',
+        'step_1_title' => 'Prijavite se in nastavite',
+        'step_1_body' => 'Ustvarite račun, dodajte blagovno znamko in izberite paket. 5 minut.',
+        'step_2_title' => 'Povabite stranke',
+        'step_2_body' => 'Pošljite eno povezavo. Stranke se same pridružijo in opravijo uvajanje — brez nameščanja aplikacij.',
+        'step_3_title' => 'Trenirajte in sledite',
+        'step_3_body' => 'Dodelite programe, preglejte preglede, sporočajte se s strankami — vse na enem mestu.',
     ],
 
     'stats' => [
         'trial_value' => '7 dni',
         'trial_label' => 'Brezplačno preizkusno obdobje',
-        'exercises_value' => '100+',
-        'exercises_label' => 'Vključenih predlog vaj',
-        'setup_value' => '0 €',
-        'setup_label' => 'Strošek vzpostavitve — nikoli',
+        'exercises_value' => '5 min',
+        'exercises_label' => 'Povprečni čas vzpostavitve na stranko',
+        'setup_value' => 'Brez',
+        'setup_label' => 'Dolgoročnih pogodb',
+    ],
+
+    'testimonials' => [
+        'heading' => 'Zaupanje trenerjev po Evropi',
+        'sarah' => [
+            'quote' => 'LiftDeck mi je prepolovil čas za administracijo. Prej sem porabil 3 ure na teden za preglednice — zdaj je to 20 minut.',
+            'name' => 'Sarah M.',
+            'role' => 'Spletna fitnes trenerka',
+        ],
+        'james' => [
+            'quote' => 'Moje stranke prihajajo bolj dosledno, odkar sem prešel na LiftDeck. Sistem nagrad za zvestobo je briljanten.',
+            'name' => 'James K.',
+            'role' => 'Osebni trener',
+        ],
+        'ana' => [
+            'quote' => 'Že sistem rednih pregledov je bil vreden tega. V enem nadzornem panelu vidim tedenske fotografije, meritve in razpoloženje strank, namesto da lovim sporočila WhatsApp.',
+            'name' => 'Ana P.',
+            'role' => 'Trenerka prehrane in fitnesa',
+        ],
     ],
 
     'features' => [
@@ -66,6 +104,8 @@ return [
         'heading' => 'Paketi, ki rastejo z vami',
         'subheading' => 'Paket Basic vključuje 7-dnevno brezplačno preizkusno obdobje.',
         'founding_offer' => 'Ponudba za prve trenerje: uporabite kodo FOUNDING70 za 70% popust na prva 2 meseca.',
+        'founding_offer_prefix' => 'Ponudba za prve trenerje — Uporabite kodo',
+        'founding_offer_suffix' => 'za 70% popust na prva 2 meseca.',
         'per_month' => '/mes',
         'get_started' => 'Začnite brezplačno preizkusno obdobje',
         'subscribe' => 'Naročite se',
@@ -109,8 +149,9 @@ return [
 
     'cta' => [
         'heading' => 'Ste pripravljeni na razvoj vašega trenerskega posla?',
-        'description' => 'Začnite 7-dnevno brezplačno preizkusno obdobje še danes.',
+        'description' => 'Začnite 7-dnevno brezplačno preizkusno obdobje še danes — in pridobite 70% popust na prva 2 meseca s kodo FOUNDING70.',
         'button' => 'Začnite brezplačno preizkusno obdobje',
+        'reassurance' => 'Brez kartice · Prekličete lahko kadarkoli',
     ],
 
     'faq' => [

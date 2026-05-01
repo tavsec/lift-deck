@@ -65,6 +65,24 @@
                     </li>
                 @endforeach
             </ul>
+
+            <div class="mt-6">
+                <p
+                    x-show="coachingType === 'solo'"
+                    x-cloak
+                    class="text-sm text-blue-300 italic"
+                >The Basic plan is perfect for you — includes a 7-day free trial.</p>
+                <p
+                    x-show="coachingType === 'growing'"
+                    x-cloak
+                    class="text-sm text-blue-300 italic"
+                >The Advanced plan is ideal for your coaching volume.</p>
+                <p
+                    x-show="coachingType === 'gym'"
+                    x-cloak
+                    class="text-sm text-blue-300 italic"
+                >The Professional plan gives you unlimited clients and custom branding.</p>
+            </div>
         </div>
 
         <p class="text-xs text-slate-600">{{ __('auth.register.panel.trial_note') }}</p>
@@ -196,11 +214,11 @@
                         <div>
                             <label class="mb-1 block text-xs font-semibold text-[#45515e]">
                                 {{ __('auth.register.step3.name') }}
-                                <span class="ml-1 font-normal text-[#8e8e93]">({{ __('auth.register.step3.optional') }})</span>
                             </label>
                             <input
                                 type="text"
                                 x-model="name"
+                                required
                                 class="w-full rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 px-3 py-2 text-sm text-[#222222] dark:text-gray-100 focus:border-[#1456f0] focus:outline-none focus:ring-2 focus:ring-[#1456f0]/20"
                             >
                         </div>
@@ -258,6 +276,8 @@
                             {{ __('auth.register.step3.submit') }} →
                         </button>
                     </div>
+
+                    <p class="mt-2 text-center text-xs text-gray-400">No credit card required to start • 7-day free trial on Basic plan</p>
 
                     <p class="mt-4 text-center text-xs text-[#8e8e93]">
                         {{ __('auth.register.actions.signin') }}

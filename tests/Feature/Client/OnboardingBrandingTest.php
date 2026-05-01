@@ -12,6 +12,22 @@ beforeEach(function () {
     $this->actingAs($this->client);
 });
 
+test('welcome page shows gym name when coach has one set', function () {
+    $this->coach->update(['gym_name' => 'Power Fitness Co.']);
+
+    $this->get(route('client.welcome'))
+        ->assertOk()
+        ->assertSee('Power Fitness Co.');
+});
+
+test('welcome page falls back to coach name when gym name is not set', function () {
+    $this->coach->update(['gym_name' => null]);
+
+    $this->get(route('client.welcome'))
+        ->assertOk()
+        ->assertSee($this->coach->name);
+});
+
 test('welcome page shows coach onboarding welcome text', function () {
     $this->get(route('client.welcome'))
         ->assertOk()
@@ -108,9 +124,9 @@ test('onboarding marks profile as complete', function () {
     expect($this->client->clientProfile->onboarding_completed_at)->not->toBeNull();
 });
 
-test('onboarding works with no fields configured', function () {
+test('onboarding redirects to dashboard when no fields are configured', function () {
     $this->get(route('client.onboarding'))
-        ->assertOk();
+        ->assertRedirect(route('client.dashboard'));
 
     $this->post(route('client.onboarding.store'), [
         'fields' => [],

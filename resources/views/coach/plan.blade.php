@@ -76,6 +76,9 @@
                             {{ $currentPlanKey === 'advanced' ? __('coach.plan.current_plan') : __('coach.plan.cta_subscribe') }}
                         </button>
                     </form>
+                    @if($currentPlanKey !== 'advanced')
+                        <p class="mt-2 text-center text-xs text-[#8e8e93] dark:text-gray-500">Billed monthly — cancel anytime</p>
+                    @endif
                 </div>
             </div>
 
@@ -111,6 +114,9 @@
                             {{ $currentPlanKey === 'professional' ? __('coach.plan.current_plan') : __('coach.plan.cta_subscribe') }}
                         </button>
                     </form>
+                    @if($currentPlanKey !== 'professional')
+                        <p class="mt-2 text-center text-xs text-[#8e8e93] dark:text-gray-500">Billed monthly — cancel anytime</p>
+                    @endif
                 </div>
             </div>
         </div>

@@ -71,6 +71,8 @@ return [
             'view' => 'View',
             'no_clients' => 'No clients yet',
             'no_clients_description' => 'Get started by inviting your first client.',
+            'branding_notice' => "You haven't set up your gym branding yet. Clients will see a generic experience.",
+            'branding_notice_action' => 'Set up branding',
         ],
 
         'show' => [
@@ -835,6 +837,23 @@ return [
             'feature_clients' => '30 clients included',
             'feature_advanced' => 'Everything in Advanced',
             'feature_branding' => 'Custom branding',
+        ],
+    ],
+
+    'onboarding_checklist' => [
+        'heading' => 'Getting Started',
+        'progress' => ':completed of :total complete',
+        'dismiss' => 'Dismiss',
+        'steps' => [
+            'subscribe' => 'Subscribe to a plan',
+            'invite_client' => 'Invite your first client',
+            'create_program' => 'Create a training program',
+            'setup_branding' => 'Set up your branding',
+        ],
+        'actions' => [
+            'invite_client' => 'Invite Client',
+            'create_program' => 'Build Program',
+            'setup_branding' => 'Go to Branding',
         ],
     ],
 

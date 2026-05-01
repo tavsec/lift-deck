@@ -57,7 +57,9 @@ class ClientController extends Controller
             ? WorkoutLog::whereIn('id', $unreadWorkoutLogIds)->pluck('client_id')->unique()
             : collect();
 
-        return view('coach.clients.index', compact('clients', 'pendingInvitations', 'clientIdsWithUnread'));
+        $hasBranding = filled($coach->getRawOriginal('gym_name'));
+
+        return view('coach.clients.index', compact('clients', 'pendingInvitations', 'clientIdsWithUnread', 'hasBranding'));
     }
 
     /**

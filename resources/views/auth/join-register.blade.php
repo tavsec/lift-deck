@@ -18,25 +18,25 @@
         <div class="space-y-4">
             <div>
                 <x-input-label for="name" :value="__('auth.join_register.name')" />
-                <x-text-input id="name" class="mt-1" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
+                <x-text-input id="name" class="mt-1" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" :placeholder="__('Your full name')" />
                 <x-input-error :messages="$errors->get('name')" class="mt-1" />
             </div>
 
             <div>
                 <x-input-label for="email" :value="__('auth.join_register.email')" />
-                <x-text-input id="email" class="mt-1" type="email" name="email" :value="old('email')" required autocomplete="username" />
+                <x-text-input id="email" class="mt-1" type="email" name="email" :value="old('email')" required autocomplete="email" :placeholder="__('your@email.com')" />
                 <x-input-error :messages="$errors->get('email')" class="mt-1" />
             </div>
 
             <div>
                 <x-input-label for="password" :value="__('auth.join_register.password')" />
-                <x-text-input id="password" class="mt-1" type="password" name="password" required autocomplete="new-password" />
+                <x-text-input id="password" class="mt-1" type="password" name="password" required autocomplete="new-password" :placeholder="__('Min. 8 characters')" />
                 <x-input-error :messages="$errors->get('password')" class="mt-1" />
             </div>
 
             <div>
                 <x-input-label for="password_confirmation" :value="__('auth.join_register.confirm_password')" />
-                <x-text-input id="password_confirmation" class="mt-1" type="password" name="password_confirmation" required autocomplete="new-password" />
+                <x-text-input id="password_confirmation" class="mt-1" type="password" name="password_confirmation" required autocomplete="new-password" :placeholder="__('Repeat your password')" />
                 <x-input-error :messages="$errors->get('password_confirmation')" class="mt-1" />
             </div>
         </div>

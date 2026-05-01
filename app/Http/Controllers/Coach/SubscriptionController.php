@@ -77,6 +77,10 @@ class SubscriptionController extends Controller
             return redirect()->route('coach.dashboard');
         }
 
+        if ($coach->trial_ends_at?->isFuture()) {
+            return redirect()->route('coach.dashboard');
+        }
+
         $plan = config("plans.{$coach->selected_plan}");
 
         abort_if($plan === null, 404);

@@ -65,6 +65,58 @@
             </div>
         @endif
 
+        {{-- Onboarding Checklist --}}
+        @if($onboardingChecklist['show'])
+            <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 shadow-card p-6">
+                <div class="flex items-center justify-between mb-4">
+                    <div>
+                        <h2 class="font-display text-base font-semibold text-[#222222] dark:text-gray-100">{{ __('coach.onboarding_checklist.heading') }}</h2>
+                        <p class="text-sm text-[#8e8e93] dark:text-gray-400 mt-0.5">
+                            {{ __('coach.onboarding_checklist.progress', ['completed' => $onboardingChecklist['completed_count'], 'total' => $onboardingChecklist['total_count']]) }}
+                        </p>
+                    </div>
+                    <form method="POST" action="{{ route('coach.onboarding-checklist.dismiss') }}">
+                        @csrf
+                        <button type="submit" class="text-xs font-medium text-[#8e8e93] dark:text-gray-400 hover:text-[#45515e] dark:hover:text-gray-300 transition-colors">
+                            {{ __('coach.onboarding_checklist.dismiss') }}
+                        </button>
+                    </form>
+                </div>
+
+                {{-- Progress bar --}}
+                <div class="w-full bg-gray-100 dark:bg-gray-800 rounded-full h-1.5 mb-5">
+                    <div class="h-1.5 rounded-full bg-[#1456f0] transition-all duration-500"
+                         style="width: {{ ($onboardingChecklist['completed_count'] / $onboardingChecklist['total_count']) * 100 }}%"></div>
+                </div>
+
+                <ul class="space-y-3">
+                    @foreach($onboardingChecklist['steps'] as $step)
+                        <li class="flex items-center justify-between gap-4">
+                            <div class="flex items-center gap-3">
+                                @if($step['complete'])
+                                    <div class="flex-shrink-0 h-5 w-5 rounded-full bg-[#1456f0] flex items-center justify-center">
+                                        <svg class="h-3 w-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/>
+                                        </svg>
+                                    </div>
+                                @else
+                                    <div class="flex-shrink-0 h-5 w-5 rounded-full border-2 border-gray-300 dark:border-gray-600"></div>
+                                @endif
+                                <span class="text-sm {{ $step['complete'] ? 'text-[#8e8e93] dark:text-gray-500 line-through' : 'text-[#222222] dark:text-gray-100' }}">
+                                    {{ $step['label'] }}
+                                </span>
+                            </div>
+                            @if(! $step['complete'] && $step['route'])
+                                <a href="{{ $step['route'] }}" class="flex-shrink-0 text-xs font-semibold text-[#1456f0] hover:underline">
+                                    {{ $step['action_label'] }}
+                                </a>
+                            @endif
+                        </li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
         <!-- Welcome Message -->
         <div class="flex items-center justify-between">
             <div>

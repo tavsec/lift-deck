@@ -1,7 +1,10 @@
 <?php
 
 $worktreeRoot = dirname(__DIR__);
-$loader = require $worktreeRoot.'/vendor/autoload.php';
+$vendorPath = file_exists($worktreeRoot.'/vendor/autoload.php')
+    ? $worktreeRoot.'/vendor/autoload.php'
+    : dirname(dirname(dirname($worktreeRoot))).'/vendor/autoload.php';
+$loader = require $vendorPath;
 
 // Override PSR-4 namespaces to use the worktree's files.
 $loader->setPsr4('App\\', [$worktreeRoot.'/app/']);

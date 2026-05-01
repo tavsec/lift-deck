@@ -71,6 +71,8 @@ return [
             'view' => 'Pregled',
             'no_clients' => 'Još nema klijenata',
             'no_clients_description' => 'Počnite pozivanjem prvog klijenta.',
+            'branding_notice' => 'Još niste postavili branding svog teretane. Klijenti će vidjeti generičko iskustvo.',
+            'branding_notice_action' => 'Postavi branding',
         ],
 
         'show' => [
@@ -832,6 +834,23 @@ return [
             'feature_clients' => '30 klijenata uključeno',
             'feature_advanced' => 'Sve iz Advanced plana',
             'feature_branding' => 'Prilagođeni branding',
+        ],
+    ],
+
+    'onboarding_checklist' => [
+        'heading' => 'Početak',
+        'progress' => ':completed od :total dovršeno',
+        'dismiss' => 'Zatvori',
+        'steps' => [
+            'subscribe' => 'Pretplatite se na plan',
+            'invite_client' => 'Pozovite prvog klijenta',
+            'create_program' => 'Stvorite program treninga',
+            'setup_branding' => 'Postavite branding',
+        ],
+        'actions' => [
+            'invite_client' => 'Pozovi klijenta',
+            'create_program' => 'Izradi program',
+            'setup_branding' => 'Idi na Branding',
         ],
     ],
 

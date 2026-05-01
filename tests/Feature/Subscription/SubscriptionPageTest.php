@@ -133,3 +133,40 @@ it('checkout route redirects already subscribed coach to dashboard', function ()
         ->get(route('coach.subscription.checkout'))
         ->assertRedirect(route('coach.dashboard'));
 });
+
+it('subscription page shows correct prices for all plans', function (): void {
+    $coach = User::factory()->state(['role' => 'coach'])->create([
+        'trial_ends_at' => now()->addDays(5),
+    ]);
+
+    $this->actingAs($coach)
+        ->get(route('coach.subscription'))
+        ->assertOk()
+        ->assertSee('€10')
+        ->assertSee('€45')
+        ->assertSee('€79');
+});
+
+it('subscription page shows billing reassurance copy for advanced selected plan', function (): void {
+    $coach = User::factory()->state(['role' => 'coach'])->create([
+        'trial_ends_at' => now()->subDay(),
+        'selected_plan' => 'advanced',
+    ]);
+
+    $this->actingAs($coach)
+        ->get(route('coach.subscription'))
+        ->assertOk()
+        ->assertSee('Billed monthly');
+});
+
+it('subscription page shows billing reassurance copy for professional selected plan', function (): void {
+    $coach = User::factory()->state(['role' => 'coach'])->create([
+        'trial_ends_at' => now()->subDay(),
+        'selected_plan' => 'professional',
+    ]);
+
+    $this->actingAs($coach)
+        ->get(route('coach.subscription'))
+        ->assertOk()
+        ->assertSee('Billed monthly');
+});

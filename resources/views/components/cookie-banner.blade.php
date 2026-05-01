@@ -1,3 +1,4 @@
+@unless(request()->routeIs('register', 'join', 'join.code', 'coach.plan'))
 <div
     x-data="cookieBanner()"
     x-init="init()"
@@ -136,7 +137,7 @@
                         this.applyConsent();
                     } catch {}
                 } else {
-                    this.showBanner = true;
+                    setTimeout(() => { this.showBanner = true; }, 2000);
                 }
             },
 
@@ -183,3 +184,4 @@
         };
     }
 </script>
+@endunless

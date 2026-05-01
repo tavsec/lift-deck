@@ -13,22 +13,60 @@ return [
         'get_started' => 'Get started free',
     ],
 
+    'announcement' => [
+        'prefix' => 'Founding offer:',
+        'body' => '70% off your first 2 months with code',
+        'code' => 'FOUNDING70',
+        'cta' => 'Claim →',
+    ],
+
     'hero' => [
         'badge' => 'Built for fitness coaches',
         'heading_1' => 'Your coaching.',
         'heading_2' => 'Their progress.',
-        'subheading' => 'LiftDeck gives fitness coaches a complete platform — programs, check-ins, nutrition, messaging, and rewards — all in one place, accessible from any device.',
+        'subheading' => 'Stop juggling spreadsheets, WhatsApp, and five different apps. Run programs, check-ins, nutrition and messaging in one branded platform — and give clients an experience that keeps them paying.',
         'cta_primary' => 'Start free trial',
-        'cta_secondary' => 'See how it works',
+        'cta_secondary' => 'Explore features →',
+        'cta_reassurance' => 'No credit card required · 7-day free trial · Cancel anytime',
+    ],
+
+    'how_it_works' => [
+        'label' => 'How it works',
+        'heading' => 'From signup to first session in under 10 minutes',
+        'step_1_title' => 'Sign up & set up',
+        'step_1_body' => 'Create your account, add your branding, and pick a plan. 5 minutes flat.',
+        'step_2_title' => 'Invite your clients',
+        'step_2_body' => 'Send a single link. Clients join and onboard themselves — no app to install.',
+        'step_3_title' => 'Coach & track',
+        'step_3_body' => 'Assign programs, review check-ins, message clients — all in one place.',
     ],
 
     'stats' => [
         'trial_value' => '7 days',
         'trial_label' => 'Free trial included',
-        'exercises_value' => '100+',
-        'exercises_label' => 'Exercise templates included',
-        'setup_value' => '0',
-        'setup_label' => 'Setup fee — ever',
+        'exercises_value' => '5 min',
+        'exercises_label' => 'Avg. setup time per client',
+        'setup_value' => 'No',
+        'setup_label' => 'Long-term contracts',
+    ],
+
+    'testimonials' => [
+        'heading' => 'Trusted by coaches across Europe',
+        'sarah' => [
+            'quote' => 'LiftDeck cut my admin time in half. I used to spend 3 hours a week on spreadsheets — now it\'s 20 minutes.',
+            'name' => 'Sarah M.',
+            'role' => 'Online Fitness Coach',
+        ],
+        'james' => [
+            'quote' => 'My clients actually show up more consistently since I switched to LiftDeck. The loyalty rewards system is brilliant.',
+            'name' => 'James K.',
+            'role' => 'Personal Trainer',
+        ],
+        'ana' => [
+            'quote' => 'The check-in system alone was worth it. I can see my clients\' weekly photos, metrics and mood in one dashboard instead of chasing WhatsApp messages.',
+            'name' => 'Ana P.',
+            'role' => 'Nutrition & Fitness Coach',
+        ],
     ],
 
     'features' => [
@@ -66,6 +104,8 @@ return [
         'heading' => 'Plans that grow with you',
         'subheading' => 'Basic plan includes a 7-day free trial.',
         'founding_offer' => 'Founding coach offer: use code FOUNDING70 for 70% off your first 2 months.',
+        'founding_offer_prefix' => 'Founding Coach Offer — Use code',
+        'founding_offer_suffix' => 'for 70% off your first 2 months.',
         'per_month' => '/mo',
         'get_started' => 'Start free trial',
         'subscribe' => 'Subscribe',
@@ -109,8 +149,9 @@ return [
 
     'cta' => [
         'heading' => 'Ready to grow your coaching business?',
-        'description' => 'Start your 7-day free trial today.',
+        'description' => 'Start your 7-day free trial today — and get 70% off your first 2 months with code FOUNDING70.',
         'button' => 'Start your free trial',
+        'reassurance' => 'No credit card required · Cancel anytime',
     ],
 
     'faq' => [

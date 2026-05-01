@@ -114,3 +114,15 @@ it('success page redirects to dashboard', function (): void {
         ->get(route('coach.plan.success'))
         ->assertRedirect(route('coach.dashboard'));
 });
+
+it('plan page shows billing reassurance copy under advanced and professional plans', function (): void {
+    $coach = User::factory()->state(['role' => 'coach'])->create([
+        'trial_ends_at' => null,
+        'selected_plan' => null,
+    ]);
+
+    $this->actingAs($coach)
+        ->get(route('coach.plan'))
+        ->assertOk()
+        ->assertSee('Billed monthly');
+});

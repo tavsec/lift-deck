@@ -24,10 +24,14 @@ class OnboardingController extends Controller
     /**
      * Show the onboarding form with dynamic fields.
      */
-    public function show(): View
+    public function show(): View|RedirectResponse
     {
         $coach = auth()->user()->coach;
         $fields = $coach->onboardingFields()->orderBy('order')->get();
+
+        if ($fields->isEmpty()) {
+            return redirect()->route('client.dashboard');
+        }
 
         return view('client.onboarding', compact('fields'));
     }

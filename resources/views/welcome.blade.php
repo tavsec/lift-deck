@@ -108,6 +108,19 @@
 </head>
 <body class="font-sans antialiased bg-white text-[#222222]">
 
+    {{-- ANNOUNCEMENT BAR --}}
+    @if(Route::has('register'))
+        <a
+            href="{{ route('register') }}"
+            class="block bg-[#1456f0] text-white text-center text-xs sm:text-sm font-medium px-4 py-2.5 hover:bg-blue-700 transition-colors"
+        >
+            <span class="font-semibold">{{ __('landing.announcement.prefix') }}</span>
+            <span class="opacity-90">{{ __('landing.announcement.body') }}</span>
+            <span class="font-mono bg-white/15 border border-white/30 rounded px-1.5 py-0.5 mx-1">{{ __('landing.announcement.code') }}</span>
+            <span class="font-semibold underline-offset-2 hover:underline">{{ __('landing.announcement.cta') }}</span>
+        </a>
+    @endif
+
     {{-- NAVIGATION --}}
     <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-sm border-b border-gray-100">
         <div class="max-w-6xl mx-auto px-6 h-16 flex items-center gap-8">
@@ -167,27 +180,123 @@
 
     <main>
         {{-- HERO --}}
-        <section class="pt-24 pb-20 px-6 text-center">
-            <div class="max-w-4xl mx-auto">
-                <div class="inline-flex items-center gap-2 bg-blue-50 text-[#1456f0] rounded-full px-4 py-1.5 text-sm font-semibold mb-8 border border-blue-100">
-                    <span class="w-2 h-2 rounded-full bg-[#1456f0]" aria-hidden="true"></span>
-                    {{ __('landing.hero.badge') }}
-                </div>
-                <h1 class="font-display text-5xl md:text-[64px] font-medium text-[#181e25] leading-[1.10] tracking-tight mb-6">
-                    {{ __('landing.hero.heading_1') }}<br>{{ __('landing.hero.heading_2') }}
-                </h1>
-                <p class="text-lg md:text-xl text-[#45515e] leading-relaxed max-w-2xl mx-auto mb-10">
-                    {{ __('landing.hero.subheading') }}
-                </p>
-                <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-                    @if(Route::has('register'))
-                        <a href="{{ route('register') }}" class="w-full sm:w-auto px-8 py-3.5 bg-[#181e25] text-white text-base font-semibold rounded-lg hover:bg-gray-800 transition-colors">
-                            {{ __('landing.hero.cta_primary') }} →
+        <section class="relative overflow-hidden pt-20 pb-12 lg:pt-24 lg:pb-20 px-6">
+            {{-- subtle background gradient --}}
+            <div aria-hidden="true" class="absolute inset-x-0 top-0 -z-10 h-[640px] bg-gradient-to-b from-blue-50/60 via-white to-transparent"></div>
+
+            <div class="max-w-6xl mx-auto">
+                <div class="text-center">
+                    <div class="inline-flex items-center gap-2 bg-blue-50 text-[#1456f0] rounded-full px-4 py-1.5 text-sm font-semibold mb-7 border border-blue-100">
+                        <span class="w-2 h-2 rounded-full bg-[#1456f0]" aria-hidden="true"></span>
+                        {{ __('landing.hero.badge') }}
+                    </div>
+                    <h1 class="font-display text-5xl md:text-[64px] font-medium text-[#181e25] leading-[1.10] tracking-tight mb-6">
+                        {{ __('landing.hero.heading_1') }}<br>{{ __('landing.hero.heading_2') }}
+                    </h1>
+                    <p class="text-lg md:text-xl text-[#45515e] leading-relaxed max-w-2xl mx-auto mb-9">
+                        {{ __('landing.hero.subheading') }}
+                    </p>
+                    <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                        @if(Route::has('register'))
+                            <a href="{{ route('register') }}" class="w-full sm:w-auto px-8 py-3.5 bg-[#181e25] text-white text-base font-semibold rounded-lg hover:bg-gray-800 transition-colors shadow-lg shadow-black/5">
+                                {{ __('landing.hero.cta_primary') }} →
+                            </a>
+                        @endif
+                        <a href="#features" class="w-full sm:w-auto px-8 py-3.5 bg-gray-100 text-[#333333] text-base font-semibold rounded-lg hover:bg-gray-200 transition-colors">
+                            {{ __('landing.hero.cta_secondary') }}
                         </a>
-                    @endif
-                    <a href="#features" class="w-full sm:w-auto px-8 py-3.5 bg-gray-100 text-[#333333] text-base font-semibold rounded-lg hover:bg-gray-200 transition-colors">
-                        {{ __('landing.hero.cta_secondary') }}
-                    </a>
+                    </div>
+                    <p class="mt-5 text-sm text-[#8e8e93]">{{ __('landing.hero.cta_reassurance') }}</p>
+                </div>
+
+                {{-- Product mockup --}}
+                @php
+                    $heroSlides = [
+                        ['file' => 'dashboard', 'alt_desktop' => 'LiftDeck coach dashboard preview', 'alt_mobile' => 'LiftDeck mobile coach dashboard'],
+                        ['file' => 'clients', 'alt_desktop' => 'LiftDeck client roster preview', 'alt_mobile' => 'LiftDeck mobile client roster'],
+                        ['file' => 'programs', 'alt_desktop' => 'LiftDeck training programs preview', 'alt_mobile' => 'LiftDeck mobile training programs'],
+                    ];
+                @endphp
+
+                <div class="mt-16 lg:mt-20 relative">
+                    {{-- soft glow under the mockup --}}
+                    <div aria-hidden="true" class="absolute inset-x-10 -bottom-6 h-24 bg-[#1456f0]/20 blur-3xl rounded-full"></div>
+
+                    {{-- Desktop browser-frame mockup (hidden on mobile) --}}
+                    <div class="hidden lg:block">
+                        <div class="relative mx-auto max-w-5xl rounded-xl overflow-hidden bg-white border border-gray-200 shadow-2xl shadow-gray-900/10">
+                            {{-- Browser chrome --}}
+                            <div class="flex items-center gap-2 px-4 py-3 bg-gray-100 border-b border-gray-200">
+                                <span class="w-3 h-3 rounded-full bg-[#ff5f57]" aria-hidden="true"></span>
+                                <span class="w-3 h-3 rounded-full bg-[#febc2e]" aria-hidden="true"></span>
+                                <span class="w-3 h-3 rounded-full bg-[#28c840]" aria-hidden="true"></span>
+                                <div class="flex flex-1 justify-center">
+                                    <div class="bg-white rounded-md px-3 py-1 text-xs text-[#8e8e93] border border-gray-200 inline-flex items-center gap-1.5 max-w-md w-full justify-center">
+                                        <svg class="w-3 h-3 text-[#28c840]" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path fill-rule="evenodd" d="M10 1a4.5 4.5 0 00-4.5 4.5V9H5a2 2 0 00-2 2v6a2 2 0 002 2h10a2 2 0 002-2v-6a2 2 0 00-2-2h-.5V5.5A4.5 4.5 0 0010 1zm3 8V5.5a3 3 0 10-6 0V9h6z" clip-rule="evenodd"/></svg>
+                                        liftdeck.io
+                                    </div>
+                                </div>
+                                <div class="w-16" aria-hidden="true"></div>
+                            </div>
+                            {{-- Slideshow --}}
+                            <div class="relative w-full" style="aspect-ratio: 1440 / 900;">
+                                @foreach($heroSlides as $i => $slide)
+                                    <picture class="ld-slide ld-slide-{{ $i + 1 }}">
+                                        <source type="image/webp" srcset="{{ asset('images/landing/' . $slide['file'] . '-full@1x.webp') }} 1x, {{ asset('images/landing/' . $slide['file'] . '-full@2x.webp') }} 2x">
+                                        <img
+                                            src="{{ asset('images/landing/' . $slide['file'] . '-full@1x.png') }}"
+                                            srcset="{{ asset('images/landing/' . $slide['file'] . '-full@1x.png') }} 1x, {{ asset('images/landing/' . $slide['file'] . '-full@2x.png') }} 2x"
+                                            alt="{{ $slide['alt_desktop'] }}"
+                                            width="1440" height="900"
+                                            class="absolute inset-0 block w-full h-full object-cover object-top"
+                                            loading="{{ $i === 0 ? 'eager' : 'lazy' }}"
+                                            @if($i === 0) fetchpriority="high" @endif
+                                        >
+                                    </picture>
+                                @endforeach
+                            </div>
+                        </div>
+
+                        {{-- Static phone mockup overlapping bottom-right --}}
+                        <div class="absolute -right-2 -bottom-10 w-[200px]">
+                            <div class="rounded-[28px] bg-[#181e25] p-2 shadow-2xl shadow-gray-900/30">
+                                <div class="rounded-[22px] overflow-hidden bg-white">
+                                    <picture>
+                                        <source type="image/webp" srcset="{{ asset('images/landing/dashboard-mobile@1x.webp') }} 1x, {{ asset('images/landing/dashboard-mobile@2x.webp') }} 2x">
+                                        <img
+                                            src="{{ asset('images/landing/dashboard-mobile@1x.png') }}"
+                                            srcset="{{ asset('images/landing/dashboard-mobile@1x.png') }} 1x, {{ asset('images/landing/dashboard-mobile@2x.png') }} 2x"
+                                            alt="LiftDeck mobile coach view"
+                                            width="390" height="844"
+                                            class="block w-full h-auto"
+                                            loading="lazy"
+                                        >
+                                    </picture>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {{-- Mobile phone-only showcase (hidden on lg+) --}}
+                    <div class="lg:hidden mx-auto w-[260px] sm:w-[280px]">
+                        <div class="rounded-[36px] bg-[#181e25] p-2 shadow-2xl shadow-gray-900/30">
+                            <div class="relative rounded-[28px] overflow-hidden bg-white" style="aspect-ratio: 390 / 844;">
+                                @foreach($heroSlides as $i => $slide)
+                                    <picture class="ld-slide ld-slide-{{ $i + 1 }}">
+                                        <source type="image/webp" srcset="{{ asset('images/landing/' . $slide['file'] . '-mobile@1x.webp') }} 1x, {{ asset('images/landing/' . $slide['file'] . '-mobile@2x.webp') }} 2x">
+                                        <img
+                                            src="{{ asset('images/landing/' . $slide['file'] . '-mobile@1x.png') }}"
+                                            srcset="{{ asset('images/landing/' . $slide['file'] . '-mobile@1x.png') }} 1x, {{ asset('images/landing/' . $slide['file'] . '-mobile@2x.png') }} 2x"
+                                            alt="{{ $slide['alt_mobile'] }}"
+                                            width="390" height="844"
+                                            class="absolute inset-0 block w-full h-full object-cover object-top"
+                                            loading="{{ $i === 0 ? 'eager' : 'lazy' }}"
+                                        >
+                                    </picture>
+                                @endforeach
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -212,8 +321,74 @@
             </div>
         </section>
 
+        {{-- HOW IT WORKS --}}
+        <section class="py-20 px-6 bg-white" aria-label="How it works">
+            <div class="max-w-5xl mx-auto">
+                <div class="text-center mb-14">
+                    <div class="text-xs font-bold uppercase tracking-widest text-[#8e8e93] mb-3">{{ __('landing.how_it_works.label') }}</div>
+                    <h2 class="font-display text-3xl md:text-[38px] font-semibold text-[#181e25] leading-tight max-w-2xl mx-auto">
+                        {{ __('landing.how_it_works.heading') }}
+                    </h2>
+                </div>
+                <div class="grid md:grid-cols-3 gap-x-8 gap-y-12 relative">
+                    {{-- connecting dotted line on desktop --}}
+                    <div aria-hidden="true" class="hidden md:block absolute top-12 left-[16.66%] right-[16.66%] h-px border-t-2 border-dashed border-blue-200/70"></div>
+
+                    @php
+                        $stepIllustrations = [
+                            1 => '<svg viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                <rect x="6" y="14" width="84" height="68" rx="10" fill="#EFF4FF" stroke="#1456f0" stroke-width="2"/>
+                                <rect x="6" y="14" width="84" height="14" rx="10" fill="#1456f0"/>
+                                <circle cx="13" cy="21" r="1.5" fill="#fff" opacity=".6"/>
+                                <circle cx="19" cy="21" r="1.5" fill="#fff" opacity=".6"/>
+                                <circle cx="25" cy="21" r="1.5" fill="#fff" opacity=".6"/>
+                                <rect x="18" y="38" width="60" height="6" rx="2" fill="#1456f0" opacity=".25"/>
+                                <rect x="18" y="50" width="60" height="20" rx="4" fill="#fff" stroke="#1456f0" stroke-width="1.5"/>
+                                <circle cx="74" cy="60" r="6" fill="#1456f0"/>
+                                <path d="M71.5 60l2 2 3.5-3.5" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>',
+                            2 => '<svg viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                <circle cx="32" cy="38" r="11" fill="#1456f0"/>
+                                <path d="M16 76c0-9 7-15 16-15s16 6 16 15" fill="#1456f0" opacity=".25"/>
+                                <circle cx="64" cy="32" r="8" fill="#fff" stroke="#1456f0" stroke-width="2"/>
+                                <path d="M52 64c0-7 5-12 12-12s12 5 12 12" stroke="#1456f0" stroke-width="2" fill="none"/>
+                                <circle cx="78" cy="20" r="9" fill="#fff" stroke="#1456f0" stroke-width="2"/>
+                                <path d="M74 20h8M78 16v8" stroke="#1456f0" stroke-width="2" stroke-linecap="round"/>
+                            </svg>',
+                            3 => '<svg viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                <rect x="8" y="16" width="80" height="64" rx="8" fill="#EFF4FF" stroke="#1456f0" stroke-width="2"/>
+                                <path d="M16 64l14-16 12 8 14-22 14 14" stroke="#1456f0" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                                <circle cx="30" cy="48" r="3" fill="#1456f0"/>
+                                <circle cx="42" cy="56" r="3" fill="#1456f0"/>
+                                <circle cx="56" cy="34" r="3" fill="#1456f0"/>
+                                <circle cx="70" cy="48" r="3" fill="#1456f0"/>
+                                <rect x="14" y="22" width="20" height="3" rx="1.5" fill="#1456f0" opacity=".3"/>
+                            </svg>',
+                        ];
+                    @endphp
+
+                    @foreach([1, 2, 3] as $step)
+                        <div class="relative bg-white">
+                            <div class="w-24 h-24 mb-5 mx-auto md:mx-0 relative">
+                                {!! $stepIllustrations[$step] !!}
+                                <div class="absolute -top-2 -left-2 flex h-8 w-8 items-center justify-center rounded-full bg-[#181e25] text-white font-display font-semibold text-sm shadow-lg ring-4 ring-white">
+                                    {{ $step }}
+                                </div>
+                            </div>
+                            <h3 class="font-display text-lg font-semibold text-[#181e25] mb-2 text-center md:text-left">
+                                {{ __('landing.how_it_works.step_' . $step . '_title') }}
+                            </h3>
+                            <p class="text-sm text-[#45515e] leading-relaxed text-center md:text-left">
+                                {{ __('landing.how_it_works.step_' . $step . '_body') }}
+                            </p>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        </section>
+
         {{-- FEATURES --}}
-        <section id="features" class="py-20 px-6">
+        <section id="features" class="py-20 px-6 bg-gray-50 border-t border-gray-100">
             <div class="max-w-6xl mx-auto">
                 <div class="text-center mb-14">
                     <div class="text-xs font-bold uppercase tracking-widest text-[#8e8e93] mb-3">{{ __('landing.features.label') }}</div>
@@ -237,6 +412,38 @@
             </div>
         </section>
 
+        {{-- TESTIMONIALS --}}
+        <section class="py-20 px-6 bg-white border-t border-gray-100">
+            <div class="max-w-6xl mx-auto">
+                <div class="text-center mb-14">
+                    <h2 class="font-display text-3xl md:text-[38px] font-semibold text-[#181e25] leading-tight">
+                        {{ __('landing.testimonials.heading') }}
+                    </h2>
+                </div>
+                <div class="grid md:grid-cols-3 gap-6">
+                    @foreach(['sarah', 'james', 'ana'] as $testimonial)
+                        @php
+                            $initials = collect(explode(' ', __('landing.testimonials.' . $testimonial . '.name')))
+                                ->map(fn (string $part) => strtoupper(substr($part, 0, 1)))
+                                ->implode('');
+                        @endphp
+                        <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-7 flex flex-col gap-5">
+                            <p class="text-[#45515e] text-sm leading-relaxed flex-1">&ldquo;{{ __('landing.testimonials.' . $testimonial . '.quote') }}&rdquo;</p>
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-full bg-[#1456f0]/10 flex items-center justify-center flex-shrink-0">
+                                    <span class="text-xs font-bold text-[#1456f0]">{{ $initials }}</span>
+                                </div>
+                                <div>
+                                    <div class="text-sm font-semibold text-[#181e25]">{{ __('landing.testimonials.' . $testimonial . '.name') }}</div>
+                                    <div class="text-xs text-[#8e8e93]">{{ __('landing.testimonials.' . $testimonial . '.role') }}</div>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        </section>
+
         {{-- PRICING --}}
         <section id="pricing" class="py-20 px-6 bg-gray-50 border-t border-gray-100">
             <div class="max-w-6xl mx-auto">
@@ -248,9 +455,12 @@
                     <p class="mt-4 text-[#45515e]">{{ __('landing.pricing.subheading') }}</p>
                 </div>
 
-                <div class="text-center mb-10">
-                    <span class="inline-flex items-center gap-2 bg-amber-50 text-amber-800 rounded-full px-5 py-2 text-sm font-semibold border border-amber-200">
-                        {{ __('landing.pricing.founding_offer') }}
+                <div class="mb-10 rounded-xl bg-blue-50 border border-blue-200 px-6 py-4 flex flex-col sm:flex-row items-center justify-center gap-3 text-center">
+                    <span class="text-base" aria-hidden="true">🎉</span>
+                    <span class="text-sm font-semibold text-blue-900">
+                        {{ __('landing.pricing.founding_offer_prefix') }}
+                        <span class="font-mono bg-white border border-blue-200 rounded px-2 py-0.5 text-[#1456f0] mx-1">FOUNDING70</span>
+                        {{ __('landing.pricing.founding_offer_suffix') }}
                     </span>
                 </div>
 
@@ -393,6 +603,7 @@
                         {{ __('landing.cta.button') }} →
                     </a>
                 @endif
+                <p class="mt-5 text-sm text-[#8e8e93]">{{ __('landing.cta.reassurance') }}</p>
             </div>
         </section>
     </main>

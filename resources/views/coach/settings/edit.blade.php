@@ -156,7 +156,7 @@
                             {{ $currentPlanKey ? ucfirst($currentPlanKey) . ' plan — ' : '' }}Free trial{{ $trialEndsAt ? ' — ends ' . $trialEndsAt->format('M j, Y') : '' }}
                         </p>
                         <p class="mt-1 text-sm text-blue-700 dark:text-blue-300">
-                            {{ $clientCount }} / {{ $clientLimit ?? '∞' }} clients
+                            {{ $clientCount }} / {{ $clientLimit ?? '∞' }} {{ $clientCount === 1 ? 'client' : 'clients' }}
                         </p>
                     </div>
                 </div>
@@ -201,12 +201,12 @@
                         </p>
                         <p class="mt-1 text-sm text-green-700 dark:text-green-300">
                             @if($meteredClientCount !== null)
-                                {{ $clientCount }} clients
+                                {{ $clientCount }} {{ $clientCount === 1 ? 'client' : 'clients' }}
                                 ({{ $meteredClientCount }} metered @ €{{ $stripePrices['professional']['metered_formatted'] ?? '?' }}/client)
                             @elseif($clientLimit !== null)
-                                {{ $clientCount }} / {{ $clientLimit }} clients
+                                {{ $clientCount }} / {{ $clientLimit }} {{ $clientCount === 1 ? 'client' : 'clients' }}
                             @else
-                                {{ $clientCount }} clients
+                                {{ $clientCount }} {{ $clientCount === 1 ? 'client' : 'clients' }}
                             @endif
                         </p>
                     </div>

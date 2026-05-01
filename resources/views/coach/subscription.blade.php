@@ -68,9 +68,9 @@
                             <p class="text-sm font-medium text-green-800 dark:text-green-200">
                                 Active plan: <span class="capitalize">{{ $currentPlanKey }}</span>
                                 @if($clientLimit !== null)
-                                    &mdash; {{ $clientCount }} / {{ $clientLimit }} clients
+                                    &mdash; {{ $clientCount }} / {{ $clientLimit }} {{ $clientCount === 1 ? 'client' : 'clients' }}
                                 @else
-                                    &mdash; {{ $clientCount }} clients (unlimited)
+                                    &mdash; {{ $clientCount }} {{ $clientCount === 1 ? 'client' : 'clients' }} (unlimited)
                                 @endif
                             </p>
                         </div>
@@ -101,7 +101,7 @@
                             <h3 class="font-display text-base font-semibold text-[#222222] dark:text-gray-100">Basic</h3>
                             <p class="mt-1 text-sm text-[#8e8e93] dark:text-gray-500">For coaches just getting started.</p>
                             <p class="mt-4">
-                                <span class="text-3xl font-bold text-[#222222] dark:text-gray-100">€2.50</span>
+                                <span class="text-3xl font-bold text-[#222222] dark:text-gray-100">€10</span>
                                 <span class="text-sm text-[#8e8e93] dark:text-gray-500">/mo</span>
                             </p>
                         </div>
@@ -136,7 +136,7 @@
                             <h3 class="font-display text-base font-semibold text-[#222222] dark:text-gray-100">Advanced</h3>
                             <p class="mt-1 text-sm text-[#8e8e93] dark:text-gray-500">For growing coaches.</p>
                             <p class="mt-4">
-                                <span class="text-3xl font-bold text-[#222222] dark:text-gray-100">€10</span>
+                                <span class="text-3xl font-bold text-[#222222] dark:text-gray-100">€45</span>
                                 <span class="text-sm text-[#8e8e93] dark:text-gray-500">/mo</span>
                             </p>
                         </div>
@@ -171,7 +171,7 @@
                             <h3 class="font-display text-base font-semibold text-[#222222] dark:text-gray-100">Professional</h3>
                             <p class="mt-1 text-sm text-[#8e8e93] dark:text-gray-500">For professional coaches at scale.</p>
                             <p class="mt-4">
-                                <span class="text-3xl font-bold text-[#222222] dark:text-gray-100">€15</span>
+                                <span class="text-3xl font-bold text-[#222222] dark:text-gray-100">€79</span>
                                 <span class="text-sm text-[#8e8e93] dark:text-gray-500">/mo + metered</span>
                             </p>
                         </div>
@@ -206,10 +206,15 @@
                             Manage Subscription
                         </a>
                     @elseif($selectedPlan)
-                        <a href="{{ route('coach.subscription.checkout') }}"
-                            class="inline-flex items-center px-6 py-2.5 bg-[#181e25] dark:bg-gray-700 text-white text-sm font-semibold rounded-lg hover:bg-gray-800 transition-colors">
-                            Subscribe to {{ ucfirst($selectedPlan) }}
-                        </a>
+                        <div class="flex flex-col items-center gap-1.5">
+                            <a href="{{ route('coach.subscription.checkout') }}"
+                                class="inline-flex items-center px-6 py-2.5 bg-[#181e25] dark:bg-gray-700 text-white text-sm font-semibold rounded-lg hover:bg-gray-800 transition-colors">
+                                Subscribe to {{ ucfirst($selectedPlan) }}
+                            </a>
+                            @if(in_array($selectedPlan, ['advanced', 'professional']))
+                                <p class="text-xs text-[#8e8e93] dark:text-gray-500">Billed monthly — cancel anytime</p>
+                            @endif
+                        </div>
                     @else
                         <a href="{{ route('coach.plan') }}"
                             class="inline-flex items-center px-6 py-2.5 bg-[#181e25] dark:bg-gray-700 text-white text-sm font-semibold rounded-lg hover:bg-gray-800 transition-colors">

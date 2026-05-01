@@ -71,6 +71,8 @@ return [
             'view' => 'Oglej',
             'no_clients' => 'Še ni strank',
             'no_clients_description' => 'Začnite z vabilom vaše prve stranke.',
+            'branding_notice' => 'Še niste nastavili blagovne znamke vaše telovadnice. Stranke bodo videle generično izkušnjo.',
+            'branding_notice_action' => 'Nastavi blagovno znamko',
         ],
 
         'show' => [
@@ -832,6 +834,23 @@ return [
             'feature_clients' => '30 strank vključenih',
             'feature_advanced' => 'Vse iz načrta Advanced',
             'feature_branding' => 'Prilagojeno oglaševanje',
+        ],
+    ],
+
+    'onboarding_checklist' => [
+        'heading' => 'Začetek',
+        'progress' => ':completed od :total dokončano',
+        'dismiss' => 'Zapri',
+        'steps' => [
+            'subscribe' => 'Naročite se na načrt',
+            'invite_client' => 'Povabite prvega stranko',
+            'create_program' => 'Ustvarite program vadbe',
+            'setup_branding' => 'Nastavite blagovno znamko',
+        ],
+        'actions' => [
+            'invite_client' => 'Povabi stranko',
+            'create_program' => 'Sestavi program',
+            'setup_branding' => 'Pojdi na blagovno znamko',
         ],
     ],
 

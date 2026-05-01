@@ -33,6 +33,7 @@ test('new coach has no trial_ends_at immediately after registration', function (
 
 test('gym_name and bio are saved when provided at registration', function () {
     $this->post('/register', [
+        'name' => 'Iron Peak Coach',
         'email' => 'coach@example.com',
         'password' => 'password',
         'password_confirmation' => 'password',
@@ -48,6 +49,7 @@ test('gym_name and bio are saved when provided at registration', function () {
 
 test('registration succeeds without gym_name and bio', function () {
     $response = $this->post('/register', [
+        'name' => 'Test Coach',
         'email' => 'coach2@example.com',
         'password' => 'password',
         'password_confirmation' => 'password',
@@ -57,16 +59,27 @@ test('registration succeeds without gym_name and bio', function () {
     $response->assertRedirect(route('coach.plan'));
 });
 
-test('name defaults to email prefix when not provided', function () {
-    $this->post('/register', [
-        'email' => 'alex.johnson@example.com',
+test('registration fails without a name', function () {
+    $response = $this->post('/register', [
+        'email' => 'noname@example.com',
         'password' => 'password',
         'password_confirmation' => 'password',
     ]);
 
-    $coach = \App\Models\User::where('email', 'alex.johnson@example.com')->first();
+    $response->assertSessionHasErrors('name');
+    $this->assertGuest();
+});
 
-    expect($coach->name)->toBe('alex.johnson');
+test('registration fails when name is too short', function () {
+    $response = $this->post('/register', [
+        'name' => 'A',
+        'email' => 'shortname@example.com',
+        'password' => 'password',
+        'password_confirmation' => 'password',
+    ]);
+
+    $response->assertSessionHasErrors('name');
+    $this->assertGuest();
 });
 
 test('register page shows step 3 data when validation fails', function () {
