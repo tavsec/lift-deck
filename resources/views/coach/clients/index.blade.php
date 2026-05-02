@@ -209,11 +209,22 @@
                                     <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                         <div class="flex items-center justify-end gap-4">
                                             <a href="{{ route('coach.clients.show', $client) }}" class="text-sm font-medium text-[#1456f0] hover:underline">{{ __('coach.clients.index.view') }}</a>
-                                            <form method="POST" action="{{ route('coach.clients.destroy', $client) }}" onsubmit="return confirm('{{ __('coach.clients.show.remove_confirm') }}');">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="inline-flex items-center text-sm font-medium text-red-600 dark:text-red-400 hover:text-red-700 transition-colors">{{ __('coach.clients.show.remove') }}</button>
-                                            </form>
+                                            <span x-data="{ confirm: false }">
+                                                <button x-show="!confirm" @click="confirm = true"
+                                                        type="button"
+                                                        class="text-sm font-medium text-red-600 hover:text-red-700 dark:text-red-400">
+                                                    {{ __('coach.clients.show.remove') }}
+                                                </button>
+                                                <span x-show="confirm" class="flex items-center gap-2">
+                                                    <span class="text-xs text-gray-500 dark:text-gray-400">{{ __('coach.clients.index.remove_confirm') }}</span>
+                                                    <form method="POST" action="{{ route('coach.clients.destroy', $client) }}" class="inline">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="text-sm font-medium text-red-600 hover:text-red-700 dark:text-red-400">{{ __('coach.clients.index.remove_yes') }}</button>
+                                                    </form>
+                                                    <button @click="confirm = false" type="button" class="text-sm font-medium text-gray-500 hover:text-gray-700 dark:text-gray-400">{{ __('coach.clients.index.remove_cancel') }}</button>
+                                                </span>
+                                            </span>
                                         </div>
                                     </td>
                                 </tr>

@@ -59,6 +59,14 @@
             </div>
         </div>
 
+        <!-- Section Navigation -->
+        <div class="flex gap-1 border-b border-gray-200 dark:border-gray-800 -mx-6 px-6 overflow-x-auto">
+            <a href="#section-overview" class="flex-shrink-0 px-4 py-2.5 text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 border-b-2 border-transparent hover:border-gray-300 dark:hover:border-gray-600 transition-colors whitespace-nowrap">{{ __('coach.clients.show.nav_overview') }}</a>
+            <a href="#section-workouts" class="flex-shrink-0 px-4 py-2.5 text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 border-b-2 border-transparent hover:border-gray-300 dark:hover:border-gray-600 transition-colors whitespace-nowrap">{{ __('coach.clients.show.nav_workouts') }}</a>
+            <a href="#section-nutrition" class="flex-shrink-0 px-4 py-2.5 text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 border-b-2 border-transparent hover:border-gray-300 dark:hover:border-gray-600 transition-colors whitespace-nowrap">{{ __('coach.clients.show.nav_nutrition') }}</a>
+            <a href="#section-loyalty" class="flex-shrink-0 px-4 py-2.5 text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 border-b-2 border-transparent hover:border-gray-300 dark:hover:border-gray-600 transition-colors whitespace-nowrap">{{ __('coach.clients.show.nav_loyalty') }}</a>
+        </div>
+
         @if(session('success'))
             <div class="rounded-xl bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 p-4">
                 <div class="flex">
@@ -81,7 +89,7 @@
             </div>
         @endif
 
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div id="section-overview" class="grid grid-cols-1 lg:grid-cols-3 gap-6 scroll-mt-20">
             <!-- Client Info -->
             <div class="lg:col-span-1 space-y-6">
                 <!-- Status Card -->
@@ -257,7 +265,7 @@
                 </div>
 
                 <!-- Recent Workouts -->
-                <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 shadow-card p-6">
+                <div id="section-workouts" class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 shadow-card p-6 scroll-mt-20">
                     <div class="flex items-center justify-between mb-4">
                         <h2 class="font-display text-base font-semibold text-[#222222] dark:text-gray-100">{{ __('coach.clients.show.recent_workouts') }}</h2>
                         <a href="{{ route('coach.clients.workout-logs.create', $client) }}" class="inline-flex items-center px-4 py-2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg text-sm font-semibold text-[#45515e] dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
@@ -312,7 +320,7 @@
                 </div>
 
                 <!-- Nutrition Summary -->
-                <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 shadow-card p-6">
+                <div id="section-nutrition" class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 shadow-card p-6 scroll-mt-20">
                     <div class="flex items-center justify-between mb-4">
                         <h2 class="font-display text-base font-semibold text-[#222222] dark:text-gray-100">{{ __('coach.clients.show.nutrition') }}</h2>
                         <a href="{{ route('coach.clients.nutrition', $client) }}" class="text-sm font-medium text-[#1456f0] hover:underline">{{ __('coach.clients.show.view_details') }}</a>
@@ -425,7 +433,7 @@
                 @endif
 
                 <!-- Loyalty Section -->
-                <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 shadow-card p-6">
+                <div id="section-loyalty" class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 shadow-card p-6 scroll-mt-20">
                     <div class="flex items-center justify-between mb-4">
                         <div class="flex items-center gap-3">
                             <h2 class="font-display text-base font-semibold text-[#222222] dark:text-gray-100">{{ __('coach.clients.show.loyalty') }}</h2>

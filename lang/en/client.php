@@ -197,6 +197,7 @@ return [
         'your_coach' => 'Your Coach',
         'no_messages' => 'No messages yet. Start a conversation with your coach!',
         'type_placeholder' => 'Type your message...',
+        'back' => 'Back',
     ],
 
     'rewards' => [

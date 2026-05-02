@@ -37,6 +37,15 @@
         <link href="{{ asset('vendor/bladewind/css/bladewind-ui.min.css') }}" rel="stylesheet" />
 
         <!-- Scripts -->
+        <script>
+            (function() {
+                var stored = {{ auth()->user()->dark_mode ? 'true' : 'false' }};
+                var hasPreference = {{ auth()->user()->dark_mode !== null ? 'true' : 'false' }};
+                if (!hasPreference && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                    document.documentElement.classList.add('dark');
+                }
+            })();
+        </script>
         @vite(['resources/css/app.css', 'resources/js/app.js'])
 
         <!-- Branding -->
@@ -64,7 +73,7 @@
                         @method('PATCH')
                         <button type="submit"
                             aria-label="{{ auth()->user()->dark_mode ? __('client.layout.switch_to_light') : __('client.layout.switch_to_dark') }}"
-                            class="p-2 rounded-md text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-800">
+                            class="p-2.5 rounded-md text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-800">
                             @if(auth()->user()->dark_mode)
                                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>
@@ -76,17 +85,17 @@
                             @endif
                         </button>
                     </form>
-                    <a href="{{ route('client.messages') }}" class="p-2 rounded-md text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-800">
+                    <a href="{{ route('client.messages') }}" class="p-2.5 rounded-md text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-800">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path>
                         </svg>
                     </a>
                     <a href="{{ route('client.settings.edit') }}"
-                        class="w-8 h-8 rounded-full flex items-center justify-center text-white text-sm font-semibold flex-shrink-0 overflow-hidden"
+                        class="w-11 h-11 rounded-full flex items-center justify-center text-white text-sm font-semibold flex-shrink-0 overflow-hidden"
                         style="background-color: var(--color-primary)"
                         aria-label="Settings">
                         @if(auth()->user()->avatar)
-                            <img src="{{ auth()->user()->avatar }}" alt="{{ auth()->user()->name }}" class="w-8 h-8 object-cover">
+                            <img src="{{ auth()->user()->avatar }}" alt="{{ auth()->user()->name }}" class="w-11 h-11 object-cover">
                         @else
                             {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
                         @endif
@@ -96,7 +105,7 @@
         </div>
 
         <!-- Main Content Area -->
-        <main class="pt-16 pb-20 max-w-4xl mx-auto px-4">
+        <main class="pt-16 pb-20 md:pb-6 max-w-4xl mx-auto px-4">
             @unless(request()->routeIs('client.log.create*') || request()->routeIs('client.log.custom'))
             <div
                 x-data="{
@@ -170,7 +179,7 @@
         </main>
 
         <!-- Bottom Navigation (Fixed) -->
-        <nav class="fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800 z-40">
+        <nav class="fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800 z-40 md:hidden">
             <div class="max-w-4xl mx-auto">
                 <div class="flex items-stretch">
                     <!-- Home Tab -->
@@ -206,6 +215,9 @@
                         @if(request()->routeIs('client.log*'))
                             <span class="absolute top-0 left-1/2 -translate-x-1/2 w-6 h-0.5 rounded-full" style="background-color: var(--color-primary)"></span>
                         @endif
+                        @if($unreadNotificationCount > 0)
+                            <span class="absolute top-1.5 right-1/4 flex h-3.5 w-3.5 items-center justify-center rounded-full bg-red-500 text-[9px] font-bold text-white">{{ $unreadNotificationCount > 9 ? '9+' : $unreadNotificationCount }}</span>
+                        @endif
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
                         </svg>
@@ -238,21 +250,6 @@
                         <span class="text-[10px] mt-0.5 font-medium">{{ __('client.layout.nav.nutrition') }}</span>
                     </a>
 
-                    <!-- History Tab -->
-                    <a href="{{ route('client.history') }}"
-                       class="relative flex flex-col items-center justify-center py-2 flex-1 {{ request()->routeIs('client.history*') ? '' : 'text-[#8e8e93] dark:text-gray-500' }}"
-                       {!! request()->routeIs('client.history*') ? 'style="color: var(--color-primary)"' : '' !!}>
-                        @if(request()->routeIs('client.history*'))
-                            <span class="absolute top-0 left-1/2 -translate-x-1/2 w-6 h-0.5 rounded-full" style="background-color: var(--color-primary)"></span>
-                        @endif
-                        @if($unreadNotificationCount > 0)
-                            <span class="absolute top-1.5 right-1/4 flex h-3.5 w-3.5 items-center justify-center rounded-full bg-red-500 text-[9px] font-bold text-white">{{ $unreadNotificationCount > 9 ? '9+' : $unreadNotificationCount }}</span>
-                        @endif
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                        </svg>
-                        <span class="text-[10px] mt-0.5 font-medium">{{ __('client.layout.nav.history') }}</span>
-                    </a>
                 </div>
             </div>
         </nav>

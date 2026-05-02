@@ -197,6 +197,7 @@ return [
         'your_coach' => 'Vaš trener',
         'no_messages' => 'Še ni sporočil. Začnite pogovor z vašim trenerjem!',
         'type_placeholder' => 'Vtipkajte sporočilo...',
+        'back' => 'Nazaj',
     ],
 
     'rewards' => [

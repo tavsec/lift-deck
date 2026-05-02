@@ -79,9 +79,6 @@
                                     </span>
                                 @endif
                             </div>
-                            @if($exercise->description)
-                                <p class="mt-2 text-sm text-[#8e8e93] dark:text-gray-400 line-clamp-2">{{ $exercise->description }}</p>
-                            @endif
                             @if($exercise->video_url)
                                 <div class="mt-2 flex items-center text-xs text-[#8e8e93] dark:text-gray-500">
                                     <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">

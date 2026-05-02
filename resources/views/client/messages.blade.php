@@ -2,6 +2,14 @@
     <x-slot:title>{{ __('client.messages.your_coach') }}</x-slot:title>
 
     <div class="flex flex-col h-[calc(100vh-10rem)] px-4">
+        <!-- Back Navigation -->
+        <a href="{{ route('client.dashboard') }}" class="inline-flex items-center gap-1.5 text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 mb-4">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+            </svg>
+            {{ __('client.messages.back') }}
+        </a>
+
         <!-- Header -->
         <div class="flex items-center pb-4 border-b border-gray-200 dark:border-gray-800">
             <div class="h-10 w-10 rounded-full bg-blue-50 dark:bg-blue-900/30 flex items-center justify-center overflow-hidden">
