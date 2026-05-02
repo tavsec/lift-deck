@@ -42,6 +42,7 @@ test('inactive client is flagged when no logs in last 3 days but has active goal
     $client = User::factory()->client()->create([
         'coach_id' => $this->coach->id,
         'name' => 'Inactive Ivy',
+        'created_at' => now()->subWeeks(2),
     ]);
 
     MacroGoal::factory()->create([
@@ -64,6 +65,26 @@ test('inactive client is flagged when no logs in last 3 days but has active goal
         ->assertSee(__('coach.dashboard.needs_attention.heading'))
         ->assertSee('Inactive Ivy')
         ->assertSee(__('coach.dashboard.needs_attention.flags.inactive'));
+});
+
+test('brand-new client (joined within 3 days) is NOT flagged as inactive', function () {
+    $client = User::factory()->client()->create([
+        'coach_id' => $this->coach->id,
+        'name' => 'Newcomer Nora',
+        'created_at' => now()->subDay(),
+    ]);
+
+    MacroGoal::factory()->create([
+        'client_id' => $client->id,
+        'coach_id' => $this->coach->id,
+        'calories' => 2000,
+        'effective_date' => now()->subDay()->toDateString(),
+    ]);
+
+    $this->actingAs($this->coach)
+        ->get(route('coach.dashboard'))
+        ->assertOk()
+        ->assertDontSee('Newcomer Nora');
 });
 
 test('off_target client is flagged when avg daily calories diverge from goal', function () {
@@ -119,6 +140,7 @@ test('inactive flag wins over no_goal when client has both signals', function ()
     $client = User::factory()->client()->create([
         'coach_id' => $this->coach->id,
         'name' => 'Mixed Mia',
+        'created_at' => now()->subWeeks(2),
     ]);
 
     MacroGoal::factory()->create([

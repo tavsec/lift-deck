@@ -136,7 +136,13 @@ class DashboardController extends Controller
             );
 
             // Priority 1: inactive (no logs in last 3 days, but has an active goal).
-            if ($activeGoal !== null && $logsLast3Days->isEmpty()) {
+            // Skip clients newer than the 3-day window — they couldn't have logged before they joined.
+            if (
+                $activeGoal !== null
+                && $logsLast3Days->isEmpty()
+                && $client->created_at !== null
+                && $client->created_at->lessThan($threeDayWindowStart)
+            ) {
                 return ['client' => $client, 'flag' => 'inactive'];
             }
 
