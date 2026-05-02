@@ -649,7 +649,7 @@
                     </div>
 
                     <div x-show="selectedFood" x-cloak class="pt-2 border-t border-gray-100 dark:border-gray-800">
-                        <form method="POST" action="{{ route('client.nutrition.store') }}" @submit="return foodFormReady()">
+                        <form method="POST" action="{{ route('client.nutrition.store') }}" @submit="if (!foodFormReady()) $event.preventDefault()">
                             @csrf
                             <input type="hidden" name="date" value="{{ $date }}">
                             <input type="hidden" name="name" :value="foodScaledName">
