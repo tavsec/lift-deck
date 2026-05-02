@@ -45,6 +45,7 @@ class NutritionController extends Controller
         }
 
         $mealLogs = $client->mealLogs()
+            ->with('comments.author:id,name')
             ->whereDate('date', '>=', $from)
             ->whereDate('date', '<=', $to)
             ->orderBy('date')

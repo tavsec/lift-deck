@@ -289,6 +289,14 @@ class User extends Authenticatable implements FilamentUser, MustVerifyEmail
     }
 
     /**
+     * Get all meal log comments authored by this user (typically a coach).
+     */
+    public function authoredMealLogComments(): HasMany
+    {
+        return $this->hasMany(MealLogComment::class, 'author_id');
+    }
+
+    /**
      * Get day plan assignments for this client.
      */
     public function clientDayAssignments(): HasMany

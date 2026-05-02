@@ -306,6 +306,18 @@ return [
                 'cancel' => 'Prekliči',
                 'summary_prefix' => 'Predlagano:',
             ],
+            'comments' => [
+                'heading' => 'Komentarji',
+                'placeholder' => 'Pustite povratno informacijo za svojo stranko…',
+                'submit' => 'Komentiraj',
+                'add' => 'Dodaj komentar',
+                'cancel' => 'Prekliči',
+                'delete' => 'Izbriši',
+                'delete_confirm' => 'Izbrišem ta komentar?',
+                'empty' => 'Še ni komentarjev.',
+                'added' => 'Komentar dodan.',
+                'deleted' => 'Komentar odstranjen.',
+            ],
         ],
 
         'workout_log' => [

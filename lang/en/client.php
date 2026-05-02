@@ -170,6 +170,25 @@ return [
                 'snack' => 'Snack',
             ],
         ],
+        'food_search' => [
+            'tab' => 'Search',
+            'heading' => 'Search any food',
+            'subtitle' => 'Free public database (Open Food Facts)',
+            'placeholder' => 'e.g. Greek yogurt, Nutella...',
+            'loading' => 'Searching...',
+            'no_results' => 'No matches. Try a different name.',
+            'min_chars' => 'Type at least 2 characters',
+            'per_100g' => 'per 100g',
+            'portion_label' => 'Portion (grams)',
+            'meal_type_label' => 'Meal type',
+            'save' => 'Save meal',
+        ],
+        'comments' => [
+            'heading' => 'Coach feedback',
+            'unread_badge' => ':count new',
+            'unread_badge_one' => '1 new',
+            'empty' => 'No coach feedback yet.',
+        ],
     ],
 
     'log' => [

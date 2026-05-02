@@ -306,6 +306,18 @@ return [
                 'cancel' => 'Cancel',
                 'summary_prefix' => 'Suggested:',
             ],
+            'comments' => [
+                'heading' => 'Comments',
+                'placeholder' => 'Leave feedback for your client…',
+                'submit' => 'Comment',
+                'add' => 'Add comment',
+                'cancel' => 'Cancel',
+                'delete' => 'Delete',
+                'delete_confirm' => 'Delete this comment?',
+                'empty' => 'No comments yet.',
+                'added' => 'Comment added.',
+                'deleted' => 'Comment removed.',
+            ],
         ],
 
         'workout_log' => [

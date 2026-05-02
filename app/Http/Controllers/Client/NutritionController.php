@@ -10,7 +10,9 @@ use App\Models\DayPlanItem;
 use App\Models\MacroGoal;
 use App\Models\Meal;
 use App\Models\MealLog;
+use App\Models\MealLogComment;
 use App\Services\AnalyticsService;
+use App\Services\OpenFoodFacts;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -21,7 +23,10 @@ use Illuminate\View\View;
 
 class NutritionController extends Controller
 {
-    public function __construct(private readonly AnalyticsService $analyticsService) {}
+    public function __construct(
+        private readonly AnalyticsService $analyticsService,
+        private readonly OpenFoodFacts $openFoodFacts,
+    ) {}
 
     public function index(Request $request): View
     {
@@ -31,9 +36,15 @@ class NutritionController extends Controller
         $macroGoal = MacroGoal::activeForClient($user->id, $date);
 
         $mealLogs = $user->mealLogs()
+            ->with('comments.author:id,name')
             ->whereDate('date', $date)
             ->orderBy('created_at')
             ->get();
+
+        $unreadCommentCount = MealLogComment::query()
+            ->whereNull('read_at')
+            ->whereHas('mealLog', fn ($q) => $q->where('client_id', $user->id))
+            ->count();
 
         $totals = [
             'calories' => $mealLogs->sum('calories'),
@@ -77,6 +88,7 @@ class NutritionController extends Controller
             'favorites',
             'assignment',
             'assignedItems',
+            'unreadCommentCount',
         ));
     }
 
@@ -135,6 +147,14 @@ class NutritionController extends Controller
             ->get(['id', 'name', 'calories', 'protein', 'carbs', 'fat']);
 
         return response()->json($meals);
+    }
+
+    public function foodSearch(Request $request): JsonResponse
+    {
+        $query = (string) $request->query('q', '');
+        $results = $this->openFoodFacts->search($query);
+
+        return response()->json(['results' => $results->values()]);
     }
 
     public function copyYesterday(Request $request): RedirectResponse

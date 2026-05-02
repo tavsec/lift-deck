@@ -306,6 +306,18 @@ return [
                 'cancel' => 'Odustani',
                 'summary_prefix' => 'Predloženo:',
             ],
+            'comments' => [
+                'heading' => 'Komentari',
+                'placeholder' => 'Ostavite povratnu informaciju za svog klijenta…',
+                'submit' => 'Komentiraj',
+                'add' => 'Dodaj komentar',
+                'cancel' => 'Odustani',
+                'delete' => 'Obriši',
+                'delete_confirm' => 'Obrisati ovaj komentar?',
+                'empty' => 'Još nema komentara.',
+                'added' => 'Komentar dodan.',
+                'deleted' => 'Komentar uklonjen.',
+            ],
         ],
 
         'workout_log' => [

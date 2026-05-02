@@ -448,6 +448,65 @@
                                                     <p class="mt-1 text-xs text-[#8e8e93] dark:text-gray-500">
                                                         P {{ $log->protein }}g / C {{ $log->carbs }}g / F {{ $log->fat }}g
                                                     </p>
+
+                                                    {{-- Comments thread --}}
+                                                    <div class="mt-3 ml-3 pl-3 border-l-2 border-gray-100 dark:border-gray-800" x-data="{ commenting: false }">
+                                                        @if($log->comments->isNotEmpty())
+                                                            <ul class="space-y-2 mb-2">
+                                                                @foreach($log->comments as $comment)
+                                                                    <li class="flex items-start gap-2">
+                                                                        <div class="flex-shrink-0 w-6 h-6 rounded-full bg-[#1456f0]/10 text-[#1456f0] text-[11px] font-semibold flex items-center justify-center">
+                                                                            {{ mb_strtoupper(mb_substr($comment->author?->name ?? '?', 0, 1)) }}
+                                                                        </div>
+                                                                        <div class="flex-1 min-w-0">
+                                                                            <p class="text-xs text-[#45515e] dark:text-gray-300 whitespace-pre-line">{{ $comment->body }}</p>
+                                                                            <p class="text-[11px] text-[#8e8e93] dark:text-gray-500 mt-0.5">
+                                                                                {{ $comment->author?->name }} · {{ $comment->created_at->diffForHumans() }}
+                                                                            </p>
+                                                                        </div>
+                                                                        @if($comment->author_id === auth()->id())
+                                                                            <form method="POST" action="{{ route('coach.meal-log-comments.destroy', $comment) }}"
+                                                                                onsubmit="return confirm('{{ __('coach.clients.nutrition.comments.delete_confirm') }}');">
+                                                                                @csrf
+                                                                                @method('DELETE')
+                                                                                <button type="submit" class="text-[#8e8e93] dark:text-gray-500 hover:text-red-500 transition-colors" aria-label="{{ __('coach.clients.nutrition.comments.delete') }}">
+                                                                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                                                                                    </svg>
+                                                                                </button>
+                                                                            </form>
+                                                                        @endif
+                                                                    </li>
+                                                                @endforeach
+                                                            </ul>
+                                                        @endif
+
+                                                        <div x-show="!commenting">
+                                                            <button type="button" @click="commenting = true"
+                                                                class="text-xs font-medium text-[#1456f0] hover:underline">
+                                                                {{ __('coach.clients.nutrition.comments.add') }}
+                                                            </button>
+                                                        </div>
+
+                                                        <form x-show="commenting" x-cloak method="POST"
+                                                            action="{{ route('coach.clients.meal-logs.comments.store', [$client, $log]) }}"
+                                                            class="space-y-2">
+                                                            @csrf
+                                                            <textarea name="body" rows="2" required maxlength="1000"
+                                                                placeholder="{{ __('coach.clients.nutrition.comments.placeholder') }}"
+                                                                class="w-full border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-[#222222] dark:text-gray-100 placeholder-[#8e8e93] dark:placeholder-gray-500 rounded-lg px-3 py-2 text-xs focus:outline-none focus:border-[#1456f0] focus:ring-2 focus:ring-[#1456f0]/20 transition-colors duration-150"></textarea>
+                                                            <div class="flex items-center gap-2">
+                                                                <button type="submit"
+                                                                    class="inline-flex items-center px-3 py-1.5 bg-[#181e25] dark:bg-gray-700 text-white text-xs font-semibold rounded-lg hover:bg-gray-800 transition-colors">
+                                                                    {{ __('coach.clients.nutrition.comments.submit') }}
+                                                                </button>
+                                                                <button type="button" @click="commenting = false"
+                                                                    class="inline-flex items-center px-3 py-1.5 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-[#45515e] dark:text-gray-300 text-xs font-semibold rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                                                                    {{ __('coach.clients.nutrition.comments.cancel') }}
+                                                                </button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
                                                 </div>
                                             @endforeach
                                         </div>

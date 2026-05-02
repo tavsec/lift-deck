@@ -170,6 +170,25 @@ return [
                 'snack' => 'Užina',
             ],
         ],
+        'food_search' => [
+            'tab' => 'Pretraži',
+            'heading' => 'Pretraži bilo koju hranu',
+            'subtitle' => 'Besplatna javna baza (Open Food Facts)',
+            'placeholder' => 'npr. Grčki jogurt, Nutella...',
+            'loading' => 'Pretraživanje...',
+            'no_results' => 'Nema rezultata. Pokušajte s drugim nazivom.',
+            'min_chars' => 'Upišite barem 2 znaka',
+            'per_100g' => 'na 100 g',
+            'portion_label' => 'Porcija (grami)',
+            'meal_type_label' => 'Vrsta obroka',
+            'save' => 'Spremi obrok',
+        ],
+        'comments' => [
+            'heading' => 'Povratne informacije trenera',
+            'unread_badge' => ':count novih',
+            'unread_badge_one' => '1 nova',
+            'empty' => 'Još nema povratnih informacija trenera.',
+        ],
     ],
 
     'log' => [

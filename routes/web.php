@@ -82,6 +82,8 @@ Route::middleware(['auth', 'verified', 'role:coach', 'subscribed'])
 
         Route::post('clients/{client}/meal-logs', [Coach\ClientMealLogController::class, 'store'])->name('clients.meal-logs.store');
         Route::delete('clients/{client}/meal-logs/{mealLog}', [Coach\ClientMealLogController::class, 'destroy'])->name('clients.meal-logs.destroy');
+        Route::post('clients/{client}/meal-logs/{mealLog}/comments', [Coach\MealLogCommentController::class, 'store'])->name('clients.meal-logs.comments.store');
+        Route::delete('meal-log-comments/{comment}', [Coach\MealLogCommentController::class, 'destroy'])->name('meal-log-comments.destroy');
         Route::get('clients/{client}/nutrition', [Coach\NutritionController::class, 'show'])->name('clients.nutrition');
         Route::get('clients/{client}/analytics', [Coach\AnalyticsController::class, 'show'])->name('clients.analytics');
         Route::get('clients/{client}/analytics/export', [Coach\AnalyticsController::class, 'exportToExcel'])->name('clients.analytics.export');
@@ -167,6 +169,8 @@ Route::middleware(['auth', 'verified', 'role:client'])
         Route::get('exercises/{exercise}/progress', Client\ExerciseProgressController::class)->name('exercises.progress');
         Route::get('nutrition', [Client\NutritionController::class, 'index'])->name('nutrition');
         Route::get('nutrition/meals', [Client\NutritionController::class, 'meals'])->name('nutrition.meals');
+        Route::post('meal-log-comments/mark-all-read', [Client\MealLogCommentController::class, 'markAllRead'])->name('meal-log-comments.mark-read');
+        Route::get('nutrition/food-search', [Client\NutritionController::class, 'foodSearch'])->name('nutrition.food-search');
         Route::post('nutrition', [Client\NutritionController::class, 'store'])->name('nutrition.store');
         Route::post('nutrition/copy-yesterday', [Client\NutritionController::class, 'copyYesterday'])->name('nutrition.copy-yesterday');
         Route::delete('nutrition/{mealLog}', [Client\NutritionController::class, 'destroy'])->name('nutrition.destroy');

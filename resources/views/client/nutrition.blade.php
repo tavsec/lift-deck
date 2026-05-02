@@ -6,6 +6,16 @@
         <div class="mb-5">
             <div class="flex items-center justify-between">
                 <h1 class="font-display text-xl font-semibold text-[#222222] dark:text-gray-100">{{ __('client.nutrition.heading') }}</h1>
+                @if(($unreadCommentCount ?? 0) > 0)
+                    <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold bg-[#1456f0]/10 text-[#1456f0]" data-testid="unread-comments-badge">
+                        <svg class="w-3.5 h-3.5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
+                        </svg>
+                        {{ $unreadCommentCount === 1
+                            ? __('client.nutrition.comments.unread_badge_one')
+                            : __('client.nutrition.comments.unread_badge', ['count' => $unreadCommentCount]) }}
+                    </span>
+                @endif
             </div>
             <div class="mt-3 flex items-center justify-between">
                 <a :href="prevUrl" class="p-2 rounded-lg text-[#45515e] dark:text-gray-400 hover:text-[#222222] dark:hover:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
@@ -206,25 +216,50 @@
                         </div>
                         <div class="divide-y divide-gray-100 dark:divide-gray-800">
                             @foreach($logs as $log)
-                                <div class="px-5 py-3 flex items-center justify-between">
-                                    <div>
-                                        <p class="text-sm font-medium text-[#222222] dark:text-gray-100">{{ $log->name }}</p>
-                                        <p class="text-xs text-[#8e8e93] dark:text-gray-500 mt-0.5">
-                                            {{ $log->calories }} kcal &middot;
-                                            P {{ $log->protein }}g &middot;
-                                            C {{ $log->carbs }}g &middot;
-                                            F {{ $log->fat }}g
-                                        </p>
+                                <div class="px-5 py-3">
+                                    <div class="flex items-center justify-between">
+                                        <div>
+                                            <p class="text-sm font-medium text-[#222222] dark:text-gray-100">{{ $log->name }}</p>
+                                            <p class="text-xs text-[#8e8e93] dark:text-gray-500 mt-0.5">
+                                                {{ $log->calories }} kcal &middot;
+                                                P {{ $log->protein }}g &middot;
+                                                C {{ $log->carbs }}g &middot;
+                                                F {{ $log->fat }}g
+                                            </p>
+                                        </div>
+                                        <form method="POST" action="{{ route('client.nutrition.destroy', $log) }}" onsubmit="return confirm('{{ __('client.nutrition.remove_meal_confirm') }}');">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="p-1 text-[#8e8e93] dark:text-gray-500 hover:text-red-500 transition-colors">
+                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                                                </svg>
+                                            </button>
+                                        </form>
                                     </div>
-                                    <form method="POST" action="{{ route('client.nutrition.destroy', $log) }}" onsubmit="return confirm('{{ __('client.nutrition.remove_meal_confirm') }}');">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="p-1 text-[#8e8e93] dark:text-gray-500 hover:text-red-500 transition-colors">
-                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-                                            </svg>
-                                        </button>
-                                    </form>
+
+                                    @if($log->comments->isNotEmpty())
+                                        <div class="mt-2 ml-2 pl-3 border-l-2 border-[#1456f0]/30 bg-gray-50 dark:bg-gray-800/40 rounded-r-md py-2 pr-2">
+                                            <p class="text-[11px] font-semibold uppercase tracking-wider text-[#8e8e93] dark:text-gray-500 mb-1.5">
+                                                {{ __('client.nutrition.comments.heading') }}
+                                            </p>
+                                            <ul class="space-y-2">
+                                                @foreach($log->comments as $comment)
+                                                    <li class="flex items-start gap-2">
+                                                        <div class="flex-shrink-0 w-6 h-6 rounded-full bg-[#1456f0]/10 text-[#1456f0] text-[11px] font-semibold flex items-center justify-center">
+                                                            {{ mb_strtoupper(mb_substr($comment->author?->name ?? '?', 0, 1)) }}
+                                                        </div>
+                                                        <div class="flex-1 min-w-0">
+                                                            <p class="text-xs text-[#45515e] dark:text-gray-300 whitespace-pre-line">{{ $comment->body }}</p>
+                                                            <p class="text-[11px] text-[#8e8e93] dark:text-gray-500 mt-0.5">
+                                                                {{ $comment->author?->name }} · {{ $comment->created_at->diffForHumans() }}
+                                                            </p>
+                                                        </div>
+                                                    </li>
+                                                @endforeach
+                                            </ul>
+                                        </div>
+                                    @endif
                                 </div>
                             @endforeach
                         </div>
@@ -373,6 +408,10 @@
                     <button @click="mode = 'custom'" :class="mode === 'custom' ? 'border-[#1456f0] text-[#1456f0]' : 'border-transparent text-[#8e8e93] dark:text-gray-400 hover:text-[#45515e] dark:hover:text-gray-300 hover:border-gray-300 dark:hover:border-gray-600'"
                         class="flex-1 py-3 px-4 text-center text-sm font-medium border-b-2 transition-colors" type="button">
                         {{ __('client.nutrition.custom') }}
+                    </button>
+                    <button @click="mode = 'search'" :class="mode === 'search' ? 'border-[#1456f0] text-[#1456f0]' : 'border-transparent text-[#8e8e93] dark:text-gray-400 hover:text-[#45515e] dark:hover:text-gray-300 hover:border-gray-300 dark:hover:border-gray-600'"
+                        class="flex-1 py-3 px-4 text-center text-sm font-medium border-b-2 transition-colors" type="button">
+                        {{ __('client.nutrition.food_search.tab') }}
                     </button>
                 </nav>
             </div>
@@ -561,11 +600,126 @@
                         </button>
                     </form>
                 </div>
+
+                <!-- Search Mode (Open Food Facts) -->
+                <div x-show="mode === 'search'" class="space-y-4">
+                    <div>
+                        <h3 class="text-sm font-semibold text-[#222222] dark:text-gray-100">{{ __('client.nutrition.food_search.heading') }}</h3>
+                        <p class="text-xs text-[#8e8e93] dark:text-gray-500 mt-0.5">{{ __('client.nutrition.food_search.subtitle') }}</p>
+                    </div>
+
+                    <input type="text" x-model="foodQuery" @input.debounce.300ms="searchFoods()"
+                        placeholder="{{ __('client.nutrition.food_search.placeholder') }}"
+                        class="w-full rounded-lg border-gray-200 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-[#1456f0] focus:ring-[#1456f0] text-sm">
+
+                    <div x-show="foodSearching" class="text-center py-4">
+                        <p class="text-sm text-[#8e8e93] dark:text-gray-500">{{ __('client.nutrition.food_search.loading') }}</p>
+                    </div>
+
+                    <div x-show="!foodSearching && foodQuery.length > 0 && foodQuery.length < 2" x-cloak class="text-center py-4">
+                        <p class="text-sm text-[#8e8e93] dark:text-gray-500">{{ __('client.nutrition.food_search.min_chars') }}</p>
+                    </div>
+
+                    <div x-show="!foodSearching && foodQuery.length >= 2 && foodResults.length === 0 && foodSearched" x-cloak class="text-center py-4">
+                        <p class="text-sm text-[#8e8e93] dark:text-gray-500">{{ __('client.nutrition.food_search.no_results') }}</p>
+                    </div>
+
+                    <div x-show="foodResults.length > 0" class="max-h-72 overflow-y-auto space-y-2">
+                        <template x-for="item in foodResults" :key="item.code">
+                            <button @click="selectFoodItem(item)" type="button"
+                                :class="selectedFood && selectedFood.code === item.code ? 'border-[#1456f0] bg-blue-50 dark:bg-blue-900/20' : 'border-gray-200 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-800'"
+                                class="w-full text-left p-3 rounded-xl border transition-colors flex items-start gap-3">
+                                <template x-if="item.image">
+                                    <img :src="item.image" :alt="item.name" class="w-12 h-12 rounded-lg object-cover bg-gray-100 dark:bg-gray-800 flex-shrink-0">
+                                </template>
+                                <template x-if="!item.image">
+                                    <div class="w-12 h-12 rounded-lg bg-gray-100 dark:bg-gray-800 flex-shrink-0 flex items-center justify-center">
+                                        <svg class="w-5 h-5 text-[#8e8e93]" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14M4 6h16M4 6v12a2 2 0 002 2h12a2 2 0 002-2V6"/>
+                                        </svg>
+                                    </div>
+                                </template>
+                                <div class="flex-1 min-w-0">
+                                    <p class="text-sm font-medium text-[#222222] dark:text-gray-100 truncate" x-text="item.name"></p>
+                                    <p x-show="item.brand" class="text-xs text-[#8e8e93] dark:text-gray-500 truncate" x-text="item.brand"></p>
+                                    <p class="text-xs text-[#45515e] dark:text-gray-400 mt-1">
+                                        <span x-text="Math.round(item.kcal_per_100g)"></span> kcal &middot;
+                                        P<span x-text="item.protein_per_100g"></span>/C<span x-text="item.carbs_per_100g"></span>/F<span x-text="item.fat_per_100g"></span>
+                                        <span class="text-[#8e8e93] dark:text-gray-500">{{ __('client.nutrition.food_search.per_100g') }}</span>
+                                    </p>
+                                </div>
+                            </button>
+                        </template>
+                    </div>
+
+                    <div x-show="selectedFood" x-cloak class="pt-2 border-t border-gray-100 dark:border-gray-800">
+                        <form method="POST" action="{{ route('client.nutrition.store') }}" @submit="return foodFormReady()">
+                            @csrf
+                            <input type="hidden" name="date" value="{{ $date }}">
+                            <input type="hidden" name="name" :value="foodScaledName">
+                            <input type="hidden" name="calories" :value="foodScaledCalories">
+                            <input type="hidden" name="protein" :value="foodScaledProtein">
+                            <input type="hidden" name="carbs" :value="foodScaledCarbs">
+                            <input type="hidden" name="fat" :value="foodScaledFat">
+                            <input type="hidden" name="meal_type" :value="foodCustomMealType || foodMealType">
+
+                            <div class="mb-3">
+                                <label class="block text-sm font-medium text-[#222222] dark:text-gray-100 mb-2">{{ __('client.nutrition.food_search.portion_label') }}</label>
+                                <input type="number" min="1" max="2000" step="5" x-model.number="foodPortion"
+                                    class="w-full rounded-lg border-gray-200 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-[#1456f0] focus:ring-[#1456f0] text-sm">
+                                <p class="mt-2 text-xs text-[#8e8e93] dark:text-gray-500">
+                                    <span x-text="foodScaledCalories"></span> kcal &middot;
+                                    P <span x-text="foodScaledProtein"></span>g &middot;
+                                    C <span x-text="foodScaledCarbs"></span>g &middot;
+                                    F <span x-text="foodScaledFat"></span>g
+                                </p>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="block text-sm font-medium text-[#222222] dark:text-gray-100 mb-2">{{ __('client.nutrition.food_search.meal_type_label') }}</label>
+                                <div class="flex flex-wrap gap-2">
+                                    <template x-for="type in mealTypes" :key="type">
+                                        <button type="button" @click="foodMealType = type; foodCustomMealType = ''"
+                                            :class="foodMealType === type && !foodCustomMealType ? 'text-white border-[#1456f0]' : 'bg-white dark:bg-gray-800 text-[#45515e] dark:text-gray-300 border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700'"
+                                            :style="foodMealType === type && !foodCustomMealType ? 'background-color: var(--color-primary)' : ''"
+                                            class="px-3 py-1.5 text-sm font-medium border rounded-lg transition-colors" x-text="type"></button>
+                                    </template>
+                                </div>
+                                <input type="text" x-model="foodCustomMealType" @input="if (foodCustomMealType) foodMealType = ''"
+                                    placeholder="{{ __('client.nutrition.or_type_custom') }}"
+                                    class="mt-2 w-full rounded-lg border-gray-200 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-[#1456f0] focus:ring-[#1456f0] text-sm">
+                            </div>
+
+                            <button type="submit"
+                                :disabled="!foodFormReady()"
+                                class="w-full inline-flex items-center justify-center px-4 py-3 bg-[#181e25] dark:bg-gray-700 text-white text-sm font-semibold rounded-xl hover:bg-gray-800 dark:hover:bg-gray-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
+                                {{ __('client.nutrition.food_search.save') }}
+                            </button>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
     @push('scripts')
+    <script>
+        // Mark all unread coach meal-log comments as read on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            const token = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
+            if (!token) {
+                return;
+            }
+            fetch('{{ route('client.meal-log-comments.mark-read') }}', {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': token,
+                    'Accept': 'application/json',
+                },
+                credentials: 'same-origin',
+            }).catch(() => { /* swallow — non-critical */ });
+        });
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
     <script>
         function chartTheme() {
@@ -663,6 +817,7 @@
             const today = '{{ now()->format("Y-m-d") }}';
             const baseUrl = '{{ route("client.nutrition") }}';
             const mealsUrl = '{{ route("client.nutrition.meals") }}';
+            const foodSearchUrl = '{{ route("client.nutrition.food-search") }}';
 
             function shiftDate(dateStr, days) {
                 const d = new Date(dateStr + 'T00:00:00');
@@ -690,6 +845,14 @@
                 portionOptions: [0.5, 1, 1.5, 2],
                 customPortionMode: false,
                 customPortionInput: '',
+                foodQuery: '',
+                foodResults: [],
+                foodSearching: false,
+                foodSearched: false,
+                selectedFood: null,
+                foodPortion: 100,
+                foodMealType: 'Breakfast',
+                foodCustomMealType: '',
 
                 get scaledCalories() {
                     if (!this.selectedMeal) return 0;
@@ -729,6 +892,76 @@
                     }
                     this.portion = Math.round(value * 100) / 100;
                     this.customPortionMode = true;
+                },
+
+                get foodScale() {
+                    const grams = Number(this.foodPortion);
+                    if (isNaN(grams) || grams < 1) return 0;
+                    return grams / 100;
+                },
+                get foodScaledCalories() {
+                    if (!this.selectedFood) return 0;
+                    return Math.round(Number(this.selectedFood.kcal_per_100g) * this.foodScale);
+                },
+                get foodScaledProtein() {
+                    if (!this.selectedFood) return 0;
+                    return Math.round(Number(this.selectedFood.protein_per_100g) * this.foodScale * 10) / 10;
+                },
+                get foodScaledCarbs() {
+                    if (!this.selectedFood) return 0;
+                    return Math.round(Number(this.selectedFood.carbs_per_100g) * this.foodScale * 10) / 10;
+                },
+                get foodScaledFat() {
+                    if (!this.selectedFood) return 0;
+                    return Math.round(Number(this.selectedFood.fat_per_100g) * this.foodScale * 10) / 10;
+                },
+                get foodScaledName() {
+                    if (!this.selectedFood) return '';
+                    const base = this.selectedFood.brand
+                        ? this.selectedFood.name + ' (' + this.selectedFood.brand + ')'
+                        : this.selectedFood.name;
+                    return base;
+                },
+
+                async searchFoods() {
+                    const q = (this.foodQuery || '').trim();
+                    if (q.length < 2) {
+                        this.foodResults = [];
+                        this.foodSearched = false;
+                        return;
+                    }
+                    this.foodSearching = true;
+                    this.foodSearched = false;
+                    try {
+                        const response = await fetch(foodSearchUrl + '?q=' + encodeURIComponent(q), {
+                            headers: { 'Accept': 'application/json' }
+                        });
+                        if (!response.ok) {
+                            this.foodResults = [];
+                            return;
+                        }
+                        const data = await response.json();
+                        this.foodResults = Array.isArray(data.results) ? data.results : [];
+                    } catch (e) {
+                        this.foodResults = [];
+                    } finally {
+                        this.foodSearching = false;
+                        this.foodSearched = true;
+                    }
+                },
+
+                selectFoodItem(item) {
+                    this.selectedFood = this.selectedFood?.code === item.code ? null : item;
+                    this.foodPortion = 100;
+                },
+
+                foodFormReady() {
+                    if (!this.selectedFood) return false;
+                    const grams = Number(this.foodPortion);
+                    if (isNaN(grams) || grams < 1 || grams > 2000) return false;
+                    if (!(this.foodMealType || this.foodCustomMealType)) return false;
+                    if (this.foodScaledCalories <= 0) return false;
+                    return true;
                 },
 
                 get prevUrl() {
