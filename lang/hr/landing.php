@@ -3,7 +3,7 @@
 return [
     'meta' => [
         'title' => 'LiftDeck — Platforma za fitness trenere',
-        'description' => 'LiftDeck daje fitness trenerima potpunu platformu — programe, provjere, prehranu, dopisivanje i nagrade — sve na jednom mjestu. Pokrenite 7-dnevno besplatno probno razdoblje.',
+        'description' => 'LiftDeck daje fitness trenerima potpunu platformu — programe, provjere, planove obroka, praćenje makronutrijenata, dopisivanje i nagrade — sve na jednom mjestu. Pokrenite 7-dnevno besplatno probno razdoblje.',
     ],
 
     'nav' => [
@@ -86,8 +86,8 @@ return [
             'description' => 'Klijenti bilježe treninge s telefona. Vidite svaki set i osobni rekord u stvarnom vremenu.',
         ],
         'nutrition' => [
-            'title' => 'Planovi prehrane',
-            'description' => 'Izradite planove obroka i pratite makronutrijente. Prehrana i trening su usklađeni za svakog klijenta.',
+            'title' => 'Prehrambeno savjetovanje',
+            'description' => 'Dnevni planovi obroka, baza s 3M+ namirnica, makro ciljevi i komentari uz svaki obrok — sve ugrađeno.',
         ],
         'messaging' => [
             'title' => 'Dopisivanje',
@@ -96,6 +96,39 @@ return [
         'rewards' => [
             'title' => 'Lojalnost i nagrade',
             'description' => 'Motivirajte klijente bodovima, dostignućima i nagradama koje se mogu zamijeniti, vezanim uz njihov napredak.',
+        ],
+    ],
+
+    'nutrition_section' => [
+        'label' => 'Prehrambeno savjetovanje',
+        'heading' => 'Prehrambeno savjetovanje koje raste s vama',
+        'subheading' => 'Bez više juriša za makroima u tablicama. Sastavite planove obroka, postavite ciljeve i dajte povratne informacije — sve na istom mjestu gdje vodite trening.',
+        'back_to_features' => 'Natrag na sve značajke',
+        'items' => [
+            'day_plans' => [
+                'title' => 'Dnevni planovi obroka po klijentu',
+                'description' => 'Sastavite dan iz svoje biblioteke, prilagođenih namirnica ili 3M+ proizvoda kroz Open Food Facts. Dodijelite ga datumu — klijenti jednim dodirom označavaju da su obrok pojeli.',
+            ],
+            'food_database' => [
+                'title' => 'Ugrađena baza 3M+ namirnica',
+                'description' => 'Integracija s Open Food Facts omogućuje klijentima da bilježe bilo koji pakirani proizvod po nazivu ili barkodu — bez ograničenja biblioteke i bez dodatnih aplikacija.',
+            ],
+            'smart_logging' => [
+                'title' => 'Pametno bilježenje',
+                'description' => 'Kopiraj jučer, omiljene prečice za česte obroke i prilagođene veličine porcija (0,5×, 0,75×, 1×) — klijenti bilježe u sekundama, ne minutama.',
+            ],
+            'macro_calculator' => [
+                'title' => 'Makro ciljevi iz TDEE-a',
+                'description' => 'Ciljeve izračunate izravno iz težine, aktivnosti i cilja klijenta. Bez nagađanja — i bez tipkanja četiri broja po klijentu.',
+            ],
+            'feedback' => [
+                'title' => 'Komentari uz svaki obrok',
+                'description' => 'Komentirajte pojedinačne unose obroka u trenutku kad nešto primijetite. Klijenti vide oznaku nepročitanih i odgovaraju izravno u unosu.',
+            ],
+            'attention_dashboard' => [
+                'title' => 'Nadzorna ploča pažnje',
+                'description' => 'Top 5 klijenata koji odustaju od plana — bez unosa 3 dana, izvan cilja, bez postavljenog cilja — pojavljuju se automatski. Trenirajte tamo gdje je važno.',
+            ],
         ],
     ],
 
@@ -129,7 +162,8 @@ return [
             'description' => 'Za rastuće trenerske tvrtke.',
             'features' => [
                 'Sve iz plana Basic',
-                'Planiranje prehrane',
+                'Prehrambeno savjetovanje i planovi obroka',
+                'Kalkulator makronutrijenata + 3M+ namirnica',
                 'Lojalnost i nagrade',
                 'Dopisivanje',
             ],
@@ -169,8 +203,12 @@ return [
                 'answer' => 'Basic je 10€/mjesečno za do 5 klijenata i uključuje 7-dnevno besplatno probno razdoblje. Advanced je 45€/mjesečno za do 30 klijenata i uključuje lojalnost i gamifikacijske značajke. Professional je 79€/mjesečno i dodaje prilagođeni brending teretane. Osnivački treneri dobivaju 70% popusta na prva 2 mjeseca s kodom FOUNDING70.',
             ],
             'nutrition' => [
-                'question' => 'Što je s praćenjem prehrane?',
-                'answer' => 'Potpuno planiranje obroka uključeno: kreirajte predloške, postavite makroe, klijenti bilježe putem fotografija. Pratite pridržavanje i dobivajte tjedna izvješća o prehrani.',
+                'question' => 'Pokriva li LiftDeck prehrambeno savjetovanje?',
+                'answer' => 'Da — u potpunosti. Sastavite dnevne planove obroka koje klijenti jednim dodirom označavaju kao pojedene, postavite makro ciljeve pomoću ugrađenog TDEE kalkulatora i komentirajte svaki unos obroka. Nadzorna ploča pažnje automatski ističe klijente koji odustaju od plana, pa znate gdje se trebate fokusirati.',
+            ],
+            'nutrition_food_database' => [
+                'question' => 'Može li klijent bilježiti namirnice koje nisu u mojoj biblioteci?',
+                'answer' => 'Da. Bilježenje uključuje pretragu proizvoda kroz Open Food Facts (3M+ pakiranih namirnica diljem svijeta), tako da klijent može pronaći gotovo bilo što. Treneri mogu dodati i prilagođene namirnice, a klijenti mogu kopirati jučer ili spremiti omiljene obroke za bilježenje jednim dodirom.',
             ],
             'branding' => [
                 'question' => 'Mogu li ga prilagoditi svom brendu?',

@@ -3,7 +3,7 @@
 return [
     'meta' => [
         'title' => 'LiftDeck — Coaching Software for Fitness Professionals',
-        'description' => 'LiftDeck gives fitness coaches a complete platform — programs, check-ins, nutrition, messaging and rewards — all in one place. Start your 7-day free trial.',
+        'description' => 'LiftDeck gives fitness coaches a complete platform — programs, check-ins, meal plans, macro tracking, messaging and rewards — all in one place. Start your 7-day free trial.',
     ],
 
     'nav' => [
@@ -86,8 +86,8 @@ return [
             'description' => 'Clients log workouts from their phone. You see every rep, set, and personal best in real time.',
         ],
         'nutrition' => [
-            'title' => 'Nutrition Plans',
-            'description' => 'Create meal plans and track macros. Keep nutrition and training aligned for every client.',
+            'title' => 'Nutrition Coaching',
+            'description' => 'Daily meal plans, 3M+ food database, macro targets and inline feedback — all built in.',
         ],
         'messaging' => [
             'title' => 'Messaging',
@@ -96,6 +96,39 @@ return [
         'rewards' => [
             'title' => 'Loyalty & Rewards',
             'description' => 'Motivate clients with points, achievements, and redeemable rewards tied to their progress.',
+        ],
+    ],
+
+    'nutrition_section' => [
+        'label' => 'Nutrition coaching',
+        'heading' => 'Nutrition coaching that scales',
+        'subheading' => 'Stop chasing macros in spreadsheets. Build meal plans, set targets and give feedback — all from the same place you run training.',
+        'back_to_features' => 'Back to all features',
+        'items' => [
+            'day_plans' => [
+                'title' => 'Per-client daily meal plans',
+                'description' => 'Build a day from your library, custom foods, or 3M+ products via Open Food Facts. Assign to a date — clients mark each meal as eaten with one tap.',
+            ],
+            'food_database' => [
+                'title' => '3M+ food database built in',
+                'description' => 'Open Food Facts integration lets clients log any packaged product by name or barcode — no library limits, no extra apps.',
+            ],
+            'smart_logging' => [
+                'title' => 'Smart logging',
+                'description' => 'Copy yesterday, favorite chips for frequent meals, and custom portion sizes (0.5×, 0.75×, 1×) — clients log in seconds, not minutes.',
+            ],
+            'macro_calculator' => [
+                'title' => 'TDEE-driven macro targets',
+                'description' => 'Compute targets straight from a client\'s weight, activity and goal. No more guessing — and no more typing four numbers per client.',
+            ],
+            'feedback' => [
+                'title' => 'Inline feedback on meals',
+                'description' => 'Comment on individual meal logs the moment you spot something. Clients see an unread badge and reply right inside the log.',
+            ],
+            'attention_dashboard' => [
+                'title' => 'Attention dashboard',
+                'description' => 'The top 5 clients drifting off plan — no log in 3 days, off target, no goal set — surface automatically. Coach where it matters.',
+            ],
         ],
     ],
 
@@ -129,7 +162,8 @@ return [
             'description' => 'For growing coaching businesses.',
             'features' => [
                 'Everything in Basic',
-                'Nutrition planning',
+                'Nutrition coaching & meal plans',
+                'Macro calculator + 3M+ food database',
                 'Loyalty & rewards',
                 'Messaging',
             ],
@@ -169,8 +203,12 @@ return [
                 'answer' => 'Basic is €10/month for up to 5 clients and includes a 7-day free trial. Advanced is €45/month for up to 30 clients and includes loyalty and gamification features. Professional is €79/month and adds custom gym branding. Founding coaches get 70% off their first 2 months with promo code FOUNDING70.',
             ],
             'nutrition' => [
-                'question' => 'What about nutrition tracking?',
-                'answer' => 'Full meal planning included: create templates, set macros, clients log via photos. Track adherence and get weekly nutrition reports.',
+                'question' => 'Does LiftDeck handle nutrition coaching?',
+                'answer' => 'Yes — fully. Build daily meal plans your clients can mark as eaten with one tap, set macro targets using the built-in TDEE calculator, and review every meal log with inline feedback. An attention dashboard flags clients who fall off track so you know exactly where to focus.',
+            ],
+            'nutrition_food_database' => [
+                'question' => 'Can my client log foods that aren\'t in my library?',
+                'answer' => 'Yes. The logger has built-in product search across Open Food Facts (3M+ packaged foods worldwide), so clients can scan or search any product. Coaches can also add custom foods, and clients can copy yesterday or favorite frequent meals for one-tap logging.',
             ],
             'branding' => [
                 'question' => 'Can I customize it for my brand?',

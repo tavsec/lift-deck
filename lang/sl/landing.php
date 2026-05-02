@@ -3,7 +3,7 @@
 return [
     'meta' => [
         'title' => 'LiftDeck — Platforma za fitnes trenerje',
-        'description' => 'LiftDeck daje fitnes trenerjem popolno platformo — programe, redne preglede, prehrano, sporočanje in nagrade — vse na enem mestu. Začnite s 7-dnevnim brezplačnim preizkusom.',
+        'description' => 'LiftDeck daje fitnes trenerjem popolno platformo — programe, redne preglede, jedilnike, sledenje makrohranilom, sporočanje in nagrade — vse na enem mestu. Začnite s 7-dnevnim brezplačnim preizkusom.',
     ],
 
     'nav' => [
@@ -86,8 +86,8 @@ return [
             'description' => 'Stranke beležijo treninge s telefona. Vidite vsak set in osebni rekord v realnem času.',
         ],
         'nutrition' => [
-            'title' => 'Prehranjevalni načrti',
-            'description' => 'Ustvarite jedilnike in sledite makrohranilom. Prehrana in trening sta usklajena za vsako stranko.',
+            'title' => 'Prehransko svetovanje',
+            'description' => 'Dnevni jedilniki, baza s 3M+ živili, makrocilji in sprotni komentarji — vse vgrajeno.',
         ],
         'messaging' => [
             'title' => 'Sporočanje',
@@ -96,6 +96,39 @@ return [
         'rewards' => [
             'title' => 'Zvestoba in nagrade',
             'description' => 'Motivirajte stranke s točkami, dosežki in unovčljivimi nagradami, ki so vezane na njihov napredek.',
+        ],
+    ],
+
+    'nutrition_section' => [
+        'label' => 'Prehransko svetovanje',
+        'heading' => 'Prehransko svetovanje, ki raste z vami',
+        'subheading' => 'Konec lova za makri po preglednicah. Sestavite jedilnike, nastavite cilje in dajte povratno informacijo — vse na istem mestu, kjer vodite trening.',
+        'back_to_features' => 'Nazaj na vse funkcije',
+        'items' => [
+            'day_plans' => [
+                'title' => 'Dnevni jedilniki za vsako stranko',
+                'description' => 'Sestavite dan iz svoje knjižnice, lastnih živil ali 3M+ izdelkov prek Open Food Facts. Dodelite ga datumu — stranke z enim klikom označijo, da so obrok pojedle.',
+            ],
+            'food_database' => [
+                'title' => 'Vgrajena baza 3M+ živil',
+                'description' => 'Integracija z Open Food Facts strankam omogoča beleženje katerega koli pakiranega izdelka po imenu ali črtni kodi — brez omejitev knjižnice in brez dodatnih aplikacij.',
+            ],
+            'smart_logging' => [
+                'title' => 'Pametno beleženje',
+                'description' => 'Kopiraj včeraj, priljubljene bližnjice za pogoste obroke in prilagojene velikosti porcij (0,5×, 0,75×, 1×) — beleženje v sekundah, ne minutah.',
+            ],
+            'macro_calculator' => [
+                'title' => 'Makrocilji iz TDEE',
+                'description' => 'Cilje izračunate neposredno iz teže, aktivnosti in cilja stranke. Brez ugibanja — in brez tipkanja štirih številk za vsako stranko.',
+            ],
+            'feedback' => [
+                'title' => 'Sprotni komentarji na obroke',
+                'description' => 'Komentirajte posamezne vnose obrokov takoj, ko nekaj opazite. Stranke vidijo oznako neprebranih sporočil in odgovorijo neposredno v vnosu.',
+            ],
+            'attention_dashboard' => [
+                'title' => 'Nadzorni panel pozornosti',
+                'description' => 'Top 5 strank, ki zaidejo z načrta — brez vnosa 3 dni, izven cilja, brez zastavljenega cilja — se pokaže samodejno. Trenirajte tam, kjer je najbolj pomembno.',
+            ],
         ],
     ],
 
@@ -129,7 +162,8 @@ return [
             'description' => 'Za rastoča trenerska podjetja.',
             'features' => [
                 'Vse iz paketa Basic',
-                'Načrtovanje prehrane',
+                'Prehransko svetovanje in jedilniki',
+                'Kalkulator makrohranil + 3M+ živil',
                 'Zvestoba in nagrade',
                 'Sporočanje',
             ],
@@ -169,8 +203,12 @@ return [
                 'answer' => 'Basic je 10€/mesečno za do 5 strank in vključuje 7-dnevno brezplačno preizkusno obdobje. Advanced je 45€/mesečno za do 30 strank in vključuje zvestobo in gamifikacijske funkcije. Professional je 79€/mesečno in doda prilagojeno blagovno znamko telovadnice. Ustanovni trenerji dobijo 70% popust na prva 2 meseca s kodo FOUNDING70.',
             ],
             'nutrition' => [
-                'question' => 'Kaj pa sledenje prehrani?',
-                'answer' => 'Vključeno je celotno načrtovanje obrokov: ustvarite predloge, nastavite makre, stranke beležijo prek fotografij. Sledite vzdržnosti in prejemajte tedenska poročila o prehrani.',
+                'question' => 'Ali LiftDeck pokriva prehransko svetovanje?',
+                'answer' => 'Da — v celoti. Sestavite dnevne jedilnike, ki jih stranke z enim klikom označijo kot pojedene, nastavite makrocilje z vgrajenim TDEE kalkulatorjem in komentirajte vsak vnos obroka. Nadzorni panel samodejno izpostavi stranke, ki zaidejo s poti, da veste, kje je vaša pomoč najbolj potrebna.',
+            ],
+            'nutrition_food_database' => [
+                'question' => 'Ali lahko stranka beleži živila, ki jih ni v moji knjižnici?',
+                'answer' => 'Da. Beleženje vključuje iskanje izdelkov v zbirki Open Food Facts (3M+ pakiranih živil po vsem svetu), tako da stranka najde tako rekoč karkoli. Trenerji lahko dodajo lastna živila, stranke pa lahko prekopirajo včerajšnji dan ali shranijo priljubljene obroke za beleženje z enim klikom.',
             ],
             'branding' => [
                 'question' => 'Ali ga lahko prilagodim svoji blagovni znamki?',

@@ -3,7 +3,9 @@
     $localeToUrl   = ['en' => 'en', 'sl' => 'si', 'hr' => 'hr'];
     $currentPath   = $localeToUrl[$currentLocale] ?? 'en';
 
-    $faqKeys = ['right_for_me', 'cost', 'nutrition', 'branding', 'app', 'get_started'];
+    $faqKeys = ['right_for_me', 'cost', 'nutrition', 'nutrition_food_database', 'branding', 'app', 'get_started'];
+
+    $nutritionHighlights = ['day_plans', 'food_database', 'smart_logging', 'macro_calculator', 'feedback', 'attention_dashboard'];
 
     $schema = [
         '@context' => 'https://schema.org',
@@ -408,6 +410,62 @@
                             <p class="text-sm text-white/80 leading-relaxed">{{ __('landing.features.' . $card['key'] . '.description') }}</p>
                         </div>
                     @endforeach
+                </div>
+            </div>
+        </section>
+
+        {{-- NUTRITION DEEP-DIVE --}}
+        @php
+            $nutritionIcons = [
+                'day_plans' => '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>',
+                'food_database' => '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>',
+                'smart_logging' => '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>',
+                'macro_calculator' => '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m-6 4h6m-6 4h4m1 5H5a2 2 0 01-2-2V5a2 2 0 012-2h7l5 5v11a2 2 0 01-2 2z"/>',
+                'feedback' => '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h6m-1 8a8 8 0 100-16 8 8 0 000 16z"/>',
+                'attention_dashboard' => '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01M5 19h14a2 2 0 001.84-2.75L13.74 4a2 2 0 00-3.48 0L3.16 16.25A2 2 0 005 19z"/>',
+            ];
+        @endphp
+        <section id="nutrition" class="py-20 px-6 bg-white border-t border-gray-100" aria-label="Nutrition coaching">
+            <div class="max-w-6xl mx-auto">
+                <div class="grid lg:grid-cols-12 gap-10 lg:gap-14 items-start">
+                    <div class="lg:col-span-5 lg:sticky lg:top-24">
+                        <div class="inline-flex items-center gap-2 bg-cyan-50 text-[#0891b2] rounded-full px-3.5 py-1 text-xs font-bold uppercase tracking-widest mb-5 border border-cyan-100">
+                            <span class="w-1.5 h-1.5 rounded-full bg-[#0891b2]" aria-hidden="true"></span>
+                            {{ __('landing.nutrition_section.label') }}
+                        </div>
+                        <h2 class="font-display text-3xl md:text-[38px] font-semibold text-[#181e25] leading-tight mb-5">
+                            {{ __('landing.nutrition_section.heading') }}
+                        </h2>
+                        <p class="text-[#45515e] leading-relaxed mb-6">
+                            {{ __('landing.nutrition_section.subheading') }}
+                        </p>
+                        {{-- TODO: screenshot of day-plan editor / coach nutrition view --}}
+                        <a href="#features" class="inline-flex items-center text-sm font-semibold text-[#1456f0] hover:text-blue-700 transition-colors">
+                            {{ __('landing.nutrition_section.back_to_features') }} ↑
+                        </a>
+                    </div>
+
+                    <div class="lg:col-span-7">
+                        <ul class="grid sm:grid-cols-2 gap-4">
+                            @foreach($nutritionHighlights as $key)
+                                <li class="rounded-2xl bg-gray-50 border border-gray-100 p-5 flex flex-col gap-3 hover:border-cyan-200 hover:bg-white transition-colors">
+                                    <div class="w-9 h-9 rounded-lg bg-gradient-to-br from-[#0891b2] to-[#06b6d4] flex items-center justify-center" aria-hidden="true">
+                                        <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            {!! $nutritionIcons[$key] !!}
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <h3 class="font-display text-sm font-semibold text-[#181e25] mb-1.5">
+                                            {{ __('landing.nutrition_section.items.' . $key . '.title') }}
+                                        </h3>
+                                        <p class="text-sm text-[#45515e] leading-relaxed">
+                                            {{ __('landing.nutrition_section.items.' . $key . '.description') }}
+                                        </p>
+                                    </div>
+                                </li>
+                            @endforeach
+                        </ul>
+                    </div>
                 </div>
             </div>
         </section>
