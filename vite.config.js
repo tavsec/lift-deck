@@ -3,6 +3,16 @@ import laravel from 'laravel-vite-plugin';
 import { VitePWA } from 'vite-plugin-pwa';
 
 export default defineConfig({
+    server: {
+        watch: {
+            ignored: [
+                '**/.claude/worktrees/**',
+                '**/vendor/**',
+                '**/node_modules/**',
+                '**/storage/**',
+            ],
+        },
+    },
     plugins: [
         laravel({
             input: ['resources/css/app.css', 'resources/js/app.js'],
