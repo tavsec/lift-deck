@@ -3,7 +3,9 @@
 namespace App\Http\Requests;
 
 use App\Models\Meal;
+use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StoreDayPlanRequest extends FormRequest
 {
@@ -17,22 +19,29 @@ class StoreDayPlanRequest extends FormRequest
             return false;
         }
 
-        $mealIds = collect($this->input('items', []))
+        /** @var User|null $client */
+        $client = $this->route('client');
+        if (! $client instanceof User || $client->coach_id !== $user->id) {
+            return false;
+        }
+
+        $libraryMealIds = collect($this->input('items', []))
+            ->filter(fn ($item): bool => is_array($item) && ($item['source'] ?? null) === 'library')
             ->pluck('meal_id')
             ->filter()
             ->unique()
             ->values();
 
-        if ($mealIds->isEmpty()) {
+        if ($libraryMealIds->isEmpty()) {
             return true;
         }
 
         $owned = Meal::query()
-            ->whereIn('id', $mealIds)
+            ->whereIn('id', $libraryMealIds)
             ->where('coach_id', $user->id)
             ->count();
 
-        return $owned === $mealIds->count();
+        return $owned === $libraryMealIds->count();
     }
 
     /**
@@ -46,8 +55,16 @@ class StoreDayPlanRequest extends FormRequest
             'name' => ['required', 'string', 'max:255'],
             'description' => ['nullable', 'string'],
             'items' => ['nullable', 'array'],
-            'items.*.meal_id' => ['required', 'integer', 'exists:meals,id'],
+            'items.*.source' => ['required', Rule::in(['library', 'custom', 'off', 'macros'])],
             'items.*.meal_type' => ['required', 'string', 'max:50'],
+            'items.*.name' => ['required', 'string', 'max:255'],
+            'items.*.calories' => ['required', 'integer', 'min:0'],
+            'items.*.protein' => ['required', 'numeric', 'min:0'],
+            'items.*.carbs' => ['required', 'numeric', 'min:0'],
+            'items.*.fat' => ['required', 'numeric', 'min:0'],
+            'items.*.meal_id' => ['nullable', 'required_if:items.*.source,library', 'integer', 'exists:meals,id'],
+            'items.*.off_code' => ['nullable', 'required_if:items.*.source,off', 'string', 'max:64'],
+            'items.*.portion_grams' => ['nullable', 'integer', 'min:1', 'max:5000'],
             'items.*.sort_order' => ['nullable', 'integer', 'min:0'],
         ];
     }

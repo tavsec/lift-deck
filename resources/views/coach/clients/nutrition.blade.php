@@ -211,6 +211,62 @@
                 </div>
                 @endif
 
+                <!-- Plans for this client -->
+                <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 shadow-card p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <div>
+                            <h2 class="font-display text-base font-semibold text-[#222222] dark:text-gray-100">{{ __('coach.clients.nutrition.plans.heading') }}</h2>
+                            <p class="text-xs text-[#8e8e93] dark:text-gray-500 mt-0.5">{{ __('coach.clients.nutrition.plans.subtitle') }}</p>
+                        </div>
+                        <a href="{{ route('coach.clients.day-plans.create', $client) }}"
+                            class="inline-flex items-center px-3 py-1.5 bg-[#181e25] dark:bg-gray-700 text-white text-xs font-semibold rounded-lg hover:bg-gray-800 transition-colors">
+                            <svg class="w-3.5 h-3.5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+                            </svg>
+                            {{ __('coach.clients.nutrition.plans.add_plan') }}
+                        </a>
+                    </div>
+
+                    @if($clientDayPlans->isEmpty())
+                        <p class="text-sm text-[#8e8e93] dark:text-gray-500">{{ __('coach.clients.nutrition.plans.no_plans') }}</p>
+                    @else
+                        <div class="space-y-2">
+                            @foreach($clientDayPlans as $plan)
+                                @php
+                                    $kcal = (int) $plan->items->sum('calories');
+                                @endphp
+                                <div class="flex items-center justify-between p-3 rounded-lg bg-gray-50 dark:bg-gray-950 border border-gray-100 dark:border-gray-800">
+                                    <div class="min-w-0 flex-1">
+                                        <p class="text-sm font-medium text-[#222222] dark:text-gray-100 truncate">{{ $plan->name }}</p>
+                                        <p class="text-xs text-[#8e8e93] dark:text-gray-500 mt-0.5">
+                                            {{ trans_choice('coach.clients.nutrition.plans.item_count', $plan->items_count, ['count' => $plan->items_count]) }}
+                                            &middot; {{ $kcal }} kcal
+                                        </p>
+                                    </div>
+                                    <div class="flex items-center gap-1 flex-shrink-0 ml-3">
+                                        <a href="{{ route('coach.clients.day-plans.edit', [$client, $plan]) }}"
+                                            class="p-1.5 text-[#8e8e93] dark:text-gray-500 hover:text-[#1456f0] transition-colors" aria-label="{{ __('coach.clients.nutrition.plans.edit') }}">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+                                            </svg>
+                                        </a>
+                                        <form method="POST" action="{{ route('coach.clients.day-plans.destroy', [$client, $plan]) }}"
+                                            onsubmit="return confirm('{{ __('coach.clients.nutrition.plans.archive_confirm') }}');">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="p-1.5 text-[#8e8e93] dark:text-gray-500 hover:text-red-500 transition-colors" aria-label="{{ __('coach.clients.nutrition.plans.archive') }}">
+                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6M1 7h22"/>
+                                                </svg>
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                    @endif
+                </div>
+
                 <!-- Day Plan Assignment -->
                 <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 shadow-card p-6">
                     <h2 class="font-display text-base font-semibold text-[#222222] dark:text-gray-100 mb-4">{{ __('coach.day_plans.assignments.heading') }}</h2>
@@ -218,7 +274,7 @@
                     @if($availableDayPlans->isEmpty())
                         <p class="text-sm text-[#8e8e93] dark:text-gray-500">
                             {{ __('coach.day_plans.assignments.no_plans_yet') }}
-                            <a href="{{ route('coach.day-plans.create') }}" class="text-[#1456f0] hover:underline">{{ __('coach.day_plans.assignments.create_link') }}</a>
+                            <a href="{{ route('coach.clients.day-plans.create', $client) }}" class="text-[#1456f0] hover:underline">{{ __('coach.day_plans.assignments.create_link') }}</a>
                         </p>
                     @else
                         <form method="POST" action="{{ route('coach.clients.day-assignments.store', $client) }}" class="space-y-4">

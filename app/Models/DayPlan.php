@@ -16,6 +16,7 @@ class DayPlan extends Model
 
     protected $fillable = [
         'coach_id',
+        'client_id',
         'name',
         'description',
         'is_active',
@@ -31,6 +32,11 @@ class DayPlan extends Model
     public function coach(): BelongsTo
     {
         return $this->belongsTo(User::class, 'coach_id');
+    }
+
+    public function client(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'client_id');
     }
 
     public function items(): HasMany
@@ -51,36 +57,36 @@ class DayPlan extends Model
     protected function totalCalories(): Attribute
     {
         return Attribute::get(function (): int {
-            $this->loadMissing('items.meal');
+            $this->loadMissing('items');
 
-            return (int) $this->items->sum(fn (DayPlanItem $item): int => (int) ($item->meal->calories ?? 0));
+            return (int) $this->items->sum(fn (DayPlanItem $item): int => (int) $item->calories);
         });
     }
 
     protected function totalProtein(): Attribute
     {
         return Attribute::get(function (): float {
-            $this->loadMissing('items.meal');
+            $this->loadMissing('items');
 
-            return (float) $this->items->sum(fn (DayPlanItem $item): float => (float) ($item->meal->protein ?? 0));
+            return (float) $this->items->sum(fn (DayPlanItem $item): float => (float) $item->protein);
         });
     }
 
     protected function totalCarbs(): Attribute
     {
         return Attribute::get(function (): float {
-            $this->loadMissing('items.meal');
+            $this->loadMissing('items');
 
-            return (float) $this->items->sum(fn (DayPlanItem $item): float => (float) ($item->meal->carbs ?? 0));
+            return (float) $this->items->sum(fn (DayPlanItem $item): float => (float) $item->carbs);
         });
     }
 
     protected function totalFat(): Attribute
     {
         return Attribute::get(function (): float {
-            $this->loadMissing('items.meal');
+            $this->loadMissing('items');
 
-            return (float) $this->items->sum(fn (DayPlanItem $item): float => (float) ($item->meal->fat ?? 0));
+            return (float) $this->items->sum(fn (DayPlanItem $item): float => (float) $item->fat);
         });
     }
 }

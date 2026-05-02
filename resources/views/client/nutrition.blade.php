@@ -60,13 +60,8 @@
 
         @if($assignment && $assignedItems->isNotEmpty())
             @php
-                $mealTypeOrder = ['Breakfast', 'Lunch', 'Dinner', 'Snack'];
-                $mealTypeLabels = [
-                    'Breakfast' => __('client.nutrition.assigned_plan.meal_types.breakfast'),
-                    'Lunch' => __('client.nutrition.assigned_plan.meal_types.lunch'),
-                    'Dinner' => __('client.nutrition.assigned_plan.meal_types.dinner'),
-                    'Snack' => __('client.nutrition.assigned_plan.meal_types.snack'),
-                ];
+                // Order sections by FIRST-SEEN of each item's meal_type, preserving sort_order within each section.
+                $orderedSectionLabels = $assignedItems->map(fn ($i) => $i['item']->meal_type)->unique()->values();
                 $groupedAssignedItems = $assignedItems->groupBy(fn ($i) => $i['item']->meal_type);
                 $totalAssigned = $assignedItems->count();
                 $completedAssigned = $assignedItems->filter(fn ($i) => $i['completed'])->count();
@@ -81,26 +76,25 @@
                 </div>
 
                 <div class="space-y-4">
-                    @foreach($mealTypeOrder as $type)
-                        @php $group = $groupedAssignedItems->get($type, collect()); @endphp
+                    @foreach($orderedSectionLabels as $sectionLabel)
+                        @php $group = $groupedAssignedItems->get($sectionLabel, collect()); @endphp
                         @if($group->isNotEmpty())
                             <div>
-                                <h3 class="text-xs font-semibold uppercase tracking-wider text-[#8e8e93] dark:text-gray-500 mb-2">{{ $mealTypeLabels[$type] }}</h3>
+                                <h3 class="text-xs font-semibold uppercase tracking-wider text-[#8e8e93] dark:text-gray-500 mb-2">{{ $sectionLabel }}</h3>
                                 <div class="space-y-2">
                                     @foreach($group as $entry)
                                         @php
                                             $item = $entry['item'];
-                                            $meal = $item->meal;
                                             $completed = $entry['completed'];
                                         @endphp
                                         <div class="flex items-center justify-between p-3 rounded-lg border {{ $completed ? 'border-green-200 dark:border-green-900 bg-green-50 dark:bg-green-900/20' : 'border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-950' }}">
                                             <div class="flex-1 min-w-0">
-                                                <p class="text-sm font-medium text-[#222222] dark:text-gray-100 truncate">{{ $meal->name }}</p>
+                                                <p class="text-sm font-medium text-[#222222] dark:text-gray-100 truncate">{{ $item->name }}</p>
                                                 <p class="text-xs text-[#8e8e93] dark:text-gray-500 mt-0.5">
-                                                    {{ $meal->calories }} kcal &middot;
-                                                    P {{ $meal->protein }}g &middot;
-                                                    C {{ $meal->carbs }}g &middot;
-                                                    F {{ $meal->fat }}g
+                                                    {{ (int) $item->calories }} kcal &middot;
+                                                    P {{ $item->protein }}g &middot;
+                                                    C {{ $item->carbs }}g &middot;
+                                                    F {{ $item->fat }}g
                                                 </p>
                                             </div>
                                             @if($completed)
@@ -114,14 +108,16 @@
                                                 <form method="POST" action="{{ route('client.nutrition.store') }}" class="ml-3">
                                                     @csrf
                                                     <input type="hidden" name="date" value="{{ $date }}">
-                                                    <input type="hidden" name="meal_id" value="{{ $meal->id }}">
+                                                    @if($item->meal_id)
+                                                        <input type="hidden" name="meal_id" value="{{ $item->meal_id }}">
+                                                    @endif
                                                     <input type="hidden" name="day_plan_item_id" value="{{ $item->id }}">
                                                     <input type="hidden" name="meal_type" value="{{ $item->meal_type }}">
-                                                    <input type="hidden" name="name" value="{{ $meal->name }}">
-                                                    <input type="hidden" name="calories" value="{{ (int) $meal->calories }}">
-                                                    <input type="hidden" name="protein" value="{{ $meal->protein }}">
-                                                    <input type="hidden" name="carbs" value="{{ $meal->carbs }}">
-                                                    <input type="hidden" name="fat" value="{{ $meal->fat }}">
+                                                    <input type="hidden" name="name" value="{{ $item->name }}">
+                                                    <input type="hidden" name="calories" value="{{ (int) $item->calories }}">
+                                                    <input type="hidden" name="protein" value="{{ $item->protein }}">
+                                                    <input type="hidden" name="carbs" value="{{ $item->carbs }}">
+                                                    <input type="hidden" name="fat" value="{{ $item->fat }}">
                                                     <button type="submit" class="inline-flex items-center px-3 py-1.5 text-xs font-semibold text-white rounded-lg transition-colors" style="background-color: var(--color-primary)">
                                                         <svg class="w-3.5 h-3.5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>

@@ -65,7 +65,7 @@ class NutritionController extends Controller
         $assignment = ClientDayAssignment::query()
             ->where('client_id', $user->id)
             ->whereDate('date', $date)
-            ->with(['dayPlan.items.meal'])
+            ->with(['dayPlan.items'])
             ->first();
 
         $assignedItems = $this->buildAssignedItems($assignment, $user->id, $date);

@@ -93,13 +93,13 @@ Route::middleware(['auth', 'verified', 'role:coach', 'subscribed'])
         Route::resource('exercises', Coach\ExerciseController::class);
         Route::resource('meals', Coach\MealController::class)->except(['show']);
 
-        // Day Plans
-        Route::get('day-plans', [Coach\DayPlanController::class, 'index'])->name('day-plans.index');
-        Route::get('day-plans/create', [Coach\DayPlanController::class, 'create'])->name('day-plans.create');
-        Route::post('day-plans', [Coach\DayPlanController::class, 'store'])->name('day-plans.store');
-        Route::get('day-plans/{dayPlan}/edit', [Coach\DayPlanController::class, 'edit'])->name('day-plans.edit');
-        Route::put('day-plans/{dayPlan}', [Coach\DayPlanController::class, 'update'])->name('day-plans.update');
-        Route::delete('day-plans/{dayPlan}', [Coach\DayPlanController::class, 'destroy'])->name('day-plans.destroy');
+        // Day Plans (per-client; OFF food search lives at the flat coach scope)
+        Route::get('day-plans/food-search', [Coach\DayPlanController::class, 'foodSearch'])->name('day-plans.food-search');
+        Route::get('clients/{client}/day-plans/create', [Coach\DayPlanController::class, 'create'])->name('clients.day-plans.create');
+        Route::post('clients/{client}/day-plans', [Coach\DayPlanController::class, 'store'])->name('clients.day-plans.store');
+        Route::get('clients/{client}/day-plans/{dayPlan}/edit', [Coach\DayPlanController::class, 'edit'])->name('clients.day-plans.edit');
+        Route::put('clients/{client}/day-plans/{dayPlan}', [Coach\DayPlanController::class, 'update'])->name('clients.day-plans.update');
+        Route::delete('clients/{client}/day-plans/{dayPlan}', [Coach\DayPlanController::class, 'destroy'])->name('clients.day-plans.destroy');
 
         // Client Day Plan Assignments
         Route::post('clients/{client}/day-assignments', [Coach\ClientDayAssignmentController::class, 'store'])->name('clients.day-assignments.store');

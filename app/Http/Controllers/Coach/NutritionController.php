@@ -65,7 +65,14 @@ class NutritionController extends Controller
             ];
         }
 
-        $availableDayPlans = auth()->user()->dayPlans()
+        $clientDayPlans = $client->assignedDayPlans()
+            ->where('is_active', true)
+            ->withCount('items')
+            ->with('items:id,day_plan_id,calories,protein,carbs,fat')
+            ->orderBy('name')
+            ->get();
+
+        $availableDayPlans = $client->assignedDayPlans()
             ->active()
             ->orderBy('name')
             ->get(['id', 'name']);
@@ -86,6 +93,7 @@ class NutritionController extends Controller
             'range',
             'from',
             'to',
+            'clientDayPlans',
             'availableDayPlans',
             'upcomingAssignments',
         ));

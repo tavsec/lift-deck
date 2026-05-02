@@ -14,9 +14,28 @@ class DayPlanItem extends Model
     protected $fillable = [
         'day_plan_id',
         'meal_id',
+        'off_code',
         'meal_type',
+        'name',
+        'calories',
+        'protein',
+        'carbs',
+        'fat',
+        'portion_grams',
         'sort_order',
     ];
+
+    protected function casts(): array
+    {
+        return [
+            'calories' => 'integer',
+            'protein' => 'decimal:1',
+            'carbs' => 'decimal:1',
+            'fat' => 'decimal:1',
+            'portion_grams' => 'integer',
+            'sort_order' => 'integer',
+        ];
+    }
 
     public function dayPlan(): BelongsTo
     {
