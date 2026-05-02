@@ -665,7 +665,7 @@
 
                             <div class="mb-3">
                                 <label class="block text-sm font-medium text-[#222222] dark:text-gray-100 mb-2">{{ __('client.nutrition.food_search.portion_label') }}</label>
-                                <input type="number" min="1" max="2000" step="5" x-model.number="foodPortion"
+                                <input type="number" min="1" max="2000" step="1" x-model.number="foodPortion"
                                     class="w-full rounded-lg border-gray-200 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-[#1456f0] focus:ring-[#1456f0] text-sm">
                                 <p class="mt-2 text-xs text-[#8e8e93] dark:text-gray-500">
                                     <span x-text="foodScaledCalories"></span> kcal &middot;
