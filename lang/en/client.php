@@ -144,6 +144,16 @@ return [
         'adherence' => 'Adherence',
         'calories' => 'Calories',
         'macros' => 'Macros',
+        'quick_log' => [
+            'copy_yesterday' => "Copy yesterday's meals",
+            'copied' => 'Copied :count meal(s) from yesterday.',
+            'nothing_to_copy' => 'No meals from yesterday to copy.',
+            'favorites_heading' => 'Quick log',
+            'favorites_subtitle' => 'Tap a favorite to log it again',
+            'favorites_save' => 'Log meal',
+            'favorites_cancel' => 'Cancel',
+            'portion' => 'Portion',
+        ],
     ],
 
     'log' => [

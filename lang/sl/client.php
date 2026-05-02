@@ -144,6 +144,16 @@ return [
         'adherence' => 'Doslednost',
         'calories' => 'Kalorije',
         'macros' => 'Makrohranila',
+        'quick_log' => [
+            'copy_yesterday' => 'Kopiraj včerajšnje obroke',
+            'copied' => 'Kopiranih :count obrokov od včeraj.',
+            'nothing_to_copy' => 'Ni obrokov od včeraj za kopiranje.',
+            'favorites_heading' => 'Hitri vnos',
+            'favorites_subtitle' => 'Tapnite priljubljen obrok za ponovni vnos',
+            'favorites_save' => 'Zabeleži obrok',
+            'favorites_cancel' => 'Prekliči',
+            'portion' => 'Porcija',
+        ],
     ],
 
     'log' => [

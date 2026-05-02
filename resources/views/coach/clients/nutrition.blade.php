@@ -32,8 +32,93 @@
             <!-- Left: Set Goals -->
             <div class="lg:col-span-1 space-y-6">
                 <!-- Set Macro Goal Form -->
-                <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 shadow-card p-6">
-                    <h2 class="font-display text-base font-semibold text-[#222222] dark:text-gray-100 mb-4">{{ __('coach.clients.nutrition.set_macro_goal') }}</h2>
+                <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 shadow-card p-6"
+                    x-data="macroCalculator()">
+                    <div class="flex items-center justify-between mb-4">
+                        <h2 class="font-display text-base font-semibold text-[#222222] dark:text-gray-100">{{ __('coach.clients.nutrition.set_macro_goal') }}</h2>
+                        <button @click="open = !open" type="button" class="inline-flex items-center px-3 py-1.5 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg text-xs font-semibold text-[#45515e] dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                            <svg class="w-3.5 h-3.5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m-6 4h6m-6 4h6M5 5a2 2 0 012-2h10a2 2 0 012 2v14a2 2 0 01-2 2H7a2 2 0 01-2-2V5z"/>
+                            </svg>
+                            <span x-text="open ? '{{ __('coach.clients.nutrition.calculator.hide') }}' : '{{ __('coach.clients.nutrition.calculator.button') }}'"></span>
+                        </button>
+                    </div>
+
+                    <div x-show="open" x-cloak x-transition class="mb-4 border border-gray-200 dark:border-gray-800 rounded-xl p-4 bg-gray-50 dark:bg-gray-950">
+                        <p class="text-xs text-[#8e8e93] dark:text-gray-400 mb-3">{{ __('coach.clients.nutrition.calculator.description') }}</p>
+
+                        <div class="grid grid-cols-3 gap-3">
+                            <div>
+                                <label class="block text-xs font-medium text-[#45515e] dark:text-gray-300 mb-1">{{ __('coach.clients.nutrition.calculator.weight') }}</label>
+                                <input type="number" x-model.number="weight" step="0.1" min="30" max="250"
+                                    class="w-full border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-[#222222] dark:text-gray-100 rounded-lg px-2.5 py-2 text-sm focus:outline-none focus:border-[#1456f0] focus:ring-2 focus:ring-[#1456f0]/20 transition-colors duration-150">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-medium text-[#45515e] dark:text-gray-300 mb-1">{{ __('coach.clients.nutrition.calculator.height') }}</label>
+                                <input type="number" x-model.number="height" step="1" min="100" max="230"
+                                    class="w-full border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-[#222222] dark:text-gray-100 rounded-lg px-2.5 py-2 text-sm focus:outline-none focus:border-[#1456f0] focus:ring-2 focus:ring-[#1456f0]/20 transition-colors duration-150">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-medium text-[#45515e] dark:text-gray-300 mb-1">{{ __('coach.clients.nutrition.calculator.age') }}</label>
+                                <input type="number" x-model.number="age" step="1" min="14" max="100"
+                                    class="w-full border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-[#222222] dark:text-gray-100 rounded-lg px-2.5 py-2 text-sm focus:outline-none focus:border-[#1456f0] focus:ring-2 focus:ring-[#1456f0]/20 transition-colors duration-150">
+                            </div>
+                        </div>
+
+                        <div class="mt-3">
+                            <label class="block text-xs font-medium text-[#45515e] dark:text-gray-300 mb-1.5">{{ __('coach.clients.nutrition.calculator.sex') }}</label>
+                            <div class="flex items-center gap-4">
+                                <label class="inline-flex items-center text-sm text-[#45515e] dark:text-gray-300">
+                                    <input type="radio" x-model="sex" value="male" class="mr-1.5 text-[#1456f0] focus:ring-[#1456f0]/20">
+                                    {{ __('coach.clients.nutrition.calculator.male') }}
+                                </label>
+                                <label class="inline-flex items-center text-sm text-[#45515e] dark:text-gray-300">
+                                    <input type="radio" x-model="sex" value="female" class="mr-1.5 text-[#1456f0] focus:ring-[#1456f0]/20">
+                                    {{ __('coach.clients.nutrition.calculator.female') }}
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 gap-3 mt-3">
+                            <div>
+                                <label class="block text-xs font-medium text-[#45515e] dark:text-gray-300 mb-1">{{ __('coach.clients.nutrition.calculator.activity') }}</label>
+                                <select x-model.number="activity" class="w-full border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-[#222222] dark:text-gray-100 rounded-lg px-2.5 py-2 text-sm focus:outline-none focus:border-[#1456f0] focus:ring-2 focus:ring-[#1456f0]/20 transition-colors duration-150">
+                                    <option value="1.2">{{ __('coach.clients.nutrition.calculator.activity_sedentary') }}</option>
+                                    <option value="1.375">{{ __('coach.clients.nutrition.calculator.activity_light') }}</option>
+                                    <option value="1.55">{{ __('coach.clients.nutrition.calculator.activity_moderate') }}</option>
+                                    <option value="1.725">{{ __('coach.clients.nutrition.calculator.activity_active') }}</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-medium text-[#45515e] dark:text-gray-300 mb-1">{{ __('coach.clients.nutrition.calculator.goal') }}</label>
+                                <select x-model.number="goal" class="w-full border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-[#222222] dark:text-gray-100 rounded-lg px-2.5 py-2 text-sm focus:outline-none focus:border-[#1456f0] focus:ring-2 focus:ring-[#1456f0]/20 transition-colors duration-150">
+                                    <option value="-500">{{ __('coach.clients.nutrition.calculator.goal_lose_05') }}</option>
+                                    <option value="-250">{{ __('coach.clients.nutrition.calculator.goal_lose_025') }}</option>
+                                    <option value="0">{{ __('coach.clients.nutrition.calculator.goal_maintain') }}</option>
+                                    <option value="250">{{ __('coach.clients.nutrition.calculator.goal_gain_025') }}</option>
+                                    <option value="500">{{ __('coach.clients.nutrition.calculator.goal_gain_05') }}</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <template x-if="!isValid()">
+                            <p class="mt-3 text-xs text-amber-600 dark:text-amber-400">{{ __('coach.clients.nutrition.calculator.fill_all') }}</p>
+                        </template>
+
+                        <div class="mt-4 flex items-center justify-end gap-2">
+                            <button type="button" @click="open = false" class="inline-flex items-center px-3 py-1.5 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg text-xs font-semibold text-[#45515e] dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                                {{ __('coach.clients.nutrition.calculator.cancel') }}
+                            </button>
+                            <button type="button" @click="apply()" :disabled="!isValid()" :class="isValid() ? 'bg-[#181e25] dark:bg-gray-700 hover:bg-gray-800' : 'bg-gray-300 dark:bg-gray-700 cursor-not-allowed opacity-60'" class="inline-flex items-center px-3 py-1.5 text-white text-xs font-semibold rounded-lg transition-colors">
+                                {{ __('coach.clients.nutrition.calculator.apply') }}
+                            </button>
+                        </div>
+                    </div>
+
+                    <template x-if="summary">
+                        <p class="mb-3 text-xs text-[#45515e] dark:text-gray-300 bg-blue-50 dark:bg-blue-900/20 border border-blue-100 dark:border-blue-900 rounded-lg px-3 py-2" x-text="summary"></p>
+                    </template>
+
                     <form method="POST" action="{{ route('coach.clients.macro-goals.store', $client) }}" class="space-y-4">
                         @csrf
 
@@ -314,4 +399,49 @@
             </div>
         </div>
     </div>
+
+    @push('scripts')
+        <script>
+            function macroCalculator() {
+                return {
+                    open: false,
+                    weight: null,
+                    height: null,
+                    age: null,
+                    sex: 'male',
+                    activity: 1.55,
+                    goal: 0,
+                    summary: '',
+                    isValid() {
+                        return Number.isFinite(this.weight) && this.weight >= 30 && this.weight <= 250
+                            && Number.isFinite(this.height) && this.height >= 100 && this.height <= 230
+                            && Number.isFinite(this.age) && this.age >= 14 && this.age <= 100
+                            && (this.sex === 'male' || this.sex === 'female')
+                            && Number.isFinite(this.activity) && Number.isFinite(this.goal);
+                    },
+                    apply() {
+                        if (!this.isValid()) {
+                            return;
+                        }
+                        const bmr = this.sex === 'male'
+                            ? 10 * this.weight + 6.25 * this.height - 5 * this.age + 5
+                            : 10 * this.weight + 6.25 * this.height - 5 * this.age - 161;
+                        const tdee = bmr * this.activity;
+                        const calories = Math.round((tdee + this.goal) / 50) * 50;
+                        const protein = Math.round(this.weight * 1.8);
+                        const fat = Math.round(this.weight * 0.8);
+                        const carbs = Math.round(Math.max(0, (calories - protein * 4 - fat * 9) / 4));
+
+                        document.querySelector('input[name="calories"]#calories').value = calories;
+                        document.querySelector('input[name="protein"]#protein').value = protein;
+                        document.querySelector('input[name="carbs"]#carbs').value = carbs;
+                        document.querySelector('input[name="fat"]#fat').value = fat;
+
+                        this.summary = `{{ __('coach.clients.nutrition.calculator.summary_prefix') }} ${calories} kcal • ${protein} P • ${carbs} C • ${fat} F (Mifflin-St Jeor)`;
+                        this.open = false;
+                    },
+                };
+            }
+        </script>
+    @endpush
 </x-layouts.coach>

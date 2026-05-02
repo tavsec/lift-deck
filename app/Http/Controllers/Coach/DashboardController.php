@@ -7,6 +7,8 @@ use App\Models\User;
 use App\Models\WorkoutLog;
 use App\Models\WorkoutLogComment;
 use App\Services\SubscriptionService;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Collection;
 use Illuminate\View\View;
 
 class DashboardController extends Controller
@@ -95,6 +97,76 @@ class DashboardController extends Controller
 
         $onboardingChecklist = $this->buildOnboardingChecklist($user);
 
-        return view('coach.dashboard', compact('stats', 'recentWorkoutLogs', 'recentComments', 'onboardingChecklist'));
+        $needsAttention = $this->clientsNeedingAttention($user);
+
+        return view('coach.dashboard', compact('stats', 'recentWorkoutLogs', 'recentComments', 'onboardingChecklist', 'needsAttention'));
+    }
+
+    /**
+     * Build a list of clients who may need a check-in, with the FIRST matching
+     * flag in priority order: inactive -> off_target -> no_goal. Limited to 5.
+     *
+     * @return Collection<int, array{client: User, flag: string}>
+     */
+    private function clientsNeedingAttention(User $coach): Collection
+    {
+        $today = Carbon::today();
+        $threeDayWindowStart = $today->copy()->subDays(2)->startOfDay();
+        $fourteenDayWindowStart = $today->copy()->subDays(13)->startOfDay();
+
+        $clients = $coach->clients()
+            ->with([
+                'macroGoals' => function ($query) use ($today): void {
+                    $query->whereDate('effective_date', '<=', $today)
+                        ->orderByDesc('effective_date');
+                },
+                'mealLogs' => function ($query) use ($fourteenDayWindowStart): void {
+                    $query->whereDate('date', '>=', $fourteenDayWindowStart)
+                        ->orderByDesc('date');
+                },
+            ])
+            ->latest('id')
+            ->get();
+
+        $flagged = $clients->map(function (User $client) use ($threeDayWindowStart): ?array {
+            $activeGoal = $client->macroGoals->first();
+
+            $logsLast3Days = $client->mealLogs->filter(
+                fn ($log) => $log->date->greaterThanOrEqualTo($threeDayWindowStart)
+            );
+
+            // Priority 1: inactive (no logs in last 3 days, but has an active goal).
+            if ($activeGoal !== null && $logsLast3Days->isEmpty()) {
+                return ['client' => $client, 'flag' => 'inactive'];
+            }
+
+            // Priority 2: off_target (has logs and active goal, avg daily calories far from target).
+            if ($activeGoal !== null && $logsLast3Days->isNotEmpty() && $activeGoal->calories > 0) {
+                $totalsByDay = $logsLast3Days
+                    ->groupBy(fn ($log) => $log->date->toDateString())
+                    ->map(fn (Collection $dayLogs) => (int) $dayLogs->sum('calories'));
+
+                $avg = $totalsByDay->avg();
+                $ratio = $avg / (int) $activeGoal->calories;
+
+                if ($ratio < 0.7 || $ratio > 1.3) {
+                    return ['client' => $client, 'flag' => 'off_target'];
+                }
+            }
+
+            // Priority 3: no_goal (logged in last 14 days but no active goal).
+            if ($activeGoal === null && $client->mealLogs->isNotEmpty()) {
+                return ['client' => $client, 'flag' => 'no_goal'];
+            }
+
+            return null;
+        })->filter();
+
+        $priority = ['inactive' => 0, 'off_target' => 1, 'no_goal' => 2];
+
+        return $flagged
+            ->sortBy(fn (array $row) => $priority[$row['flag']])
+            ->values()
+            ->take(5);
     }
 }

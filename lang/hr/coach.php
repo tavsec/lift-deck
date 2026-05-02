@@ -40,6 +40,15 @@ return [
         'recent_comments' => 'Nedavni komentari',
         'on' => 'na',
         'no_comments' => 'Još nema komentara',
+        'needs_attention' => [
+            'heading' => 'Potrebna pažnja',
+            'subtitle' => 'Ovi klijenti možda trebaju javljanje',
+            'flags' => [
+                'inactive' => 'Bez unosa 3 dana',
+                'off_target' => 'Izvan cilja zadnja 3 dana',
+                'no_goal' => 'Postavi makro cilj',
+            ],
+        ],
     ],
 
     'clients' => [
@@ -270,6 +279,32 @@ return [
             'no_meals' => 'Nema zabilježenih obroka',
             'remove_confirm' => 'Ukloniti ovaj obrok?',
             'remove' => 'Ukloni',
+            'calculator' => [
+                'button' => 'Izračunaj iz profila',
+                'hide' => 'Sakrij kalkulator',
+                'description' => 'Procijenite kalorije i makronutrijente pomoću Mifflin-St Jeor formule. Vrijednosti će se upisati u obrazac ispod.',
+                'weight' => 'Težina (kg)',
+                'height' => 'Visina (cm)',
+                'age' => 'Dob',
+                'sex' => 'Spol',
+                'male' => 'Muški',
+                'female' => 'Ženski',
+                'activity' => 'Razina aktivnosti',
+                'activity_sedentary' => 'Sjedilački (1.2)',
+                'activity_light' => 'Lagana (1.375)',
+                'activity_moderate' => 'Umjerena (1.55)',
+                'activity_active' => 'Aktivna (1.725)',
+                'goal' => 'Cilj',
+                'goal_lose_05' => 'Gubitak 0,5 kg/tjedan (−500 kcal)',
+                'goal_lose_025' => 'Gubitak 0,25 kg/tjedan (−250 kcal)',
+                'goal_maintain' => 'Održavanje težine',
+                'goal_gain_025' => 'Dobivanje 0,25 kg/tjedan (+250 kcal)',
+                'goal_gain_05' => 'Dobivanje 0,5 kg/tjedan (+500 kcal)',
+                'fill_all' => 'Ispunite sva polja za izračun.',
+                'apply' => 'Primijeni',
+                'cancel' => 'Odustani',
+                'summary_prefix' => 'Predloženo:',
+            ],
         ],
 
         'workout_log' => [

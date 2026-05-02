@@ -198,6 +198,42 @@
             </div>
         </div>
 
+        {{-- Needs attention --}}
+        @if($needsAttention->isNotEmpty())
+            <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 shadow-card p-6">
+                <h2 class="font-display text-base font-semibold text-[#222222] dark:text-gray-100">{{ __('coach.dashboard.needs_attention.heading') }}</h2>
+                <p class="text-sm text-[#8e8e93] dark:text-gray-400 mt-0.5">{{ __('coach.dashboard.needs_attention.subtitle') }}</p>
+
+                <div class="divide-y divide-gray-100 dark:divide-gray-800 mt-4">
+                    @foreach($needsAttention as $row)
+                        @php($client = $row['client'])
+                        @php($flag = $row['flag'])
+                        @php($chipClasses = match($flag) {
+                            'inactive' => 'bg-red-50 text-red-700 dark:bg-red-900/20 dark:text-red-300',
+                            'off_target' => 'bg-orange-50 text-orange-700 dark:bg-orange-900/20 dark:text-orange-300',
+                            'no_goal' => 'bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-300',
+                        })
+                        <a href="{{ route('coach.clients.nutrition', $client) }}" class="flex items-center gap-3 py-3 hover:bg-gray-50 dark:hover:bg-gray-800/40 -mx-2 px-2 rounded-lg transition-colors">
+                            <div class="flex-shrink-0 h-8 w-8 rounded-full flex items-center justify-center overflow-hidden"
+                                 style="background-color: var(--color-primary)">
+                                @if($client->avatar)
+                                    <img src="{{ $client->avatar }}" alt="{{ $client->name }}" class="w-full h-full object-cover">
+                                @else
+                                    <span class="text-xs font-semibold text-white">{{ strtoupper(substr($client->name, 0, 1)) }}</span>
+                                @endif
+                            </div>
+                            <div class="flex-1 min-w-0 flex items-center gap-2">
+                                <p class="text-sm font-medium text-[#222222] dark:text-gray-100 truncate">{{ $client->name }}</p>
+                                <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium {{ $chipClasses }}">
+                                    {{ __('coach.dashboard.needs_attention.flags.'.$flag) }}
+                                </span>
+                            </div>
+                        </a>
+                    @endforeach
+                </div>
+            </div>
+        @endif
+
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <!-- Recent Workout Logs -->
             <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 shadow-card p-6">

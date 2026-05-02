@@ -42,6 +42,26 @@
             </div>
         @endif
 
+        @if(session('error'))
+            <div class="rounded-lg bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 p-4 mb-4">
+                <p class="text-sm text-red-800 dark:text-red-200">{{ session('error') }}</p>
+            </div>
+        @endif
+
+        @if($hasPreviousDayLogs)
+            <form method="POST" action="{{ route('client.nutrition.copy-yesterday') }}">
+                @csrf
+                <input type="hidden" name="date" value="{{ $date }}">
+                <button type="submit"
+                    class="w-full inline-flex items-center justify-center gap-2 px-4 py-3 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 text-[#222222] dark:text-gray-100 text-sm font-medium rounded-xl shadow-card hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+                    <svg class="w-4 h-4 text-[#1456f0]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2"/>
+                    </svg>
+                    {{ __('client.nutrition.quick_log.copy_yesterday') }}
+                </button>
+            </form>
+        @endif
+
         <!-- Macro Progress Bars -->
         <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 shadow-card p-5">
             @if($macroGoal)
@@ -178,6 +198,78 @@
             </div>
         @endif
 
+        @if($favorites->isNotEmpty())
+            <div x-data="{ active: null, mealType: 'Breakfast', mealTypes: ['Breakfast', 'Lunch', 'Dinner', 'Snack'] }"
+                class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 shadow-card p-5">
+                <div class="mb-3">
+                    <h2 class="font-display text-base font-semibold text-[#222222] dark:text-gray-100">{{ __('client.nutrition.quick_log.favorites_heading') }}</h2>
+                    <p class="text-xs text-[#8e8e93] dark:text-gray-500 mt-0.5">{{ __('client.nutrition.quick_log.favorites_subtitle') }}</p>
+                </div>
+
+                <div class="flex flex-wrap gap-2">
+                    @foreach($favorites as $i => $fav)
+                        <button type="button" @click="active = (active === {{ $i }} ? null : {{ $i }})"
+                            :class="active === {{ $i }} ? 'bg-blue-50 dark:bg-blue-900/20 border-[#1456f0] text-[#1456f0]' : 'bg-gray-50 dark:bg-gray-800 border-gray-200 dark:border-gray-700 text-[#45515e] dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'"
+                            class="px-3 py-1.5 text-xs font-medium border rounded-full transition-colors">
+                            {{ $fav['name'] }}
+                            <span class="text-[10px] opacity-70 ml-1">{{ (int) $fav['calories'] }} kcal</span>
+                        </button>
+                    @endforeach
+                </div>
+
+                @foreach($favorites as $i => $fav)
+                    <div x-show="active === {{ $i }}" x-cloak x-transition class="mt-4 pt-4 border-t border-gray-100 dark:border-gray-800">
+                        <form method="POST" action="{{ route('client.nutrition.store') }}" class="space-y-3">
+                            @csrf
+                            <input type="hidden" name="date" value="{{ $date }}">
+                            <input type="hidden" name="name" value="{{ $fav['name'] }}">
+                            <input type="hidden" name="calories" value="{{ (int) $fav['calories'] }}">
+                            <input type="hidden" name="protein" value="{{ $fav['protein'] }}">
+                            <input type="hidden" name="carbs" value="{{ $fav['carbs'] }}">
+                            <input type="hidden" name="fat" value="{{ $fav['fat'] }}">
+                            @if(! empty($fav['meal_id']))
+                                <input type="hidden" name="meal_id" value="{{ $fav['meal_id'] }}">
+                            @endif
+                            <input type="hidden" name="meal_type" :value="mealType">
+
+                            <div class="bg-gray-50 dark:bg-gray-800/50 rounded-lg p-3">
+                                <p class="text-sm font-medium text-[#222222] dark:text-gray-100">{{ $fav['name'] }}</p>
+                                <p class="text-xs text-[#8e8e93] dark:text-gray-500 mt-0.5">
+                                    {{ (int) $fav['calories'] }} kcal &middot;
+                                    P {{ number_format($fav['protein'], 1) }}g &middot;
+                                    C {{ number_format($fav['carbs'], 1) }}g &middot;
+                                    F {{ number_format($fav['fat'], 1) }}g
+                                </p>
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-medium text-[#222222] dark:text-gray-100 mb-2">{{ __('client.nutrition.meal_type') }}</label>
+                                <div class="flex flex-wrap gap-2">
+                                    <template x-for="type in mealTypes" :key="type">
+                                        <button type="button" @click="mealType = type"
+                                            :class="mealType === type ? 'text-white border-[#1456f0]' : 'bg-white dark:bg-gray-800 text-[#45515e] dark:text-gray-300 border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700'"
+                                            :style="mealType === type ? 'background-color: var(--color-primary)' : ''"
+                                            class="px-3 py-1.5 text-sm font-medium border rounded-lg transition-colors" x-text="type"></button>
+                                    </template>
+                                </div>
+                            </div>
+
+                            <div class="flex gap-2">
+                                <button type="button" @click="active = null"
+                                    class="flex-1 inline-flex items-center justify-center px-4 py-2.5 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-[#45515e] dark:text-gray-300 text-sm font-medium rounded-xl hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                                    {{ __('client.nutrition.quick_log.favorites_cancel') }}
+                                </button>
+                                <button type="submit"
+                                    class="flex-1 inline-flex items-center justify-center px-4 py-2.5 bg-[#181e25] dark:bg-gray-700 text-white text-sm font-semibold rounded-xl hover:bg-gray-800 dark:hover:bg-gray-600 transition-colors">
+                                    {{ __('client.nutrition.quick_log.favorites_save') }}
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                @endforeach
+            </div>
+        @endif
+
         <!-- Add Meal Section -->
         <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 shadow-card overflow-hidden">
             <div class="border-b border-gray-200 dark:border-gray-800">
@@ -222,15 +314,37 @@
                     </div>
 
                     <div x-show="selectedMeal" class="pt-2 border-t border-gray-100 dark:border-gray-800">
+                        <!-- Portion Selector -->
+                        <div class="mb-3">
+                            <label class="block text-sm font-medium text-[#222222] dark:text-gray-100 mb-2">{{ __('client.nutrition.quick_log.portion') }}</label>
+                            <div class="grid grid-cols-4 gap-2">
+                                <template x-for="p in portionOptions" :key="p">
+                                    <button type="button" @click="portion = p"
+                                        :class="portion === p ? 'text-white border-[#1456f0]' : 'bg-white dark:bg-gray-800 text-[#45515e] dark:text-gray-300 border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700'"
+                                        :style="portion === p ? 'background-color: var(--color-primary)' : ''"
+                                        class="px-3 py-1.5 text-sm font-medium border rounded-lg transition-colors">
+                                        <span x-text="p + '×'"></span>
+                                    </button>
+                                </template>
+                            </div>
+                            <div x-show="selectedMeal" class="mt-2 text-xs text-[#8e8e93] dark:text-gray-500">
+                                <span x-text="scaledName"></span> &middot;
+                                <span x-text="scaledCalories"></span> kcal &middot;
+                                P <span x-text="scaledProtein"></span>g &middot;
+                                C <span x-text="scaledCarbs"></span>g &middot;
+                                F <span x-text="scaledFat"></span>g
+                            </div>
+                        </div>
+
                         <form method="POST" action="{{ route('client.nutrition.store') }}">
                             @csrf
                             <input type="hidden" name="date" value="{{ $date }}">
                             <input type="hidden" name="meal_id" :value="selectedMeal?.id">
-                            <input type="hidden" name="name" :value="selectedMeal?.name">
-                            <input type="hidden" name="calories" :value="selectedMeal?.calories">
-                            <input type="hidden" name="protein" :value="selectedMeal?.protein">
-                            <input type="hidden" name="carbs" :value="selectedMeal?.carbs">
-                            <input type="hidden" name="fat" :value="selectedMeal?.fat">
+                            <input type="hidden" name="name" :value="scaledName">
+                            <input type="hidden" name="calories" :value="scaledCalories">
+                            <input type="hidden" name="protein" :value="scaledProtein">
+                            <input type="hidden" name="carbs" :value="scaledCarbs">
+                            <input type="hidden" name="fat" :value="scaledFat">
 
                             <!-- Meal Type Selector -->
                             <div class="mb-3">
@@ -459,6 +573,30 @@
                 customFormMealType: 'Breakfast',
                 customFormCustomType: '',
                 mealTypes: ['Breakfast', 'Lunch', 'Dinner', 'Snack'],
+                portion: 1,
+                portionOptions: [0.5, 1, 1.5, 2],
+
+                get scaledCalories() {
+                    if (!this.selectedMeal) return 0;
+                    return Math.round(Number(this.selectedMeal.calories) * this.portion);
+                },
+                get scaledProtein() {
+                    if (!this.selectedMeal) return 0;
+                    return Math.round(Number(this.selectedMeal.protein) * this.portion * 10) / 10;
+                },
+                get scaledCarbs() {
+                    if (!this.selectedMeal) return 0;
+                    return Math.round(Number(this.selectedMeal.carbs) * this.portion * 10) / 10;
+                },
+                get scaledFat() {
+                    if (!this.selectedMeal) return 0;
+                    return Math.round(Number(this.selectedMeal.fat) * this.portion * 10) / 10;
+                },
+                get scaledName() {
+                    if (!this.selectedMeal) return '';
+                    if (this.portion === 1) return this.selectedMeal.name;
+                    return this.selectedMeal.name + ' (×' + this.portion + ')';
+                },
 
                 get prevUrl() {
                     return baseUrl + '?date=' + shiftDate(this.currentDate, -1);
@@ -493,6 +631,7 @@
 
                 selectLibraryMeal(meal) {
                     this.selectedMeal = this.selectedMeal?.id === meal.id ? null : meal;
+                    this.portion = 1;
                 },
 
                 loadAllMeals() {

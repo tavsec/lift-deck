@@ -156,6 +156,7 @@ Route::middleware(['auth', 'verified', 'role:client'])
         Route::get('nutrition', [Client\NutritionController::class, 'index'])->name('nutrition');
         Route::get('nutrition/meals', [Client\NutritionController::class, 'meals'])->name('nutrition.meals');
         Route::post('nutrition', [Client\NutritionController::class, 'store'])->name('nutrition.store');
+        Route::post('nutrition/copy-yesterday', [Client\NutritionController::class, 'copyYesterday'])->name('nutrition.copy-yesterday');
         Route::delete('nutrition/{mealLog}', [Client\NutritionController::class, 'destroy'])->name('nutrition.destroy');
         Route::get('messages', [Client\MessageController::class, 'index'])->name('messages');
         Route::post('messages', [Client\MessageController::class, 'store'])->name('messages.store');

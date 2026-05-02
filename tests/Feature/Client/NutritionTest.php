@@ -142,3 +142,104 @@ it('passes nutrition chart data to the nutrition view', function () {
         ->assertViewHas('nutritionData')
         ->assertViewHas('nutritionStats');
 });
+
+it('passes hasPreviousDayLogs and favorites to the nutrition view', function () {
+    $this->actingAs($this->client)
+        ->get(route('client.nutrition'))
+        ->assertOk()
+        ->assertViewHas('hasPreviousDayLogs')
+        ->assertViewHas('favorites');
+});
+
+it('shows hasPreviousDayLogs as true when previous day has logs and current day is empty', function () {
+    MealLog::factory()->create([
+        'client_id' => $this->client->id,
+        'date' => now()->subDay()->format('Y-m-d'),
+    ]);
+
+    $this->actingAs($this->client)
+        ->get(route('client.nutrition'))
+        ->assertOk()
+        ->assertViewHas('hasPreviousDayLogs', true);
+});
+
+it('shows hasPreviousDayLogs as false when current day already has logs', function () {
+    MealLog::factory()->create([
+        'client_id' => $this->client->id,
+        'date' => now()->subDay()->format('Y-m-d'),
+    ]);
+    MealLog::factory()->create([
+        'client_id' => $this->client->id,
+        'date' => now()->format('Y-m-d'),
+    ]);
+
+    $this->actingAs($this->client)
+        ->get(route('client.nutrition'))
+        ->assertOk()
+        ->assertViewHas('hasPreviousDayLogs', false);
+});
+
+it('copies yesterdays meals to the current date', function () {
+    MealLog::factory()->count(3)->create([
+        'client_id' => $this->client->id,
+        'date' => now()->subDay()->format('Y-m-d'),
+    ]);
+
+    $this->actingAs($this->client)
+        ->post(route('client.nutrition.copy-yesterday'), [
+            'date' => now()->format('Y-m-d'),
+        ])
+        ->assertRedirect()
+        ->assertSessionHas('success');
+
+    expect(MealLog::query()
+        ->where('client_id', $this->client->id)
+        ->whereDate('date', now()->format('Y-m-d'))
+        ->count()
+    )->toBe(3);
+});
+
+it('redirects with error when there is nothing to copy from yesterday', function () {
+    $this->actingAs($this->client)
+        ->post(route('client.nutrition.copy-yesterday'), [
+            'date' => now()->format('Y-m-d'),
+        ])
+        ->assertRedirect()
+        ->assertSessionHas('error');
+});
+
+it('builds favorites from recent meal logs grouped by name', function () {
+    MealLog::factory()->count(3)->create([
+        'client_id' => $this->client->id,
+        'name' => 'Chicken Bowl',
+        'date' => now()->subDays(5)->format('Y-m-d'),
+    ]);
+    MealLog::factory()->count(1)->create([
+        'client_id' => $this->client->id,
+        'name' => 'Protein Shake',
+        'date' => now()->subDays(2)->format('Y-m-d'),
+    ]);
+
+    $this->actingAs($this->client)
+        ->get(route('client.nutrition'))
+        ->assertOk()
+        ->assertViewHas('favorites', function ($favorites) {
+            return $favorites->count() === 2
+                && $favorites->first()['name'] === 'Chicken Bowl';
+        });
+});
+
+it('limits favorites to 5 entries', function () {
+    foreach (['A', 'B', 'C', 'D', 'E', 'F', 'G'] as $name) {
+        MealLog::factory()->create([
+            'client_id' => $this->client->id,
+            'name' => $name,
+            'date' => now()->subDays(1)->format('Y-m-d'),
+        ]);
+    }
+
+    $this->actingAs($this->client)
+        ->get(route('client.nutrition'))
+        ->assertOk()
+        ->assertViewHas('favorites', fn ($favorites) => $favorites->count() === 5);
+});

@@ -40,6 +40,15 @@ return [
         'recent_comments' => 'Recent Comments',
         'on' => 'on',
         'no_comments' => 'No comments yet',
+        'needs_attention' => [
+            'heading' => 'Needs attention',
+            'subtitle' => 'These clients may need a check-in',
+            'flags' => [
+                'inactive' => 'No log in 3 days',
+                'off_target' => 'Off target last 3 days',
+                'no_goal' => 'Set a macro goal',
+            ],
+        ],
     ],
 
     'clients' => [
@@ -270,6 +279,32 @@ return [
             'no_meals' => 'No meals logged',
             'remove_confirm' => 'Remove this meal?',
             'remove' => 'Remove',
+            'calculator' => [
+                'button' => 'Calculate from profile',
+                'hide' => 'Hide calculator',
+                'description' => 'Estimate calories and macros using the Mifflin-St Jeor equation. Values will be written into the form below.',
+                'weight' => 'Weight (kg)',
+                'height' => 'Height (cm)',
+                'age' => 'Age',
+                'sex' => 'Sex',
+                'male' => 'Male',
+                'female' => 'Female',
+                'activity' => 'Activity level',
+                'activity_sedentary' => 'Sedentary (1.2)',
+                'activity_light' => 'Light (1.375)',
+                'activity_moderate' => 'Moderate (1.55)',
+                'activity_active' => 'Active (1.725)',
+                'goal' => 'Goal',
+                'goal_lose_05' => 'Lose 0.5 kg/week (−500 kcal)',
+                'goal_lose_025' => 'Lose 0.25 kg/week (−250 kcal)',
+                'goal_maintain' => 'Maintain weight',
+                'goal_gain_025' => 'Gain 0.25 kg/week (+250 kcal)',
+                'goal_gain_05' => 'Gain 0.5 kg/week (+500 kcal)',
+                'fill_all' => 'Fill all fields to calculate.',
+                'apply' => 'Apply',
+                'cancel' => 'Cancel',
+                'summary_prefix' => 'Suggested:',
+            ],
         ],
 
         'workout_log' => [

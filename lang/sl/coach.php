@@ -40,6 +40,15 @@ return [
         'recent_comments' => 'Nedavni komentarji',
         'on' => 'pri',
         'no_comments' => 'Še ni komentarjev',
+        'needs_attention' => [
+            'heading' => 'Potrebuje pozornost',
+            'subtitle' => 'Te stranke morda potrebujejo stik',
+            'flags' => [
+                'inactive' => 'Brez vnosa 3 dni',
+                'off_target' => 'Izven cilja zadnje 3 dni',
+                'no_goal' => 'Nastavi makro cilj',
+            ],
+        ],
     ],
 
     'clients' => [
@@ -270,6 +279,32 @@ return [
             'no_meals' => 'Ni zabeleženih obrokov',
             'remove_confirm' => 'Odstraniti ta obrok?',
             'remove' => 'Odstrani',
+            'calculator' => [
+                'button' => 'Izračunaj iz profila',
+                'hide' => 'Skrij kalkulator',
+                'description' => 'Ocenite kalorije in makrohranila s pomočjo Mifflin-St Jeor enačbe. Vrednosti se bodo zapisale v spodnji obrazec.',
+                'weight' => 'Teža (kg)',
+                'height' => 'Višina (cm)',
+                'age' => 'Starost',
+                'sex' => 'Spol',
+                'male' => 'Moški',
+                'female' => 'Ženska',
+                'activity' => 'Raven aktivnosti',
+                'activity_sedentary' => 'Sedeč način (1.2)',
+                'activity_light' => 'Lahka (1.375)',
+                'activity_moderate' => 'Zmerna (1.55)',
+                'activity_active' => 'Aktivna (1.725)',
+                'goal' => 'Cilj',
+                'goal_lose_05' => 'Izguba 0,5 kg/teden (−500 kcal)',
+                'goal_lose_025' => 'Izguba 0,25 kg/teden (−250 kcal)',
+                'goal_maintain' => 'Ohranjanje teže',
+                'goal_gain_025' => 'Pridobitek 0,25 kg/teden (+250 kcal)',
+                'goal_gain_05' => 'Pridobitek 0,5 kg/teden (+500 kcal)',
+                'fill_all' => 'Izpolnite vsa polja za izračun.',
+                'apply' => 'Uporabi',
+                'cancel' => 'Prekliči',
+                'summary_prefix' => 'Predlagano:',
+            ],
         ],
 
         'workout_log' => [
