@@ -9,6 +9,7 @@ return [
             'programs' => 'Programi',
             'exercises' => 'Vježbe',
             'meals' => 'Obroci',
+            'day_plans' => 'Dnevni planovi',
             'tracking' => 'Praćenje',
             'messages' => 'Poruke',
             'branding' => 'Brendiranje',
@@ -813,6 +814,81 @@ return [
         ],
         'subscription' => [
             'heading' => 'Pretplata',
+        ],
+    ],
+
+    'day_plans' => [
+        'index' => [
+            'heading' => 'Dnevni planovi',
+            'subtitle' => 'Izradite dnevne planove obroka koje možete propisati klijentima.',
+            'add' => 'Novi dnevni plan',
+            'meal_count' => '{0} bez obroka|{1} :count obrok|[2,4] :count obroka|[5,*] :count obroka',
+            'no_plans' => 'Još nema dnevnih planova',
+            'no_plans_empty' => 'Stvorite svoj prvi dnevni plan koji ćete dodijeliti klijentu.',
+        ],
+
+        'create' => [
+            'back' => 'Natrag na Dnevne planove',
+            'heading' => 'Novi dnevni plan',
+            'subtitle' => 'Sastavite cjelodnevni plan obroka iz biblioteke obroka.',
+        ],
+
+        'edit' => [
+            'back' => 'Natrag na Dnevne planove',
+            'heading' => 'Uredi dnevni plan',
+            'subtitle' => 'Ažurirajte detalje plana i obroke.',
+        ],
+
+        'form' => [
+            'name' => 'Naziv plana',
+            'name_placeholder' => 'npr. Dan s visokim unosom proteina',
+            'description' => 'Opis',
+            'description_placeholder' => 'Bilješke za sebe ili kontekst za klijente...',
+            'add_meal' => 'Dodaj obrok',
+            'empty_section' => 'Još nema dodanih obroka',
+            'total_calories' => 'Ukupno kcal',
+            'total_protein' => 'Proteini',
+            'total_carbs' => 'Ugljikohidrati',
+            'total_fat' => 'Masti',
+            'cancel' => 'Odustani',
+            'create' => 'Stvori dnevni plan',
+            'update' => 'Ažuriraj dnevni plan',
+            'archive_heading' => 'Arhiviraj dnevni plan',
+            'archive_description' => 'Arhiviranje sakriva ovaj plan iz novih dodjeljivanja. Postojeća dodjeljivanja ostaju.',
+            'archive_confirm' => 'Arhiviraj ovaj dnevni plan?',
+            'archive' => 'Arhiviraj dnevni plan',
+            'picker' => [
+                'heading' => 'Odaberi obrok',
+                'search_placeholder' => 'Pretraži biblioteku obroka...',
+                'no_meals' => 'Nema obroka koji odgovaraju pretrazi.',
+            ],
+        ],
+
+        'meal_types' => [
+            'breakfast' => 'Doručak',
+            'lunch' => 'Ručak',
+            'dinner' => 'Večera',
+            'snack' => 'Užina',
+        ],
+
+        'assignments' => [
+            'heading' => 'Dodijeli dnevni plan',
+            'no_plans_yet' => 'Još nemate dnevnih planova.',
+            'create_link' => 'Stvorite jedan',
+            'day_plan_label' => 'Dnevni plan',
+            'date_label' => 'Datum',
+            'submit' => 'Dodijeli plan',
+            'upcoming_heading' => 'Predstojeća dodjeljivanja',
+            'remove_confirm' => 'Ukloniti ovo dodjeljivanje?',
+            'duplicate_date' => 'Plan je već dodijeljen za ovaj datum.',
+        ],
+
+        'flash' => [
+            'created' => 'Dnevni plan stvoren.',
+            'updated' => 'Dnevni plan ažuriran.',
+            'archived' => 'Dnevni plan arhiviran.',
+            'assigned' => 'Dnevni plan dodijeljen.',
+            'unassigned' => 'Dodjeljivanje uklonjeno.',
         ],
     ],
 

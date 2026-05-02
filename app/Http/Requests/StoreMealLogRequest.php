@@ -18,6 +18,7 @@ class StoreMealLogRequest extends FormRequest
     {
         return [
             'meal_id' => ['nullable', 'exists:meals,id'],
+            'day_plan_item_id' => ['nullable', 'exists:day_plan_items,id'],
             'date' => ['required', 'date', 'before_or_equal:today'],
             'meal_type' => ['required', 'string', 'max:50'],
             'name' => ['required', 'string', 'max:255'],

@@ -211,6 +211,71 @@
                 </div>
                 @endif
 
+                <!-- Day Plan Assignment -->
+                <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 shadow-card p-6">
+                    <h2 class="font-display text-base font-semibold text-[#222222] dark:text-gray-100 mb-4">{{ __('coach.day_plans.assignments.heading') }}</h2>
+
+                    @if($availableDayPlans->isEmpty())
+                        <p class="text-sm text-[#8e8e93] dark:text-gray-500">
+                            {{ __('coach.day_plans.assignments.no_plans_yet') }}
+                            <a href="{{ route('coach.day-plans.create') }}" class="text-[#1456f0] hover:underline">{{ __('coach.day_plans.assignments.create_link') }}</a>
+                        </p>
+                    @else
+                        <form method="POST" action="{{ route('coach.clients.day-assignments.store', $client) }}" class="space-y-4">
+                            @csrf
+                            <div>
+                                <label for="day_plan_id" class="block text-sm font-medium text-[#45515e] dark:text-gray-300 mb-1.5">{{ __('coach.day_plans.assignments.day_plan_label') }} <span class="text-red-500">*</span></label>
+                                <select name="day_plan_id" id="day_plan_id" required
+                                    class="w-full border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-[#222222] dark:text-gray-100 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-[#1456f0] focus:ring-2 focus:ring-[#1456f0]/20 transition-colors duration-150 @error('day_plan_id') border-red-500 @enderror">
+                                    @foreach($availableDayPlans as $plan)
+                                        <option value="{{ $plan->id }}">{{ $plan->name }}</option>
+                                    @endforeach
+                                </select>
+                                @error('day_plan_id')
+                                    <p class="mt-1 text-xs text-red-600 dark:text-red-400">{{ $message }}</p>
+                                @enderror
+                            </div>
+                            <div>
+                                <label for="assignment_date" class="block text-sm font-medium text-[#45515e] dark:text-gray-300 mb-1.5">{{ __('coach.day_plans.assignments.date_label') }} <span class="text-red-500">*</span></label>
+                                <input type="date" name="date" id="assignment_date" value="{{ old('date', now()->format('Y-m-d')) }}" required
+                                    class="w-full border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-[#222222] dark:text-gray-100 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-[#1456f0] focus:ring-2 focus:ring-[#1456f0]/20 transition-colors duration-150 @error('date') border-red-500 @enderror">
+                                @error('date')
+                                    <p class="mt-1 text-xs text-red-600 dark:text-red-400">{{ $message }}</p>
+                                @enderror
+                            </div>
+                            <button type="submit" class="w-full inline-flex items-center justify-center px-4 py-2.5 bg-[#181e25] dark:bg-gray-700 text-white text-sm font-semibold rounded-lg hover:bg-gray-800 transition-colors">
+                                {{ __('coach.day_plans.assignments.submit') }}
+                            </button>
+                        </form>
+
+                        @if($upcomingAssignments->isNotEmpty())
+                            <div class="mt-5 pt-5 border-t border-gray-100 dark:border-gray-800">
+                                <h3 class="text-xs font-semibold uppercase tracking-wider text-[#8e8e93] dark:text-gray-500 mb-3">{{ __('coach.day_plans.assignments.upcoming_heading') }}</h3>
+                                <div class="space-y-2">
+                                    @foreach($upcomingAssignments as $assignment)
+                                        <div class="flex items-center justify-between p-3 rounded-lg bg-gray-50 dark:bg-gray-950 border border-gray-100 dark:border-gray-800">
+                                            <div class="min-w-0">
+                                                <p class="text-sm font-medium text-[#222222] dark:text-gray-100 truncate">{{ $assignment->dayPlan?->name }}</p>
+                                                <p class="text-xs text-[#8e8e93] dark:text-gray-500">{{ $assignment->date->format('M d, Y') }}</p>
+                                            </div>
+                                            <form method="POST" action="{{ route('coach.clients.day-assignments.destroy', [$client, $assignment]) }}"
+                                                onsubmit="return confirm('{{ __('coach.day_plans.assignments.remove_confirm') }}');">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="p-1 text-[#8e8e93] dark:text-gray-500 hover:text-red-500 transition-colors">
+                                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                                                    </svg>
+                                                </button>
+                                            </form>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            </div>
+                        @endif
+                    @endif
+                </div>
+
                 <!-- Goal History -->
                 @if($macroGoals->count() > 0)
                 <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 shadow-card p-6">

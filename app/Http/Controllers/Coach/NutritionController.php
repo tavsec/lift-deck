@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Coach;
 
 use App\Http\Controllers\Controller;
+use App\Models\ClientDayAssignment;
 use App\Models\MacroGoal;
 use App\Models\User;
 use Carbon\Carbon;
@@ -63,6 +64,18 @@ class NutritionController extends Controller
             ];
         }
 
+        $availableDayPlans = auth()->user()->dayPlans()
+            ->active()
+            ->orderBy('name')
+            ->get(['id', 'name']);
+
+        $upcomingAssignments = ClientDayAssignment::query()
+            ->where('client_id', $client->id)
+            ->whereDate('date', '>=', now()->format('Y-m-d'))
+            ->with('dayPlan:id,name')
+            ->orderBy('date')
+            ->get();
+
         return view('coach.clients.nutrition', compact(
             'client',
             'macroGoals',
@@ -72,6 +85,8 @@ class NutritionController extends Controller
             'range',
             'from',
             'to',
+            'availableDayPlans',
+            'upcomingAssignments',
         ));
     }
 }

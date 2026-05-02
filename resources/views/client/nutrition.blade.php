@@ -48,6 +48,98 @@
             </div>
         @endif
 
+        @if($assignment && $assignedItems->isNotEmpty())
+            @php
+                $mealTypeOrder = ['Breakfast', 'Lunch', 'Dinner', 'Snack'];
+                $mealTypeLabels = [
+                    'Breakfast' => __('client.nutrition.assigned_plan.meal_types.breakfast'),
+                    'Lunch' => __('client.nutrition.assigned_plan.meal_types.lunch'),
+                    'Dinner' => __('client.nutrition.assigned_plan.meal_types.dinner'),
+                    'Snack' => __('client.nutrition.assigned_plan.meal_types.snack'),
+                ];
+                $groupedAssignedItems = $assignedItems->groupBy(fn ($i) => $i['item']->meal_type);
+                $totalAssigned = $assignedItems->count();
+                $completedAssigned = $assignedItems->filter(fn ($i) => $i['completed'])->count();
+            @endphp
+
+            <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 shadow-card p-5 mb-4">
+                <div class="mb-4">
+                    <h2 class="font-display text-base font-semibold text-[#222222] dark:text-gray-100">
+                        {{ __('client.nutrition.assigned_plan.heading', ['name' => $assignment->dayPlan->name]) }}
+                    </h2>
+                    <p class="text-xs text-[#8e8e93] dark:text-gray-500 mt-0.5">{{ __('client.nutrition.assigned_plan.subtitle') }}</p>
+                </div>
+
+                <div class="space-y-4">
+                    @foreach($mealTypeOrder as $type)
+                        @php $group = $groupedAssignedItems->get($type, collect()); @endphp
+                        @if($group->isNotEmpty())
+                            <div>
+                                <h3 class="text-xs font-semibold uppercase tracking-wider text-[#8e8e93] dark:text-gray-500 mb-2">{{ $mealTypeLabels[$type] }}</h3>
+                                <div class="space-y-2">
+                                    @foreach($group as $entry)
+                                        @php
+                                            $item = $entry['item'];
+                                            $meal = $item->meal;
+                                            $completed = $entry['completed'];
+                                        @endphp
+                                        <div class="flex items-center justify-between p-3 rounded-lg border {{ $completed ? 'border-green-200 dark:border-green-900 bg-green-50 dark:bg-green-900/20' : 'border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-950' }}">
+                                            <div class="flex-1 min-w-0">
+                                                <p class="text-sm font-medium text-[#222222] dark:text-gray-100 truncate">{{ $meal->name }}</p>
+                                                <p class="text-xs text-[#8e8e93] dark:text-gray-500 mt-0.5">
+                                                    {{ $meal->calories }} kcal &middot;
+                                                    P {{ $meal->protein }}g &middot;
+                                                    C {{ $meal->carbs }}g &middot;
+                                                    F {{ $meal->fat }}g
+                                                </p>
+                                            </div>
+                                            @if($completed)
+                                                <span class="ml-3 inline-flex items-center px-3 py-1.5 text-xs font-medium text-green-700 dark:text-green-400">
+                                                    <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                                                    </svg>
+                                                    {{ __('client.nutrition.assigned_plan.logged') }}
+                                                </span>
+                                            @else
+                                                <form method="POST" action="{{ route('client.nutrition.store') }}" class="ml-3">
+                                                    @csrf
+                                                    <input type="hidden" name="date" value="{{ $date }}">
+                                                    <input type="hidden" name="meal_id" value="{{ $meal->id }}">
+                                                    <input type="hidden" name="day_plan_item_id" value="{{ $item->id }}">
+                                                    <input type="hidden" name="meal_type" value="{{ $item->meal_type }}">
+                                                    <input type="hidden" name="name" value="{{ $meal->name }}">
+                                                    <input type="hidden" name="calories" value="{{ (int) $meal->calories }}">
+                                                    <input type="hidden" name="protein" value="{{ $meal->protein }}">
+                                                    <input type="hidden" name="carbs" value="{{ $meal->carbs }}">
+                                                    <input type="hidden" name="fat" value="{{ $meal->fat }}">
+                                                    <button type="submit" class="inline-flex items-center px-3 py-1.5 text-xs font-semibold text-white rounded-lg transition-colors" style="background-color: var(--color-primary)">
+                                                        <svg class="w-3.5 h-3.5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                                                        </svg>
+                                                        {{ __('client.nutrition.assigned_plan.mark_eaten') }}
+                                                    </button>
+                                                </form>
+                                            @endif
+                                        </div>
+                                    @endforeach
+                                </div>
+                            </div>
+                        @endif
+                    @endforeach
+                </div>
+
+                <div class="mt-4 pt-4 border-t border-gray-100 dark:border-gray-800">
+                    <div class="flex justify-between text-xs text-[#8e8e93] dark:text-gray-500 mb-1">
+                        <span>{{ __('client.nutrition.assigned_plan.progress', ['done' => $completedAssigned, 'total' => $totalAssigned]) }}</span>
+                        <span>{{ $totalAssigned > 0 ? round(($completedAssigned / $totalAssigned) * 100) : 0 }}%</span>
+                    </div>
+                    <div class="w-full bg-gray-100 dark:bg-gray-800 rounded-full h-1.5">
+                        <div class="h-1.5 rounded-full bg-green-500" style="width: {{ $totalAssigned > 0 ? ($completedAssigned / $totalAssigned) * 100 : 0 }}%"></div>
+                    </div>
+                </div>
+            </div>
+        @endif
+
         @if($hasPreviousDayLogs)
             <form method="POST" action="{{ route('client.nutrition.copy-yesterday') }}">
                 @csrf
@@ -317,15 +409,36 @@
                         <!-- Portion Selector -->
                         <div class="mb-3">
                             <label class="block text-sm font-medium text-[#222222] dark:text-gray-100 mb-2">{{ __('client.nutrition.quick_log.portion') }}</label>
-                            <div class="grid grid-cols-4 gap-2">
+                            <div class="grid grid-cols-5 gap-2">
                                 <template x-for="p in portionOptions" :key="p">
-                                    <button type="button" @click="portion = p"
-                                        :class="portion === p ? 'text-white border-[#1456f0]' : 'bg-white dark:bg-gray-800 text-[#45515e] dark:text-gray-300 border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700'"
-                                        :style="portion === p ? 'background-color: var(--color-primary)' : ''"
+                                    <button type="button" @click="portion = p; customPortionMode = false"
+                                        :class="(portion === p && !customPortionMode) ? 'text-white border-[#1456f0]' : 'bg-white dark:bg-gray-800 text-[#45515e] dark:text-gray-300 border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700'"
+                                        :style="(portion === p && !customPortionMode) ? 'background-color: var(--color-primary)' : ''"
                                         class="px-3 py-1.5 text-sm font-medium border rounded-lg transition-colors">
                                         <span x-text="p + '×'"></span>
                                     </button>
                                 </template>
+                                <button type="button" @click="enableCustomPortion()"
+                                    :class="customPortionMode ? 'text-white border-[#1456f0]' : 'bg-white dark:bg-gray-800 text-[#45515e] dark:text-gray-300 border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700'"
+                                    :style="customPortionMode ? 'background-color: var(--color-primary)' : ''"
+                                    class="px-3 py-1.5 text-sm font-medium border rounded-lg transition-colors">
+                                    <span x-show="!(customPortionMode && !portionOptions.includes(portion))">{{ __('client.nutrition.quick_log.portion_custom') }}</span>
+                                    <span x-show="customPortionMode && !portionOptions.includes(portion)" x-cloak>
+                                        {{ __('client.nutrition.quick_log.portion_custom') }} (×<span x-text="Math.round(portion * 100) / 100"></span>)
+                                    </span>
+                                </button>
+                            </div>
+                            <div x-show="customPortionMode" x-cloak class="mt-2 flex gap-2">
+                                <input type="number" step="0.1" min="0.1" max="10"
+                                    x-model="customPortionInput"
+                                    @keydown.enter.prevent="applyCustomPortion()"
+                                    placeholder="{{ __('client.nutrition.quick_log.portion_custom_placeholder') }}"
+                                    class="flex-1 rounded-lg border-gray-200 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-[#1456f0] focus:ring-[#1456f0] text-sm">
+                                <button type="button" @click="applyCustomPortion()"
+                                    class="px-4 py-1.5 text-sm font-medium text-white rounded-lg transition-colors"
+                                    style="background-color: var(--color-primary)">
+                                    {{ __('client.nutrition.quick_log.portion_custom_apply') }}
+                                </button>
                             </div>
                             <div x-show="selectedMeal" class="mt-2 text-xs text-[#8e8e93] dark:text-gray-500">
                                 <span x-text="scaledName"></span> &middot;
@@ -575,6 +688,8 @@
                 mealTypes: ['Breakfast', 'Lunch', 'Dinner', 'Snack'],
                 portion: 1,
                 portionOptions: [0.5, 1, 1.5, 2],
+                customPortionMode: false,
+                customPortionInput: '',
 
                 get scaledCalories() {
                     if (!this.selectedMeal) return 0;
@@ -595,7 +710,25 @@
                 get scaledName() {
                     if (!this.selectedMeal) return '';
                     if (this.portion === 1) return this.selectedMeal.name;
-                    return this.selectedMeal.name + ' (×' + this.portion + ')';
+                    const display = Math.round(this.portion * 100) / 100;
+                    return this.selectedMeal.name + ' (×' + display + ')';
+                },
+
+                enableCustomPortion() {
+                    this.customPortionMode = true;
+                    if (this.portionOptions.includes(this.portion)) {
+                        this.customPortionInput = '';
+                    } else {
+                        this.customPortionInput = String(Math.round(this.portion * 100) / 100);
+                    }
+                },
+                applyCustomPortion() {
+                    const value = parseFloat(this.customPortionInput);
+                    if (isNaN(value) || value < 0.1 || value > 10) {
+                        return;
+                    }
+                    this.portion = Math.round(value * 100) / 100;
+                    this.customPortionMode = true;
                 },
 
                 get prevUrl() {
@@ -632,6 +765,8 @@
                 selectLibraryMeal(meal) {
                     this.selectedMeal = this.selectedMeal?.id === meal.id ? null : meal;
                     this.portion = 1;
+                    this.customPortionMode = false;
+                    this.customPortionInput = '';
                 },
 
                 loadAllMeals() {

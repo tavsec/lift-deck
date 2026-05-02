@@ -91,6 +91,18 @@ Route::middleware(['auth', 'verified', 'role:coach', 'subscribed'])
         Route::resource('exercises', Coach\ExerciseController::class);
         Route::resource('meals', Coach\MealController::class)->except(['show']);
 
+        // Day Plans
+        Route::get('day-plans', [Coach\DayPlanController::class, 'index'])->name('day-plans.index');
+        Route::get('day-plans/create', [Coach\DayPlanController::class, 'create'])->name('day-plans.create');
+        Route::post('day-plans', [Coach\DayPlanController::class, 'store'])->name('day-plans.store');
+        Route::get('day-plans/{dayPlan}/edit', [Coach\DayPlanController::class, 'edit'])->name('day-plans.edit');
+        Route::put('day-plans/{dayPlan}', [Coach\DayPlanController::class, 'update'])->name('day-plans.update');
+        Route::delete('day-plans/{dayPlan}', [Coach\DayPlanController::class, 'destroy'])->name('day-plans.destroy');
+
+        // Client Day Plan Assignments
+        Route::post('clients/{client}/day-assignments', [Coach\ClientDayAssignmentController::class, 'store'])->name('clients.day-assignments.store');
+        Route::delete('clients/{client}/day-assignments/{assignment}', [Coach\ClientDayAssignmentController::class, 'destroy'])->name('clients.day-assignments.destroy');
+
         Route::middleware('feature:'.\App\Features\Loyalty::class)->group(function (): void {
             Route::resource('rewards', Coach\RewardController::class)->except(['show']);
             Route::resource('achievements', Coach\AchievementController::class)->except(['show']);

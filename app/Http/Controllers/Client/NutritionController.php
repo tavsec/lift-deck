@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Client;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreMealLogRequest;
 use App\Jobs\ProcessXpEvent;
+use App\Models\ClientDayAssignment;
+use App\Models\DayPlanItem;
 use App\Models\MacroGoal;
 use App\Models\Meal;
 use App\Models\MealLog;
@@ -13,6 +15,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 
@@ -48,6 +51,14 @@ class NutritionController extends Controller
 
         $favorites = $this->favoritesForClient($user->id);
 
+        $assignment = ClientDayAssignment::query()
+            ->where('client_id', $user->id)
+            ->whereDate('date', $date)
+            ->with(['dayPlan.items.meal'])
+            ->first();
+
+        $assignedItems = $this->buildAssignedItems($assignment, $user->id, $date);
+
         $from = now()->subDays(29)->format('Y-m-d');
         $to = now()->format('Y-m-d');
         [
@@ -64,6 +75,8 @@ class NutritionController extends Controller
             'nutritionStats',
             'hasPreviousDayLogs',
             'favorites',
+            'assignment',
+            'assignedItems',
         ));
     }
 
@@ -75,6 +88,13 @@ class NutritionController extends Controller
         if (! empty($validated['meal_id'])) {
             $meal = Meal::findOrFail($validated['meal_id']);
             if ($meal->coach_id !== $user->coach_id) {
+                abort(403);
+            }
+        }
+
+        if (! empty($validated['day_plan_item_id'])) {
+            $item = DayPlanItem::with('dayPlan')->findOrFail($validated['day_plan_item_id']);
+            if ($item->dayPlan->coach_id !== $user->coach_id) {
                 abort(403);
             }
         }
@@ -165,7 +185,7 @@ class NutritionController extends Controller
      *
      * @return \Illuminate\Support\Collection<int, array{name: string, calories: int, protein: float, carbs: float, fat: float, meal_id: int|null}>
      */
-    private function favoritesForClient(int $clientId): \Illuminate\Support\Collection
+    private function favoritesForClient(int $clientId): Collection
     {
         $since = now()->subDays(90)->format('Y-m-d');
 
@@ -200,5 +220,33 @@ class NutritionController extends Controller
                 return $item;
             })
             ->values();
+    }
+
+    /**
+     * Build a collection of assigned plan items with completion state for the client.
+     *
+     * @return \Illuminate\Support\Collection<int, array{item: \App\Models\DayPlanItem, completed: bool}>
+     */
+    private function buildAssignedItems(?ClientDayAssignment $assignment, int $clientId, string $date): Collection
+    {
+        if (! $assignment instanceof ClientDayAssignment || $assignment->dayPlan === null) {
+            return collect();
+        }
+
+        $itemIds = $assignment->dayPlan->items->pluck('id')->all();
+
+        $loggedItemIds = MealLog::query()
+            ->where('client_id', $clientId)
+            ->whereDate('date', $date)
+            ->whereIn('day_plan_item_id', $itemIds)
+            ->pluck('day_plan_item_id')
+            ->all();
+
+        $loggedSet = array_flip($loggedItemIds);
+
+        return $assignment->dayPlan->items->map(fn (DayPlanItem $item): array => [
+            'item' => $item,
+            'completed' => isset($loggedSet[$item->id]),
+        ])->values();
     }
 }

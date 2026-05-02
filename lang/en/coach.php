@@ -9,6 +9,7 @@ return [
             'programs' => 'Programs',
             'exercises' => 'Exercises',
             'meals' => 'Meals',
+            'day_plans' => 'Day Plans',
             'tracking' => 'Tracking',
             'messages' => 'Messages',
             'branding' => 'Branding',
@@ -816,6 +817,81 @@ return [
         ],
         'subscription' => [
             'heading' => 'Subscription',
+        ],
+    ],
+
+    'day_plans' => [
+        'index' => [
+            'heading' => 'Day Plans',
+            'subtitle' => 'Build reusable meal plans you can prescribe to clients.',
+            'add' => 'New Day Plan',
+            'meal_count' => '{0} no meals|{1} :count meal|[2,*] :count meals',
+            'no_plans' => 'No day plans yet',
+            'no_plans_empty' => 'Create your first day plan to prescribe to clients.',
+        ],
+
+        'create' => [
+            'back' => 'Back to Day Plans',
+            'heading' => 'New Day Plan',
+            'subtitle' => 'Compose a day-long meal plan from your meal library.',
+        ],
+
+        'edit' => [
+            'back' => 'Back to Day Plans',
+            'heading' => 'Edit Day Plan',
+            'subtitle' => 'Update plan details and meals.',
+        ],
+
+        'form' => [
+            'name' => 'Plan name',
+            'name_placeholder' => 'e.g., High-protein cutting day',
+            'description' => 'Description',
+            'description_placeholder' => 'Notes for yourself or context for clients...',
+            'add_meal' => 'Add meal',
+            'empty_section' => 'No meals added yet',
+            'total_calories' => 'Total kcal',
+            'total_protein' => 'Protein',
+            'total_carbs' => 'Carbs',
+            'total_fat' => 'Fat',
+            'cancel' => 'Cancel',
+            'create' => 'Create Day Plan',
+            'update' => 'Update Day Plan',
+            'archive_heading' => 'Archive Day Plan',
+            'archive_description' => 'Archiving hides this plan from new assignments. Existing assignments are kept.',
+            'archive_confirm' => 'Archive this day plan?',
+            'archive' => 'Archive Day Plan',
+            'picker' => [
+                'heading' => 'Pick a meal',
+                'search_placeholder' => 'Search your meal library...',
+                'no_meals' => 'No meals match your search.',
+            ],
+        ],
+
+        'meal_types' => [
+            'breakfast' => 'Breakfast',
+            'lunch' => 'Lunch',
+            'dinner' => 'Dinner',
+            'snack' => 'Snack',
+        ],
+
+        'assignments' => [
+            'heading' => 'Assign Day Plan',
+            'no_plans_yet' => 'No day plans yet.',
+            'create_link' => 'Create one',
+            'day_plan_label' => 'Day plan',
+            'date_label' => 'Date',
+            'submit' => 'Assign Plan',
+            'upcoming_heading' => 'Upcoming assignments',
+            'remove_confirm' => 'Remove this assignment?',
+            'duplicate_date' => 'A plan is already assigned to this date.',
+        ],
+
+        'flash' => [
+            'created' => 'Day plan created.',
+            'updated' => 'Day plan updated.',
+            'archived' => 'Day plan archived.',
+            'assigned' => 'Day plan assigned.',
+            'unassigned' => 'Assignment removed.',
         ],
     ],
 

@@ -153,6 +153,22 @@ return [
             'favorites_save' => 'Zabilježi obrok',
             'favorites_cancel' => 'Odustani',
             'portion' => 'Porcija',
+            'portion_custom' => 'Prilagođeno',
+            'portion_custom_apply' => 'Postavi',
+            'portion_custom_placeholder' => 'npr. 0,75',
+        ],
+        'assigned_plan' => [
+            'heading' => 'Današnji plan: :name',
+            'subtitle' => 'Propisao vaš trener',
+            'mark_eaten' => 'Označi kao pojedeno',
+            'logged' => 'Zabilježeno',
+            'progress' => ':done od :total završeno',
+            'meal_types' => [
+                'breakfast' => 'Doručak',
+                'lunch' => 'Ručak',
+                'dinner' => 'Večera',
+                'snack' => 'Užina',
+            ],
         ],
     ],
 

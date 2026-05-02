@@ -153,6 +153,22 @@ return [
             'favorites_save' => 'Log meal',
             'favorites_cancel' => 'Cancel',
             'portion' => 'Portion',
+            'portion_custom' => 'Custom',
+            'portion_custom_apply' => 'Set',
+            'portion_custom_placeholder' => 'e.g. 0.75',
+        ],
+        'assigned_plan' => [
+            'heading' => "Today's Plan: :name",
+            'subtitle' => 'Prescribed by your coach',
+            'mark_eaten' => 'Mark as eaten',
+            'logged' => 'Logged',
+            'progress' => ':done of :total completed',
+            'meal_types' => [
+                'breakfast' => 'Breakfast',
+                'lunch' => 'Lunch',
+                'dinner' => 'Dinner',
+                'snack' => 'Snack',
+            ],
         ],
     ],
 

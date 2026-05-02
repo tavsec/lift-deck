@@ -15,6 +15,7 @@ class MealLog extends Model
     protected $fillable = [
         'client_id',
         'meal_id',
+        'day_plan_item_id',
         'date',
         'meal_type',
         'name',
@@ -51,5 +52,10 @@ class MealLog extends Model
     public function meal(): BelongsTo
     {
         return $this->belongsTo(Meal::class);
+    }
+
+    public function dayPlanItem(): BelongsTo
+    {
+        return $this->belongsTo(DayPlanItem::class);
     }
 }
