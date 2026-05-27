@@ -143,7 +143,7 @@
         <p class="mt-3">
             <strong class="text-[#222222]">LiftDeck d.o.o.</strong><br>
             E-pošta: <a href="mailto:info@liftdeck.io" class="text-[#1456f0] hover:underline">info@liftdeck.io</a><br>
-            Spletna stran: <a href="https://www.liftdeck.io" class="text-[#1456f0] hover:underline">www.liftdeck.io</a>
+            Spletna stran: <a href="https://liftdeck.io" class="text-[#1456f0] hover:underline">liftdeck.io</a>
         </p>
     </section>
 

@@ -30,7 +30,7 @@ class SitemapController extends Controller
                 'landingUrls' => $landingUrls,
                 'termsUrls' => $termsUrls,
                 'locales' => self::LOCALES,
-                'xDefault' => url('/'),
+                'xDefault' => url('/en'),
             ])
             ->header('Content-Type', 'application/xml; charset=utf-8');
     }

@@ -52,3 +52,12 @@ test('serves landing page at /si', function (): void {
 test('serves landing page at /hr', function (): void {
     $this->get('/hr')->assertOk()->assertViewIs('welcome');
 });
+
+test('landing page renders favicon links and og image', function (): void {
+    $this->get('/en')
+        ->assertOk()
+        ->assertSee('rel="icon" type="image/svg+xml" href="/favicon.svg"', false)
+        ->assertSee('rel="apple-touch-icon" href="/apple-touch-icon.png"', false)
+        ->assertSee('property="og:image" content="'.asset('images/og.png').'"', false)
+        ->assertSee('name="twitter:image" content="'.asset('images/og.png').'"', false);
+});

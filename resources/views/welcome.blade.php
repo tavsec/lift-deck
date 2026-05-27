@@ -63,6 +63,9 @@
     <title>{{ __('landing.meta.title') }}</title>
     <meta name="description" content="{{ __('landing.meta.description') }}">
 
+    {{-- Favicons --}}
+    <x-favicons />
+
     {{-- SEO: Canonical --}}
     <link rel="canonical" href="{{ url('/' . $currentPath) }}">
 
@@ -70,7 +73,7 @@
     <link rel="alternate" hreflang="en" href="{{ url('/en') }}">
     <link rel="alternate" hreflang="sl" href="{{ url('/si') }}">
     <link rel="alternate" hreflang="hr" href="{{ url('/hr') }}">
-    <link rel="alternate" hreflang="x-default" href="{{ url('/') }}">
+    <link rel="alternate" hreflang="x-default" href="{{ url('/en') }}">
 
     {{-- Open Graph --}}
     <meta property="og:type" content="website">
@@ -78,11 +81,16 @@
     <meta property="og:title" content="{{ __('landing.meta.title') }}">
     <meta property="og:description" content="{{ __('landing.meta.description') }}">
     <meta property="og:locale" content="{{ $currentLocale === 'sl' ? 'sl_SI' : ($currentLocale === 'hr' ? 'hr_HR' : 'en_US') }}">
+    <meta property="og:image" content="{{ asset('images/og.png') }}">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="{{ __('landing.meta.title') }}">
 
     {{-- Twitter Card --}}
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="{{ __('landing.meta.title') }}">
     <meta name="twitter:description" content="{{ __('landing.meta.description') }}">
+    <meta name="twitter:image" content="{{ asset('images/og.png') }}">
 
     {{-- Sitemap discovery --}}
     <link rel="sitemap" type="application/xml" href="{{ route('sitemap') }}">

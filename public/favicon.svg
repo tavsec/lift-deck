@@ -1,0 +1,5 @@
+<?xml version="1.0"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="512" height="512">
+  <rect x="0" y="0" width="100" height="100" rx="22" fill="#0B1020"></rect>
+  <text x="50" y="68" text-anchor="middle" font-family="Manrope, system-ui, sans-serif" font-weight="800" font-size="62" letter-spacing="-3" fill="#FFFFFF">L<tspan fill="#1456F0">D</tspan></text>
+</svg>

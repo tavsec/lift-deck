@@ -12,7 +12,9 @@
         <meta name="apple-mobile-web-app-capable" content="yes">
         <meta name="apple-mobile-web-app-status-bar-style" content="default">
         <meta name="apple-mobile-web-app-title" content="LiftDeck">
-        <link rel="apple-touch-icon" href="/images/pwa-192.png">
+
+        <!-- Favicons -->
+        <x-favicons />
 
         <title>{{ $title ?? __('client.layout.title') }}</title>
 

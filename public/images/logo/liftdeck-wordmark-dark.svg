@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 500" width="1600" height="500">
+  
+  <defs>
+    
+  </defs>
+  
+  <text x="800" y="250" font-size="200" letter-spacing="-8" text-anchor="middle" dominant-baseline="central">
+    <tspan fill="#FFFFFF">Lift</tspan><tspan fill="#1456F0">Deck</tspan>
+  </text>
+</svg>
