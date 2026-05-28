@@ -195,6 +195,10 @@ class SubscriptionService
      */
     public function reportClientUsage(User $coach): void
     {
+        if ($coach->is_free_access) {
+            return;
+        }
+
         if ($this->currentPlanKey($coach) !== 'professional') {
             return;
         }
