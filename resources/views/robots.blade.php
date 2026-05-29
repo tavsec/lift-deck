@@ -1,4 +1,5 @@
 User-agent: *
+Allow: /$
 Allow: /en
 Allow: /si
 Allow: /hr

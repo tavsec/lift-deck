@@ -2,8 +2,8 @@
 
 return [
     'meta' => [
-        'title' => 'LiftDeck — Platforma za fitnes trenerje',
-        'description' => 'LiftDeck daje fitnes trenerjem popolno platformo — programe, redne preglede, jedilnike, sledenje makrohranilom, sporočanje in nagrade — vse na enem mestu. Začnite s 7-dnevnim brezplačnim preizkusom.',
+        'title' => 'Platforma za fitnes trenerje | LiftDeck',
+        'description' => 'Platforma za fitnes trenerje — programi, pregledi, prehrana, makri in sporočanje na enem mestu z vašo znamko. 7-dnevni brezplačni preizkus.',
     ],
 
     'nav' => [
@@ -22,8 +22,8 @@ return [
 
     'hero' => [
         'badge' => 'Ustvarjeno za fitnes trenerje',
-        'heading_1' => 'Vaše treniranje.',
-        'heading_2' => 'Njihov napredek.',
+        'heading_1' => 'Platforma za trenerje,',
+        'heading_2' => 'ki obdrži vaše stranke.',
         'subheading' => 'Nehajte se boriti s preglednicami, WhatsAppom in petimi različnimi aplikacijami. Programi, redni pregledi, prehrana in sporočanje na eni platformi z vašo blagovno znamko — strankam pa ponudite izkušnjo, zaradi katere bodo ostale.',
         'cta_primary' => 'Začnite brezplačno preizkusno obdobje',
         'cta_secondary' => 'Raziščite funkcije →',

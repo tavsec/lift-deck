@@ -7,19 +7,52 @@
 
     $nutritionHighlights = ['day_plans', 'food_database', 'smart_logging', 'macro_calculator', 'feedback', 'attention_dashboard'];
 
+    $siteUrl      = url('/');
+    $canonicalUrl = url('/' . $currentPath);
+
     $schema = [
         '@context' => 'https://schema.org',
         '@graph'   => [
             [
+                '@type' => 'Organization',
+                '@id'   => $siteUrl . '/#organization',
+                'name'  => 'LiftDeck',
+                'url'   => $siteUrl,
+                'email' => 'info@liftdeck.io',
+                'logo'  => [
+                    '@type' => 'ImageObject',
+                    'url'   => asset('favicon-32.png'),
+                ],
+                'image' => asset('images/og.png'),
+            ],
+            [
+                '@type'      => 'WebSite',
+                '@id'        => $siteUrl . '/#website',
+                'url'        => $siteUrl,
+                'name'       => 'LiftDeck',
+                'inLanguage' => str_replace('_', '-', $currentLocale),
+                'publisher'  => ['@id' => $siteUrl . '/#organization'],
+            ],
+            [
                 '@type'               => 'SoftwareApplication',
+                '@id'                 => $siteUrl . '/#software',
                 'name'                => 'LiftDeck',
+                'url'                 => $canonicalUrl,
                 'description'         => __('landing.meta.description'),
                 'applicationCategory' => 'HealthApplication',
                 'operatingSystem'     => 'Web',
+                'publisher'           => ['@id' => $siteUrl . '/#organization'],
                 'offers'              => [
-                    ['@type' => 'Offer', 'price' => '10', 'priceCurrency' => 'EUR', 'name' => __('landing.pricing.basic.name')],
-                    ['@type' => 'Offer', 'price' => '45', 'priceCurrency' => 'EUR', 'name' => __('landing.pricing.advanced.name')],
-                    ['@type' => 'Offer', 'price' => '79', 'priceCurrency' => 'EUR', 'name' => __('landing.pricing.professional.name')],
+                    '@type'         => 'AggregateOffer',
+                    'priceCurrency' => 'EUR',
+                    'lowPrice'      => '10',
+                    'highPrice'     => '79',
+                    'offerCount'    => '3',
+                    'offers'        => [
+                        ['@type' => 'Offer', 'price' => '10', 'priceCurrency' => 'EUR', 'name' => __('landing.pricing.basic.name')],
+                        ['@type' => 'Offer', 'price' => '45', 'priceCurrency' => 'EUR', 'name' => __('landing.pricing.advanced.name')],
+                        ['@type' => 'Offer', 'price' => '79', 'priceCurrency' => 'EUR', 'name' => __('landing.pricing.professional.name')],
+                    ],
                 ],
             ],
             [
@@ -62,6 +95,10 @@
     {{-- SEO: Title & Meta Description --}}
     <title>{{ __('landing.meta.title') }}</title>
     <meta name="description" content="{{ __('landing.meta.description') }}">
+
+    {{-- SEO: Crawling directives — allow full snippets & large image previews in SERPs --}}
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+    <meta name="theme-color" content="#1456f0">
 
     {{-- Favicons --}}
     <x-favicons />
@@ -222,9 +259,9 @@
                 {{-- Product mockup --}}
                 @php
                     $heroSlides = [
-                        ['file' => 'dashboard', 'alt_desktop' => 'LiftDeck coach dashboard preview', 'alt_mobile' => 'LiftDeck mobile coach dashboard'],
-                        ['file' => 'clients', 'alt_desktop' => 'LiftDeck client roster preview', 'alt_mobile' => 'LiftDeck mobile client roster'],
-                        ['file' => 'programs', 'alt_desktop' => 'LiftDeck training programs preview', 'alt_mobile' => 'LiftDeck mobile training programs'],
+                        ['file' => 'dashboard', 'alt_desktop' => 'LiftDeck coaching platform dashboard for personal trainers', 'alt_mobile' => 'LiftDeck coaching platform dashboard on mobile'],
+                        ['file' => 'clients', 'alt_desktop' => 'LiftDeck client management roster for online coaches', 'alt_mobile' => 'LiftDeck client roster on mobile'],
+                        ['file' => 'programs', 'alt_desktop' => 'LiftDeck training program builder with exercise library', 'alt_mobile' => 'LiftDeck training programs on mobile'],
                     ];
                 @endphp
 

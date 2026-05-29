@@ -2,8 +2,8 @@
 
 return [
     'meta' => [
-        'title' => 'LiftDeck — Coaching Software for Fitness Professionals',
-        'description' => 'LiftDeck gives fitness coaches a complete platform — programs, check-ins, meal plans, macro tracking, messaging and rewards — all in one place. Start your 7-day free trial.',
+        'title' => 'Coaching Platform for Personal Trainers | LiftDeck',
+        'description' => 'Coaching platform for personal trainers — run programs, check-ins, nutrition, macros and messaging in one branded space. 7-day free trial, no card needed.',
     ],
 
     'nav' => [
@@ -22,8 +22,8 @@ return [
 
     'hero' => [
         'badge' => 'Built for fitness coaches',
-        'heading_1' => 'Your coaching.',
-        'heading_2' => 'Their progress.',
+        'heading_1' => 'Coaching platform',
+        'heading_2' => 'your clients stick with.',
         'subheading' => 'Stop juggling spreadsheets, WhatsApp, and five different apps. Run programs, check-ins, nutrition and messaging in one branded platform — and give clients an experience that keeps them paying.',
         'cta_primary' => 'Start free trial',
         'cta_secondary' => 'Explore features →',
