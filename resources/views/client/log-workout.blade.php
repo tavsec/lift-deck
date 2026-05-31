@@ -184,46 +184,15 @@
                                                         class="w-full h-[44px] rounded-xl border-[1.5px] border-[rgba(18,22,31,0.14)] dark:border-[rgba(255,255,255,0.12)] bg-white dark:bg-[#11141a] text-[#181b22] dark:text-[#f0f2f5] font-mono font-semibold text-base text-center outline-none focus:border-[#c6f24e] focus:shadow-[0_0_0_3px_rgba(198,242,78,0.22)] transition-all"
                                                     >
                                                 </td>
-                                                <td class="py-1.5 pr-1 relative">
-                                                    <!-- Hidden field for form submission -->
+                                                <td class="py-1.5 pr-1">
                                                     <input type="hidden" :name="`exercises[${exerciseIndex}][sets][${setIndex}][rpe]`" :value="set.rpe || ''">
-                                                    <!-- RPE pill button -->
                                                     <button
                                                         type="button"
-                                                        @click.stop="rpePicker = (rpePicker?.ei === exerciseIndex && rpePicker?.si === setIndex) ? null : {ei: exerciseIndex, si: setIndex}"
+                                                        @click.stop="rpePicker = {ei: exerciseIndex, si: setIndex}"
                                                         class="w-full h-[44px] rounded-xl border-[1.5px] font-mono font-bold text-sm transition-all flex items-center justify-center"
-                                                        :style="set.rpe ? `border-color:${rpeColor(set.rpe)};color:${rpeColor(set.rpe)};background:${rpeColor(set.rpe)}18` : 'border-color:rgba(18,22,31,0.14);color:var(--tw-text-opacity,1)'"
+                                                        :style="set.rpe ? `border-color:${rpeColor(set.rpe)};color:${rpeColor(set.rpe)};background:${rpeColor(set.rpe)}22` : 'border-color:rgba(18,22,31,0.14)'"
                                                         :class="set.rpe ? '' : 'text-[#8c93a0] dark:text-[#6b7280] bg-white dark:bg-[#11141a]'"
-                                                    >
-                                                        <span x-text="set.rpe || '—'"></span>
-                                                    </button>
-                                                    <!-- RPE picker dropdown -->
-                                                    <div
-                                                        x-show="rpePicker?.ei === exerciseIndex && rpePicker?.si === setIndex"
-                                                        x-cloak
-                                                        @click.stop
-                                                        @keydown.escape.window="rpePicker = null"
-                                                        class="absolute bottom-full right-0 z-30 mb-2 bg-white dark:bg-[#181b21] border border-[rgba(18,22,31,0.09)] dark:border-[rgba(255,255,255,0.08)] rounded-2xl shadow-[0_12px_32px_rgba(18,22,31,0.18)] p-3"
-                                                        style="width: 220px"
-                                                    >
-                                                        <p class="text-[10px] font-bold uppercase tracking-widest text-[#8c93a0] dark:text-[#6b7280] mb-2 text-center">RPE</p>
-                                                        <div class="grid grid-cols-5 gap-1.5">
-                                                            <template x-for="n in [1,2,3,4,5,6,7,8,9,10]" :key="n">
-                                                                <button
-                                                                    type="button"
-                                                                    @click="set.rpe = n; rpePicker = null"
-                                                                    class="h-10 rounded-xl border-[1.5px] flex flex-col items-center justify-center transition-all"
-                                                                    :style="`border-color:${set.rpe === n ? rpeColor(n) : 'rgba(18,22,31,0.1)'};background:${set.rpe === n ? rpeColor(n)+'28' : 'transparent'};color:${rpeColor(n)}`"
-                                                                >
-                                                                    <span class="font-mono font-bold text-sm leading-none" x-text="n"></span>
-                                                                </button>
-                                                            </template>
-                                                        </div>
-                                                        <button type="button" @click="set.rpe = null; rpePicker = null"
-                                                            class="w-full mt-2 py-1.5 rounded-lg text-xs font-semibold text-[#8c93a0] dark:text-[#6b7280] hover:bg-[rgba(18,22,31,0.05)] dark:hover:bg-[rgba(255,255,255,0.05)] transition-colors">
-                                                            Clear
-                                                        </button>
-                                                    </div>
+                                                    ><span x-text="set.rpe || '—'"></span></button>
                                                 </td>
                                                 <td class="py-1.5">
                                                     <button
@@ -380,6 +349,37 @@
                 </button>
             </div>
         </form>
+
+        <!-- RPE Bottom Sheet -->
+        <div
+            x-show="rpePicker !== null"
+            x-cloak
+            @click.self="rpePicker = null"
+            class="fixed inset-0 z-50 flex items-end"
+            style="background: rgba(8,10,14,0.55); backdrop-filter: blur(3px);"
+        >
+            <div @click.stop class="w-full bg-white dark:bg-[#181b21] rounded-t-3xl shadow-[0_-8px_40px_rgba(0,0,0,0.25)] pt-3 pb-10 px-5">
+                <div class="w-10 h-1.5 rounded-full bg-[rgba(18,22,31,0.12)] dark:bg-[rgba(255,255,255,0.12)] mx-auto mb-5"></div>
+                <p class="text-xs font-bold uppercase tracking-widest text-[#8c93a0] dark:text-[#6b7280] mb-4 text-center">{{ __('Rate of Perceived Exertion') }}</p>
+                <div class="grid grid-cols-5 gap-2 mb-3">
+                    <template x-for="n in [1,2,3,4,5,6,7,8,9,10]" :key="n">
+                        <button
+                            type="button"
+                            @click="setRpe(n)"
+                            class="h-14 rounded-2xl border-[1.5px] flex flex-col items-center justify-center gap-0.5 transition-all"
+                            :style="`border-color:${isCurrentRpe(n) ? rpeColor(n) : 'rgba(18,22,31,0.1)'};background:${isCurrentRpe(n) ? rpeColor(n)+'28' : 'transparent'};color:${rpeColor(n)}`"
+                        >
+                            <span class="font-mono font-bold text-xl leading-none" x-text="n"></span>
+                            <span class="text-[9px] font-semibold text-[#8c93a0] leading-none" x-text="rpeLabel(n)"></span>
+                        </button>
+                    </template>
+                </div>
+                <button type="button" @click="setRpe(null)"
+                    class="w-full py-3.5 rounded-2xl border border-[rgba(18,22,31,0.09)] dark:border-[rgba(255,255,255,0.08)] text-sm font-semibold text-[#555b66] dark:text-[#a4abb6] transition-colors">
+                    {{ __('Clear RPE') }}
+                </button>
+            </div>
+        </div>
 
         <!-- Exercise Detail Modal -->
         <div x-show="selectedExercise" x-cloak class="fixed inset-0 z-50 flex items-center justify-center p-4">
@@ -810,11 +810,29 @@
 
                 rpeColor(rpe) {
                     var n = parseInt(rpe);
-                    if (!n) return '';
-                    if (n <= 3) return 'oklch(0.78 0.15 145)';
-                    if (n <= 6) return 'oklch(0.82 0.15 90)';
-                    if (n <= 8) return 'oklch(0.74 0.17 55)';
-                    return 'oklch(0.66 0.2 28)';
+                    if (!n) return 'rgba(18,22,31,0.3)';
+                    if (n <= 3) return 'oklch(0.62 0.16 150)';
+                    if (n <= 6) return 'oklch(0.65 0.15 75)';
+                    if (n <= 8) return 'oklch(0.62 0.17 55)';
+                    return 'oklch(0.58 0.2 28)';
+                },
+
+                setRpe(value) {
+                    if (this.rpePicker !== null) {
+                        const { ei, si } = this.rpePicker;
+                        this.exercises[ei].sets[si].rpe = value;
+                    }
+                    this.rpePicker = null;
+                },
+
+                isCurrentRpe(n) {
+                    if (!this.rpePicker) return false;
+                    const { ei, si } = this.rpePicker;
+                    return this.exercises[ei]?.sets[si]?.rpe === n;
+                },
+
+                rpeLabel(n) {
+                    return ['','Easy','Easy','Light','Mod','Mod','Hard','Hard','V.Hard','Max','Max'][n] || '';
                 },
 
                 loadProgress(exerciseId, range) {
