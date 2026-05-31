@@ -20,6 +20,7 @@ class ExerciseLog extends Model
         'set_number',
         'weight',
         'reps',
+        'rpe',
         'notes',
     ];
 
@@ -36,6 +37,7 @@ class ExerciseLog extends Model
         return [
             'weight' => 'decimal:2',
             'reps' => 'integer',
+            'rpe' => 'integer',
             'set_number' => 'integer',
         ];
     }
