@@ -235,6 +235,9 @@ class LogController extends Controller
                     'set_number' => $setIndex + 1,
                     'weight' => $setData['weight'] ?? null,
                     'reps' => $setData['reps'],
+                    'rpe' => isset($setData['rpe']) && $setData['rpe'] !== '' && $setData['rpe'] !== null
+                        ? (int) $setData['rpe']
+                        : null,
                 ]);
             }
         }

@@ -32,6 +32,7 @@ class StoreWorkoutLogRequest extends FormRequest
             'exercises.*.sets' => ['required', 'array', 'min:0'],
             'exercises.*.sets.*.weight' => ['nullable', 'numeric', 'min:0', 'max:9999.99'],
             'exercises.*.sets.*.reps' => ['required', 'integer', 'min:0', 'max:999'],
+            'exercises.*.sets.*.rpe' => ['nullable', 'integer', 'min:1', 'max:10'],
         ];
     }
 
