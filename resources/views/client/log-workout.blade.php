@@ -265,7 +265,7 @@
                         <button
                             type="button"
                             @click="openExercisePicker()"
-                            class="w-full inline-flex justify-center items-center gap-2 px-4 py-2.5 border-2 border-dashed border-gray-200 dark:border-gray-700 rounded-xl text-sm font-medium text-[#555b66] dark:text-[#a4abb6] hover:border-[#c6f24e] hover:text-[#5c7a10] dark:hover:text-[#c6f24e] transition-colors"
+                            class="w-full flex items-center justify-center gap-2 px-4 py-3.5 border-2 border-dashed border-[rgba(18,22,31,0.14)] dark:border-[rgba(255,255,255,0.14)] rounded-xl text-sm font-semibold text-[#555b66] dark:text-[#a4abb6] hover:border-[#c6f24e] hover:text-[#5c7a10] dark:hover:border-[#c6f24e] dark:hover:text-[#c6f24e] transition-all"
                         >
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
@@ -274,42 +274,58 @@
                         </button>
                     </div>
 
-                    <div x-show="showExercisePicker" x-cloak>
-                        <div class="space-y-3">
-                            <div class="flex items-center justify-between">
-                                <label class="block text-sm font-semibold text-[#181b22] dark:text-[#f0f2f5]">{{ __('client.log_workout.select_exercise') }}</label>
-                                <button type="button" @click="showExercisePicker = false" class="text-[#8c93a0] dark:text-[#6b7280] hover:text-[#181b22] dark:hover:text-gray-300">
-                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-                                    </svg>
-                                </button>
-                            </div>
+                    <div x-show="showExercisePicker" x-cloak class="space-y-2">
+                        <div class="flex items-center gap-2 mb-1">
+                            <h3 class="text-sm font-semibold text-[#181b22] dark:text-[#f0f2f5] flex-1">{{ __('client.log_workout.select_exercise') }}</h3>
+                            <button type="button" @click="showExercisePicker = false"
+                                class="p-1 text-[#8c93a0] dark:text-[#6b7280] hover:text-[#181b22] dark:hover:text-[#f0f2f5] rounded">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="flex items-center gap-2 px-3 h-11 bg-[#f3f5f7] dark:bg-[#11141a] border border-[rgba(18,22,31,0.14)] dark:border-[rgba(255,255,255,0.12)] rounded-xl focus-within:border-[#c6f24e] focus-within:shadow-[0_0_0_3px_rgba(198,242,78,0.2)] transition-all">
+                            <svg class="w-4 h-4 text-[#8c93a0] dark:text-[#6b7280] flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                            </svg>
                             <input
                                 type="text"
                                 x-model="exerciseSearch"
                                 placeholder="{{ __('client.log_workout.search_exercises') }}"
-                                class="w-full rounded-lg border-gray-200 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm text-sm focus:border-[#c6f24e] focus:ring-[#c6f24e]"
+                                class="flex-1 border-0 bg-transparent outline-none text-sm text-[#181b22] dark:text-[#f0f2f5] placeholder-[#8c93a0]"
                                 x-ref="exerciseSearchInput"
                             >
-                            <div class="max-h-48 overflow-y-auto border border-[rgba(18,22,31,0.09)] dark:border-[rgba(255,255,255,0.08)] rounded-xl divide-y divide-[rgba(18,22,31,0.06)] dark:divide-[rgba(255,255,255,0.06)]">
-                                <template x-for="exercise in filteredExercises" :key="exercise.id">
-                                    <button
-                                        type="button"
-                                        @click="addExercise(exercise)"
-                                        class="w-full text-left px-3 py-2 hover:bg-[rgba(198,242,78,0.08)] dark:hover:bg-gray-800 transition-colors flex items-center justify-between"
-                                    >
-                                        <div>
-                                            <span class="text-sm font-medium text-[#181b22] dark:text-[#f0f2f5]" x-text="exercise.name"></span>
-                                            <span class="text-xs text-[#8c93a0] dark:text-[#6b7280] ml-2" x-text="exercise.muscle_group.replace('_', ' ')"></span>
-                                        </div>
-                                        <svg class="w-4 h-4 text-[#8c93a0] dark:text-[#6b7280]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
-                                        </svg>
-                                    </button>
-                                </template>
-                                <div x-show="filteredExercises.length === 0" class="px-3 py-4 text-center text-sm text-[#8c93a0] dark:text-[#6b7280]">
-                                    {{ __('client.log_workout.no_exercises_found') }}
-                                </div>
+                            <button type="button" x-show="exerciseSearch" @click="exerciseSearch = ''"
+                                class="text-[#8c93a0] dark:text-[#6b7280] flex-shrink-0">
+                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="max-h-64 overflow-y-auto rounded-xl border border-[rgba(18,22,31,0.09)] dark:border-[rgba(255,255,255,0.08)] bg-white dark:bg-[#181b21]">
+                            <template x-for="exercise in filteredExercises" :key="exercise.id">
+                                <button
+                                    type="button"
+                                    @click="addExercise(exercise)"
+                                    class="w-full flex items-center gap-3 px-3 py-2.5 hover:bg-[rgba(198,242,78,0.08)] dark:hover:bg-[rgba(198,242,78,0.05)] transition-colors border-b border-[rgba(18,22,31,0.06)] dark:border-[rgba(255,255,255,0.05)] last:border-0 text-left"
+                                >
+                                    <div x-html="exThumbHtml(exercise.muscle_group, 36)" class="flex-shrink-0"></div>
+                                    <div class="flex-1 min-w-0">
+                                        <div class="text-sm font-semibold text-[#181b22] dark:text-[#f0f2f5] truncate" x-text="exercise.name"></div>
+                                        <div class="text-xs text-[#8c93a0] dark:text-[#6b7280]" x-text="exercise.muscle_group.replace(/_/g, ' ')"></div>
+                                    </div>
+                                    <svg class="w-4 h-4 text-[#c6f24e] flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+                                    </svg>
+                                </button>
+                            </template>
+                            <div x-show="filteredExercises.length === 0 && exercisesLoaded"
+                                class="px-3 py-6 text-center text-sm text-[#8c93a0] dark:text-[#6b7280]">
+                                {{ __('client.log_workout.no_exercises_found') }}
+                            </div>
+                            <div x-show="!exercisesLoaded"
+                                class="px-3 py-6 text-center text-sm text-[#8c93a0] dark:text-[#6b7280]">
+                                Loading…
                             </div>
                         </div>
                     </div>
