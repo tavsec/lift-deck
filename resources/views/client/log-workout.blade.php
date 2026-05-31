@@ -4,7 +4,8 @@
     <div
         x-data="workoutLogger()"
         class="px-4 py-5 space-y-4"
-        @keydown.escape.window="selectedExercise = null"
+        @keydown.escape.window="selectedExercise = null; rpePicker = null"
+        @click.window="rpePicker = null"
     >
         <!-- Header -->
         <div class="mb-5">
@@ -163,38 +164,66 @@
                                         <template x-for="(set, setIndex) in exercise.sets" :key="setIndex">
                                             <tr>
                                                 <td class="py-1.5 pr-3 text-[#555b66] dark:text-[#a4abb6] font-medium font-mono" x-text="setIndex + 1"></td>
-                                                <td class="py-1.5 pr-3">
+                                                <td class="py-1.5 pr-2">
                                                     <input
-                                                        type="number"
-                                                        step="0.5"
-                                                        min="0"
+                                                        type="text"
+                                                        inputmode="decimal"
                                                         :name="`exercises[${exerciseIndex}][sets][${setIndex}][weight]`"
                                                         x-model="set.weight"
                                                         placeholder="0"
-                                                        class="w-full rounded-lg border-gray-200 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm text-sm focus:border-[#c6f24e] focus:ring-[#c6f24e]"
+                                                        class="w-full h-[44px] rounded-xl border-[1.5px] border-[rgba(18,22,31,0.14)] dark:border-[rgba(255,255,255,0.12)] bg-white dark:bg-[#11141a] text-[#181b22] dark:text-[#f0f2f5] font-mono font-semibold text-base text-center outline-none focus:border-[#c6f24e] focus:shadow-[0_0_0_3px_rgba(198,242,78,0.22)] transition-all"
                                                     >
                                                 </td>
                                                 <td class="py-1.5 pr-2">
                                                     <input
-                                                        type="number"
-                                                        min="0"
+                                                        type="text"
+                                                        inputmode="numeric"
                                                         :name="`exercises[${exerciseIndex}][sets][${setIndex}][reps]`"
                                                         x-model="set.reps"
                                                         :placeholder="exercise.prescribed_reps || '0'"
-                                                        class="w-full rounded-lg border-gray-200 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm text-sm focus:border-[#c6f24e] focus:ring-[#c6f24e]"
+                                                        class="w-full h-[44px] rounded-xl border-[1.5px] border-[rgba(18,22,31,0.14)] dark:border-[rgba(255,255,255,0.12)] bg-white dark:bg-[#11141a] text-[#181b22] dark:text-[#f0f2f5] font-mono font-semibold text-base text-center outline-none focus:border-[#c6f24e] focus:shadow-[0_0_0_3px_rgba(198,242,78,0.22)] transition-all"
                                                     >
                                                 </td>
-                                                <td class="py-1.5 pr-1">
-                                                    <input
-                                                        type="number"
-                                                        min="1"
-                                                        max="10"
-                                                        :name="`exercises[${exerciseIndex}][sets][${setIndex}][rpe]`"
-                                                        x-model="set.rpe"
-                                                        placeholder="—"
-                                                        class="w-full rounded-lg border-gray-200 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm text-sm text-center focus:border-[#c6f24e] focus:ring-[#c6f24e]"
-                                                        :style="set.rpe ? 'border-color:'+rpeColor(set.rpe)+';box-shadow:0 0 0 1px '+rpeColor(set.rpe)+'44' : ''"
+                                                <td class="py-1.5 pr-1 relative">
+                                                    <!-- Hidden field for form submission -->
+                                                    <input type="hidden" :name="`exercises[${exerciseIndex}][sets][${setIndex}][rpe]`" :value="set.rpe || ''">
+                                                    <!-- RPE pill button -->
+                                                    <button
+                                                        type="button"
+                                                        @click.stop="rpePicker = (rpePicker?.ei === exerciseIndex && rpePicker?.si === setIndex) ? null : {ei: exerciseIndex, si: setIndex}"
+                                                        class="w-full h-[44px] rounded-xl border-[1.5px] font-mono font-bold text-sm transition-all flex items-center justify-center"
+                                                        :style="set.rpe ? `border-color:${rpeColor(set.rpe)};color:${rpeColor(set.rpe)};background:${rpeColor(set.rpe)}18` : 'border-color:rgba(18,22,31,0.14);color:var(--tw-text-opacity,1)'"
+                                                        :class="set.rpe ? '' : 'text-[#8c93a0] dark:text-[#6b7280] bg-white dark:bg-[#11141a]'"
                                                     >
+                                                        <span x-text="set.rpe || '—'"></span>
+                                                    </button>
+                                                    <!-- RPE picker dropdown -->
+                                                    <div
+                                                        x-show="rpePicker?.ei === exerciseIndex && rpePicker?.si === setIndex"
+                                                        x-cloak
+                                                        @click.stop
+                                                        @keydown.escape.window="rpePicker = null"
+                                                        class="absolute bottom-full right-0 z-30 mb-2 bg-white dark:bg-[#181b21] border border-[rgba(18,22,31,0.09)] dark:border-[rgba(255,255,255,0.08)] rounded-2xl shadow-[0_12px_32px_rgba(18,22,31,0.18)] p-3"
+                                                        style="width: 220px"
+                                                    >
+                                                        <p class="text-[10px] font-bold uppercase tracking-widest text-[#8c93a0] dark:text-[#6b7280] mb-2 text-center">RPE</p>
+                                                        <div class="grid grid-cols-5 gap-1.5">
+                                                            <template x-for="n in [1,2,3,4,5,6,7,8,9,10]" :key="n">
+                                                                <button
+                                                                    type="button"
+                                                                    @click="set.rpe = n; rpePicker = null"
+                                                                    class="h-10 rounded-xl border-[1.5px] flex flex-col items-center justify-center transition-all"
+                                                                    :style="`border-color:${set.rpe === n ? rpeColor(n) : 'rgba(18,22,31,0.1)'};background:${set.rpe === n ? rpeColor(n)+'28' : 'transparent'};color:${rpeColor(n)}`"
+                                                                >
+                                                                    <span class="font-mono font-bold text-sm leading-none" x-text="n"></span>
+                                                                </button>
+                                                            </template>
+                                                        </div>
+                                                        <button type="button" @click="set.rpe = null; rpePicker = null"
+                                                            class="w-full mt-2 py-1.5 rounded-lg text-xs font-semibold text-[#8c93a0] dark:text-[#6b7280] hover:bg-[rgba(18,22,31,0.05)] dark:hover:bg-[rgba(255,255,255,0.05)] transition-colors">
+                                                            Clear
+                                                        </button>
+                                                    </div>
                                                 </td>
                                                 <td class="py-1.5">
                                                     <button
@@ -474,6 +503,7 @@
                 isOffline: false,
                 showOfflineSubmitBanner: false,
                 notes: '',
+                rpePicker: null,
                 _pendingRestore: null,
                 _savedAtFormatted: '',
                 _saveTimer: null,
