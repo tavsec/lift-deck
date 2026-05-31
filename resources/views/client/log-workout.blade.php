@@ -8,18 +8,18 @@
     >
         <!-- Header -->
         <div class="mb-5">
-            <a href="{{ route('client.log') }}" class="inline-flex items-center text-sm text-[#8e8e93] dark:text-gray-500 hover:text-[#222222] dark:hover:text-gray-300 mb-3">
+            <a href="{{ route('client.log') }}" class="inline-flex items-center text-sm text-[#8c93a0] dark:text-[#6b7280] hover:text-[#181b22] dark:hover:text-gray-300 mb-3">
                 <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
                 </svg>
                 {{ __('client.log_workout.back') }}
             </a>
             @if($isCustom)
-                <h1 class="font-display text-xl font-semibold text-[#222222] dark:text-gray-100">{{ __('client.log_workout.custom_workout') }}</h1>
-                <p class="text-sm text-[#8e8e93] dark:text-gray-500 mt-0.5">{{ __('client.log_workout.custom_workout_description') }}</p>
+                <h1 class="font-display text-2xl font-bold text-[#181b22] dark:text-[#f0f2f5] tracking-tight">{{ __('client.log_workout.custom_workout') }}</h1>
+                <p class="text-sm text-[#8c93a0] dark:text-[#6b7280] mt-0.5">{{ __('client.log_workout.custom_workout_description') }}</p>
             @else
-                <h1 class="font-display text-xl font-semibold text-[#222222] dark:text-gray-100">{{ $workout->name }}</h1>
-                <p class="text-sm text-[#8e8e93] dark:text-gray-500 mt-0.5">{{ __('client.program.day_n', ['n' => $workout->day_number]) }} &middot; <span x-text="exercises.length"></span> {{ __('client.log_workout.exercises_label') }}</p>
+                <h1 class="font-display text-2xl font-bold text-[#181b22] dark:text-[#f0f2f5] tracking-tight">{{ $workout->name }}</h1>
+                <p class="text-sm text-[#8c93a0] dark:text-[#6b7280] mt-0.5">{{ __('client.program.day_n', ['n' => $workout->day_number]) }} &middot; <span x-text="exercises.length"></span> {{ __('client.log_workout.exercises_label') }}</p>
             @endif
         </div>
 
@@ -36,21 +36,21 @@
 
         <!-- Restore banner -->
         <div x-show="restoreBanner" x-cloak
-            class="rounded-lg bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 p-4">
+            class="rounded-lg bg-[rgba(198,242,78,0.12)] dark:bg-[rgba(198,242,78,0.08)] border border-[rgba(198,242,78,0.3)] p-4">
             <div class="flex items-start justify-between gap-3">
                 <div>
-                    <p class="text-sm font-semibold text-blue-800 dark:text-blue-300">{{ __('client.log_workout.restore_banner_title') }}</p>
-                    <p class="text-xs text-blue-600 dark:text-blue-400 mt-0.5">
+                    <p class="text-sm font-semibold text-[#5c7a10] dark:text-[#c6f24e]">{{ __('client.log_workout.restore_banner_title') }}</p>
+                    <p class="text-xs text-[#5c7a10]/70 dark:text-[#c6f24e]/70 mt-0.5">
                         {{ str_replace(':time', '', __('client.log_workout.restore_banner_description')) }}<span x-text="_savedAtFormatted"></span>{{ Str::after(__('client.log_workout.restore_banner_description'), ':time') }}
                     </p>
                 </div>
                 <div class="flex gap-2 shrink-0">
                     <button type="button" @click="confirmRestore()"
-                        class="text-xs font-semibold px-3 py-1.5 bg-[#1456f0] text-white rounded-lg hover:bg-[#2563eb] transition-colors">
+                        class="text-xs font-semibold px-3 py-1.5 bg-[#c6f24e] text-[#14180a] rounded-lg hover:bg-[#b4e438] transition-colors">
                         {{ __('client.log_workout.restore') }}
                     </button>
                     <button type="button" @click="discardRestore()"
-                        class="text-xs font-medium px-3 py-1.5 bg-white dark:bg-gray-800 text-[#45515e] dark:text-gray-400 border border-gray-200 dark:border-gray-700 rounded-lg hover:bg-gray-50 transition-colors">
+                        class="text-xs font-medium px-3 py-1.5 bg-white dark:bg-gray-800 text-[#555b66] dark:text-[#a4abb6] border border-gray-200 dark:border-gray-700 rounded-lg hover:bg-gray-50 transition-colors">
                         {{ __('client.log_workout.start_fresh') }}
                     </button>
                 </div>
@@ -89,8 +89,8 @@
             <div class="space-y-4">
                 <!-- Custom Workout Name -->
                 @if($isCustom)
-                    <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 shadow-card p-5">
-                        <label for="custom_name" class="block text-sm font-medium text-[#222222] dark:text-gray-100 mb-1">{{ __('client.log_workout.workout_name') }}</label>
+                    <div class="bg-white dark:bg-[#181b21] rounded-xl border border-[rgba(18,22,31,0.09)] dark:border-[rgba(255,255,255,0.08)] shadow-[0_1px_2px_rgba(18,22,31,.05),0_5px_16px_rgba(18,22,31,.05)] dark:shadow-[0_1px_2px_rgba(0,0,0,.4),0_6px_18px_rgba(0,0,0,.3)] p-5">
+                        <label for="custom_name" class="block text-sm font-medium text-[#181b22] dark:text-[#f0f2f5] mb-1">{{ __('client.log_workout.workout_name') }}</label>
                         <input
                             type="text"
                             id="custom_name"
@@ -98,7 +98,7 @@
                             value="{{ old('custom_name') }}"
                             placeholder="{{ __('client.log_workout.workout_name_placeholder') }}"
                             required
-                            class="w-full rounded-lg border-gray-200 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm text-sm focus:border-[#1456f0] focus:ring-[#1456f0] @error('custom_name') border-red-300 @enderror"
+                            class="w-full rounded-lg border-gray-200 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm text-sm focus:border-[#c6f24e] focus:ring-[#c6f24e] @error('custom_name') border-red-300 @enderror"
                         >
                         @error('custom_name')
                             <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
@@ -109,35 +109,36 @@
                 <!-- Exercises -->
                 <div x-ref="exerciseList" x-init="initSortable()" class="space-y-4">
                 <template x-for="(exercise, exerciseIndex) in exercises" :key="exercise.exercise_id">
-                    <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 shadow-card p-5">
+                    <div class="bg-white dark:bg-[#181b21] rounded-xl border border-[rgba(18,22,31,0.09)] dark:border-[rgba(255,255,255,0.08)] shadow-[0_1px_2px_rgba(18,22,31,.05),0_5px_16px_rgba(18,22,31,.05)] dark:shadow-[0_1px_2px_rgba(0,0,0,.4),0_6px_18px_rgba(0,0,0,.3)] p-5">
                         <div class="space-y-3">
                             <div class="flex items-center justify-between">
-                                <div class="flex items-center gap-2">
+                                <div class="flex items-center gap-2.5">
                                     <!-- Drag Handle -->
                                     <div class="drag-handle cursor-grab active:cursor-grabbing text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 touch-none">
                                         <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                                             <path d="M7 2a2 2 0 1 0 0 4 2 2 0 0 0 0-4zM13 2a2 2 0 1 0 0 4 2 2 0 0 0 0-4zM7 8a2 2 0 1 0 0 4 2 2 0 0 0 0-4zM13 8a2 2 0 1 0 0 4 2 2 0 0 0 0-4zM7 14a2 2 0 1 0 0 4 2 2 0 0 0 0-4zM13 14a2 2 0 1 0 0 4 2 2 0 0 0 0-4z"/>
                                         </svg>
                                     </div>
+                                    <div x-html="exThumbHtml(exercise.muscle_group, 40)" class="flex-shrink-0"></div>
                                     <div>
-                                        <button type="button" class="text-sm font-semibold text-[#222222] dark:text-gray-100 text-left hover:underline focus:outline-none" @click="selectedExercise = exercise" x-text="exercise.name"></button>
-                                        <p class="text-xs text-[#8e8e93] dark:text-gray-500" x-show="exercise.prescribed_sets">
+                                        <button type="button" class="text-sm font-semibold text-[#181b22] dark:text-[#f0f2f5] text-left hover:underline focus:outline-none" @click="selectedExercise = exercise" x-text="exercise.name"></button>
+                                        <p class="text-xs text-[#8c93a0] dark:text-[#6b7280]" x-show="exercise.prescribed_sets">
                                             {{ Str::before(__('client.log_workout.prescribed'), ':sets') }}<span x-text="exercise.prescribed_sets"></span>{{ Str::between(__('client.log_workout.prescribed'), ':sets', ':reps') }}<span x-text="exercise.prescribed_reps"></span>{{ Str::after(__('client.log_workout.prescribed'), ':reps') }}
                                         </p>
                                     </div>
                                 </div>
                                 <div class="flex items-center gap-1">
-                                    <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-blue-50 text-[#1456f0] dark:bg-blue-900/30 dark:text-blue-400" x-text="exercise.muscle_group.replace('_', ' ')"></span>
+                                    <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-[rgba(198,242,78,0.15)] text-[#5c7a10] dark:bg-[rgba(198,242,78,0.12)] dark:text-[#c6f24e]" x-text="exercise.muscle_group.replace('_', ' ')"></span>
                                     <!-- Move Up -->
                                     <button type="button" @click="moveExerciseUp(exerciseIndex)" :disabled="exerciseIndex === 0"
-                                        class="p-1 text-[#8e8e93] dark:text-gray-500 hover:text-[#222222] dark:hover:text-gray-300 rounded hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors disabled:opacity-30 disabled:cursor-not-allowed" title="Move up">
+                                        class="p-1 text-[#8c93a0] dark:text-[#6b7280] hover:text-[#181b22] dark:hover:text-gray-300 rounded hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors disabled:opacity-30 disabled:cursor-not-allowed" title="Move up">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"/>
                                         </svg>
                                     </button>
                                     <!-- Move Down -->
                                     <button type="button" @click="moveExerciseDown(exerciseIndex)" :disabled="exerciseIndex === exercises.length - 1"
-                                        class="p-1 text-[#8e8e93] dark:text-gray-500 hover:text-[#222222] dark:hover:text-gray-300 rounded hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors disabled:opacity-30 disabled:cursor-not-allowed" title="Move down">
+                                        class="p-1 text-[#8c93a0] dark:text-[#6b7280] hover:text-[#181b22] dark:hover:text-gray-300 rounded hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors disabled:opacity-30 disabled:cursor-not-allowed" title="Move down">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
                                         </svg>
@@ -157,7 +158,7 @@
                             <input type="hidden" :name="`exercises[${exerciseIndex}][exercise_id]`" :value="exercise.exercise_id">
 
                             <!-- Previous Session Data -->
-                            <div x-show="exercise.previous_sets && exercise.previous_sets.length > 0" class="text-xs text-[#8e8e93] dark:text-gray-500">
+                            <div x-show="exercise.previous_sets && exercise.previous_sets.length > 0" class="text-xs text-[#8c93a0] dark:text-[#6b7280]">
                                 <span class="font-medium">{{ __('client.log_workout.last_session') }}</span>
                                 <template x-for="(prev, prevIndex) in (exercise.previous_sets || [])" :key="prevIndex">
                                     <span>
@@ -170,17 +171,18 @@
                             <div class="overflow-x-auto">
                                 <table class="w-full text-sm">
                                     <thead>
-                                        <tr class="text-left text-xs text-[#8e8e93] dark:text-gray-500 border-b border-gray-100 dark:border-gray-800">
-                                            <th class="pb-2 pr-3 w-12">{{ __('client.log_workout.set') }}</th>
-                                            <th class="pb-2 pr-3">{{ __('client.log_workout.weight_kg') }}</th>
+                                        <tr class="text-left text-xs text-[#8c93a0] dark:text-[#6b7280] border-b border-[rgba(18,22,31,0.06)] dark:border-[rgba(255,255,255,0.06)]">
+                                            <th class="pb-2 pr-2 w-8">{{ __('client.log_workout.set') }}</th>
+                                            <th class="pb-2 pr-2">{{ __('client.log_workout.weight_kg') }}</th>
                                             <th class="pb-2 pr-2">{{ __('client.log_workout.reps') }}</th>
-                                            <th class="pb-2 w-8"></th>
+                                            <th class="pb-2 pr-1 w-14 text-center">RPE</th>
+                                            <th class="pb-2 w-6"></th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <template x-for="(set, setIndex) in exercise.sets" :key="setIndex">
                                             <tr>
-                                                <td class="py-1.5 pr-3 text-[#45515e] dark:text-gray-400 font-medium" x-text="setIndex + 1"></td>
+                                                <td class="py-1.5 pr-3 text-[#555b66] dark:text-[#a4abb6] font-medium font-mono" x-text="setIndex + 1"></td>
                                                 <td class="py-1.5 pr-3">
                                                     <input
                                                         type="number"
@@ -189,7 +191,7 @@
                                                         :name="`exercises[${exerciseIndex}][sets][${setIndex}][weight]`"
                                                         x-model="set.weight"
                                                         placeholder="0"
-                                                        class="w-full rounded-lg border-gray-200 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm text-sm focus:border-[#1456f0] focus:ring-[#1456f0]"
+                                                        class="w-full rounded-lg border-gray-200 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm text-sm focus:border-[#c6f24e] focus:ring-[#c6f24e]"
                                                     >
                                                 </td>
                                                 <td class="py-1.5 pr-2">
@@ -199,7 +201,19 @@
                                                         :name="`exercises[${exerciseIndex}][sets][${setIndex}][reps]`"
                                                         x-model="set.reps"
                                                         :placeholder="exercise.prescribed_reps || '0'"
-                                                        class="w-full rounded-lg border-gray-200 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm text-sm focus:border-[#1456f0] focus:ring-[#1456f0]"
+                                                        class="w-full rounded-lg border-gray-200 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm text-sm focus:border-[#c6f24e] focus:ring-[#c6f24e]"
+                                                    >
+                                                </td>
+                                                <td class="py-1.5 pr-1">
+                                                    <input
+                                                        type="number"
+                                                        min="1"
+                                                        max="10"
+                                                        :name="`exercises[${exerciseIndex}][sets][${setIndex}][rpe]`"
+                                                        x-model="set.rpe"
+                                                        placeholder="—"
+                                                        class="w-full rounded-lg border-gray-200 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm text-sm text-center focus:border-[#c6f24e] focus:ring-[#c6f24e]"
+                                                        :style="set.rpe ? 'border-color:'+rpeColor(set.rpe)+';box-shadow:0 0 0 1px '+rpeColor(set.rpe)+'44' : ''"
                                                     >
                                                 </td>
                                                 <td class="py-1.5">
@@ -207,7 +221,7 @@
                                                         type="button"
                                                         @click="removeSet(exerciseIndex, setIndex)"
                                                         x-show="exercise.sets.length > 1"
-                                                        class="p-1 text-[#8e8e93] dark:text-gray-500 hover:text-red-500 transition-colors"
+                                                        class="p-1 text-[#8c93a0] dark:text-[#6b7280] hover:text-red-500 transition-colors"
                                                         title="Remove set"
                                                     >
                                                         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -225,7 +239,7 @@
                             <button
                                 type="button"
                                 @click="addSet(exerciseIndex)"
-                                class="inline-flex items-center text-xs text-[#1456f0] hover:opacity-80 font-medium"
+                                class="inline-flex items-center text-xs text-[#5c7a10] dark:text-[#c6f24e] hover:opacity-80 font-semibold"
                             >
                                 <svg class="w-3.5 h-3.5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
@@ -242,16 +256,16 @@
                     <svg class="mx-auto h-10 w-10 text-gray-300 dark:text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
                     </svg>
-                    <p class="mt-2 text-sm text-[#8e8e93] dark:text-gray-500">{{ __('client.log_workout.no_exercises') }}</p>
+                    <p class="mt-2 text-sm text-[#8c93a0] dark:text-[#6b7280]">{{ __('client.log_workout.no_exercises') }}</p>
                 </div>
 
                 <!-- Add Exercise -->
-                <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 shadow-card p-5">
+                <div class="bg-white dark:bg-[#181b21] rounded-xl border border-[rgba(18,22,31,0.09)] dark:border-[rgba(255,255,255,0.08)] shadow-[0_1px_2px_rgba(18,22,31,.05),0_5px_16px_rgba(18,22,31,.05)] dark:shadow-[0_1px_2px_rgba(0,0,0,.4),0_6px_18px_rgba(0,0,0,.3)] p-5">
                     <div x-show="!showExercisePicker">
                         <button
                             type="button"
                             @click="openExercisePicker()"
-                            class="w-full inline-flex justify-center items-center gap-2 px-4 py-2.5 border-2 border-dashed border-gray-200 dark:border-gray-700 rounded-xl text-sm font-medium text-[#45515e] dark:text-gray-400 hover:border-[#1456f0] hover:text-[#1456f0] transition-colors"
+                            class="w-full inline-flex justify-center items-center gap-2 px-4 py-2.5 border-2 border-dashed border-gray-200 dark:border-gray-700 rounded-xl text-sm font-medium text-[#555b66] dark:text-[#a4abb6] hover:border-[#c6f24e] hover:text-[#5c7a10] dark:hover:text-[#c6f24e] transition-colors"
                         >
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
@@ -263,8 +277,8 @@
                     <div x-show="showExercisePicker" x-cloak>
                         <div class="space-y-3">
                             <div class="flex items-center justify-between">
-                                <label class="block text-sm font-semibold text-[#222222] dark:text-gray-100">{{ __('client.log_workout.select_exercise') }}</label>
-                                <button type="button" @click="showExercisePicker = false" class="text-[#8e8e93] dark:text-gray-500 hover:text-[#222222] dark:hover:text-gray-300">
+                                <label class="block text-sm font-semibold text-[#181b22] dark:text-[#f0f2f5]">{{ __('client.log_workout.select_exercise') }}</label>
+                                <button type="button" @click="showExercisePicker = false" class="text-[#8c93a0] dark:text-[#6b7280] hover:text-[#181b22] dark:hover:text-gray-300">
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
                                     </svg>
@@ -274,26 +288,26 @@
                                 type="text"
                                 x-model="exerciseSearch"
                                 placeholder="{{ __('client.log_workout.search_exercises') }}"
-                                class="w-full rounded-lg border-gray-200 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm text-sm focus:border-[#1456f0] focus:ring-[#1456f0]"
+                                class="w-full rounded-lg border-gray-200 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm text-sm focus:border-[#c6f24e] focus:ring-[#c6f24e]"
                                 x-ref="exerciseSearchInput"
                             >
-                            <div class="max-h-48 overflow-y-auto border border-gray-100 dark:border-gray-800 rounded-xl divide-y divide-gray-100 dark:divide-gray-800">
+                            <div class="max-h-48 overflow-y-auto border border-[rgba(18,22,31,0.09)] dark:border-[rgba(255,255,255,0.08)] rounded-xl divide-y divide-[rgba(18,22,31,0.06)] dark:divide-[rgba(255,255,255,0.06)]">
                                 <template x-for="exercise in filteredExercises" :key="exercise.id">
                                     <button
                                         type="button"
                                         @click="addExercise(exercise)"
-                                        class="w-full text-left px-3 py-2 hover:bg-blue-50 dark:hover:bg-gray-800 transition-colors flex items-center justify-between"
+                                        class="w-full text-left px-3 py-2 hover:bg-[rgba(198,242,78,0.08)] dark:hover:bg-gray-800 transition-colors flex items-center justify-between"
                                     >
                                         <div>
-                                            <span class="text-sm font-medium text-[#222222] dark:text-gray-100" x-text="exercise.name"></span>
-                                            <span class="text-xs text-[#8e8e93] dark:text-gray-500 ml-2" x-text="exercise.muscle_group.replace('_', ' ')"></span>
+                                            <span class="text-sm font-medium text-[#181b22] dark:text-[#f0f2f5]" x-text="exercise.name"></span>
+                                            <span class="text-xs text-[#8c93a0] dark:text-[#6b7280] ml-2" x-text="exercise.muscle_group.replace('_', ' ')"></span>
                                         </div>
-                                        <svg class="w-4 h-4 text-[#8e8e93] dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <svg class="w-4 h-4 text-[#8c93a0] dark:text-[#6b7280]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
                                         </svg>
                                     </button>
                                 </template>
-                                <div x-show="filteredExercises.length === 0" class="px-3 py-4 text-center text-sm text-[#8e8e93] dark:text-gray-500">
+                                <div x-show="filteredExercises.length === 0" class="px-3 py-4 text-center text-sm text-[#8c93a0] dark:text-[#6b7280]">
                                     {{ __('client.log_workout.no_exercises_found') }}
                                 </div>
                             </div>
@@ -302,32 +316,32 @@
                 </div>
 
                 <!-- Date & Time -->
-                <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 shadow-card p-5">
-                    <label for="completed_at" class="block text-sm font-medium text-[#222222] dark:text-gray-100 mb-1">{{ __('client.log_workout.date_time') }}</label>
+                <div class="bg-white dark:bg-[#181b21] rounded-xl border border-[rgba(18,22,31,0.09)] dark:border-[rgba(255,255,255,0.08)] shadow-[0_1px_2px_rgba(18,22,31,.05),0_5px_16px_rgba(18,22,31,.05)] dark:shadow-[0_1px_2px_rgba(0,0,0,.4),0_6px_18px_rgba(0,0,0,.3)] p-5">
+                    <label for="completed_at" class="block text-sm font-medium text-[#181b22] dark:text-[#f0f2f5] mb-1">{{ __('client.log_workout.date_time') }}</label>
                     <input
                         type="datetime-local"
                         id="completed_at"
                         name="completed_at"
                         value="{{ old('completed_at', now()->format('Y-m-d\TH:i')) }}"
                         max="{{ now()->format('Y-m-d\TH:i') }}"
-                        class="w-full rounded-lg border-gray-200 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm text-sm focus:border-[#1456f0] focus:ring-[#1456f0] @error('completed_at') border-red-300 @enderror"
+                        class="w-full rounded-lg border-gray-200 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm text-sm focus:border-[#c6f24e] focus:ring-[#c6f24e] @error('completed_at') border-red-300 @enderror"
                     >
                     @error('completed_at')
                         <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
                     @enderror
-                    <p class="mt-1 text-xs text-[#8e8e93] dark:text-gray-500">{{ __('client.log_workout.date_time_hint') }}</p>
+                    <p class="mt-1 text-xs text-[#8c93a0] dark:text-[#6b7280]">{{ __('client.log_workout.date_time_hint') }}</p>
                 </div>
 
                 <!-- Notes -->
-                <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 shadow-card p-5">
-                    <label for="notes" class="block text-sm font-medium text-[#222222] dark:text-gray-100 mb-1">{{ __('client.log_workout.notes_optional') }}</label>
+                <div class="bg-white dark:bg-[#181b21] rounded-xl border border-[rgba(18,22,31,0.09)] dark:border-[rgba(255,255,255,0.08)] shadow-[0_1px_2px_rgba(18,22,31,.05),0_5px_16px_rgba(18,22,31,.05)] dark:shadow-[0_1px_2px_rgba(0,0,0,.4),0_6px_18px_rgba(0,0,0,.3)] p-5">
+                    <label for="notes" class="block text-sm font-medium text-[#181b22] dark:text-[#f0f2f5] mb-1">{{ __('client.log_workout.notes_optional') }}</label>
                     <textarea
                         id="notes"
                         name="notes"
                         rows="2"
                         placeholder="{{ __('client.log_workout.notes_placeholder') }}"
                         x-model="notes"
-                        class="w-full rounded-lg border-gray-200 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm text-sm focus:border-[#1456f0] focus:ring-[#1456f0]"
+                        class="w-full rounded-lg border-gray-200 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm text-sm focus:border-[#c6f24e] focus:ring-[#c6f24e]"
                     >{{ old('notes') }}</textarea>
                 </div>
 
@@ -335,7 +349,7 @@
                 <button
                     type="submit"
                     x-bind:disabled="exercises.length === 0"
-                    class="w-full inline-flex justify-center items-center px-6 py-3 bg-[#181e25] dark:bg-gray-700 text-white text-sm font-semibold rounded-xl hover:bg-gray-800 dark:hover:bg-gray-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                    class="w-full inline-flex justify-center items-center px-6 py-3 bg-[#c6f24e] text-[#14180a] text-sm font-semibold rounded-xl hover:bg-[#b4e438] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                     {{ __('client.log_workout.complete_workout') }}
                 </button>
@@ -345,13 +359,13 @@
         <!-- Exercise Detail Modal -->
         <div x-show="selectedExercise" x-cloak class="fixed inset-0 z-50 flex items-center justify-center p-4">
             <div class="absolute inset-0 bg-black/50" @click="selectedExercise = null"></div>
-            <div class="relative w-full max-w-2xl bg-white dark:bg-gray-900 rounded-2xl shadow-xl overflow-y-auto max-h-[85vh]">
+            <div class="relative w-full max-w-2xl bg-white dark:bg-[#181b21] rounded-2xl shadow-xl overflow-y-auto max-h-[85vh]">
                 <div class="flex items-start justify-between px-5 pt-5 pb-4">
                     <div>
-                        <h2 class="font-display text-lg font-semibold text-[#222222] dark:text-gray-100" x-text="selectedExercise ? selectedExercise.name : ''"></h2>
-                        <span class="inline-flex items-center mt-1 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-blue-50 text-[#1456f0] dark:bg-blue-900/30 dark:text-blue-400" x-text="selectedExercise ? selectedExercise.muscle_group.replace('_', ' ') : ''"></span>
+                        <h2 class="font-display text-lg font-semibold text-[#181b22] dark:text-[#f0f2f5]" x-text="selectedExercise ? selectedExercise.name : ''"></h2>
+                        <span class="inline-flex items-center mt-1 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-[rgba(198,242,78,0.15)] text-[#5c7a10] dark:bg-[rgba(198,242,78,0.12)] dark:text-[#c6f24e]" x-text="selectedExercise ? selectedExercise.muscle_group.replace('_', ' ') : ''"></span>
                     </div>
-                    <button type="button" @click="selectedExercise = null" class="p-2 -mr-1 text-[#8e8e93] hover:text-[#222222] dark:hover:text-gray-300 rounded-lg" aria-label="Close">
+                    <button type="button" @click="selectedExercise = null" class="p-2 -mr-1 text-[#8c93a0] hover:text-[#181b22] dark:hover:text-gray-300 rounded-lg" aria-label="Close">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
                         </svg>
@@ -368,19 +382,19 @@
                             <svg class="mx-auto h-10 w-10 text-gray-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/>
                             </svg>
-                            <p class="mt-2 text-sm text-[#8e8e93] dark:text-gray-500">{{ __('client.log_workout.no_video') }}</p>
+                            <p class="mt-2 text-sm text-[#8c93a0] dark:text-[#6b7280]">{{ __('client.log_workout.no_video') }}</p>
                         </div>
                     </div>
                 </div>
                 <div class="px-5 pb-8">
-                    <h3 class="text-sm font-medium text-[#8e8e93] dark:text-gray-500 mb-2">{{ __('client.log_workout.description') }}</h3>
-                    <p x-show="selectedExercise && selectedExercise.description" class="text-sm text-[#45515e] dark:text-gray-300 whitespace-pre-wrap" x-text="selectedExercise ? selectedExercise.description : ''"></p>
-                    <p x-show="!selectedExercise || !selectedExercise.description" class="text-sm text-[#8e8e93] dark:text-gray-500 italic">{{ __('client.log_workout.no_description') }}</p>
+                    <h3 class="text-sm font-medium text-[#8c93a0] dark:text-[#6b7280] mb-2">{{ __('client.log_workout.description') }}</h3>
+                    <p x-show="selectedExercise && selectedExercise.description" class="text-sm text-[#555b66] dark:text-gray-300 whitespace-pre-wrap" x-text="selectedExercise ? selectedExercise.description : ''"></p>
+                    <p x-show="!selectedExercise || !selectedExercise.description" class="text-sm text-[#8c93a0] dark:text-[#6b7280] italic">{{ __('client.log_workout.no_description') }}</p>
                 </div>
 
                 <!-- Progress Section -->
-                <div class="px-5 pb-8 border-t border-gray-100 dark:border-gray-800 pt-5">
-                    <h3 class="text-sm font-medium text-[#8e8e93] dark:text-gray-500 mb-3">{{ __('client.exercise_progress.heading') }}</h3>
+                <div class="px-5 pb-8 border-t border-[rgba(18,22,31,0.06)] dark:border-[rgba(255,255,255,0.06)] pt-5">
+                    <h3 class="text-sm font-medium text-[#8c93a0] dark:text-[#6b7280] mb-3">{{ __('client.exercise_progress.heading') }}</h3>
 
                     <!-- Range selector -->
                     <div class="flex gap-1 mb-4">
@@ -388,8 +402,7 @@
                             <button
                                 type="button"
                                 @click="progressRange = r; selectedExercise && loadProgress(selectedExercise.exercise_id, r)"
-                                :class="progressRange === r ? 'text-white' : 'bg-gray-100 dark:bg-gray-800 text-[#45515e] dark:text-gray-300'"
-                                :style="progressRange === r ? 'background-color: var(--color-primary)' : ''"
+                                :class="progressRange === r ? 'bg-[#c6f24e] text-[#14180a]' : 'bg-gray-100 dark:bg-gray-800 text-[#555b66] dark:text-gray-300'"
                                 class="px-2.5 py-1 rounded text-xs font-medium transition-colors"
                                 x-text="r === 30 ? '30d' : r === 90 ? '90d' : r === 365 ? '1yr' : '{{ __('client.exercise_progress.all_time') }}'"
                             ></button>
@@ -398,7 +411,7 @@
 
                     <!-- Loading spinner -->
                     <div x-show="progressLoading" class="flex items-center justify-center py-8">
-                        <svg class="animate-spin h-6 w-6 text-[#1456f0]" fill="none" viewBox="0 0 24 24">
+                        <svg class="animate-spin h-6 w-6 text-[#5c7a10] dark:text-[#c6f24e]" fill="none" viewBox="0 0 24 24">
                             <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                             <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
                         </svg>
@@ -410,27 +423,27 @@
                             <!-- PR stats -->
                             <div class="grid grid-cols-2 gap-3">
                                 <div class="bg-gray-50 dark:bg-gray-800 rounded-xl p-3 text-center">
-                                    <p class="text-xs text-[#8e8e93] dark:text-gray-500">{{ __('client.exercise_progress.max_weight') }}</p>
-                                    <p class="text-lg font-semibold text-[#222222] dark:text-gray-100 mt-1" x-text="progressData.maxWeight !== null ? progressData.maxWeight + ' kg' : '—'"></p>
+                                    <p class="text-xs text-[#8c93a0] dark:text-[#6b7280]">{{ __('client.exercise_progress.max_weight') }}</p>
+                                    <p class="text-lg font-semibold font-mono text-[#181b22] dark:text-[#f0f2f5] mt-1" x-text="progressData.maxWeight !== null ? progressData.maxWeight + ' kg' : '—'"></p>
                                 </div>
                                 <div class="bg-gray-50 dark:bg-gray-800 rounded-xl p-3 text-center">
-                                    <p class="text-xs text-[#8e8e93] dark:text-gray-500">{{ __('client.exercise_progress.est_1rm') }}</p>
-                                    <p class="text-lg font-semibold text-[#222222] dark:text-gray-100 mt-1" x-text="progressData.estimated1rm !== null ? progressData.estimated1rm + ' kg' : '—'"></p>
+                                    <p class="text-xs text-[#8c93a0] dark:text-[#6b7280]">{{ __('client.exercise_progress.est_1rm') }}</p>
+                                    <p class="text-lg font-semibold font-mono text-[#181b22] dark:text-[#f0f2f5] mt-1" x-text="progressData.estimated1rm !== null ? progressData.estimated1rm + ' kg' : '—'"></p>
                                 </div>
                             </div>
 
                             <!-- No chart data -->
-                            <p x-show="progressData.weightChart.length === 0" class="text-sm text-[#8e8e93] dark:text-gray-500 italic text-center py-4">{{ __('client.exercise_progress.no_data') }}</p>
+                            <p x-show="progressData.weightChart.length === 0" class="text-sm text-[#8c93a0] dark:text-[#6b7280] italic text-center py-4">{{ __('client.exercise_progress.no_data') }}</p>
 
                             <!-- Charts -->
                             <template x-if="progressData.weightChart.length > 0">
                                 <div class="space-y-4">
                                     <div>
-                                        <p class="text-xs text-[#8e8e93] dark:text-gray-500 mb-1">{{ __('client.exercise_progress.weight_chart') }}</p>
+                                        <p class="text-xs text-[#8c93a0] dark:text-[#6b7280] mb-1">{{ __('client.exercise_progress.weight_chart') }}</p>
                                         <canvas id="logProgressWeightChart" height="120"></canvas>
                                     </div>
                                     <div>
-                                        <p class="text-xs text-[#8e8e93] dark:text-gray-500 mb-1">{{ __('client.exercise_progress.volume_chart') }}</p>
+                                        <p class="text-xs text-[#8c93a0] dark:text-[#6b7280] mb-1">{{ __('client.exercise_progress.volume_chart') }}</p>
                                         <canvas id="logProgressVolumeChart" height="120"></canvas>
                                     </div>
                                 </div>
@@ -751,7 +764,7 @@
                         prescribed_reps: null,
                         previous_sets: exercise.previous_sets || [],
                         lock_removal: false,
-                        sets: [{ weight: '', reps: '' }],
+                        sets: [{ weight: '', reps: '', rpe: '' }],
                     });
                     this.showExercisePicker = false;
                     this.exerciseSearch = '';
@@ -762,11 +775,20 @@
                 },
 
                 addSet(exerciseIndex) {
-                    this.exercises[exerciseIndex].sets.push({ weight: '', reps: '' });
+                    this.exercises[exerciseIndex].sets.push({ weight: '', reps: '', rpe: '' });
                 },
 
                 removeSet(exerciseIndex, setIndex) {
                     this.exercises[exerciseIndex].sets.splice(setIndex, 1);
+                },
+
+                rpeColor(rpe) {
+                    var n = parseInt(rpe);
+                    if (!n) return '';
+                    if (n <= 3) return 'oklch(0.78 0.15 145)';
+                    if (n <= 6) return 'oklch(0.82 0.15 90)';
+                    if (n <= 8) return 'oklch(0.74 0.17 55)';
+                    return 'oklch(0.66 0.2 28)';
                 },
 
                 loadProgress(exerciseId, range) {
@@ -815,8 +837,8 @@
                                 labels,
                                 datasets: [{
                                     data: data.weightChart.map(p => p.weight),
-                                    borderColor: 'rgb(59, 130, 246)',
-                                    backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                                    borderColor: '#5c7a10',
+                                    backgroundColor: 'rgba(198, 242, 78, 0.15)',
                                     tension: 0.3,
                                     fill: true,
                                     pointRadius: 3,
@@ -847,6 +869,40 @@
                 },
             }
         }
+
+        window.exThumbHtml = function(muscle, size) {
+            size = size || 40;
+            var themes = {
+                back:       { from: '#3b82f6', to: '#1e40af', ic: 'back' },
+                chest:      { from: '#f0653e', to: '#b8311a', ic: 'chest' },
+                shoulders:  { from: '#a06bff', to: '#6d28d9', ic: 'shoulder' },
+                shoulder:   { from: '#a06bff', to: '#6d28d9', ic: 'shoulder' },
+                core:       { from: '#2dd4bf', to: '#0d9488', ic: 'core' },
+                quadriceps: { from: '#34d27b', to: '#15803d', ic: 'legs' },
+                legs:       { from: '#34d27b', to: '#15803d', ic: 'legs' },
+                glutes:     { from: '#f472b6', to: '#be185d', ic: 'legs' },
+                biceps:     { from: '#f5b53d', to: '#c2790a', ic: 'arm' },
+                triceps:    { from: '#f59e3d', to: '#c2620a', ic: 'arm' },
+                arms:       { from: '#f5b53d', to: '#c2790a', ic: 'arm' },
+                hamstrings: { from: '#34d27b', to: '#15803d', ic: 'legs' },
+                calves:     { from: '#34d27b', to: '#15803d', ic: 'legs' },
+            };
+            var glyphs = {
+                back:     '<path d="M12 3v18"/><path d="M12 6c-2.5 0-5 1.5-5 4M12 6c2.5 0 5 1.5 5 4"/><path d="M7 10c0 3 2 5 5 5s5-2 5-5"/>',
+                chest:    '<path d="M4 8c2-1.5 5-2 8-2s6 .5 8 2"/><path d="M4 8v4c0 3 3.5 5 8 5s8-2 8-5V8"/><path d="M12 6v11"/>',
+                shoulder: '<circle cx="12" cy="8" r="3.2"/><path d="M5 20c.5-4 3-6 7-6s6.5 2 7 6"/>',
+                core:     '<rect x="7" y="4" width="10" height="16" rx="3"/><path d="M7 9h10M7 13h10M12 4v16"/>',
+                legs:     '<path d="M9 3v7l-2 11M15 3v7l2 11"/><path d="M9 10h6"/>',
+                arm:      '<path d="M6 6v5a4 4 0 0 0 4 4h2"/><path d="M12 15a3 3 0 0 0 6 0v-2"/><circle cx="6" cy="5" r="1.5" fill="white" stroke="none"/>',
+                dumbbell: '<path d="M6.5 6.5l11 11"/><path d="M3 10l-1-1a2 2 0 0 1 3-3l1 1M14 21l1 1a2 2 0 0 0 3-3l-1-1"/>',
+            };
+            var key = (muscle || '').toLowerCase().replace(/[\s-]+/g, '_');
+            var t = themes[key] || { from: '#94a3b8', to: '#475569', ic: 'dumbbell' };
+            var g = glyphs[t.ic] || glyphs.dumbbell;
+            var br = Math.round(size * 0.25);
+            var ic = Math.round(size * 0.56);
+            return '<div style="width:'+size+'px;height:'+size+'px;border-radius:'+br+'px;background:linear-gradient(150deg,'+t.from+','+t.to+');flex-shrink:0;position:relative;overflow:hidden;display:grid;place-items:center;box-shadow:inset 0 0 0 1px rgba(255,255,255,.12),inset 0 -10px 18px rgba(0,0,0,.22)"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:'+ic+'px;height:'+ic+'px;position:relative;z-index:1;filter:drop-shadow(0 1px 2px rgba(0,0,0,.35))">'+g+'</svg><div style="position:absolute;inset:0;background:radial-gradient(120% 80% at 25% 15%,rgba(255,255,255,.28),transparent 55%);pointer-events:none"></div></div>';
+        };
     </script>
     @endpush
 </x-layouts.client>
