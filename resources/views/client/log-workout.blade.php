@@ -111,46 +111,26 @@
                 <template x-for="(exercise, exerciseIndex) in exercises" :key="exercise.exercise_id">
                     <div class="bg-white dark:bg-[#181b21] rounded-xl border border-[rgba(18,22,31,0.09)] dark:border-[rgba(255,255,255,0.08)] shadow-[0_1px_2px_rgba(18,22,31,.05),0_5px_16px_rgba(18,22,31,.05)] dark:shadow-[0_1px_2px_rgba(0,0,0,.4),0_6px_18px_rgba(0,0,0,.3)] p-5">
                         <div class="space-y-3">
-                            <div class="flex items-center justify-between">
-                                <div class="flex items-center gap-2.5">
-                                    <!-- Drag Handle -->
-                                    <div class="drag-handle cursor-grab active:cursor-grabbing text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 touch-none">
-                                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                                            <path d="M7 2a2 2 0 1 0 0 4 2 2 0 0 0 0-4zM13 2a2 2 0 1 0 0 4 2 2 0 0 0 0-4zM7 8a2 2 0 1 0 0 4 2 2 0 0 0 0-4zM13 8a2 2 0 1 0 0 4 2 2 0 0 0 0-4zM7 14a2 2 0 1 0 0 4 2 2 0 0 0 0-4zM13 14a2 2 0 1 0 0 4 2 2 0 0 0 0-4z"/>
-                                        </svg>
-                                    </div>
-                                    <div x-html="exThumbHtml(exercise.muscle_group, 40)" class="flex-shrink-0"></div>
-                                    <div>
-                                        <button type="button" class="text-sm font-semibold text-[#181b22] dark:text-[#f0f2f5] text-left hover:underline focus:outline-none" @click="selectedExercise = exercise" x-text="exercise.name"></button>
-                                        <p class="text-xs text-[#8c93a0] dark:text-[#6b7280]" x-show="exercise.prescribed_sets">
-                                            {{ Str::before(__('client.log_workout.prescribed'), ':sets') }}<span x-text="exercise.prescribed_sets"></span>{{ Str::between(__('client.log_workout.prescribed'), ':sets', ':reps') }}<span x-text="exercise.prescribed_reps"></span>{{ Str::after(__('client.log_workout.prescribed'), ':reps') }}
-                                        </p>
-                                    </div>
+                            <!-- Exercise header: drag | thumb | name+prescribed | remove -->
+                            <div class="flex items-start gap-2.5">
+                                <div class="drag-handle cursor-grab active:cursor-grabbing touch-none flex-shrink-0 mt-1 opacity-40 hover:opacity-70 transition-opacity">
+                                    <svg class="w-4 h-4 text-[#555b66] dark:text-[#a4abb6]" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M7 2a2 2 0 1 0 0 4 2 2 0 0 0 0-4zM13 2a2 2 0 1 0 0 4 2 2 0 0 0 0-4zM7 8a2 2 0 1 0 0 4 2 2 0 0 0 0-4zM13 8a2 2 0 1 0 0 4 2 2 0 0 0 0-4zM7 14a2 2 0 1 0 0 4 2 2 0 0 0 0-4zM13 14a2 2 0 1 0 0 4 2 2 0 0 0 0-4z"/>
+                                    </svg>
                                 </div>
-                                <div class="flex items-center gap-1">
-                                    <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-[rgba(198,242,78,0.15)] text-[#5c7a10] dark:bg-[rgba(198,242,78,0.12)] dark:text-[#c6f24e]" x-text="exercise.muscle_group.replace('_', ' ')"></span>
-                                    <!-- Move Up -->
-                                    <button type="button" @click="moveExerciseUp(exerciseIndex)" :disabled="exerciseIndex === 0"
-                                        class="p-1 text-[#8c93a0] dark:text-[#6b7280] hover:text-[#181b22] dark:hover:text-gray-300 rounded hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors disabled:opacity-30 disabled:cursor-not-allowed" title="Move up">
-                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"/>
-                                        </svg>
-                                    </button>
-                                    <!-- Move Down -->
-                                    <button type="button" @click="moveExerciseDown(exerciseIndex)" :disabled="exerciseIndex === exercises.length - 1"
-                                        class="p-1 text-[#8c93a0] dark:text-[#6b7280] hover:text-[#181b22] dark:hover:text-gray-300 rounded hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors disabled:opacity-30 disabled:cursor-not-allowed" title="Move down">
-                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-                                        </svg>
-                                    </button>
-                                    <!-- Remove -->
-                                    <button type="button" @click="removeExercise(exerciseIndex)" x-show="!exercise.lock_removal"
-                                        class="p-1 text-red-400 hover:text-red-600 rounded hover:bg-red-50 transition-colors" title="Remove exercise">
-                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-                                        </svg>
-                                    </button>
+                                <div x-html="exThumbHtml(exercise.muscle_group, 40)" class="flex-shrink-0"></div>
+                                <div class="flex-1 min-w-0">
+                                    <button type="button" class="font-display font-semibold text-[15px] text-[#181b22] dark:text-[#f0f2f5] text-left hover:underline focus:outline-none leading-snug" @click="selectedExercise = exercise" x-text="exercise.name"></button>
+                                    <p class="text-xs text-[#8c93a0] dark:text-[#6b7280] mt-0.5" x-show="exercise.prescribed_sets">
+                                        {{ Str::before(__('client.log_workout.prescribed'), ':sets') }}<span x-text="exercise.prescribed_sets"></span>{{ Str::between(__('client.log_workout.prescribed'), ':sets', ':reps') }}<span x-text="exercise.prescribed_reps"></span>{{ Str::after(__('client.log_workout.prescribed'), ':reps') }}
+                                    </p>
                                 </div>
+                                <button type="button" @click="removeExercise(exerciseIndex)" x-show="!exercise.lock_removal"
+                                    class="flex-shrink-0 mt-0.5 p-1 text-[#8c93a0] dark:text-[#6b7280] hover:text-red-500 dark:hover:text-red-400 rounded transition-colors" title="Remove exercise">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                                    </svg>
+                                </button>
                             </div>
 
                             <!-- Hidden fields -->
