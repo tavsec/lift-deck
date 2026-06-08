@@ -83,7 +83,11 @@
       "Bash(APP_BASE_PATH=\"/Users/timotejavsec/Documents/Projects/lift-deck\" php artisan test --compact tests/Feature/Auth tests/Feature/ProfileTest.php)",
       "Bash(APP_BASE_PATH=\"/Users/timotejavsec/Documents/Projects/lift-deck\" php artisan test tests/Feature/Auth tests/Feature/ProfileTest.php)",
       "Bash(APP_BASE_PATH=/Users/timotejavsec/Documents/Projects/lift-deck php -r ' *)",
-      "Bash(APP_BASE_PATH=\"/Users/timotejavsec/Documents/Projects/lift-deck\" php artisan test --compact tests/Feature/SeoTest.php tests/Feature/LandingLocaleTest.php)"
+      "Bash(APP_BASE_PATH=\"/Users/timotejavsec/Documents/Projects/lift-deck\" php artisan test --compact tests/Feature/SeoTest.php tests/Feature/LandingLocaleTest.php)",
+      "mcp__laravel-boost__read-log-entries",
+      "mcp__laravel-boost__browser-logs",
+      "Bash(node *)",
+      "mcp__laravel-boost__database-query"
     ]
   },
   "enabledMcpjsonServers": [

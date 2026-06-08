@@ -33,4 +33,9 @@ if (! empty($overrides)) {
     $loader->addClassMap($overrides);
 }
 
+// Set APP_BASE_PATH so Laravel resolves config/routes/views from the correct
+// directory. Needed in worktrees where vendor/ lives in the main repo but app
+// files live in the worktree. Works for the main repo too (no hardcoded path).
+$_SERVER['APP_BASE_PATH'] = $worktreeRoot;
+
 return $loader;

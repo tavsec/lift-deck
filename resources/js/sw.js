@@ -88,8 +88,11 @@ self.addEventListener('activate', (event) => {
 });
 
 // Intercept navigate requests to serve cache or fallback when offline
+// Only handle GET navigations — POST form submissions must reach the server directly;
+// intercepting them strips the request body, causing silent validation failures.
 self.addEventListener('fetch', (event) => {
     if (event.request.mode !== 'navigate') return;
+    if (event.request.method !== 'GET') return;
 
     event.respondWith(
         fetch(event.request).catch(async () => {

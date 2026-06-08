@@ -131,6 +131,7 @@ return [
             'set_macro_goals' => 'Set macro goals',
             'check_ins_last_7_days' => 'Daily Check-ins (Last 7 Days)',
             'log_check_in' => '+ Log Check-in',
+            'view_note' => 'View note',
             'metric' => 'Metric',
             'join_hint' => 'They can join at :url — expires in 7 days.',
             'loyalty' => 'Loyalty',

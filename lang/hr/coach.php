@@ -131,6 +131,7 @@ return [
             'set_macro_goals' => 'Postavi ciljeve makronutrijenata',
             'check_ins_last_7_days' => 'Dnevne prijave (zadnjih 7 dana)',
             'log_check_in' => '+ Zabilježi prijavu',
+            'view_note' => 'Prikaži bilješku',
             'metric' => 'Metrika',
             'join_hint' => 'Mogu se pridružiti na :url — istječe za 7 dana.',
             'loyalty' => 'Lojalnost',

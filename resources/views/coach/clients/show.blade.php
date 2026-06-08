@@ -363,7 +363,7 @@
 
                 <!-- Daily Check-in Logs (Last 7 Days) -->
                 @if($assignedMetricIds->count() > 0)
-                <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 shadow-card p-6">
+                <div x-data="{ note: { open: false, label: '', text: '' } }" class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 shadow-card p-6">
                     <div class="flex items-center justify-between mb-4">
                         <h2 class="font-display text-base font-semibold text-[#222222] dark:text-gray-100">{{ __('coach.clients.show.check_ins_last_7_days') }}</h2>
                         <a href="{{ route('coach.clients.check-in.show', $client) }}" class="inline-flex items-center px-4 py-2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg text-sm font-semibold text-[#45515e] dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
@@ -413,9 +413,12 @@
                                                             </span>
                                                         @endif
                                                     @elseif($metric->type === 'text')
-                                                        <span class="text-[#1456f0] cursor-help" title="{{ $log->value }}">
+                                                        <button type="button"
+                                                            @click="note = { open: true, label: '{{ e($metric->name) }}', text: {{ json_encode($log->value) }} }"
+                                                            class="text-[#1456f0] hover:text-blue-700 transition-colors"
+                                                            aria-label="{{ __('coach.clients.show.view_note') }}">
                                                             <svg class="w-4 h-4 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
-                                                        </span>
+                                                        </button>
                                                     @else
                                                         <span class="text-sm font-medium text-[#222222] dark:text-gray-100">{{ $log->value }}</span>
                                                     @endif
@@ -428,6 +431,25 @@
                                 @endforeach
                             </tbody>
                         </table>
+                    </div>
+
+                    <!-- Note modal -->
+                    <div x-show="note.open" x-cloak
+                        class="fixed inset-0 z-50 flex items-center justify-center p-4"
+                        @keydown.escape.window="note.open = false">
+                        <div class="absolute inset-0 bg-black/40" @click="note.open = false"></div>
+                        <div class="relative bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 shadow-xl w-full max-w-sm p-6">
+                            <div class="flex items-center justify-between mb-3">
+                                <h3 class="text-sm font-semibold text-[#222222] dark:text-gray-100" x-text="note.label"></h3>
+                                <button type="button" @click="note.open = false"
+                                    class="text-[#8e8e93] hover:text-[#222222] dark:hover:text-gray-100 transition-colors">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                                    </svg>
+                                </button>
+                            </div>
+                            <p class="text-sm text-[#45515e] dark:text-gray-300 whitespace-pre-wrap" x-text="note.text"></p>
+                        </div>
                     </div>
                 </div>
                 @endif

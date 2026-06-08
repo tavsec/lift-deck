@@ -131,6 +131,7 @@ return [
             'set_macro_goals' => 'Nastavi makro cilje',
             'check_ins_last_7_days' => 'Dnevne prijave (zadnjih 7 dni)',
             'log_check_in' => '+ Zabeleži prijavo',
+            'view_note' => 'Prikaži opombo',
             'metric' => 'Meritev',
             'join_hint' => 'Pridružijo se lahko na :url — poteče v 7 dneh.',
             'loyalty' => 'Zvestoba',
