@@ -3,7 +3,7 @@
 
     <div class="px-4 py-5 space-y-4">
         <div class="mb-5">
-            <h1 class="font-display text-xl font-semibold text-[#222222] dark:text-gray-100">{{ __('client.history.heading') }}</h1>
+            <h1 class="font-display text-2xl font-bold text-[#181b22] dark:text-[#f0f2f5] tracking-tight">{{ __('client.history.heading') }}</h1>
         </div>
 
         @if(session('success'))
@@ -13,12 +13,12 @@
         @endif
 
         @if(count($exerciseProgressionData) > 0)
-            <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 shadow-card p-5">
-                <h2 class="font-display text-base font-semibold text-[#222222] dark:text-gray-100 mb-4">{{ __('client.history.exercise_progress') }}</h2>
+            <div class="bg-white dark:bg-[#181b21] rounded-xl border border-[rgba(18,22,31,0.09)] dark:border-[rgba(255,255,255,0.08)] shadow-[0_1px_2px_rgba(18,22,31,.05),0_5px_16px_rgba(18,22,31,.05)] dark:shadow-[0_1px_2px_rgba(0,0,0,.4),0_6px_18px_rgba(0,0,0,.3)] p-5">
+                <h2 class="font-display text-base font-semibold text-[#181b22] dark:text-[#f0f2f5] mb-4">{{ __('client.history.exercise_progress') }}</h2>
 
                 <div x-data="clientExerciseProgression({{ json_encode($exerciseProgressionData) }}, {{ json_encode($exercisesByMuscleGroup) }}, {{ json_encode($exerciseTargetHistory) }})" x-init="init()">
                     <div class="mb-4">
-                        <select x-model="selectedExercise" @change="updateChart()" class="block w-full sm:w-64 rounded-lg border-gray-200 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-[#1456f0] focus:ring-[#1456f0] text-sm">
+                        <select x-model="selectedExercise" @change="updateChart()" class="block w-full sm:w-64 rounded-lg border-gray-200 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-[#c6f24e] focus:ring-[#c6f24e] text-sm">
                             <template x-for="(exercises, group) in exerciseGroups" :key="group">
                                 <optgroup :label="group">
                                     <template x-for="ex in exercises" :key="ex.id">
@@ -35,17 +35,17 @@
 
                     <div x-show="summary" class="grid grid-cols-3 gap-4 p-4 bg-gray-50 dark:bg-gray-800/50 rounded-xl">
                         <div class="text-center">
-                            <p class="text-xs text-[#8e8e93] dark:text-gray-500 uppercase">{{ __('client.history.start_end') }}</p>
-                            <p class="text-sm font-bold font-mono text-[#222222] dark:text-gray-100" x-text="summary?.startWeight + 'kg → ' + summary?.endWeight + 'kg'"></p>
+                            <p class="text-xs text-[#8c93a0] dark:text-[#6b7280] uppercase">{{ __('client.history.start_end') }}</p>
+                            <p class="text-sm font-bold font-mono text-[#181b22] dark:text-[#f0f2f5]" x-text="summary?.startWeight + 'kg → ' + summary?.endWeight + 'kg'"></p>
                         </div>
                         <div class="text-center">
-                            <p class="text-xs text-[#8e8e93] dark:text-gray-500 uppercase">{{ __('client.history.change') }}</p>
+                            <p class="text-xs text-[#8c93a0] dark:text-[#6b7280] uppercase">{{ __('client.history.change') }}</p>
                             <p class="text-sm font-bold font-mono" :class="summary?.change >= 0 ? 'text-green-600' : 'text-red-600'"
                                x-text="(summary?.change >= 0 ? '+' : '') + summary?.change + 'kg (' + (summary?.change >= 0 ? '+' : '') + summary?.changePercent + '%)'"></p>
                         </div>
                         <div class="text-center">
-                            <p class="text-xs text-[#8e8e93] dark:text-gray-500 uppercase">{{ __('client.history.sessions') }}</p>
-                            <p class="text-sm font-bold font-mono text-[#222222] dark:text-gray-100" x-text="summary?.sessions"></p>
+                            <p class="text-xs text-[#8c93a0] dark:text-[#6b7280] uppercase">{{ __('client.history.sessions') }}</p>
+                            <p class="text-sm font-bold font-mono text-[#181b22] dark:text-[#f0f2f5]" x-text="summary?.sessions"></p>
                         </div>
                     </div>
                 </div>
@@ -56,20 +56,20 @@
             <div class="space-y-3">
                 @foreach($workoutLogs as $log)
                     <a href="{{ route('client.history.show', $log) }}" class="block">
-                        <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 shadow-card p-5 hover:shadow-md transition-shadow">
+                        <div class="bg-white dark:bg-[#181b21] rounded-xl border border-[rgba(18,22,31,0.09)] dark:border-[rgba(255,255,255,0.08)] shadow-[0_1px_2px_rgba(18,22,31,.05),0_5px_16px_rgba(18,22,31,.05)] dark:shadow-[0_1px_2px_rgba(0,0,0,.4),0_6px_18px_rgba(0,0,0,.3)] p-5 hover:shadow-md transition-shadow">
                             <div class="flex items-center justify-between">
                                 <div>
                                     <div class="flex items-center gap-2">
-                                        <h3 class="text-base font-semibold text-[#222222] dark:text-gray-100">{{ $log->displayName() }}</h3>
+                                        <h3 class="text-base font-semibold text-[#181b22] dark:text-[#f0f2f5]">{{ $log->displayName() }}</h3>
                                         @if($unreadWorkoutLogIds->contains($log->id))
-                                            <span class="flex h-2 w-2 rounded-full" style="background-color: var(--color-primary)" title="{{ __('client.history.unread_comments') }}"></span>
+                                            <span class="flex h-2 w-2 rounded-full bg-[#c6f24e]" title="{{ __('client.history.unread_comments') }}"></span>
                                         @endif
                                     </div>
-                                    <p class="text-sm text-[#8e8e93] dark:text-gray-500">{{ $log->completed_at->format('D, M j, Y \a\t g:i A') }}</p>
+                                    <p class="text-sm text-[#8c93a0] dark:text-[#6b7280]">{{ $log->completed_at->format('D, M j, Y \a\t g:i A') }}</p>
                                 </div>
                                 <div class="flex items-center gap-2">
                                     @if($log->comments_count > 0)
-                                        <span class="inline-flex items-center gap-1 text-xs text-[#8e8e93] dark:text-gray-500">
+                                        <span class="inline-flex items-center gap-1 text-xs text-[#8c93a0] dark:text-[#6b7280]">
                                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
                                             </svg>
@@ -90,13 +90,13 @@
                 {{ $workoutLogs->links() }}
             </div>
         @else
-            <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 shadow-card p-5">
+            <div class="bg-white dark:bg-[#181b21] rounded-xl border border-[rgba(18,22,31,0.09)] dark:border-[rgba(255,255,255,0.08)] shadow-[0_1px_2px_rgba(18,22,31,.05),0_5px_16px_rgba(18,22,31,.05)] dark:shadow-[0_1px_2px_rgba(0,0,0,.4),0_6px_18px_rgba(0,0,0,.3)] p-5">
                 <div class="text-center py-12">
                     <svg class="mx-auto h-16 w-16 text-gray-300 dark:text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
-                    <p class="mt-4 text-base text-[#45515e] dark:text-gray-400">{{ __('client.history.no_workouts') }}</p>
-                    <p class="mt-1 text-sm text-[#8e8e93] dark:text-gray-500">{{ __('client.history.no_workouts_description') }}</p>
+                    <p class="mt-4 text-base text-[#555b66] dark:text-[#a4abb6]">{{ __('client.history.no_workouts') }}</p>
+                    <p class="mt-1 text-sm text-[#8c93a0] dark:text-[#6b7280]">{{ __('client.history.no_workouts_description') }}</p>
                 </div>
             </div>
         @endif
@@ -190,8 +190,8 @@
                         const datasets = [{
                             label: 'Top Set Weight (kg)',
                             data: allDates.map(dateStr => logByDate[dateStr]?.weight ?? null),
-                            borderColor: '#8B5CF6',
-                            backgroundColor: 'rgba(139, 92, 246, 0.1)',
+                            borderColor: '#5c7a10',
+                            backgroundColor: 'rgba(198, 242, 78, 0.15)',
                             fill: true,
                             tension: 0.3,
                             pointRadius: allDates.map(dateStr => logByDate[dateStr] ? 4 : 0),

@@ -5,14 +5,14 @@
         <!-- Header -->
         <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
             <div>
-                <a href="{{ route('coach.programs.show', $program) }}" class="inline-flex items-center text-sm text-[#8e8e93] dark:text-gray-400 hover:text-[#45515e] dark:hover:text-gray-100 mb-4">
+                <a href="{{ route('coach.programs.show', $program) }}" class="inline-flex items-center text-sm text-[#8c93a0] dark:text-[#6b7280] hover:text-[#45515e] dark:hover:text-[#f0f2f5] mb-4">
                     <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
                     </svg>
                     {{ __('coach.programs.edit.back') }}
                 </a>
-                <h1 class="font-display text-2xl font-semibold text-[#222222] dark:text-gray-100">{{ __('coach.programs.edit.heading') }}</h1>
-                <p class="mt-1 text-sm text-[#8e8e93] dark:text-gray-400">{{ __('coach.programs.edit.subtitle') }}</p>
+                <h1 class="font-display text-[30px] font-bold text-[#181b22] dark:text-[#f0f2f5] tracking-tight">{{ __('coach.programs.edit.heading') }}</h1>
+                <p class="mt-1 text-sm text-[#8c93a0] dark:text-[#6b7280]">{{ __('coach.programs.edit.subtitle') }}</p>
             </div>
         </div>
 
@@ -32,22 +32,22 @@
         @endif
 
         <!-- Program Details Form -->
-        <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 shadow-card p-6">
-            <h2 class="font-display text-base font-semibold text-[#222222] dark:text-gray-100 mb-4">{{ __('coach.programs.edit.program_details') }}</h2>
+        <div class="bg-white dark:bg-[#16191f] rounded-xl border border-[rgba(18,22,31,0.09)] dark:border-[rgba(255,255,255,0.08)] shadow-[0_1px_2px_rgba(18,22,31,.04),0_4px_16px_rgba(18,22,31,.045)] dark:shadow-[0_1px_2px_rgba(0,0,0,.4),0_6px_20px_rgba(0,0,0,.3)] p-6">
+            <h2 class="font-display text-base font-semibold text-[#181b22] dark:text-[#f0f2f5] mb-4">{{ __('coach.programs.edit.program_details') }}</h2>
             <form method="POST" action="{{ route('coach.programs.update', $program) }}" class="space-y-4">
                 @csrf
                 @method('PUT')
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                        <label for="name" class="block text-sm font-medium text-[#45515e] dark:text-gray-300 mb-1.5">{{ __('coach.programs.edit.name') }} <span class="text-red-500">*</span></label>
+                        <label for="name" class="block text-sm font-medium text-[#555b66] dark:text-[#a4abb6] mb-1.5">{{ __('coach.programs.edit.name') }} <span class="text-red-500">*</span></label>
                         <input type="text" name="name" id="name" value="{{ old('name', $program->name) }}" required
-                            class="w-full border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-[#222222] dark:text-gray-100 placeholder-[#8e8e93] dark:placeholder-gray-500 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-[#1456f0] focus:ring-2 focus:ring-[#1456f0]/20 transition-colors duration-150">
+                            class="w-full border border-[rgba(18,22,31,0.14)] dark:border-[rgba(255,255,255,0.12)] bg-white dark:bg-[#11141a] text-[#181b22] dark:text-[#f0f2f5] placeholder-[#8c93a0] dark:placeholder-[#6b7280] rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-[#c6f24e] focus:ring-1 focus:ring-[rgba(198,242,78,0.3)] transition-colors duration-150">
                     </div>
                     <div>
-                        <label for="type" class="block text-sm font-medium text-[#45515e] dark:text-gray-300 mb-1.5">{{ __('coach.programs.edit.type') }} <span class="text-red-500">*</span></label>
+                        <label for="type" class="block text-sm font-medium text-[#555b66] dark:text-[#a4abb6] mb-1.5">{{ __('coach.programs.edit.type') }} <span class="text-red-500">*</span></label>
                         <select name="type" id="type" required
-                            class="w-full border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-[#222222] dark:text-gray-100 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-[#1456f0] focus:ring-2 focus:ring-[#1456f0]/20 transition-colors duration-150">
+                            class="w-full border border-[rgba(18,22,31,0.14)] dark:border-[rgba(255,255,255,0.12)] bg-white dark:bg-[#11141a] text-[#181b22] dark:text-[#f0f2f5] rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-[#c6f24e] focus:ring-1 focus:ring-[rgba(198,242,78,0.3)] transition-colors duration-150">
                             @foreach($typeOptions as $value => $label)
                                 <option value="{{ $value }}" {{ old('type', $program->type) === $value ? 'selected' : '' }}>{{ $label }}</option>
                             @endforeach
@@ -57,27 +57,27 @@
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                        <label for="duration_weeks" class="block text-sm font-medium text-[#45515e] dark:text-gray-300 mb-1.5">{{ __('coach.programs.edit.duration') }}</label>
+                        <label for="duration_weeks" class="block text-sm font-medium text-[#555b66] dark:text-[#a4abb6] mb-1.5">{{ __('coach.programs.edit.duration') }}</label>
                         <input type="number" name="duration_weeks" id="duration_weeks" value="{{ old('duration_weeks', $program->duration_weeks) }}" min="1" max="52"
-                            class="w-full border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-[#222222] dark:text-gray-100 placeholder-[#8e8e93] dark:placeholder-gray-500 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-[#1456f0] focus:ring-2 focus:ring-[#1456f0]/20 transition-colors duration-150">
+                            class="w-full border border-[rgba(18,22,31,0.14)] dark:border-[rgba(255,255,255,0.12)] bg-white dark:bg-[#11141a] text-[#181b22] dark:text-[#f0f2f5] placeholder-[#8c93a0] dark:placeholder-[#6b7280] rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-[#c6f24e] focus:ring-1 focus:ring-[rgba(198,242,78,0.3)] transition-colors duration-150">
                     </div>
                     <div class="flex items-end pb-1">
                         <label class="inline-flex items-center">
                             <input type="checkbox" name="is_template" value="1" {{ old('is_template', $program->is_template) ? 'checked' : '' }}
-                                class="h-4 w-4 rounded border-gray-300 dark:border-gray-700 focus:ring-2 focus:ring-[#1456f0]/20" style="color: var(--color-primary)">
-                            <span class="ml-2 text-sm text-[#45515e] dark:text-gray-300">{{ __('coach.programs.edit.is_template') }}</span>
+                                class="h-4 w-4 rounded border-[rgba(18,22,31,0.16)] dark:border-[rgba(255,255,255,0.16)] focus:ring-2 focus:ring-[#c6f24e]/20" style="color: var(--color-primary)">
+                            <span class="ml-2 text-sm text-[#555b66] dark:text-[#a4abb6]">{{ __('coach.programs.edit.is_template') }}</span>
                         </label>
                     </div>
                 </div>
 
                 <div>
-                    <label for="description" class="block text-sm font-medium text-[#45515e] dark:text-gray-300 mb-1.5">{{ __('coach.programs.edit.description') }}</label>
+                    <label for="description" class="block text-sm font-medium text-[#555b66] dark:text-[#a4abb6] mb-1.5">{{ __('coach.programs.edit.description') }}</label>
                     <textarea name="description" id="description" rows="2"
-                        class="w-full border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-[#222222] dark:text-gray-100 placeholder-[#8e8e93] dark:placeholder-gray-500 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-[#1456f0] focus:ring-2 focus:ring-[#1456f0]/20 transition-colors duration-150">{{ old('description', $program->description) }}</textarea>
+                        class="w-full border border-[rgba(18,22,31,0.14)] dark:border-[rgba(255,255,255,0.12)] bg-white dark:bg-[#11141a] text-[#181b22] dark:text-[#f0f2f5] placeholder-[#8c93a0] dark:placeholder-[#6b7280] rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-[#c6f24e] focus:ring-1 focus:ring-[rgba(198,242,78,0.3)] transition-colors duration-150">{{ old('description', $program->description) }}</textarea>
                 </div>
 
                 <div class="flex justify-end">
-                    <button type="submit" class="inline-flex items-center px-4 py-2.5 bg-[#181e25] dark:bg-gray-700 border border-transparent rounded-lg font-semibold text-sm text-white hover:bg-[#2d3748] dark:hover:bg-gray-600 focus:outline-none transition ease-in-out duration-150">
+                    <button type="submit" class="inline-flex items-center px-4 py-2.5 bg-[#181b22] dark:bg-[#c6f24e] border border-transparent rounded-lg font-semibold text-sm text-white dark:text-[#14180a] hover:bg-[#2d3748] dark:hover:bg-[#b4e438] focus:outline-none transition ease-in-out duration-150">
                         {{ __('coach.programs.edit.save') }}
                     </button>
                 </div>
@@ -87,22 +87,22 @@
         <!-- Workouts Section -->
         <div class="space-y-4">
             <div class="flex items-center justify-between">
-                <h2 class="font-display text-base font-semibold text-[#222222] dark:text-gray-100">{{ __('coach.programs.edit.workouts') }}</h2>
+                <h2 class="font-display text-base font-semibold text-[#181b22] dark:text-[#f0f2f5]">{{ __('coach.programs.edit.workouts') }}</h2>
             </div>
 
             <!-- Add Workout Form -->
-            <div class="bg-gray-50 dark:bg-gray-800/50 rounded-xl border-2 border-dashed border-gray-200 dark:border-gray-700 p-4">
+            <div class="bg-[#f3f5f7] dark:bg-[#1d2027] rounded-xl border-2 border-dashed border-[rgba(18,22,31,0.14)] dark:border-[rgba(255,255,255,0.12)] p-4">
                 <form method="POST" action="{{ route('coach.programs.workouts.store', $program) }}" class="flex flex-col sm:flex-row gap-3">
                     @csrf
                     <div class="flex-1">
                         <input type="text" name="name" required placeholder="{{ __('coach.programs.edit.workout_name_placeholder') }}"
-                            class="w-full border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-[#222222] dark:text-gray-100 placeholder-[#8e8e93] dark:placeholder-gray-500 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-[#1456f0] focus:ring-2 focus:ring-[#1456f0]/20 transition-colors duration-150">
+                            class="w-full border border-[rgba(18,22,31,0.14)] dark:border-[rgba(255,255,255,0.12)] bg-white dark:bg-[#11141a] text-[#181b22] dark:text-[#f0f2f5] placeholder-[#8c93a0] dark:placeholder-[#6b7280] rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-[#c6f24e] focus:ring-1 focus:ring-[rgba(198,242,78,0.3)] transition-colors duration-150">
                     </div>
                     <div class="w-24">
                         <input type="number" name="day_number" required placeholder="{{ __('coach.programs.edit.day_placeholder') }}" min="1"
-                            class="w-full border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-[#222222] dark:text-gray-100 placeholder-[#8e8e93] dark:placeholder-gray-500 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-[#1456f0] focus:ring-2 focus:ring-[#1456f0]/20 transition-colors duration-150">
+                            class="w-full border border-[rgba(18,22,31,0.14)] dark:border-[rgba(255,255,255,0.12)] bg-white dark:bg-[#11141a] text-[#181b22] dark:text-[#f0f2f5] placeholder-[#8c93a0] dark:placeholder-[#6b7280] rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-[#c6f24e] focus:ring-1 focus:ring-[rgba(198,242,78,0.3)] transition-colors duration-150">
                     </div>
-                    <button type="submit" class="inline-flex items-center px-4 py-2.5 bg-[#181e25] dark:bg-gray-700 border border-transparent rounded-lg font-semibold text-sm text-white hover:bg-[#2d3748] dark:hover:bg-gray-600 focus:outline-none transition ease-in-out duration-150">
+                    <button type="submit" class="inline-flex items-center px-4 py-2.5 bg-[#181b22] dark:bg-[#c6f24e] border border-transparent rounded-lg font-semibold text-sm text-white dark:text-[#14180a] hover:bg-[#2d3748] dark:hover:bg-[#b4e438] focus:outline-none transition ease-in-out duration-150">
                         <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
                         </svg>
@@ -113,13 +113,13 @@
 
             <!-- Workout List -->
             @foreach($program->workouts as $workout)
-                <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 shadow-card overflow-hidden">
+                <div class="bg-white dark:bg-[#16191f] rounded-xl border border-[rgba(18,22,31,0.09)] dark:border-[rgba(255,255,255,0.08)] shadow-[0_1px_2px_rgba(18,22,31,.04),0_4px_16px_rgba(18,22,31,.045)] dark:shadow-[0_1px_2px_rgba(0,0,0,.4),0_6px_20px_rgba(0,0,0,.3)] overflow-hidden">
                     <!-- Workout Header -->
-                    <div class="px-6 py-4 bg-gray-50 dark:bg-gray-800/50 border-b border-gray-100 dark:border-gray-800">
+                    <div class="px-6 py-4 bg-[#f3f5f7] dark:bg-[#1d2027] border-b border-[rgba(18,22,31,0.06)] dark:border-[rgba(255,255,255,0.06)]">
                         <div class="flex items-center justify-between">
                             <div>
-                                <h3 class="text-base font-semibold text-[#222222] dark:text-gray-100">{{ $workout->name }}</h3>
-                                <p class="text-sm text-[#8e8e93] dark:text-gray-400">Day {{ $workout->day_number }}</p>
+                                <h3 class="text-base font-semibold text-[#181b22] dark:text-[#f0f2f5]">{{ $workout->name }}</h3>
+                                <p class="text-sm text-[#8c93a0] dark:text-[#6b7280]">Day {{ $workout->day_number }}</p>
                             </div>
                             <div class="flex items-center gap-3">
                                 <!-- Lock toggle -->
@@ -128,7 +128,7 @@
                                     @method('PATCH')
                                     <input type="hidden" name="lock_exercise_removal" value="{{ $workout->lock_exercise_removal ? '0' : '1' }}">
                                     <button type="submit"
-                                        class="inline-flex items-center gap-1.5 text-xs font-medium px-2.5 py-1.5 rounded-lg {{ $workout->lock_exercise_removal ? 'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400' : 'bg-gray-100 dark:bg-gray-800 text-[#8e8e93] dark:text-gray-400' }} hover:opacity-80 transition-opacity"
+                                        class="inline-flex items-center gap-1.5 text-xs font-medium px-2.5 py-1.5 rounded-lg {{ $workout->lock_exercise_removal ? 'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400' : 'bg-[#f3f5f7] dark:bg-[#1d2027] text-[#8c93a0] dark:text-[#6b7280]' }} hover:opacity-80 transition-opacity"
                                         title="{{ $workout->lock_exercise_removal ? 'Clients cannot remove exercises — click to unlock' : 'Clients can remove exercises — click to lock' }}"
                                     >
                                         @if($workout->lock_exercise_removal)
@@ -156,12 +156,12 @@
                     </div>
 
                     <!-- Exercises in Workout -->
-                    <div class="divide-y divide-gray-100 dark:divide-gray-800">
+                    <div class="divide-y divide-[rgba(18,22,31,0.06)] dark:divide-[rgba(255,255,255,0.06)]">
                         @foreach($workout->exercises as $workoutExercise)
-                            <div class="px-6 py-3 flex items-center justify-between hover:bg-gray-50 dark:hover:bg-gray-800/40 transition-colors">
+                            <div class="px-6 py-3 flex items-center justify-between hover:bg-[#f3f5f7] dark:hover:bg-[#1d2027] transition-colors">
                                 <div class="flex-1">
-                                    <p class="text-sm font-medium text-[#222222] dark:text-gray-100">{{ $workoutExercise->exercise->name }}</p>
-                                    <p class="text-sm text-[#8e8e93] dark:text-gray-400">
+                                    <p class="text-sm font-medium text-[#181b22] dark:text-[#f0f2f5]">{{ $workoutExercise->exercise->name }}</p>
+                                    <p class="text-sm text-[#8c93a0] dark:text-[#6b7280]">
                                         {{ $workoutExercise->sets }} sets &times; {{ $workoutExercise->reps }} reps
                                         @if($workoutExercise->formatted_rest)
                                             &middot; {{ $workoutExercise->formatted_rest }} rest
@@ -171,7 +171,7 @@
                                 <div class="flex items-center gap-2">
                                     <form method="POST" action="{{ route('coach.programs.exercises.move-up', [$program, $workoutExercise]) }}" class="inline">
                                         @csrf
-                                        <button type="submit" class="p-1 text-[#8e8e93] dark:text-gray-500 hover:text-[#45515e] dark:hover:text-gray-300 rounded" title="Move up">
+                                        <button type="submit" class="p-1 text-[#8c93a0] dark:text-[#6b7280] hover:text-[#45515e] dark:hover:text-[#f0f2f5] rounded" title="Move up">
                                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"/>
                                             </svg>
@@ -179,7 +179,7 @@
                                     </form>
                                     <form method="POST" action="{{ route('coach.programs.exercises.move-down', [$program, $workoutExercise]) }}" class="inline">
                                         @csrf
-                                        <button type="submit" class="p-1 text-[#8e8e93] dark:text-gray-500 hover:text-[#45515e] dark:hover:text-gray-300 rounded" title="Move down">
+                                        <button type="submit" class="p-1 text-[#8c93a0] dark:text-[#6b7280] hover:text-[#45515e] dark:hover:text-[#f0f2f5] rounded" title="Move down">
                                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
                                             </svg>
@@ -199,18 +199,18 @@
                         @endforeach
 
                         @if($workout->exercises->count() === 0)
-                            <div class="px-6 py-4 text-center text-sm text-[#8e8e93] dark:text-gray-400">
+                            <div class="px-6 py-4 text-center text-sm text-[#8c93a0] dark:text-[#6b7280]">
                                 {{ __('coach.programs.edit.no_exercises') }}
                             </div>
                         @endif
                     </div>
 
                     <!-- Add Exercise Form -->
-                    <div class="px-6 py-4 bg-gray-50 dark:bg-gray-800/50 border-t border-gray-100 dark:border-gray-800">
+                    <div class="px-6 py-4 bg-[#f3f5f7] dark:bg-[#1d2027] border-t border-[rgba(18,22,31,0.06)] dark:border-[rgba(255,255,255,0.06)]">
                         <form method="POST" action="{{ route('coach.programs.exercises.store', [$program, $workout]) }}" class="flex flex-col sm:flex-row gap-2">
                             @csrf
                             <div class="flex-1">
-                                <select name="exercise_id" required class="w-full border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-[#222222] dark:text-gray-100 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[#1456f0] focus:ring-2 focus:ring-[#1456f0]/20 transition-colors duration-150">
+                                <select name="exercise_id" required class="w-full border border-[rgba(18,22,31,0.14)] dark:border-[rgba(255,255,255,0.12)] bg-white dark:bg-[#11141a] text-[#181b22] dark:text-[#f0f2f5] rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[#c6f24e] focus:ring-1 focus:ring-[rgba(198,242,78,0.3)] transition-colors duration-150">
                                     <option value="">{{ __('coach.programs.edit.select_exercise') }}</option>
                                     @foreach($exercises->groupBy('muscle_group') as $muscleGroup => $groupExercises)
                                         <optgroup label="{{ ucfirst(str_replace('_', ' ', $muscleGroup)) }}">
@@ -223,17 +223,17 @@
                             </div>
                             <div class="w-20">
                                 <input type="number" name="sets" required placeholder="{{ __('coach.programs.edit.sets_placeholder') }}" min="1" max="20" value="3"
-                                    class="w-full border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-[#222222] dark:text-gray-100 placeholder-[#8e8e93] dark:placeholder-gray-500 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[#1456f0] focus:ring-2 focus:ring-[#1456f0]/20 transition-colors duration-150">
+                                    class="w-full border border-[rgba(18,22,31,0.14)] dark:border-[rgba(255,255,255,0.12)] bg-white dark:bg-[#11141a] text-[#181b22] dark:text-[#f0f2f5] placeholder-[#8c93a0] dark:placeholder-[#6b7280] rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[#c6f24e] focus:ring-1 focus:ring-[rgba(198,242,78,0.3)] transition-colors duration-150">
                             </div>
                             <div class="w-24">
                                 <input type="text" name="reps" required placeholder="{{ __('coach.programs.edit.reps_placeholder') }}" value="8-12"
-                                    class="w-full border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-[#222222] dark:text-gray-100 placeholder-[#8e8e93] dark:placeholder-gray-500 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[#1456f0] focus:ring-2 focus:ring-[#1456f0]/20 transition-colors duration-150">
+                                    class="w-full border border-[rgba(18,22,31,0.14)] dark:border-[rgba(255,255,255,0.12)] bg-white dark:bg-[#11141a] text-[#181b22] dark:text-[#f0f2f5] placeholder-[#8c93a0] dark:placeholder-[#6b7280] rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[#c6f24e] focus:ring-1 focus:ring-[rgba(198,242,78,0.3)] transition-colors duration-150">
                             </div>
                             <div class="w-24">
                                 <input type="number" name="rest_seconds" placeholder="{{ __('coach.programs.edit.rest_placeholder') }}" min="0" max="600" value="90"
-                                    class="w-full border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-[#222222] dark:text-gray-100 placeholder-[#8e8e93] dark:placeholder-gray-500 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[#1456f0] focus:ring-2 focus:ring-[#1456f0]/20 transition-colors duration-150">
+                                    class="w-full border border-[rgba(18,22,31,0.14)] dark:border-[rgba(255,255,255,0.12)] bg-white dark:bg-[#11141a] text-[#181b22] dark:text-[#f0f2f5] placeholder-[#8c93a0] dark:placeholder-[#6b7280] rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[#c6f24e] focus:ring-1 focus:ring-[rgba(198,242,78,0.3)] transition-colors duration-150">
                             </div>
-                            <button type="submit" class="inline-flex items-center justify-center px-3 py-2 bg-[#181e25] dark:bg-gray-700 border border-transparent rounded-lg font-semibold text-sm text-white hover:bg-[#2d3748] dark:hover:bg-gray-600 focus:outline-none transition ease-in-out duration-150">
+                            <button type="submit" class="inline-flex items-center justify-center px-3 py-2 bg-[#181b22] dark:bg-[#c6f24e] border border-transparent rounded-lg font-semibold text-sm text-white dark:text-[#14180a] hover:bg-[#2d3748] dark:hover:bg-[#b4e438] focus:outline-none transition ease-in-out duration-150">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
                                 </svg>
@@ -244,8 +244,8 @@
             @endforeach
 
             @if($program->workouts->count() === 0)
-                <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 shadow-card">
-                    <div class="text-center py-8 text-sm text-[#8e8e93] dark:text-gray-400">
+                <div class="bg-white dark:bg-[#16191f] rounded-xl border border-[rgba(18,22,31,0.09)] dark:border-[rgba(255,255,255,0.08)] shadow-[0_1px_2px_rgba(18,22,31,.04),0_4px_16px_rgba(18,22,31,.045)] dark:shadow-[0_1px_2px_rgba(0,0,0,.4),0_6px_20px_rgba(0,0,0,.3)]">
+                    <div class="text-center py-8 text-sm text-[#8c93a0] dark:text-[#6b7280]">
                         <p>{{ __('coach.programs.edit.no_workouts') }}</p>
                     </div>
                 </div>

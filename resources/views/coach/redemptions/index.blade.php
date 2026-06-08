@@ -4,8 +4,8 @@
     <div class="space-y-6">
         <!-- Header -->
         <div>
-            <h1 class="font-display text-2xl font-semibold text-[#222222] dark:text-gray-100">{{ __('coach.redemptions.heading') }}</h1>
-            <p class="text-sm text-[#8e8e93] dark:text-gray-500 mt-0.5">{{ __('coach.redemptions.subtitle') }}</p>
+            <h1 class="font-display text-[30px] font-bold text-[#181b22] dark:text-[#f0f2f5] tracking-tight">{{ __('coach.redemptions.heading') }}</h1>
+            <p class="text-sm text-[#8c93a0] dark:text-[#6b7280] mt-0.5">{{ __('coach.redemptions.subtitle') }}</p>
         </div>
 
         @if(session('success'))
@@ -39,28 +39,28 @@
         @endif
 
         @if($redemptions->count() > 0)
-            <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 shadow-card overflow-hidden">
-                <table class="min-w-full divide-y divide-gray-100 dark:divide-gray-800">
-                    <thead class="bg-gray-50 dark:bg-gray-800/50">
+            <div class="bg-white dark:bg-[#16191f] rounded-xl border border-[rgba(18,22,31,0.09)] dark:border-[rgba(255,255,255,0.08)] shadow-[0_1px_2px_rgba(18,22,31,.04),0_4px_16px_rgba(18,22,31,.045)] dark:shadow-[0_1px_2px_rgba(0,0,0,.4),0_6px_20px_rgba(0,0,0,.3)] overflow-hidden">
+                <table class="min-w-full divide-y divide-[rgba(18,22,31,0.06)] dark:divide-[rgba(255,255,255,0.06)]">
+                    <thead class="bg-[#f3f5f7] dark:bg-[#1d2027]">
                         <tr>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-[#8e8e93] dark:text-gray-400 uppercase tracking-wide">{{ __('coach.redemptions.table.client') }}</th>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-[#8e8e93] dark:text-gray-400 uppercase tracking-wide">{{ __('coach.redemptions.table.reward') }}</th>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-[#8e8e93] dark:text-gray-400 uppercase tracking-wide">{{ __('coach.redemptions.table.points_spent') }}</th>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-[#8e8e93] dark:text-gray-400 uppercase tracking-wide">{{ __('coach.redemptions.table.status') }}</th>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-[#8e8e93] dark:text-gray-400 uppercase tracking-wide">{{ __('coach.redemptions.table.notes') }}</th>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-[#8e8e93] dark:text-gray-400 uppercase tracking-wide">{{ __('coach.redemptions.table.actions') }}</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-[#8c93a0] dark:text-[#6b7280] uppercase tracking-wide">{{ __('coach.redemptions.table.client') }}</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-[#8c93a0] dark:text-[#6b7280] uppercase tracking-wide">{{ __('coach.redemptions.table.reward') }}</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-[#8c93a0] dark:text-[#6b7280] uppercase tracking-wide">{{ __('coach.redemptions.table.points_spent') }}</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-[#8c93a0] dark:text-[#6b7280] uppercase tracking-wide">{{ __('coach.redemptions.table.status') }}</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-[#8c93a0] dark:text-[#6b7280] uppercase tracking-wide">{{ __('coach.redemptions.table.notes') }}</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-[#8c93a0] dark:text-[#6b7280] uppercase tracking-wide">{{ __('coach.redemptions.table.actions') }}</th>
                         </tr>
                     </thead>
-                    <tbody class="divide-y divide-gray-100 dark:divide-gray-800">
+                    <tbody class="divide-y divide-[rgba(18,22,31,0.06)] dark:divide-[rgba(255,255,255,0.06)]">
                         @foreach($redemptions as $redemption)
-                            <tr class="hover:bg-gray-50 dark:hover:bg-gray-800/40 transition-colors">
-                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-[#222222] dark:text-gray-100">
+                            <tr class="hover:bg-[#f3f5f7] dark:hover:bg-[#1d2027] transition-colors">
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-[#181b22] dark:text-[#f0f2f5]">
                                     {{ $redemption->user->name }}
                                 </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-[#45515e] dark:text-gray-400">
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-[#555b66] dark:text-[#a4abb6]">
                                     {{ $redemption->reward->name }}
                                 </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-[#45515e] dark:text-gray-400">
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-[#555b66] dark:text-[#a4abb6]">
                                     {{ $redemption->points_spent }}
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
@@ -71,14 +71,14 @@
                                     @elseif($redemption->status === 'rejected')
                                         <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400">{{ __('coach.redemptions.status_rejected') }}</span>
                                     @else
-                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 dark:bg-gray-800 text-[#45515e] dark:text-gray-300">{{ ucfirst($redemption->status) }}</span>
+                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-[#f3f5f7] dark:bg-[#1d2027] text-[#555b66] dark:text-[#a4abb6]">{{ ucfirst($redemption->status) }}</span>
                                     @endif
                                 </td>
-                                <td class="px-6 py-4 text-sm text-[#45515e] dark:text-gray-400 max-w-xs">
+                                <td class="px-6 py-4 text-sm text-[#555b66] dark:text-[#a4abb6] max-w-xs">
                                     @if($redemption->coach_notes)
                                         <span class="line-clamp-2">{{ $redemption->coach_notes }}</span>
                                     @else
-                                        <span class="text-[#8e8e93] dark:text-gray-600">&mdash;</span>
+                                        <span class="text-[#8c93a0] dark:text-gray-600">&mdash;</span>
                                     @endif
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm">
@@ -102,7 +102,7 @@
                                             </form>
                                         </div>
                                     @else
-                                        <span class="text-[#8e8e93] dark:text-gray-600">&mdash;</span>
+                                        <span class="text-[#8c93a0] dark:text-gray-600">&mdash;</span>
                                     @endif
                                 </td>
                             </tr>
@@ -117,15 +117,15 @@
                 </div>
             @endif
         @else
-            <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 shadow-card">
+            <div class="bg-white dark:bg-[#16191f] rounded-xl border border-[rgba(18,22,31,0.09)] dark:border-[rgba(255,255,255,0.08)] shadow-[0_1px_2px_rgba(18,22,31,.04),0_4px_16px_rgba(18,22,31,.045)] dark:shadow-[0_1px_2px_rgba(0,0,0,.4),0_6px_20px_rgba(0,0,0,.3)]">
                 <div class="text-center py-12">
-                    <div class="w-12 h-12 rounded-2xl bg-gray-100 dark:bg-gray-800 flex items-center justify-center mx-auto mb-3">
-                        <svg class="h-6 w-6 text-[#8e8e93]" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <div class="w-12 h-12 rounded-2xl bg-[#f3f5f7] dark:bg-[#1d2027] flex items-center justify-center mx-auto mb-3">
+                        <svg class="h-6 w-6 text-[#8c93a0]" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"/>
                         </svg>
                     </div>
-                    <h3 class="text-sm font-semibold text-[#222222] dark:text-gray-100">{{ __('coach.redemptions.no_redemptions') }}</h3>
-                    <p class="text-sm text-[#8e8e93] dark:text-gray-500 mt-1">{{ __('coach.redemptions.no_redemptions_description') }}</p>
+                    <h3 class="text-sm font-semibold text-[#181b22] dark:text-[#f0f2f5]">{{ __('coach.redemptions.no_redemptions') }}</h3>
+                    <p class="text-sm text-[#8c93a0] dark:text-[#6b7280] mt-1">{{ __('coach.redemptions.no_redemptions_description') }}</p>
                 </div>
             </div>
         @endif

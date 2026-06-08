@@ -3,8 +3,8 @@
 
     <div class="space-y-6">
         <div>
-            <h1 class="font-display text-2xl font-semibold text-[#222222] dark:text-gray-100">{{ __('coach.settings.heading') }}</h1>
-            <p class="text-sm text-[#8e8e93] dark:text-gray-500 mt-0.5">{{ __('coach.settings.subtitle') }}</p>
+            <h1 class="font-display text-[30px] font-bold text-[#181b22] dark:text-[#f0f2f5] tracking-tight">{{ __('coach.settings.heading') }}</h1>
+            <p class="text-sm text-[#8c93a0] dark:text-[#6b7280] mt-0.5">{{ __('coach.settings.subtitle') }}</p>
         </div>
 
         @if(session('status') === 'profile-updated')
@@ -20,8 +20,8 @@
         @endif
 
         <!-- Profile Card -->
-        <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 shadow-card p-6">
-            <h2 class="font-display text-base font-semibold text-[#222222] dark:text-gray-100 mb-5">{{ __('coach.settings.profile.heading') }}</h2>
+        <div class="bg-white dark:bg-[#16191f] rounded-xl border border-[rgba(18,22,31,0.09)] dark:border-[rgba(255,255,255,0.08)] shadow-[0_1px_2px_rgba(18,22,31,.04),0_4px_16px_rgba(18,22,31,.045)] dark:shadow-[0_1px_2px_rgba(0,0,0,.4),0_6px_20px_rgba(0,0,0,.3)] p-6">
+            <h2 class="font-display text-base font-semibold text-[#181b22] dark:text-[#f0f2f5] mb-5">{{ __('coach.settings.profile.heading') }}</h2>
 
             <form method="POST" action="{{ route('coach.settings.update') }}" enctype="multipart/form-data" class="space-y-5">
                 @csrf
@@ -29,9 +29,9 @@
 
                 <!-- Avatar -->
                 <div>
-                    <label class="block text-sm font-medium text-[#45515e] dark:text-gray-300 mb-2">{{ __('coach.settings.profile.photo') }}</label>
+                    <label class="block text-sm font-medium text-[#555b66] dark:text-[#a4abb6] mb-2">{{ __('coach.settings.profile.photo') }}</label>
                     <div x-data="{ preview: null }" class="flex items-center gap-4">
-                        <div class="w-16 h-16 rounded-full overflow-hidden bg-gray-100 dark:bg-gray-800 flex items-center justify-center flex-shrink-0">
+                        <div class="w-16 h-16 rounded-full overflow-hidden bg-[#f3f5f7] dark:bg-[#1d2027] flex items-center justify-center flex-shrink-0">
                             <template x-if="preview">
                                 <img :src="preview" class="w-full h-full object-cover" alt="Preview">
                             </template>
@@ -40,14 +40,14 @@
                                     @if($user->avatar)
                                         <img src="{{ $user->avatar }}" alt="{{ $user->name }}" class="w-full h-full object-cover">
                                     @else
-                                        <span class="text-xl font-semibold text-[#8e8e93] dark:text-gray-400">{{ strtoupper(substr($user->name, 0, 1)) }}</span>
+                                        <span class="text-xl font-semibold text-[#8c93a0] dark:text-[#6b7280]">{{ strtoupper(substr($user->name, 0, 1)) }}</span>
                                     @endif
                                 </span>
                             </template>
                         </div>
                         <div class="flex flex-col gap-2">
                             <div>
-                                <label class="cursor-pointer inline-flex items-center gap-2 px-4 py-2 border border-gray-200 dark:border-gray-700 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+                                <label class="cursor-pointer inline-flex items-center gap-2 px-4 py-2 border border-[rgba(18,22,31,0.14)] dark:border-[rgba(255,255,255,0.12)] rounded-lg text-sm font-medium text-gray-700 dark:text-[#a4abb6] hover:bg-[#f3f5f7] dark:hover:bg-[#1d2027] transition-colors">
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/>
                                     </svg>
@@ -55,11 +55,11 @@
                                     <input type="file" name="avatar" accept="image/*" class="sr-only"
                                            @change="preview = $event.target.files[0] ? URL.createObjectURL($event.target.files[0]) : null">
                                 </label>
-                                <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">JPG, PNG up to 2MB</p>
+                                <p class="mt-1 text-xs text-[#8c93a0] dark:text-[#6b7280]">JPG, PNG up to 2MB</p>
                             </div>
                             @if($user->avatar)
                                 <label class="flex items-center gap-1.5 text-sm text-red-600 dark:text-red-400 cursor-pointer">
-                                    <input type="checkbox" name="remove_avatar" value="1" class="rounded border-gray-300 dark:border-gray-700 text-red-600 focus:ring-red-500">
+                                    <input type="checkbox" name="remove_avatar" value="1" class="rounded border-[rgba(18,22,31,0.16)] dark:border-[rgba(255,255,255,0.16)] text-red-600 focus:ring-red-500">
                                     {{ __('coach.settings.profile.remove_photo') }}
                                 </label>
                             @endif
@@ -72,9 +72,9 @@
 
                 <!-- Name -->
                 <div>
-                    <label for="name" class="block text-sm font-medium text-[#45515e] dark:text-gray-300 mb-1.5">{{ __('coach.settings.profile.name') }}</label>
+                    <label for="name" class="block text-sm font-medium text-[#555b66] dark:text-[#a4abb6] mb-1.5">{{ __('coach.settings.profile.name') }}</label>
                     <input type="text" id="name" name="name" value="{{ old('name', $user->name) }}"
-                        class="w-full border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-[#222222] dark:text-gray-100 placeholder-[#8e8e93] dark:placeholder-gray-500 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-[#1456f0] focus:ring-2 focus:ring-[#1456f0]/20 transition-colors duration-150">
+                        class="w-full border border-[rgba(18,22,31,0.14)] dark:border-[rgba(255,255,255,0.12)] bg-white dark:bg-[#11141a] text-[#181b22] dark:text-[#f0f2f5] placeholder-[#8c93a0] dark:placeholder-[#6b7280] rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-[#c6f24e] focus:ring-1 focus:ring-[rgba(198,242,78,0.3)] transition-colors duration-150">
                     @error('name')
                         <p class="mt-1.5 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
                     @enderror
@@ -82,9 +82,9 @@
 
                 <!-- Email -->
                 <div>
-                    <label for="email" class="block text-sm font-medium text-[#45515e] dark:text-gray-300 mb-1.5">{{ __('coach.settings.profile.email') }}</label>
+                    <label for="email" class="block text-sm font-medium text-[#555b66] dark:text-[#a4abb6] mb-1.5">{{ __('coach.settings.profile.email') }}</label>
                     <input type="email" id="email" name="email" value="{{ old('email', $user->email) }}"
-                        class="w-full border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-[#222222] dark:text-gray-100 placeholder-[#8e8e93] dark:placeholder-gray-500 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-[#1456f0] focus:ring-2 focus:ring-[#1456f0]/20 transition-colors duration-150">
+                        class="w-full border border-[rgba(18,22,31,0.14)] dark:border-[rgba(255,255,255,0.12)] bg-white dark:bg-[#11141a] text-[#181b22] dark:text-[#f0f2f5] placeholder-[#8c93a0] dark:placeholder-[#6b7280] rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-[#c6f24e] focus:ring-1 focus:ring-[rgba(198,242,78,0.3)] transition-colors duration-150">
                     @error('email')
                         <p class="mt-1.5 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
                     @enderror
@@ -92,9 +92,9 @@
 
                 <!-- Phone -->
                 <div>
-                    <label for="phone" class="block text-sm font-medium text-[#45515e] dark:text-gray-300 mb-1.5">{{ __('coach.settings.profile.phone') }} <span class="text-[#8e8e93] dark:text-gray-500 font-normal">({{ __('coach.settings.profile.optional') }})</span></label>
+                    <label for="phone" class="block text-sm font-medium text-[#555b66] dark:text-[#a4abb6] mb-1.5">{{ __('coach.settings.profile.phone') }} <span class="text-[#8c93a0] dark:text-[#6b7280] font-normal">({{ __('coach.settings.profile.optional') }})</span></label>
                     <input type="text" id="phone" name="phone" value="{{ old('phone', $user->phone) }}"
-                        class="w-full border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-[#222222] dark:text-gray-100 placeholder-[#8e8e93] dark:placeholder-gray-500 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-[#1456f0] focus:ring-2 focus:ring-[#1456f0]/20 transition-colors duration-150">
+                        class="w-full border border-[rgba(18,22,31,0.14)] dark:border-[rgba(255,255,255,0.12)] bg-white dark:bg-[#11141a] text-[#181b22] dark:text-[#f0f2f5] placeholder-[#8c93a0] dark:placeholder-[#6b7280] rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-[#c6f24e] focus:ring-1 focus:ring-[rgba(198,242,78,0.3)] transition-colors duration-150">
                     @error('phone')
                         <p class="mt-1.5 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
                     @enderror
@@ -102,16 +102,16 @@
 
                 <!-- Bio -->
                 <div>
-                    <label for="bio" class="block text-sm font-medium text-[#45515e] dark:text-gray-300 mb-1.5">{{ __('coach.settings.profile.bio') }} <span class="text-[#8e8e93] dark:text-gray-500 font-normal">({{ __('coach.settings.profile.optional') }})</span></label>
+                    <label for="bio" class="block text-sm font-medium text-[#555b66] dark:text-[#a4abb6] mb-1.5">{{ __('coach.settings.profile.bio') }} <span class="text-[#8c93a0] dark:text-[#6b7280] font-normal">({{ __('coach.settings.profile.optional') }})</span></label>
                     <textarea id="bio" name="bio" rows="3"
-                        class="w-full border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-[#222222] dark:text-gray-100 placeholder-[#8e8e93] dark:placeholder-gray-500 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-[#1456f0] focus:ring-2 focus:ring-[#1456f0]/20 transition-colors duration-150">{{ old('bio', $user->bio) }}</textarea>
+                        class="w-full border border-[rgba(18,22,31,0.14)] dark:border-[rgba(255,255,255,0.12)] bg-white dark:bg-[#11141a] text-[#181b22] dark:text-[#f0f2f5] placeholder-[#8c93a0] dark:placeholder-[#6b7280] rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-[#c6f24e] focus:ring-1 focus:ring-[rgba(198,242,78,0.3)] transition-colors duration-150">{{ old('bio', $user->bio) }}</textarea>
                     @error('bio')
                         <p class="mt-1.5 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
                     @enderror
                 </div>
 
                 <div class="pt-2">
-                    <button type="submit" class="inline-flex items-center px-4 py-2 bg-[#181e25] dark:bg-gray-700 text-white text-sm font-semibold rounded-lg hover:bg-gray-800 transition-colors">
+                    <button type="submit" class="inline-flex items-center px-4 py-2 bg-[#181b22] dark:bg-[#c6f24e] text-white dark:text-[#14180a] text-sm font-semibold rounded-lg hover:bg-[#2a2f3a] dark:hover:bg-[#b4e438] transition-colors">
                         {{ __('coach.settings.profile.save') }}
                     </button>
                 </div>
@@ -119,27 +119,27 @@
         </div>
 
         <!-- Password Card -->
-        <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 shadow-card p-6">
-            <h2 class="font-display text-base font-semibold text-[#222222] dark:text-gray-100 mb-5">{{ __('coach.settings.password.heading') }}</h2>
+        <div class="bg-white dark:bg-[#16191f] rounded-xl border border-[rgba(18,22,31,0.09)] dark:border-[rgba(255,255,255,0.08)] shadow-[0_1px_2px_rgba(18,22,31,.04),0_4px_16px_rgba(18,22,31,.045)] dark:shadow-[0_1px_2px_rgba(0,0,0,.4),0_6px_20px_rgba(0,0,0,.3)] p-6">
+            <h2 class="font-display text-base font-semibold text-[#181b22] dark:text-[#f0f2f5] mb-5">{{ __('coach.settings.password.heading') }}</h2>
 
             <form method="POST" action="{{ route('coach.settings.password') }}" class="space-y-5">
                 @csrf
                 @method('PUT')
 
                 <div x-data="{ showPassword: false }">
-                    <label for="current_password" class="block text-sm font-medium text-[#45515e] dark:text-gray-300 mb-1.5">{{ __('coach.settings.password.current') }}</label>
+                    <label for="current_password" class="block text-sm font-medium text-[#555b66] dark:text-[#a4abb6] mb-1.5">{{ __('coach.settings.password.current') }}</label>
                     <div class="relative">
                         <input
                             id="current_password"
                             :type="showPassword ? 'text' : 'password'"
                             name="current_password"
                             autocomplete="current-password"
-                            class="w-full border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-[#222222] dark:text-gray-100 rounded-lg px-3 py-2.5 pr-10 text-sm focus:outline-none focus:border-[#1456f0] focus:ring-2 focus:ring-[#1456f0]/20 transition-colors duration-150"
+                            class="w-full border border-[rgba(18,22,31,0.14)] dark:border-[rgba(255,255,255,0.12)] bg-white dark:bg-[#11141a] text-[#181b22] dark:text-[#f0f2f5] rounded-lg px-3 py-2.5 pr-10 text-sm focus:outline-none focus:border-[#c6f24e] focus:ring-1 focus:ring-[rgba(198,242,78,0.3)] transition-colors duration-150"
                         >
                         <button
                             type="button"
                             @click="showPassword = !showPassword"
-                            class="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
+                            class="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-400 hover:text-gray-600 dark:hover:text-[#f0f2f5]"
                             :aria-label="showPassword ? 'Hide password' : 'Show password'"
                         >
                             <svg x-show="!showPassword" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -157,19 +157,19 @@
                 </div>
 
                 <div x-data="{ showPassword: false }">
-                    <label for="password" class="block text-sm font-medium text-[#45515e] dark:text-gray-300 mb-1.5">{{ __('coach.settings.password.new') }}</label>
+                    <label for="password" class="block text-sm font-medium text-[#555b66] dark:text-[#a4abb6] mb-1.5">{{ __('coach.settings.password.new') }}</label>
                     <div class="relative">
                         <input
                             id="password"
                             :type="showPassword ? 'text' : 'password'"
                             name="password"
                             autocomplete="new-password"
-                            class="w-full border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-[#222222] dark:text-gray-100 rounded-lg px-3 py-2.5 pr-10 text-sm focus:outline-none focus:border-[#1456f0] focus:ring-2 focus:ring-[#1456f0]/20 transition-colors duration-150"
+                            class="w-full border border-[rgba(18,22,31,0.14)] dark:border-[rgba(255,255,255,0.12)] bg-white dark:bg-[#11141a] text-[#181b22] dark:text-[#f0f2f5] rounded-lg px-3 py-2.5 pr-10 text-sm focus:outline-none focus:border-[#c6f24e] focus:ring-1 focus:ring-[rgba(198,242,78,0.3)] transition-colors duration-150"
                         >
                         <button
                             type="button"
                             @click="showPassword = !showPassword"
-                            class="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
+                            class="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-400 hover:text-gray-600 dark:hover:text-[#f0f2f5]"
                             :aria-label="showPassword ? 'Hide password' : 'Show password'"
                         >
                             <svg x-show="!showPassword" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -187,19 +187,19 @@
                 </div>
 
                 <div x-data="{ showPassword: false }">
-                    <label for="password_confirmation" class="block text-sm font-medium text-[#45515e] dark:text-gray-300 mb-1.5">{{ __('coach.settings.password.confirm') }}</label>
+                    <label for="password_confirmation" class="block text-sm font-medium text-[#555b66] dark:text-[#a4abb6] mb-1.5">{{ __('coach.settings.password.confirm') }}</label>
                     <div class="relative">
                         <input
                             id="password_confirmation"
                             :type="showPassword ? 'text' : 'password'"
                             name="password_confirmation"
                             autocomplete="new-password"
-                            class="w-full border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-[#222222] dark:text-gray-100 rounded-lg px-3 py-2.5 pr-10 text-sm focus:outline-none focus:border-[#1456f0] focus:ring-2 focus:ring-[#1456f0]/20 transition-colors duration-150"
+                            class="w-full border border-[rgba(18,22,31,0.14)] dark:border-[rgba(255,255,255,0.12)] bg-white dark:bg-[#11141a] text-[#181b22] dark:text-[#f0f2f5] rounded-lg px-3 py-2.5 pr-10 text-sm focus:outline-none focus:border-[#c6f24e] focus:ring-1 focus:ring-[rgba(198,242,78,0.3)] transition-colors duration-150"
                         >
                         <button
                             type="button"
                             @click="showPassword = !showPassword"
-                            class="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
+                            class="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-400 hover:text-gray-600 dark:hover:text-[#f0f2f5]"
                             :aria-label="showPassword ? 'Hide password' : 'Show password'"
                         >
                             <svg x-show="!showPassword" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -214,7 +214,7 @@
                 </div>
 
                 <div class="pt-2">
-                    <button type="submit" class="inline-flex items-center px-4 py-2 bg-[#181e25] dark:bg-gray-700 text-white text-sm font-semibold rounded-lg hover:bg-gray-800 transition-colors">
+                    <button type="submit" class="inline-flex items-center px-4 py-2 bg-[#181b22] dark:bg-[#c6f24e] text-white dark:text-[#14180a] text-sm font-semibold rounded-lg hover:bg-[#2a2f3a] dark:hover:bg-[#b4e438] transition-colors">
                         {{ __('coach.settings.password.update') }}
                     </button>
                 </div>
@@ -222,8 +222,8 @@
         </div>
 
         <!-- Subscription Card -->
-        <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 shadow-card p-6">
-            <h2 class="font-display text-base font-semibold text-[#222222] dark:text-gray-100 mb-5">{{ __('coach.settings.subscription.heading') }}</h2>
+        <div class="bg-white dark:bg-[#16191f] rounded-xl border border-[rgba(18,22,31,0.09)] dark:border-[rgba(255,255,255,0.08)] shadow-[0_1px_2px_rgba(18,22,31,.04),0_4px_16px_rgba(18,22,31,.045)] dark:shadow-[0_1px_2px_rgba(0,0,0,.4),0_6px_20px_rgba(0,0,0,.3)] p-6">
+            <h2 class="font-display text-base font-semibold text-[#181b22] dark:text-[#f0f2f5] mb-5">{{ __('coach.settings.subscription.heading') }}</h2>
 
             @if($isOnTrial)
                 {{-- State 1: Free trial --}}
@@ -245,11 +245,11 @@
                     </div>
                 </div>
                 @if($hasStripeSubscription)
-                    <a href="{{ route('coach.subscription.portal') }}" class="inline-flex items-center px-4 py-2 bg-[#181e25] dark:bg-gray-700 text-white text-sm font-semibold rounded-lg hover:bg-gray-800 transition-colors">
+                    <a href="{{ route('coach.subscription.portal') }}" class="inline-flex items-center px-4 py-2 bg-[#181b22] dark:bg-[#c6f24e] text-white dark:text-[#14180a] text-sm font-semibold rounded-lg hover:bg-[#2a2f3a] dark:hover:bg-[#b4e438] transition-colors">
                         Manage on Stripe
                     </a>
                 @else
-                    <a href="{{ route('coach.plan') }}" class="inline-flex items-center px-4 py-2 bg-[#181e25] dark:bg-gray-700 text-white text-sm font-semibold rounded-lg hover:bg-gray-800 transition-colors">
+                    <a href="{{ route('coach.plan') }}" class="inline-flex items-center px-4 py-2 bg-[#181b22] dark:bg-[#c6f24e] text-white dark:text-[#14180a] text-sm font-semibold rounded-lg hover:bg-[#2a2f3a] dark:hover:bg-[#b4e438] transition-colors">
                         Choose a plan
                     </a>
                 @endif
@@ -269,7 +269,7 @@
                         </p>
                     </div>
                 </div>
-                <a href="{{ route('coach.subscription.portal') }}" class="inline-flex items-center px-4 py-2 bg-[#181e25] dark:bg-gray-700 text-white text-sm font-semibold rounded-lg hover:bg-gray-800 transition-colors">
+                <a href="{{ route('coach.subscription.portal') }}" class="inline-flex items-center px-4 py-2 bg-[#181b22] dark:bg-[#c6f24e] text-white dark:text-[#14180a] text-sm font-semibold rounded-lg hover:bg-[#2a2f3a] dark:hover:bg-[#b4e438] transition-colors">
                     Manage on Stripe
                 </a>
 
@@ -295,19 +295,19 @@
                         </p>
                     </div>
                 </div>
-                <a href="{{ route('coach.subscription.portal') }}" class="inline-flex items-center px-4 py-2 bg-[#181e25] dark:bg-gray-700 text-white text-sm font-semibold rounded-lg hover:bg-gray-800 transition-colors">
+                <a href="{{ route('coach.subscription.portal') }}" class="inline-flex items-center px-4 py-2 bg-[#181b22] dark:bg-[#c6f24e] text-white dark:text-[#14180a] text-sm font-semibold rounded-lg hover:bg-[#2a2f3a] dark:hover:bg-[#b4e438] transition-colors">
                     Manage on Stripe
                 </a>
 
             @else
                 {{-- State 4: No active subscription --}}
-                <div class="flex items-start gap-3 rounded-xl bg-gray-50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-800 p-4 mb-4">
-                    <svg class="h-5 w-5 text-[#8e8e93] flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <div class="flex items-start gap-3 rounded-xl bg-[#f3f5f7] dark:bg-[#1d2027] border border-[rgba(18,22,31,0.09)] dark:border-[rgba(255,255,255,0.08)] p-4 mb-4">
+                    <svg class="h-5 w-5 text-[#8c93a0] flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
                     </svg>
-                    <p class="text-sm text-[#45515e] dark:text-gray-400">No active subscription</p>
+                    <p class="text-sm text-[#555b66] dark:text-[#a4abb6]">No active subscription</p>
                 </div>
-                <a href="{{ route('coach.subscription') }}" class="inline-flex items-center px-4 py-2 bg-[#181e25] dark:bg-gray-700 text-white text-sm font-semibold rounded-lg hover:bg-gray-800 transition-colors">
+                <a href="{{ route('coach.subscription') }}" class="inline-flex items-center px-4 py-2 bg-[#181b22] dark:bg-[#c6f24e] text-white dark:text-[#14180a] text-sm font-semibold rounded-lg hover:bg-[#2a2f3a] dark:hover:bg-[#b4e438] transition-colors">
                     Choose a plan
                 </a>
             @endif

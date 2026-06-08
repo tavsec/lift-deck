@@ -3,8 +3,8 @@
 
     <div class="px-4 py-5 space-y-4">
         <div class="mb-5">
-            <h1 class="font-display text-xl font-semibold text-[#222222] dark:text-gray-100">{{ __('client.settings.heading') }}</h1>
-            <p class="text-sm text-[#8e8e93] dark:text-gray-500 mt-0.5">{{ __('client.settings.subtitle') }}</p>
+            <h1 class="font-display text-2xl font-bold text-[#181b22] dark:text-[#f0f2f5] tracking-tight">{{ __('client.settings.heading') }}</h1>
+            <p class="text-sm text-[#8c93a0] dark:text-[#6b7280] mt-0.5">{{ __('client.settings.subtitle') }}</p>
         </div>
 
         @if(session('status') === 'profile-updated')
@@ -20,8 +20,8 @@
         @endif
 
         <!-- Profile Card -->
-        <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 shadow-card p-5">
-            <h2 class="font-display text-base font-semibold text-[#222222] dark:text-gray-100 mb-4">{{ __('client.settings.profile.heading') }}</h2>
+        <div class="bg-white dark:bg-[#181b21] rounded-xl border border-[rgba(18,22,31,0.09)] dark:border-[rgba(255,255,255,0.08)] shadow-[0_1px_2px_rgba(18,22,31,.05),0_5px_16px_rgba(18,22,31,.05)] dark:shadow-[0_1px_2px_rgba(0,0,0,.4),0_6px_18px_rgba(0,0,0,.3)] p-5">
+            <h2 class="font-display text-base font-semibold text-[#181b22] dark:text-[#f0f2f5] mb-4">{{ __('client.settings.profile.heading') }}</h2>
 
             <form method="POST" action="{{ route('client.settings.update') }}" enctype="multipart/form-data" class="space-y-4">
                 @csrf
@@ -29,7 +29,7 @@
 
                 <!-- Avatar -->
                 <div>
-                    <label class="block text-sm font-medium text-[#222222] dark:text-gray-100 mb-2">{{ __('client.settings.profile.photo') }}</label>
+                    <label class="block text-sm font-medium text-[#181b22] dark:text-[#f0f2f5] mb-2">{{ __('client.settings.profile.photo') }}</label>
                     <div x-data="{ preview: null }" class="flex items-center gap-4">
                         <div class="w-16 h-16 rounded-full overflow-hidden bg-gray-100 dark:bg-gray-800 flex items-center justify-center flex-shrink-0">
                             <template x-if="preview">
@@ -40,7 +40,7 @@
                                     @if($user->avatar)
                                         <img src="{{ $user->avatar }}" alt="{{ $user->name }}" class="w-full h-full object-cover">
                                     @else
-                                        <span class="text-xl font-semibold text-[#8e8e93] dark:text-gray-400">{{ strtoupper(substr($user->name, 0, 1)) }}</span>
+                                        <span class="text-xl font-semibold text-[#8c93a0] dark:text-[#6b7280]">{{ strtoupper(substr($user->name, 0, 1)) }}</span>
                                     @endif
                                 </span>
                             </template>
@@ -72,9 +72,9 @@
 
                 <!-- Name -->
                 <div>
-                    <label for="name" class="block text-sm font-medium text-[#222222] dark:text-gray-100">{{ __('client.settings.profile.name') }}</label>
+                    <label for="name" class="block text-sm font-medium text-[#181b22] dark:text-[#f0f2f5]">{{ __('client.settings.profile.name') }}</label>
                     <input type="text" id="name" name="name" value="{{ old('name', $user->name) }}"
-                        class="mt-1 block w-full rounded-lg border-gray-200 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-[#1456f0] focus:ring-[#1456f0] text-sm">
+                        class="mt-1 block w-full rounded-lg border-gray-200 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-[#c6f24e] focus:ring-[#c6f24e] text-sm">
                     @error('name')
                         <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
                     @enderror
@@ -82,9 +82,9 @@
 
                 <!-- Email -->
                 <div>
-                    <label for="email" class="block text-sm font-medium text-[#222222] dark:text-gray-100">{{ __('client.settings.profile.email') }}</label>
+                    <label for="email" class="block text-sm font-medium text-[#181b22] dark:text-[#f0f2f5]">{{ __('client.settings.profile.email') }}</label>
                     <input type="email" id="email" name="email" value="{{ old('email', $user->email) }}"
-                        class="mt-1 block w-full rounded-lg border-gray-200 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-[#1456f0] focus:ring-[#1456f0] text-sm">
+                        class="mt-1 block w-full rounded-lg border-gray-200 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-[#c6f24e] focus:ring-[#c6f24e] text-sm">
                     @error('email')
                         <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
                     @enderror
@@ -92,9 +92,9 @@
 
                 <!-- Phone -->
                 <div>
-                    <label for="phone" class="block text-sm font-medium text-[#222222] dark:text-gray-100">{{ __('client.settings.profile.phone') }} <span class="text-[#8e8e93] dark:text-gray-500 font-normal">({{ __('client.settings.profile.optional') }})</span></label>
+                    <label for="phone" class="block text-sm font-medium text-[#181b22] dark:text-[#f0f2f5]">{{ __('client.settings.profile.phone') }} <span class="text-[#8c93a0] dark:text-[#6b7280] font-normal">({{ __('client.settings.profile.optional') }})</span></label>
                     <input type="text" id="phone" name="phone" value="{{ old('phone', $user->phone) }}"
-                        class="mt-1 block w-full rounded-lg border-gray-200 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-[#1456f0] focus:ring-[#1456f0] text-sm">
+                        class="mt-1 block w-full rounded-lg border-gray-200 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-[#c6f24e] focus:ring-[#c6f24e] text-sm">
                     @error('phone')
                         <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
                     @enderror
@@ -102,16 +102,16 @@
 
                 <!-- Bio -->
                 <div>
-                    <label for="bio" class="block text-sm font-medium text-[#222222] dark:text-gray-100">{{ __('client.settings.profile.bio') }} <span class="text-[#8e8e93] dark:text-gray-500 font-normal">({{ __('client.settings.profile.optional') }})</span></label>
+                    <label for="bio" class="block text-sm font-medium text-[#181b22] dark:text-[#f0f2f5]">{{ __('client.settings.profile.bio') }} <span class="text-[#8c93a0] dark:text-[#6b7280] font-normal">({{ __('client.settings.profile.optional') }})</span></label>
                     <textarea id="bio" name="bio" rows="3"
-                        class="mt-1 block w-full rounded-lg border-gray-200 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-[#1456f0] focus:ring-[#1456f0] text-sm">{{ old('bio', $user->bio) }}</textarea>
+                        class="mt-1 block w-full rounded-lg border-gray-200 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-[#c6f24e] focus:ring-[#c6f24e] text-sm">{{ old('bio', $user->bio) }}</textarea>
                     @error('bio')
                         <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
                     @enderror
                 </div>
 
                 <div class="pt-2">
-                    <button type="submit" class="inline-flex items-center px-4 py-2 bg-[#181e25] dark:bg-gray-700 text-white text-sm font-semibold rounded-lg hover:bg-gray-800 dark:hover:bg-gray-600 transition-colors">
+                    <button type="submit" class="inline-flex items-center px-4 py-2 bg-[#c6f24e] text-[#14180a] text-sm font-semibold rounded-lg hover:bg-[#b4e438] transition-colors">
                         {{ __('client.settings.profile.save') }}
                     </button>
                 </div>
@@ -119,22 +119,22 @@
         </div>
 
         <!-- Password Card -->
-        <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 shadow-card p-5">
-            <h2 class="font-display text-base font-semibold text-[#222222] dark:text-gray-100 mb-4">{{ __('client.settings.password.heading') }}</h2>
+        <div class="bg-white dark:bg-[#181b21] rounded-xl border border-[rgba(18,22,31,0.09)] dark:border-[rgba(255,255,255,0.08)] shadow-[0_1px_2px_rgba(18,22,31,.05),0_5px_16px_rgba(18,22,31,.05)] dark:shadow-[0_1px_2px_rgba(0,0,0,.4),0_6px_18px_rgba(0,0,0,.3)] p-5">
+            <h2 class="font-display text-base font-semibold text-[#181b22] dark:text-[#f0f2f5] mb-4">{{ __('client.settings.password.heading') }}</h2>
 
             <form method="POST" action="{{ route('client.settings.password') }}" class="space-y-4">
                 @csrf
                 @method('PUT')
 
                 <div x-data="{ showPassword: false }">
-                    <label for="current_password" class="block text-sm font-medium text-[#222222] dark:text-gray-100">{{ __('client.settings.password.current') }}</label>
+                    <label for="current_password" class="block text-sm font-medium text-[#181b22] dark:text-[#f0f2f5]">{{ __('client.settings.password.current') }}</label>
                     <div class="relative mt-1">
                         <input
                             id="current_password"
                             :type="showPassword ? 'text' : 'password'"
                             name="current_password"
                             autocomplete="current-password"
-                            class="block w-full rounded-lg border-gray-200 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-[#1456f0] focus:ring-[#1456f0] text-sm pr-10"
+                            class="block w-full rounded-lg border-gray-200 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-[#c6f24e] focus:ring-[#c6f24e] text-sm pr-10"
                         >
                         <button
                             type="button"
@@ -157,14 +157,14 @@
                 </div>
 
                 <div x-data="{ showPassword: false }">
-                    <label for="password" class="block text-sm font-medium text-[#222222] dark:text-gray-100">{{ __('client.settings.password.new') }}</label>
+                    <label for="password" class="block text-sm font-medium text-[#181b22] dark:text-[#f0f2f5]">{{ __('client.settings.password.new') }}</label>
                     <div class="relative mt-1">
                         <input
                             id="password"
                             :type="showPassword ? 'text' : 'password'"
                             name="password"
                             autocomplete="new-password"
-                            class="block w-full rounded-lg border-gray-200 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-[#1456f0] focus:ring-[#1456f0] text-sm pr-10"
+                            class="block w-full rounded-lg border-gray-200 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-[#c6f24e] focus:ring-[#c6f24e] text-sm pr-10"
                         >
                         <button
                             type="button"
@@ -187,14 +187,14 @@
                 </div>
 
                 <div x-data="{ showPassword: false }">
-                    <label for="password_confirmation" class="block text-sm font-medium text-[#222222] dark:text-gray-100">{{ __('client.settings.password.confirm') }}</label>
+                    <label for="password_confirmation" class="block text-sm font-medium text-[#181b22] dark:text-[#f0f2f5]">{{ __('client.settings.password.confirm') }}</label>
                     <div class="relative mt-1">
                         <input
                             id="password_confirmation"
                             :type="showPassword ? 'text' : 'password'"
                             name="password_confirmation"
                             autocomplete="new-password"
-                            class="block w-full rounded-lg border-gray-200 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-[#1456f0] focus:ring-[#1456f0] text-sm pr-10"
+                            class="block w-full rounded-lg border-gray-200 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-[#c6f24e] focus:ring-[#c6f24e] text-sm pr-10"
                         >
                         <button
                             type="button"
@@ -214,7 +214,7 @@
                 </div>
 
                 <div class="pt-2">
-                    <button type="submit" class="inline-flex items-center px-4 py-2 bg-[#181e25] dark:bg-gray-700 text-white text-sm font-semibold rounded-lg hover:bg-gray-800 dark:hover:bg-gray-600 transition-colors">
+                    <button type="submit" class="inline-flex items-center px-4 py-2 bg-[#c6f24e] text-[#14180a] text-sm font-semibold rounded-lg hover:bg-[#b4e438] transition-colors">
                         {{ __('client.settings.password.update') }}
                     </button>
                 </div>
@@ -222,12 +222,12 @@
         </div>
 
         <!-- Sign Out Card -->
-        <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 shadow-card p-5">
-            <h2 class="font-display text-base font-semibold text-[#222222] dark:text-gray-100 mb-1">{{ __('client.settings.sign_out.heading') }}</h2>
-            <p class="text-sm text-[#8e8e93] dark:text-gray-500 mb-4">{{ __('client.settings.sign_out.subtitle') }}</p>
+        <div class="bg-white dark:bg-[#181b21] rounded-xl border border-[rgba(18,22,31,0.09)] dark:border-[rgba(255,255,255,0.08)] shadow-[0_1px_2px_rgba(18,22,31,.05),0_5px_16px_rgba(18,22,31,.05)] dark:shadow-[0_1px_2px_rgba(0,0,0,.4),0_6px_18px_rgba(0,0,0,.3)] p-5">
+            <h2 class="font-display text-base font-semibold text-[#181b22] dark:text-[#f0f2f5] mb-1">{{ __('client.settings.sign_out.heading') }}</h2>
+            <p class="text-sm text-[#8c93a0] dark:text-[#6b7280] mb-4">{{ __('client.settings.sign_out.subtitle') }}</p>
             <form method="POST" action="{{ route('logout') }}">
                 @csrf
-                <button type="submit" class="inline-flex items-center px-4 py-2 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-sm font-medium text-[#45515e] dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                <button type="submit" class="inline-flex items-center px-4 py-2 rounded-lg border border-[rgba(18,22,31,0.09)] dark:border-[rgba(255,255,255,0.08)] bg-white dark:bg-gray-800 text-sm font-medium text-[#555b66] dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
                     {{ __('client.settings.sign_out.button') }}
                 </button>
             </form>

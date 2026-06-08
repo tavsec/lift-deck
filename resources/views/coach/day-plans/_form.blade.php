@@ -33,11 +33,11 @@
             @method('PUT')
         @endif
 
-        <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 shadow-card p-6 space-y-6">
+        <div class="bg-white dark:bg-[#16191f] rounded-xl border border-[rgba(18,22,31,0.09)] dark:border-[rgba(255,255,255,0.08)] shadow-[0_1px_2px_rgba(18,22,31,.04),0_4px_16px_rgba(18,22,31,.045)] dark:shadow-[0_1px_2px_rgba(0,0,0,.4),0_6px_20px_rgba(0,0,0,.3)] p-6 space-y-6">
             <div>
-                <label for="name" class="block text-sm font-medium text-[#45515e] dark:text-gray-300 mb-1.5">{{ __('coach.day_plans.form.name') }} <span class="text-red-500">*</span></label>
+                <label for="name" class="block text-sm font-medium text-[#555b66] dark:text-[#a4abb6] mb-1.5">{{ __('coach.day_plans.form.name') }} <span class="text-red-500">*</span></label>
                 <input type="text" name="name" id="name" value="{{ old('name', $dayPlan->name ?? '') }}" required
-                    class="w-full border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-[#222222] dark:text-gray-100 placeholder-[#8e8e93] dark:placeholder-gray-500 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-[#1456f0] focus:ring-2 focus:ring-[#1456f0]/20 transition-colors duration-150 @error('name') border-red-300 dark:border-red-700 @enderror"
+                    class="w-full border border-[rgba(18,22,31,0.14)] dark:border-[rgba(255,255,255,0.12)] bg-white dark:bg-[#11141a] text-[#181b22] dark:text-[#f0f2f5] placeholder-[#8c93a0] dark:placeholder-[#6b7280] rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-[#c6f24e] focus:ring-1 focus:ring-[rgba(198,242,78,0.3)] transition-colors duration-150 @error('name') border-red-300 dark:border-red-700 @enderror"
                     placeholder="{{ __('coach.day_plans.form.name_placeholder') }}">
                 @error('name')
                     <p class="mt-1 text-xs text-red-600 dark:text-red-400">{{ $message }}</p>
@@ -45,42 +45,42 @@
             </div>
 
             <div>
-                <label for="description" class="block text-sm font-medium text-[#45515e] dark:text-gray-300 mb-1.5">{{ __('coach.day_plans.form.description') }}</label>
+                <label for="description" class="block text-sm font-medium text-[#555b66] dark:text-[#a4abb6] mb-1.5">{{ __('coach.day_plans.form.description') }}</label>
                 <textarea name="description" id="description" rows="3"
-                    class="w-full border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-[#222222] dark:text-gray-100 placeholder-[#8e8e93] dark:placeholder-gray-500 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-[#1456f0] focus:ring-2 focus:ring-[#1456f0]/20 transition-colors duration-150"
+                    class="w-full border border-[rgba(18,22,31,0.14)] dark:border-[rgba(255,255,255,0.12)] bg-white dark:bg-[#11141a] text-[#181b22] dark:text-[#f0f2f5] placeholder-[#8c93a0] dark:placeholder-[#6b7280] rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-[#c6f24e] focus:ring-1 focus:ring-[rgba(198,242,78,0.3)] transition-colors duration-150"
                     placeholder="{{ __('coach.day_plans.form.description_placeholder') }}">{{ old('description', $dayPlan->description ?? '') }}</textarea>
             </div>
 
             <!-- Running totals -->
-            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 p-4 bg-gray-50 dark:bg-gray-950 rounded-xl border border-gray-100 dark:border-gray-800">
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 p-4 bg-gray-50 dark:bg-[#0b0d10] rounded-xl border border-[rgba(18,22,31,0.06)] dark:border-[rgba(255,255,255,0.06)]">
                 <div>
-                    <p class="text-xs text-[#8e8e93] dark:text-gray-500 uppercase">{{ __('coach.day_plans.form.total_calories') }}</p>
-                    <p class="text-lg font-semibold text-[#222222] dark:text-gray-100" x-text="totals.calories + ' kcal'"></p>
+                    <p class="text-xs text-[#8c93a0] dark:text-[#6b7280] uppercase">{{ __('coach.day_plans.form.total_calories') }}</p>
+                    <p class="text-lg font-semibold text-[#181b22] dark:text-[#f0f2f5]" x-text="totals.calories + ' kcal'"></p>
                 </div>
                 <div>
-                    <p class="text-xs text-[#8e8e93] dark:text-gray-500 uppercase">{{ __('coach.day_plans.form.total_protein') }}</p>
-                    <p class="text-lg font-semibold text-[#222222] dark:text-gray-100" x-text="totals.protein.toFixed(1) + 'g'"></p>
+                    <p class="text-xs text-[#8c93a0] dark:text-[#6b7280] uppercase">{{ __('coach.day_plans.form.total_protein') }}</p>
+                    <p class="text-lg font-semibold text-[#181b22] dark:text-[#f0f2f5]" x-text="totals.protein.toFixed(1) + 'g'"></p>
                 </div>
                 <div>
-                    <p class="text-xs text-[#8e8e93] dark:text-gray-500 uppercase">{{ __('coach.day_plans.form.total_carbs') }}</p>
-                    <p class="text-lg font-semibold text-[#222222] dark:text-gray-100" x-text="totals.carbs.toFixed(1) + 'g'"></p>
+                    <p class="text-xs text-[#8c93a0] dark:text-[#6b7280] uppercase">{{ __('coach.day_plans.form.total_carbs') }}</p>
+                    <p class="text-lg font-semibold text-[#181b22] dark:text-[#f0f2f5]" x-text="totals.carbs.toFixed(1) + 'g'"></p>
                 </div>
                 <div>
-                    <p class="text-xs text-[#8e8e93] dark:text-gray-500 uppercase">{{ __('coach.day_plans.form.total_fat') }}</p>
-                    <p class="text-lg font-semibold text-[#222222] dark:text-gray-100" x-text="totals.fat.toFixed(1) + 'g'"></p>
+                    <p class="text-xs text-[#8c93a0] dark:text-[#6b7280] uppercase">{{ __('coach.day_plans.form.total_fat') }}</p>
+                    <p class="text-lg font-semibold text-[#181b22] dark:text-[#f0f2f5]" x-text="totals.fat.toFixed(1) + 'g'"></p>
                 </div>
             </div>
         </div>
 
         <!-- Meal sections -->
         <template x-for="(section, sIdx) in sections" :key="section._key">
-            <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 shadow-card p-6">
+            <div class="bg-white dark:bg-[#16191f] rounded-xl border border-[rgba(18,22,31,0.09)] dark:border-[rgba(255,255,255,0.08)] shadow-[0_1px_2px_rgba(18,22,31,.04),0_4px_16px_rgba(18,22,31,.045)] dark:shadow-[0_1px_2px_rgba(0,0,0,.4),0_6px_20px_rgba(0,0,0,.3)] p-6">
                 <div class="flex items-center justify-between mb-4 gap-2">
                     <div class="flex-1 min-w-0">
                         <template x-if="!section.editing">
                             <div class="flex items-center gap-2">
-                                <h3 class="font-display text-base font-semibold text-[#222222] dark:text-gray-100 truncate" x-text="section.label"></h3>
-                                <button type="button" @click="startRenameSection(sIdx)" class="p-1 text-[#8e8e93] dark:text-gray-500 hover:text-[#45515e] dark:hover:text-gray-300 transition-colors" :aria-label="'{{ __('coach.day_plans.form.rename_section') }}'">
+                                <h3 class="font-display text-base font-semibold text-[#181b22] dark:text-[#f0f2f5] truncate" x-text="section.label"></h3>
+                                <button type="button" @click="startRenameSection(sIdx)" class="p-1 text-[#8c93a0] dark:text-[#6b7280] hover:text-[#45515e] dark:hover:text-[#f0f2f5] transition-colors" :aria-label="'{{ __('coach.day_plans.form.rename_section') }}'">
                                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
                                     </svg>
@@ -89,19 +89,19 @@
                         </template>
                         <template x-if="section.editing">
                             <input type="text" x-model="section.label" @keydown.enter.prevent="finishRenameSection(sIdx)" @blur="finishRenameSection(sIdx)" x-init="$nextTick(() => $el.focus())"
-                                class="w-full border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-[#222222] dark:text-gray-100 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[#1456f0] focus:ring-2 focus:ring-[#1456f0]/20 transition-colors duration-150">
+                                class="w-full border border-[rgba(18,22,31,0.14)] dark:border-[rgba(255,255,255,0.12)] bg-white dark:bg-[#11141a] text-[#181b22] dark:text-[#f0f2f5] rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[#c6f24e] focus:ring-1 focus:ring-[rgba(198,242,78,0.3)] transition-colors duration-150">
                         </template>
                     </div>
                     <div class="flex items-center gap-2 flex-shrink-0">
                         <button type="button" @click="openPicker(section._key)"
-                            class="inline-flex items-center px-3 py-1.5 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg text-xs font-semibold text-[#45515e] dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                            class="inline-flex items-center px-3 py-1.5 bg-white dark:bg-[#11141a] border border-[rgba(18,22,31,0.14)] dark:border-[rgba(255,255,255,0.12)] rounded-lg text-xs font-semibold text-[#555b66] dark:text-[#a4abb6] hover:bg-[#f3f5f7] dark:hover:bg-[#1d2027] transition-colors">
                             <svg class="w-3.5 h-3.5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
                             </svg>
                             {{ __('coach.day_plans.form.add_item') }}
                         </button>
                         <button type="button" x-show="itemsForSection(section._key).length === 0" @click="removeSection(sIdx)"
-                            class="p-1.5 text-[#8e8e93] dark:text-gray-500 hover:text-red-500 transition-colors" :aria-label="'{{ __('coach.day_plans.form.remove_section') }}'">
+                            class="p-1.5 text-[#8c93a0] dark:text-[#6b7280] hover:text-red-500 transition-colors" :aria-label="'{{ __('coach.day_plans.form.remove_section') }}'">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
                             </svg>
@@ -109,25 +109,25 @@
                     </div>
                 </div>
 
-                <div x-show="itemsForSection(section._key).length === 0" class="text-center py-6 border border-dashed border-gray-200 dark:border-gray-700 rounded-lg">
-                    <p class="text-sm text-[#8e8e93] dark:text-gray-500">{{ __('coach.day_plans.form.empty_section') }}</p>
+                <div x-show="itemsForSection(section._key).length === 0" class="text-center py-6 border border-dashed border-[rgba(18,22,31,0.14)] dark:border-[rgba(255,255,255,0.12)] rounded-lg">
+                    <p class="text-sm text-[#8c93a0] dark:text-[#6b7280]">{{ __('coach.day_plans.form.empty_section') }}</p>
                 </div>
 
                 <div class="space-y-2" x-show="itemsForSection(section._key).length > 0">
                     <template x-for="item in itemsForSection(section._key)" :key="item._key">
-                        <div class="flex items-center justify-between p-3 rounded-lg border border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-950">
+                        <div class="flex items-center justify-between p-3 rounded-lg border border-[rgba(18,22,31,0.09)] dark:border-[rgba(255,255,255,0.08)] bg-gray-50 dark:bg-[#0b0d10]">
                             <div class="flex-1 min-w-0">
-                                <p class="text-sm font-medium text-[#222222] dark:text-gray-100" x-text="item.name"></p>
-                                <p class="text-xs text-[#8e8e93] dark:text-gray-500 mt-0.5">
+                                <p class="text-sm font-medium text-[#181b22] dark:text-[#f0f2f5]" x-text="item.name"></p>
+                                <p class="text-xs text-[#8c93a0] dark:text-[#6b7280] mt-0.5">
                                     <span x-text="item.calories"></span> kcal &middot;
                                     P <span x-text="Number(item.protein).toFixed(1)"></span>g &middot;
                                     C <span x-text="Number(item.carbs).toFixed(1)"></span>g &middot;
                                     F <span x-text="Number(item.fat).toFixed(1)"></span>g
-                                    <template x-if="item.portion_grams"><span class="ml-1 text-[#8e8e93] dark:text-gray-500">(<span x-text="item.portion_grams"></span> g)</span></template>
+                                    <template x-if="item.portion_grams"><span class="ml-1 text-[#8c93a0] dark:text-[#6b7280]">(<span x-text="item.portion_grams"></span> g)</span></template>
                                 </p>
                             </div>
                             <button type="button" @click="removeItem(item._key)"
-                                class="ml-3 p-1.5 text-[#8e8e93] dark:text-gray-500 hover:text-red-500 transition-colors">
+                                class="ml-3 p-1.5 text-[#8c93a0] dark:text-[#6b7280] hover:text-red-500 transition-colors">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
                                 </svg>
@@ -139,10 +139,10 @@
         </template>
 
         <!-- Add section -->
-        <div class="bg-white dark:bg-gray-900 rounded-xl border border-dashed border-gray-200 dark:border-gray-800 p-4">
+        <div class="bg-white dark:bg-[#16191f] rounded-xl border border-dashed border-[rgba(18,22,31,0.09)] dark:border-[rgba(255,255,255,0.08)] p-4">
             <template x-if="!addingSection">
                 <button type="button" @click="addingSection = true; $nextTick(() => $refs.newSection?.focus())"
-                    class="w-full inline-flex items-center justify-center px-4 py-2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg text-sm font-semibold text-[#45515e] dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                    class="w-full inline-flex items-center justify-center px-4 py-2 bg-white dark:bg-[#11141a] border border-[rgba(18,22,31,0.14)] dark:border-[rgba(255,255,255,0.12)] rounded-lg text-sm font-semibold text-[#555b66] dark:text-[#a4abb6] hover:bg-[#f3f5f7] dark:hover:bg-[#1d2027] transition-colors">
                     <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
                     </svg>
@@ -153,11 +153,11 @@
                 <div class="flex gap-2">
                     <input type="text" x-ref="newSection" x-model="newSectionLabel" @keydown.enter.prevent="confirmAddSection()" @keydown.escape="cancelAddSection()"
                         placeholder="{{ __('coach.day_plans.form.section_name_placeholder') }}"
-                        class="flex-1 border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-[#222222] dark:text-gray-100 placeholder-[#8e8e93] dark:placeholder-gray-500 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[#1456f0] focus:ring-2 focus:ring-[#1456f0]/20 transition-colors duration-150">
-                    <button type="button" @click="confirmAddSection()" class="inline-flex items-center px-3 py-2 bg-[#181e25] dark:bg-gray-700 text-white text-sm font-semibold rounded-lg hover:bg-gray-800 transition-colors">
+                        class="flex-1 border border-[rgba(18,22,31,0.14)] dark:border-[rgba(255,255,255,0.12)] bg-white dark:bg-[#11141a] text-[#181b22] dark:text-[#f0f2f5] placeholder-[#8c93a0] dark:placeholder-[#6b7280] rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[#c6f24e] focus:ring-1 focus:ring-[rgba(198,242,78,0.3)] transition-colors duration-150">
+                    <button type="button" @click="confirmAddSection()" class="inline-flex items-center px-3 py-2 bg-[#181b22] dark:bg-[#c6f24e] text-white dark:text-[#14180a] text-sm font-semibold rounded-lg hover:bg-[#2a2f3a] dark:hover:bg-[#b4e438] transition-colors">
                         {{ __('coach.day_plans.form.add') }}
                     </button>
-                    <button type="button" @click="cancelAddSection()" class="inline-flex items-center px-3 py-2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-[#45515e] dark:text-gray-300 text-sm font-semibold rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                    <button type="button" @click="cancelAddSection()" class="inline-flex items-center px-3 py-2 bg-white dark:bg-[#11141a] border border-[rgba(18,22,31,0.14)] dark:border-[rgba(255,255,255,0.12)] text-[#555b66] dark:text-[#a4abb6] text-sm font-semibold rounded-lg hover:bg-[#f3f5f7] dark:hover:bg-[#1d2027] transition-colors">
                         {{ __('coach.day_plans.form.cancel') }}
                     </button>
                 </div>
@@ -168,13 +168,13 @@
         <div x-show="picker.open" x-cloak
             class="fixed inset-0 z-50 flex items-center justify-center bg-gray-900/60 px-4"
             @keydown.escape.window="closePicker()">
-            <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 shadow-xl max-w-lg w-full max-h-[90vh] flex flex-col" @click.outside="closePicker()">
-                <div class="px-5 py-4 border-b border-gray-100 dark:border-gray-800 flex items-center justify-between">
-                    <h3 class="text-sm font-semibold text-[#222222] dark:text-gray-100">
+            <div class="bg-white dark:bg-[#16191f] rounded-xl border border-[rgba(18,22,31,0.09)] dark:border-[rgba(255,255,255,0.08)] shadow-xl max-w-lg w-full max-h-[90vh] flex flex-col" @click.outside="closePicker()">
+                <div class="px-5 py-4 border-b border-[rgba(18,22,31,0.06)] dark:border-[rgba(255,255,255,0.06)] flex items-center justify-between">
+                    <h3 class="text-sm font-semibold text-[#181b22] dark:text-[#f0f2f5]">
                         {{ __('coach.day_plans.form.picker.heading') }}
-                        <span class="text-[#8e8e93] dark:text-gray-500" x-text="' — ' + (picker.label ?? '')"></span>
+                        <span class="text-[#8c93a0] dark:text-[#6b7280]" x-text="' — ' + (picker.label ?? '')"></span>
                     </h3>
-                    <button type="button" @click="closePicker()" class="p-1 text-[#8e8e93] dark:text-gray-500 hover:text-[#45515e] dark:hover:text-gray-300">
+                    <button type="button" @click="closePicker()" class="p-1 text-[#8c93a0] dark:text-[#6b7280] hover:text-[#45515e] dark:hover:text-[#f0f2f5]">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
                         </svg>
@@ -182,12 +182,12 @@
                 </div>
 
                 <!-- Tabs -->
-                <div class="border-b border-gray-100 dark:border-gray-800">
+                <div class="border-b border-[rgba(18,22,31,0.06)] dark:border-[rgba(255,255,255,0.06)]">
                     <nav class="flex">
-                        <button type="button" @click="picker.tab = 'library'" :class="picker.tab === 'library' ? 'border-[#1456f0] text-[#1456f0]' : 'border-transparent text-[#8e8e93] dark:text-gray-400 hover:text-[#45515e] dark:hover:text-gray-300'" class="flex-1 py-2.5 px-3 text-center text-xs font-medium border-b-2 transition-colors">{{ __('coach.day_plans.form.sources.library') }}</button>
-                        <button type="button" @click="picker.tab = 'custom'" :class="picker.tab === 'custom' ? 'border-[#1456f0] text-[#1456f0]' : 'border-transparent text-[#8e8e93] dark:text-gray-400 hover:text-[#45515e] dark:hover:text-gray-300'" class="flex-1 py-2.5 px-3 text-center text-xs font-medium border-b-2 transition-colors">{{ __('coach.day_plans.form.sources.custom') }}</button>
-                        <button type="button" @click="picker.tab = 'off'" :class="picker.tab === 'off' ? 'border-[#1456f0] text-[#1456f0]' : 'border-transparent text-[#8e8e93] dark:text-gray-400 hover:text-[#45515e] dark:hover:text-gray-300'" class="flex-1 py-2.5 px-3 text-center text-xs font-medium border-b-2 transition-colors">{{ __('coach.day_plans.form.sources.off') }}</button>
-                        <button type="button" @click="picker.tab = 'macros'" :class="picker.tab === 'macros' ? 'border-[#1456f0] text-[#1456f0]' : 'border-transparent text-[#8e8e93] dark:text-gray-400 hover:text-[#45515e] dark:hover:text-gray-300'" class="flex-1 py-2.5 px-3 text-center text-xs font-medium border-b-2 transition-colors">{{ __('coach.day_plans.form.sources.macros') }}</button>
+                        <button type="button" @click="picker.tab = 'library'" :class="picker.tab === 'library' ? 'border-[#c6f24e] text-[#5c7a10] dark:text-[#c6f24e]' : 'border-transparent text-[#8c93a0] dark:text-[#6b7280] hover:text-[#45515e] dark:hover:text-[#f0f2f5]'" class="flex-1 py-2.5 px-3 text-center text-xs font-medium border-b-2 transition-colors">{{ __('coach.day_plans.form.sources.library') }}</button>
+                        <button type="button" @click="picker.tab = 'custom'" :class="picker.tab === 'custom' ? 'border-[#c6f24e] text-[#5c7a10] dark:text-[#c6f24e]' : 'border-transparent text-[#8c93a0] dark:text-[#6b7280] hover:text-[#45515e] dark:hover:text-[#f0f2f5]'" class="flex-1 py-2.5 px-3 text-center text-xs font-medium border-b-2 transition-colors">{{ __('coach.day_plans.form.sources.custom') }}</button>
+                        <button type="button" @click="picker.tab = 'off'" :class="picker.tab === 'off' ? 'border-[#c6f24e] text-[#5c7a10] dark:text-[#c6f24e]' : 'border-transparent text-[#8c93a0] dark:text-[#6b7280] hover:text-[#45515e] dark:hover:text-[#f0f2f5]'" class="flex-1 py-2.5 px-3 text-center text-xs font-medium border-b-2 transition-colors">{{ __('coach.day_plans.form.sources.off') }}</button>
+                        <button type="button" @click="picker.tab = 'macros'" :class="picker.tab === 'macros' ? 'border-[#c6f24e] text-[#5c7a10] dark:text-[#c6f24e]' : 'border-transparent text-[#8c93a0] dark:text-[#6b7280] hover:text-[#45515e] dark:hover:text-[#f0f2f5]'" class="flex-1 py-2.5 px-3 text-center text-xs font-medium border-b-2 transition-colors">{{ __('coach.day_plans.form.sources.macros') }}</button>
                     </nav>
                 </div>
 
@@ -196,18 +196,18 @@
                     <div x-show="picker.tab === 'library'" class="space-y-3">
                         <input type="text" x-model="picker.search"
                             placeholder="{{ __('coach.day_plans.form.picker.search_placeholder') }}"
-                            class="w-full border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-[#222222] dark:text-gray-100 placeholder-[#8e8e93] dark:placeholder-gray-500 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[#1456f0] focus:ring-2 focus:ring-[#1456f0]/20 transition-colors duration-150">
+                            class="w-full border border-[rgba(18,22,31,0.14)] dark:border-[rgba(255,255,255,0.12)] bg-white dark:bg-[#11141a] text-[#181b22] dark:text-[#f0f2f5] placeholder-[#8c93a0] dark:placeholder-[#6b7280] rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[#c6f24e] focus:ring-1 focus:ring-[rgba(198,242,78,0.3)] transition-colors duration-150">
 
                         <template x-if="filteredMeals().length === 0">
-                            <p class="text-center text-sm text-[#8e8e93] dark:text-gray-500 py-4">{{ __('coach.day_plans.form.picker.no_meals') }}</p>
+                            <p class="text-center text-sm text-[#8c93a0] dark:text-[#6b7280] py-4">{{ __('coach.day_plans.form.picker.no_meals') }}</p>
                         </template>
 
                         <div x-show="!libraryDraft" class="max-h-72 overflow-y-auto space-y-2">
                             <template x-for="meal in filteredMeals()" :key="meal.id">
                                 <button type="button" @click="selectLibraryMeal(meal)"
-                                    class="w-full text-left p-3 rounded-lg border border-gray-200 dark:border-gray-800 hover:border-[#1456f0] hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-colors">
-                                    <p class="text-sm font-medium text-[#222222] dark:text-gray-100" x-text="meal.name"></p>
-                                    <p class="text-xs text-[#8e8e93] dark:text-gray-500 mt-0.5">
+                                    class="w-full text-left p-3 rounded-lg border border-[rgba(18,22,31,0.09)] dark:border-[rgba(255,255,255,0.08)] hover:border-[#c6f24e] hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-colors">
+                                    <p class="text-sm font-medium text-[#181b22] dark:text-[#f0f2f5]" x-text="meal.name"></p>
+                                    <p class="text-xs text-[#8c93a0] dark:text-[#6b7280] mt-0.5">
                                         <span x-text="meal.calories"></span> kcal &middot;
                                         P <span x-text="meal.protein"></span>g &middot;
                                         C <span x-text="meal.carbs"></span>g &middot;
@@ -217,32 +217,32 @@
                             </template>
                         </div>
 
-                        <div x-show="libraryDraft" x-cloak class="space-y-3 pt-3 border-t border-gray-100 dark:border-gray-800">
-                            <p class="text-sm font-medium text-[#222222] dark:text-gray-100" x-text="libraryDraft?.name"></p>
+                        <div x-show="libraryDraft" x-cloak class="space-y-3 pt-3 border-t border-[rgba(18,22,31,0.06)] dark:border-[rgba(255,255,255,0.06)]">
+                            <p class="text-sm font-medium text-[#181b22] dark:text-[#f0f2f5]" x-text="libraryDraft?.name"></p>
                             <div>
-                                <label class="block text-xs font-medium text-[#45515e] dark:text-gray-300 mb-1.5">{{ __('coach.day_plans.form.portion') }}</label>
+                                <label class="block text-xs font-medium text-[#555b66] dark:text-[#a4abb6] mb-1.5">{{ __('coach.day_plans.form.portion') }}</label>
                                 <div class="flex gap-2 flex-wrap">
                                     <template x-for="p in [0.5, 1, 1.5, 2]" :key="p">
                                         <button type="button" @click="libraryPortion = p"
-                                            :class="libraryPortion === p ? 'text-white border-[#1456f0]' : 'bg-white dark:bg-gray-800 text-[#45515e] dark:text-gray-300 border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700'"
+                                            :class="libraryPortion === p ? 'text-white border-[#1456f0]' : 'bg-white dark:bg-[#11141a] text-[#555b66] dark:text-[#a4abb6] border-[rgba(18,22,31,0.14)] dark:border-[rgba(255,255,255,0.12)] hover:bg-[#f3f5f7] dark:hover:bg-[#1d2027]'"
                                             :style="libraryPortion === p ? 'background-color: var(--color-primary)' : ''"
                                             class="px-3 py-1.5 text-sm font-medium border rounded-lg transition-colors">
                                             <span x-text="p + '×'"></span>
                                         </button>
                                     </template>
                                     <input type="number" step="0.1" min="0.1" max="10" x-model.number="libraryPortion"
-                                        class="w-24 border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-[#222222] dark:text-gray-100 rounded-lg px-2 py-1.5 text-sm focus:outline-none focus:border-[#1456f0]">
+                                        class="w-24 border border-[rgba(18,22,31,0.14)] dark:border-[rgba(255,255,255,0.12)] bg-white dark:bg-[#11141a] text-[#181b22] dark:text-[#f0f2f5] rounded-lg px-2 py-1.5 text-sm focus:outline-none focus:border-[#1456f0]">
                                 </div>
                             </div>
-                            <p class="text-xs text-[#8e8e93] dark:text-gray-500">
+                            <p class="text-xs text-[#8c93a0] dark:text-[#6b7280]">
                                 <span x-text="Math.round((libraryDraft?.calories || 0) * libraryPortion)"></span> kcal &middot;
                                 P <span x-text="((libraryDraft?.protein || 0) * libraryPortion).toFixed(1)"></span>g &middot;
                                 C <span x-text="((libraryDraft?.carbs || 0) * libraryPortion).toFixed(1)"></span>g &middot;
                                 F <span x-text="((libraryDraft?.fat || 0) * libraryPortion).toFixed(1)"></span>g
                             </p>
                             <div class="flex gap-2">
-                                <button type="button" @click="libraryDraft = null" class="flex-1 inline-flex items-center justify-center px-3 py-2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-[#45515e] dark:text-gray-300 text-sm font-semibold rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">{{ __('coach.day_plans.form.cancel') }}</button>
-                                <button type="button" @click="confirmLibrary()" class="flex-1 inline-flex items-center justify-center px-3 py-2 bg-[#181e25] dark:bg-gray-700 text-white text-sm font-semibold rounded-lg hover:bg-gray-800 transition-colors">{{ __('coach.day_plans.form.add_to_section') }}</button>
+                                <button type="button" @click="libraryDraft = null" class="flex-1 inline-flex items-center justify-center px-3 py-2 bg-white dark:bg-[#11141a] border border-[rgba(18,22,31,0.14)] dark:border-[rgba(255,255,255,0.12)] text-[#555b66] dark:text-[#a4abb6] text-sm font-semibold rounded-lg hover:bg-[#f3f5f7] dark:hover:bg-[#1d2027] transition-colors">{{ __('coach.day_plans.form.cancel') }}</button>
+                                <button type="button" @click="confirmLibrary()" class="flex-1 inline-flex items-center justify-center px-3 py-2 bg-[#181b22] dark:bg-[#c6f24e] text-white dark:text-[#14180a] text-sm font-semibold rounded-lg hover:bg-[#2a2f3a] dark:hover:bg-[#b4e438] transition-colors">{{ __('coach.day_plans.form.add_to_section') }}</button>
                             </div>
                         </div>
                     </div>
@@ -250,74 +250,74 @@
                     <!-- Custom tab -->
                     <div x-show="picker.tab === 'custom'" class="space-y-3">
                         <div>
-                            <label class="block text-xs font-medium text-[#45515e] dark:text-gray-300 mb-1">{{ __('coach.day_plans.form.item_name') }} <span class="text-red-500">*</span></label>
-                            <input type="text" x-model="customDraft.name" class="w-full border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-[#222222] dark:text-gray-100 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[#1456f0] focus:ring-2 focus:ring-[#1456f0]/20" placeholder="{{ __('coach.day_plans.form.item_name_placeholder') }}">
+                            <label class="block text-xs font-medium text-[#555b66] dark:text-[#a4abb6] mb-1">{{ __('coach.day_plans.form.item_name') }} <span class="text-red-500">*</span></label>
+                            <input type="text" x-model="customDraft.name" class="w-full border border-[rgba(18,22,31,0.14)] dark:border-[rgba(255,255,255,0.12)] bg-white dark:bg-[#11141a] text-[#181b22] dark:text-[#f0f2f5] rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[#c6f24e] focus:ring-1 focus:ring-[rgba(198,242,78,0.3)]" placeholder="{{ __('coach.day_plans.form.item_name_placeholder') }}">
                         </div>
                         <div class="grid grid-cols-4 gap-2">
                             <div>
-                                <label class="block text-xs font-medium text-[#45515e] dark:text-gray-300 mb-1">{{ __('coach.day_plans.form.kcal') }}</label>
-                                <input type="number" min="0" x-model.number="customDraft.calories" class="w-full border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-[#222222] dark:text-gray-100 rounded-lg px-2 py-2 text-sm focus:outline-none focus:border-[#1456f0]">
+                                <label class="block text-xs font-medium text-[#555b66] dark:text-[#a4abb6] mb-1">{{ __('coach.day_plans.form.kcal') }}</label>
+                                <input type="number" min="0" x-model.number="customDraft.calories" class="w-full border border-[rgba(18,22,31,0.14)] dark:border-[rgba(255,255,255,0.12)] bg-white dark:bg-[#11141a] text-[#181b22] dark:text-[#f0f2f5] rounded-lg px-2 py-2 text-sm focus:outline-none focus:border-[#1456f0]">
                             </div>
                             <div>
-                                <label class="block text-xs font-medium text-[#45515e] dark:text-gray-300 mb-1">P</label>
-                                <input type="number" step="0.1" min="0" x-model.number="customDraft.protein" class="w-full border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-[#222222] dark:text-gray-100 rounded-lg px-2 py-2 text-sm focus:outline-none focus:border-[#1456f0]">
+                                <label class="block text-xs font-medium text-[#555b66] dark:text-[#a4abb6] mb-1">P</label>
+                                <input type="number" step="0.1" min="0" x-model.number="customDraft.protein" class="w-full border border-[rgba(18,22,31,0.14)] dark:border-[rgba(255,255,255,0.12)] bg-white dark:bg-[#11141a] text-[#181b22] dark:text-[#f0f2f5] rounded-lg px-2 py-2 text-sm focus:outline-none focus:border-[#1456f0]">
                             </div>
                             <div>
-                                <label class="block text-xs font-medium text-[#45515e] dark:text-gray-300 mb-1">C</label>
-                                <input type="number" step="0.1" min="0" x-model.number="customDraft.carbs" class="w-full border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-[#222222] dark:text-gray-100 rounded-lg px-2 py-2 text-sm focus:outline-none focus:border-[#1456f0]">
+                                <label class="block text-xs font-medium text-[#555b66] dark:text-[#a4abb6] mb-1">C</label>
+                                <input type="number" step="0.1" min="0" x-model.number="customDraft.carbs" class="w-full border border-[rgba(18,22,31,0.14)] dark:border-[rgba(255,255,255,0.12)] bg-white dark:bg-[#11141a] text-[#181b22] dark:text-[#f0f2f5] rounded-lg px-2 py-2 text-sm focus:outline-none focus:border-[#1456f0]">
                             </div>
                             <div>
-                                <label class="block text-xs font-medium text-[#45515e] dark:text-gray-300 mb-1">F</label>
-                                <input type="number" step="0.1" min="0" x-model.number="customDraft.fat" class="w-full border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-[#222222] dark:text-gray-100 rounded-lg px-2 py-2 text-sm focus:outline-none focus:border-[#1456f0]">
+                                <label class="block text-xs font-medium text-[#555b66] dark:text-[#a4abb6] mb-1">F</label>
+                                <input type="number" step="0.1" min="0" x-model.number="customDraft.fat" class="w-full border border-[rgba(18,22,31,0.14)] dark:border-[rgba(255,255,255,0.12)] bg-white dark:bg-[#11141a] text-[#181b22] dark:text-[#f0f2f5] rounded-lg px-2 py-2 text-sm focus:outline-none focus:border-[#1456f0]">
                             </div>
                         </div>
-                        <button type="button" @click="confirmCustom()" :disabled="!customDraft.name?.trim()" class="w-full inline-flex items-center justify-center px-3 py-2 bg-[#181e25] dark:bg-gray-700 text-white text-sm font-semibold rounded-lg hover:bg-gray-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed">{{ __('coach.day_plans.form.add_to_section') }}</button>
+                        <button type="button" @click="confirmCustom()" :disabled="!customDraft.name?.trim()" class="w-full inline-flex items-center justify-center px-3 py-2 bg-[#181b22] dark:bg-[#c6f24e] text-white dark:text-[#14180a] text-sm font-semibold rounded-lg hover:bg-[#2a2f3a] dark:hover:bg-[#b4e438] transition-colors disabled:opacity-50 disabled:cursor-not-allowed">{{ __('coach.day_plans.form.add_to_section') }}</button>
                     </div>
 
                     <!-- OFF Search tab -->
                     <div x-show="picker.tab === 'off'" class="space-y-3">
                         <input type="text" x-model="offQuery" @input.debounce.300ms="searchOff()"
                             placeholder="{{ __('coach.day_plans.form.off.search_placeholder') }}"
-                            class="w-full border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-[#222222] dark:text-gray-100 placeholder-[#8e8e93] dark:placeholder-gray-500 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[#1456f0] focus:ring-2 focus:ring-[#1456f0]/20">
+                            class="w-full border border-[rgba(18,22,31,0.14)] dark:border-[rgba(255,255,255,0.12)] bg-white dark:bg-[#11141a] text-[#181b22] dark:text-[#f0f2f5] placeholder-[#8c93a0] dark:placeholder-[#6b7280] rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[#c6f24e] focus:ring-1 focus:ring-[rgba(198,242,78,0.3)]">
                         <template x-if="offSearching">
-                            <p class="text-center text-sm text-[#8e8e93] dark:text-gray-500 py-3">{{ __('coach.day_plans.form.off.loading') }}</p>
+                            <p class="text-center text-sm text-[#8c93a0] dark:text-[#6b7280] py-3">{{ __('coach.day_plans.form.off.loading') }}</p>
                         </template>
                         <template x-if="!offSearching && offSearched && offResults.length === 0">
-                            <p class="text-center text-sm text-[#8e8e93] dark:text-gray-500 py-3">{{ __('coach.day_plans.form.off.no_results') }}</p>
+                            <p class="text-center text-sm text-[#8c93a0] dark:text-[#6b7280] py-3">{{ __('coach.day_plans.form.off.no_results') }}</p>
                         </template>
 
                         <div x-show="!offDraft && offResults.length > 0" class="max-h-60 overflow-y-auto space-y-2">
                             <template x-for="r in offResults" :key="r.code">
                                 <button type="button" @click="selectOffResult(r)"
-                                    class="w-full text-left p-3 rounded-lg border border-gray-200 dark:border-gray-800 hover:border-[#1456f0] hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-colors">
-                                    <p class="text-sm font-medium text-[#222222] dark:text-gray-100" x-text="r.name"></p>
-                                    <p class="text-xs text-[#8e8e93] dark:text-gray-500" x-show="r.brand" x-text="r.brand"></p>
-                                    <p class="text-xs text-[#45515e] dark:text-gray-400 mt-0.5">
+                                    class="w-full text-left p-3 rounded-lg border border-[rgba(18,22,31,0.09)] dark:border-[rgba(255,255,255,0.08)] hover:border-[#c6f24e] hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-colors">
+                                    <p class="text-sm font-medium text-[#181b22] dark:text-[#f0f2f5]" x-text="r.name"></p>
+                                    <p class="text-xs text-[#8c93a0] dark:text-[#6b7280]" x-show="r.brand" x-text="r.brand"></p>
+                                    <p class="text-xs text-[#555b66] dark:text-[#a4abb6] mt-0.5">
                                         <span x-text="Math.round(r.kcal_per_100g)"></span> kcal &middot;
                                         P<span x-text="r.protein_per_100g"></span>/C<span x-text="r.carbs_per_100g"></span>/F<span x-text="r.fat_per_100g"></span>
-                                        <span class="text-[#8e8e93] dark:text-gray-500">{{ __('coach.day_plans.form.off.per_100g') }}</span>
+                                        <span class="text-[#8c93a0] dark:text-[#6b7280]">{{ __('coach.day_plans.form.off.per_100g') }}</span>
                                     </p>
                                 </button>
                             </template>
                         </div>
 
-                        <div x-show="offDraft" x-cloak class="space-y-3 pt-3 border-t border-gray-100 dark:border-gray-800">
-                            <p class="text-sm font-medium text-[#222222] dark:text-gray-100" x-text="offDraft?.name"></p>
-                            <p class="text-xs text-[#8e8e93] dark:text-gray-500" x-show="offDraft?.brand" x-text="offDraft?.brand"></p>
+                        <div x-show="offDraft" x-cloak class="space-y-3 pt-3 border-t border-[rgba(18,22,31,0.06)] dark:border-[rgba(255,255,255,0.06)]">
+                            <p class="text-sm font-medium text-[#181b22] dark:text-[#f0f2f5]" x-text="offDraft?.name"></p>
+                            <p class="text-xs text-[#8c93a0] dark:text-[#6b7280]" x-show="offDraft?.brand" x-text="offDraft?.brand"></p>
                             <div>
-                                <label class="block text-xs font-medium text-[#45515e] dark:text-gray-300 mb-1">{{ __('coach.day_plans.form.off.portion_grams') }}</label>
+                                <label class="block text-xs font-medium text-[#555b66] dark:text-[#a4abb6] mb-1">{{ __('coach.day_plans.form.off.portion_grams') }}</label>
                                 <input type="number" min="1" max="2000" step="1" x-model.number="offGrams"
-                                    class="w-full border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-[#222222] dark:text-gray-100 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[#1456f0]">
+                                    class="w-full border border-[rgba(18,22,31,0.14)] dark:border-[rgba(255,255,255,0.12)] bg-white dark:bg-[#11141a] text-[#181b22] dark:text-[#f0f2f5] rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[#1456f0]">
                             </div>
-                            <p class="text-xs text-[#8e8e93] dark:text-gray-500">
+                            <p class="text-xs text-[#8c93a0] dark:text-[#6b7280]">
                                 <span x-text="offScaled.calories"></span> kcal &middot;
                                 P <span x-text="offScaled.protein"></span>g &middot;
                                 C <span x-text="offScaled.carbs"></span>g &middot;
                                 F <span x-text="offScaled.fat"></span>g
                             </p>
                             <div class="flex gap-2">
-                                <button type="button" @click="offDraft = null" class="flex-1 inline-flex items-center justify-center px-3 py-2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-[#45515e] dark:text-gray-300 text-sm font-semibold rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">{{ __('coach.day_plans.form.cancel') }}</button>
-                                <button type="button" @click="confirmOff()" :disabled="!offFormReady()" class="flex-1 inline-flex items-center justify-center px-3 py-2 bg-[#181e25] dark:bg-gray-700 text-white text-sm font-semibold rounded-lg hover:bg-gray-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed">{{ __('coach.day_plans.form.add_to_section') }}</button>
+                                <button type="button" @click="offDraft = null" class="flex-1 inline-flex items-center justify-center px-3 py-2 bg-white dark:bg-[#11141a] border border-[rgba(18,22,31,0.14)] dark:border-[rgba(255,255,255,0.12)] text-[#555b66] dark:text-[#a4abb6] text-sm font-semibold rounded-lg hover:bg-[#f3f5f7] dark:hover:bg-[#1d2027] transition-colors">{{ __('coach.day_plans.form.cancel') }}</button>
+                                <button type="button" @click="confirmOff()" :disabled="!offFormReady()" class="flex-1 inline-flex items-center justify-center px-3 py-2 bg-[#181b22] dark:bg-[#c6f24e] text-white dark:text-[#14180a] text-sm font-semibold rounded-lg hover:bg-[#2a2f3a] dark:hover:bg-[#b4e438] transition-colors disabled:opacity-50 disabled:cursor-not-allowed">{{ __('coach.day_plans.form.add_to_section') }}</button>
                             </div>
                         </div>
                     </div>
@@ -326,23 +326,23 @@
                     <div x-show="picker.tab === 'macros'" class="space-y-3">
                         <div class="grid grid-cols-4 gap-2">
                             <div>
-                                <label class="block text-xs font-medium text-[#45515e] dark:text-gray-300 mb-1">{{ __('coach.day_plans.form.kcal') }}</label>
-                                <input type="number" min="0" x-model.number="macrosDraft.calories" class="w-full border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-[#222222] dark:text-gray-100 rounded-lg px-2 py-2 text-sm focus:outline-none focus:border-[#1456f0]">
+                                <label class="block text-xs font-medium text-[#555b66] dark:text-[#a4abb6] mb-1">{{ __('coach.day_plans.form.kcal') }}</label>
+                                <input type="number" min="0" x-model.number="macrosDraft.calories" class="w-full border border-[rgba(18,22,31,0.14)] dark:border-[rgba(255,255,255,0.12)] bg-white dark:bg-[#11141a] text-[#181b22] dark:text-[#f0f2f5] rounded-lg px-2 py-2 text-sm focus:outline-none focus:border-[#1456f0]">
                             </div>
                             <div>
-                                <label class="block text-xs font-medium text-[#45515e] dark:text-gray-300 mb-1">P</label>
-                                <input type="number" step="0.1" min="0" x-model.number="macrosDraft.protein" class="w-full border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-[#222222] dark:text-gray-100 rounded-lg px-2 py-2 text-sm focus:outline-none focus:border-[#1456f0]">
+                                <label class="block text-xs font-medium text-[#555b66] dark:text-[#a4abb6] mb-1">P</label>
+                                <input type="number" step="0.1" min="0" x-model.number="macrosDraft.protein" class="w-full border border-[rgba(18,22,31,0.14)] dark:border-[rgba(255,255,255,0.12)] bg-white dark:bg-[#11141a] text-[#181b22] dark:text-[#f0f2f5] rounded-lg px-2 py-2 text-sm focus:outline-none focus:border-[#1456f0]">
                             </div>
                             <div>
-                                <label class="block text-xs font-medium text-[#45515e] dark:text-gray-300 mb-1">C</label>
-                                <input type="number" step="0.1" min="0" x-model.number="macrosDraft.carbs" class="w-full border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-[#222222] dark:text-gray-100 rounded-lg px-2 py-2 text-sm focus:outline-none focus:border-[#1456f0]">
+                                <label class="block text-xs font-medium text-[#555b66] dark:text-[#a4abb6] mb-1">C</label>
+                                <input type="number" step="0.1" min="0" x-model.number="macrosDraft.carbs" class="w-full border border-[rgba(18,22,31,0.14)] dark:border-[rgba(255,255,255,0.12)] bg-white dark:bg-[#11141a] text-[#181b22] dark:text-[#f0f2f5] rounded-lg px-2 py-2 text-sm focus:outline-none focus:border-[#1456f0]">
                             </div>
                             <div>
-                                <label class="block text-xs font-medium text-[#45515e] dark:text-gray-300 mb-1">F</label>
-                                <input type="number" step="0.1" min="0" x-model.number="macrosDraft.fat" class="w-full border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-[#222222] dark:text-gray-100 rounded-lg px-2 py-2 text-sm focus:outline-none focus:border-[#1456f0]">
+                                <label class="block text-xs font-medium text-[#555b66] dark:text-[#a4abb6] mb-1">F</label>
+                                <input type="number" step="0.1" min="0" x-model.number="macrosDraft.fat" class="w-full border border-[rgba(18,22,31,0.14)] dark:border-[rgba(255,255,255,0.12)] bg-white dark:bg-[#11141a] text-[#181b22] dark:text-[#f0f2f5] rounded-lg px-2 py-2 text-sm focus:outline-none focus:border-[#1456f0]">
                             </div>
                         </div>
-                        <button type="button" @click="confirmMacros()" class="w-full inline-flex items-center justify-center px-3 py-2 bg-[#181e25] dark:bg-gray-700 text-white text-sm font-semibold rounded-lg hover:bg-gray-800 transition-colors">{{ __('coach.day_plans.form.add_to_section') }}</button>
+                        <button type="button" @click="confirmMacros()" class="w-full inline-flex items-center justify-center px-3 py-2 bg-[#181b22] dark:bg-[#c6f24e] text-white dark:text-[#14180a] text-sm font-semibold rounded-lg hover:bg-[#2a2f3a] dark:hover:bg-[#b4e438] transition-colors">{{ __('coach.day_plans.form.add_to_section') }}</button>
                     </div>
                 </div>
             </div>
@@ -350,17 +350,17 @@
 
         <div class="flex items-center justify-end gap-4 pt-2">
             <a href="{{ route('coach.clients.nutrition', $client) }}"
-                class="inline-flex items-center px-4 py-2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg text-sm font-semibold text-[#45515e] dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                class="inline-flex items-center px-4 py-2 bg-white dark:bg-[#11141a] border border-[rgba(18,22,31,0.14)] dark:border-[rgba(255,255,255,0.12)] rounded-lg text-sm font-semibold text-[#555b66] dark:text-[#a4abb6] hover:bg-[#f3f5f7] dark:hover:bg-[#1d2027] transition-colors">
                 {{ __('coach.day_plans.form.cancel') }}
             </a>
             @if(isset($dayPlan))
                 <button type="submit"
-                    class="inline-flex items-center px-4 py-2 bg-[#181e25] dark:bg-gray-700 text-white text-sm font-semibold rounded-lg hover:bg-gray-800 transition-colors">
+                    class="inline-flex items-center px-4 py-2 bg-[#181b22] dark:bg-[#c6f24e] text-white dark:text-[#14180a] text-sm font-semibold rounded-lg hover:bg-[#2a2f3a] dark:hover:bg-[#b4e438] transition-colors">
                     {{ __('coach.day_plans.form.update') }}
                 </button>
             @else
                 <button type="submit"
-                    class="inline-flex items-center px-4 py-2 bg-[#181e25] dark:bg-gray-700 text-white text-sm font-semibold rounded-lg hover:bg-gray-800 transition-colors">
+                    class="inline-flex items-center px-4 py-2 bg-[#181b22] dark:bg-[#c6f24e] text-white dark:text-[#14180a] text-sm font-semibold rounded-lg hover:bg-[#2a2f3a] dark:hover:bg-[#b4e438] transition-colors">
                     {{ __('coach.day_plans.form.create') }}
                 </button>
             @endif
@@ -370,11 +370,11 @@
     @if(isset($dayPlan))
         <form method="POST" action="{{ route('coach.clients.day-plans.destroy', [$client, $dayPlan]) }}"
             onsubmit="return confirm('{{ __('coach.day_plans.form.archive_confirm') }}');"
-            class="mt-6 bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 shadow-card p-6">
+            class="mt-6 bg-white dark:bg-[#16191f] rounded-xl border border-[rgba(18,22,31,0.09)] dark:border-[rgba(255,255,255,0.08)] shadow-[0_1px_2px_rgba(18,22,31,.04),0_4px_16px_rgba(18,22,31,.045)] dark:shadow-[0_1px_2px_rgba(0,0,0,.4),0_6px_20px_rgba(0,0,0,.3)] p-6">
             @csrf
             @method('DELETE')
-            <h3 class="font-display text-base font-semibold text-[#222222] dark:text-gray-100">{{ __('coach.day_plans.form.archive_heading') }}</h3>
-            <p class="mt-1 text-sm text-[#8e8e93] dark:text-gray-500">{{ __('coach.day_plans.form.archive_description') }}</p>
+            <h3 class="font-display text-base font-semibold text-[#181b22] dark:text-[#f0f2f5]">{{ __('coach.day_plans.form.archive_heading') }}</h3>
+            <p class="mt-1 text-sm text-[#8c93a0] dark:text-[#6b7280]">{{ __('coach.day_plans.form.archive_description') }}</p>
             <button type="submit" class="mt-4 inline-flex items-center px-4 py-2 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-900 text-red-700 dark:text-red-400 text-sm font-semibold rounded-lg hover:bg-red-100 dark:hover:bg-red-900/30 transition-colors">
                 {{ __('coach.day_plans.form.archive') }}
             </button>

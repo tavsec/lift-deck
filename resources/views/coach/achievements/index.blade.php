@@ -5,10 +5,10 @@
         <!-- Header -->
         <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div>
-                <h1 class="font-display text-2xl font-semibold text-[#222222] dark:text-gray-100">{{ __('coach.achievements.index.heading') }}</h1>
-                <p class="mt-1 text-sm text-[#8e8e93] dark:text-gray-500">{{ __('coach.achievements.index.subtitle') }}</p>
+                <h1 class="font-display text-[30px] font-bold text-[#181b22] dark:text-[#f0f2f5] tracking-tight">{{ __('coach.achievements.index.heading') }}</h1>
+                <p class="mt-1 text-sm text-[#8c93a0] dark:text-[#6b7280]">{{ __('coach.achievements.index.subtitle') }}</p>
             </div>
-            <a href="{{ route('coach.achievements.create') }}" class="inline-flex items-center px-4 py-2 bg-[#181e25] dark:bg-gray-700 text-white text-sm font-semibold rounded-lg hover:bg-gray-800 transition-colors">
+            <a href="{{ route('coach.achievements.create') }}" class="inline-flex items-center px-4 py-2 bg-[#181b22] dark:bg-[#c6f24e] text-white dark:text-[#14180a] text-sm font-semibold rounded-lg hover:bg-[#2a2f3a] dark:hover:bg-[#b4e438] transition-colors">
                 <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
                 </svg>
@@ -51,13 +51,13 @@
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 @foreach($achievements as $achievement)
                     @if(is_null($achievement->coach_id))
-                        <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 shadow-card overflow-hidden">
+                        <div class="bg-white dark:bg-[#16191f] rounded-xl border border-[rgba(18,22,31,0.09)] dark:border-[rgba(255,255,255,0.08)] shadow-[0_1px_2px_rgba(18,22,31,.04),0_4px_16px_rgba(18,22,31,.045)] dark:shadow-[0_1px_2px_rgba(0,0,0,.4),0_6px_20px_rgba(0,0,0,.3)] overflow-hidden">
                     @else
-                        <a href="{{ route('coach.achievements.edit', $achievement) }}" class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 shadow-card overflow-hidden hover:border-gray-300 dark:hover:border-gray-700 transition-colors">
+                        <a href="{{ route('coach.achievements.edit', $achievement) }}" class="bg-white dark:bg-[#16191f] rounded-xl border border-[rgba(18,22,31,0.09)] dark:border-[rgba(255,255,255,0.08)] shadow-[0_1px_2px_rgba(18,22,31,.04),0_4px_16px_rgba(18,22,31,.045)] dark:shadow-[0_1px_2px_rgba(0,0,0,.4),0_6px_20px_rgba(0,0,0,.3)] overflow-hidden hover:border-gray-300 dark:hover:border-gray-700 transition-colors">
                     @endif
                             <div class="p-5">
                                 <div class="flex items-start justify-between gap-2">
-                                    <h3 class="text-sm font-semibold text-[#222222] dark:text-gray-100">{{ $achievement->name }}</h3>
+                                    <h3 class="text-sm font-semibold text-[#181b22] dark:text-[#f0f2f5]">{{ $achievement->name }}</h3>
                                     <div class="flex items-center gap-1 flex-shrink-0">
                                         @if(is_null($achievement->coach_id))
                                             <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-400">{{ __('coach.achievements.index.system') }}</span>
@@ -65,18 +65,18 @@
                                         @if($achievement->type === 'automatic')
                                             <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400">{{ __('coach.achievements.index.automatic') }}</span>
                                         @else
-                                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 dark:bg-gray-800 text-[#45515e] dark:text-gray-300">{{ __('coach.achievements.index.manual') }}</span>
+                                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-[#f3f5f7] dark:bg-[#1d2027] text-[#555b66] dark:text-[#a4abb6]">{{ __('coach.achievements.index.manual') }}</span>
                                         @endif
                                     </div>
                                 </div>
 
                                 @if($achievement->description)
-                                    <p class="mt-2 text-sm text-[#8e8e93] dark:text-gray-400 line-clamp-2">{{ $achievement->description }}</p>
+                                    <p class="mt-2 text-sm text-[#8c93a0] dark:text-[#6b7280] line-clamp-2">{{ $achievement->description }}</p>
                                 @endif
 
                                 @if($achievement->type === 'automatic' && $achievement->condition_type)
-                                    <div class="mt-3 text-xs text-[#8e8e93] dark:text-gray-400">
-                                        <span class="font-medium text-[#45515e] dark:text-gray-300">{{ __('coach.achievements.index.condition') }}</span>
+                                    <div class="mt-3 text-xs text-[#8c93a0] dark:text-[#6b7280]">
+                                        <span class="font-medium text-[#555b66] dark:text-[#a4abb6]">{{ __('coach.achievements.index.condition') }}</span>
                                         {{ ucwords(str_replace('_', ' ', $achievement->condition_type)) }}
                                         @if($achievement->condition_value)
                                             &rarr; {{ $achievement->condition_value }}
@@ -84,7 +84,7 @@
                                     </div>
                                 @endif
 
-                                <div class="mt-3 flex gap-3 text-xs text-[#8e8e93] dark:text-gray-400">
+                                <div class="mt-3 flex gap-3 text-xs text-[#8c93a0] dark:text-[#6b7280]">
                                     @if($achievement->xp_reward)
                                         <span class="inline-flex items-center gap-1">
                                             <span class="font-medium text-yellow-600 dark:text-yellow-400">+{{ $achievement->xp_reward }} XP</span>
@@ -105,17 +105,17 @@
                 @endforeach
             </div>
         @else
-            <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 shadow-card">
+            <div class="bg-white dark:bg-[#16191f] rounded-xl border border-[rgba(18,22,31,0.09)] dark:border-[rgba(255,255,255,0.08)] shadow-[0_1px_2px_rgba(18,22,31,.04),0_4px_16px_rgba(18,22,31,.045)] dark:shadow-[0_1px_2px_rgba(0,0,0,.4),0_6px_20px_rgba(0,0,0,.3)]">
                 <div class="text-center py-12">
-                    <div class="w-12 h-12 rounded-2xl bg-gray-100 dark:bg-gray-800 flex items-center justify-center mx-auto mb-3">
-                        <svg class="h-6 w-6 text-[#8e8e93]" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <div class="w-12 h-12 rounded-2xl bg-[#f3f5f7] dark:bg-[#1d2027] flex items-center justify-center mx-auto mb-3">
+                        <svg class="h-6 w-6 text-[#8c93a0]" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/>
                         </svg>
                     </div>
-                    <h3 class="text-sm font-semibold text-[#222222] dark:text-gray-100">{{ __('coach.achievements.index.no_achievements') }}</h3>
-                    <p class="mt-1 text-sm text-[#8e8e93] dark:text-gray-500">{{ __('coach.achievements.index.no_achievements_description') }}</p>
+                    <h3 class="text-sm font-semibold text-[#181b22] dark:text-[#f0f2f5]">{{ __('coach.achievements.index.no_achievements') }}</h3>
+                    <p class="mt-1 text-sm text-[#8c93a0] dark:text-[#6b7280]">{{ __('coach.achievements.index.no_achievements_description') }}</p>
                     <div class="mt-6">
-                        <a href="{{ route('coach.achievements.create') }}" class="inline-flex items-center px-4 py-2 bg-[#181e25] dark:bg-gray-700 text-white text-sm font-semibold rounded-lg hover:bg-gray-800 transition-colors">
+                        <a href="{{ route('coach.achievements.create') }}" class="inline-flex items-center px-4 py-2 bg-[#181b22] dark:bg-[#c6f24e] text-white dark:text-[#14180a] text-sm font-semibold rounded-lg hover:bg-[#2a2f3a] dark:hover:bg-[#b4e438] transition-colors">
                             <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
                             </svg>

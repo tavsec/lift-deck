@@ -4,8 +4,8 @@
     <div class="px-4 py-5 space-y-4">
         <!-- Header -->
         <div class="mb-5">
-            <h1 class="font-display text-xl font-semibold text-[#222222] dark:text-gray-100">{{ __('client.rewards.heading') }}</h1>
-            <p class="text-sm text-[#8e8e93] dark:text-gray-500 mt-0.5">{{ __('client.rewards.subtitle') }}</p>
+            <h1 class="font-display text-2xl font-bold text-[#181b22] dark:text-[#f0f2f5] tracking-tight">{{ __('client.rewards.heading') }}</h1>
+            <p class="text-sm text-[#8c93a0] dark:text-[#6b7280] mt-0.5">{{ __('client.rewards.subtitle') }}</p>
         </div>
 
         @if(session('success'))
@@ -21,7 +21,7 @@
         @endif
 
         <!-- Points Balance Card -->
-        <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 shadow-card p-5">
+        <div class="bg-white dark:bg-[#181b21] rounded-xl border border-[rgba(18,22,31,0.09)] dark:border-[rgba(255,255,255,0.08)] shadow-[0_1px_2px_rgba(18,22,31,.05),0_5px_16px_rgba(18,22,31,.05)] dark:shadow-[0_1px_2px_rgba(0,0,0,.4),0_6px_18px_rgba(0,0,0,.3)] p-5">
             <div class="flex items-center justify-between">
                 <div class="flex items-center space-x-3">
                     <div class="flex items-center justify-center w-10 h-10 bg-yellow-50 dark:bg-yellow-900/20 rounded-full">
@@ -30,35 +30,35 @@
                         </svg>
                     </div>
                     <div>
-                        <p class="text-xs text-[#8e8e93] dark:text-gray-500">{{ __('client.rewards.available_points') }}</p>
-                        <p class="text-3xl font-bold font-mono text-[#222222] dark:text-gray-100">{{ $xpSummary?->available_points ?? 0 }}</p>
+                        <p class="text-xs text-[#8c93a0] dark:text-[#6b7280]">{{ __('client.rewards.available_points') }}</p>
+                        <p class="text-3xl font-bold font-mono text-[#181b22] dark:text-[#f0f2f5]">{{ $xpSummary?->available_points ?? 0 }}</p>
                     </div>
                 </div>
 
                 @if($xpSummary?->currentLevel)
                     <div class="text-right">
-                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-blue-50 text-[#1456f0] dark:bg-blue-900/30 dark:text-blue-400">
+                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-[rgba(198,242,78,0.15)] text-[#5c7a10] dark:bg-[rgba(198,242,78,0.12)] dark:text-[#c6f24e]">
                             {{ __('client.rewards.level', ['n' => $xpSummary->currentLevel->level_number, 'name' => $xpSummary->currentLevel->name]) }}
                         </span>
-                        <p class="mt-1 text-xs text-[#8e8e93] dark:text-gray-500">{{ __('client.rewards.total_xp', ['n' => number_format($xpSummary->total_xp)]) }}</p>
+                        <p class="mt-1 text-xs text-[#8c93a0] dark:text-[#6b7280]">{{ __('client.rewards.total_xp', ['n' => number_format($xpSummary->total_xp)]) }}</p>
                     </div>
                 @endif
             </div>
         </div>
 
         <div class="text-right -mt-2 mb-2">
-            <a href="{{ route('client.loyalty') }}" class="text-sm text-[#1456f0] hover:opacity-80">{{ __('client.rewards.view_history') }}</a>
+            <a href="{{ route('client.loyalty') }}" class="text-sm font-semibold text-[#5c7a10] dark:text-[#c6f24e] hover:opacity-80">{{ __('client.rewards.view_history') }}</a>
         </div>
 
         <!-- Rewards Grid -->
         @if($rewards->isEmpty())
-            <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 shadow-card p-5">
+            <div class="bg-white dark:bg-[#181b21] rounded-xl border border-[rgba(18,22,31,0.09)] dark:border-[rgba(255,255,255,0.08)] shadow-[0_1px_2px_rgba(18,22,31,.05),0_5px_16px_rgba(18,22,31,.05)] dark:shadow-[0_1px_2px_rgba(0,0,0,.4),0_6px_18px_rgba(0,0,0,.3)] p-5">
                 <div class="py-12 text-center">
                     <svg class="w-16 h-16 mx-auto mb-4 text-gray-300 dark:text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"/>
                     </svg>
-                    <p class="text-base font-medium text-[#45515e] dark:text-gray-400">{{ __('client.rewards.no_rewards') }}</p>
-                    <p class="mt-1 text-sm text-[#8e8e93] dark:text-gray-500">{{ __('client.rewards.no_rewards_description') }}</p>
+                    <p class="text-base font-medium text-[#555b66] dark:text-[#a4abb6]">{{ __('client.rewards.no_rewards') }}</p>
+                    <p class="mt-1 text-sm text-[#8c93a0] dark:text-[#6b7280]">{{ __('client.rewards.no_rewards_description') }}</p>
                 </div>
             </div>
         @else
@@ -70,10 +70,10 @@
                         $canRedeem = $canAfford && $hasStock;
                     @endphp
 
-                    <div class="flex flex-col bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 shadow-card p-5 space-y-3">
+                    <div class="flex flex-col bg-white dark:bg-[#181b21] rounded-xl border border-[rgba(18,22,31,0.09)] dark:border-[rgba(255,255,255,0.08)] shadow-[0_1px_2px_rgba(18,22,31,.05),0_5px_16px_rgba(18,22,31,.05)] dark:shadow-[0_1px_2px_rgba(0,0,0,.4),0_6px_18px_rgba(0,0,0,.3)] p-5 space-y-3">
                         <!-- Reward Header -->
                         <div class="flex items-start justify-between gap-2">
-                            <h3 class="font-display text-base font-semibold text-[#222222] dark:text-gray-100 leading-tight">{{ $reward->name }}</h3>
+                            <h3 class="font-display text-base font-semibold text-[#181b22] dark:text-[#f0f2f5] leading-tight">{{ $reward->name }}</h3>
                             <div class="flex flex-shrink-0 flex-col items-end gap-1">
                                 <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-yellow-50 text-yellow-700 dark:bg-yellow-900/20 dark:text-yellow-400">
                                     <svg class="w-3 h-3 mr-1 text-yellow-500" fill="currentColor" viewBox="0 0 20 20">
@@ -89,11 +89,11 @@
 
                         <!-- Description -->
                         @if($reward->description)
-                            <p class="text-sm text-[#45515e] dark:text-gray-400 leading-snug">{{ Str::limit($reward->description, 80) }}</p>
+                            <p class="text-sm text-[#555b66] dark:text-[#a4abb6] leading-snug">{{ Str::limit($reward->description, 80) }}</p>
                         @endif
 
                         <!-- Stock -->
-                        <p class="text-xs text-[#8e8e93] dark:text-gray-500">
+                        <p class="text-xs text-[#8c93a0] dark:text-[#6b7280]">
                             @if(is_null($reward->stock))
                                 {{ __('client.rewards.unlimited') }}
                             @elseif($reward->stock === 0)
@@ -114,8 +114,7 @@
                                     @csrf
                                     <button
                                         type="submit"
-                                        class="w-full inline-flex items-center justify-center px-4 py-2.5 text-white text-sm font-semibold rounded-lg transition-colors"
-                                        style="background-color: var(--color-primary)"
+                                        class="w-full inline-flex items-center justify-center px-4 py-2.5 bg-[#c6f24e] text-[#14180a] text-sm font-semibold rounded-lg hover:bg-[#b4e438] transition-colors"
                                     >
                                         {{ __('client.rewards.redeem') }}
                                     </button>
@@ -124,7 +123,7 @@
                                 <button
                                     type="button"
                                     disabled
-                                    class="w-full inline-flex items-center justify-center px-4 py-2.5 rounded-lg text-sm font-medium text-[#8e8e93] dark:text-gray-500 bg-gray-100 dark:bg-gray-800 cursor-not-allowed"
+                                    class="w-full inline-flex items-center justify-center px-4 py-2.5 rounded-lg text-sm font-medium text-[#8c93a0] dark:text-[#6b7280] bg-gray-100 dark:bg-gray-800 cursor-not-allowed"
                                 >
                                     @if(!$hasStock)
                                         {{ __('client.rewards.out_of_stock_button') }}

@@ -5,33 +5,33 @@
         <!-- Header -->
         <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
             <div>
-                <a href="{{ route('coach.exercises.index') }}" class="inline-flex items-center text-sm text-[#8e8e93] dark:text-gray-400 hover:text-[#45515e] dark:hover:text-gray-100 mb-4">
+                <a href="{{ route('coach.exercises.index') }}" class="inline-flex items-center text-sm text-[#8c93a0] dark:text-[#6b7280] hover:text-[#45515e] dark:hover:text-[#f0f2f5] mb-4">
                     <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
                     </svg>
                     {{ __('coach.exercises.show.back') }}
                 </a>
                 <div class="flex items-center gap-3">
-                    <h1 class="font-display text-2xl font-semibold text-[#222222] dark:text-gray-100">{{ $exercise->name }}</h1>
+                    <h1 class="font-display text-[30px] font-bold text-[#181b22] dark:text-[#f0f2f5] tracking-tight">{{ $exercise->name }}</h1>
                     @if($exercise->isCustom())
                         <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400">
                             {{ __('coach.exercises.show.custom') }}
                         </span>
                     @else
-                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 dark:bg-gray-800 text-[#45515e] dark:text-gray-300">
+                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-[#f3f5f7] dark:bg-[#1d2027] text-[#555b66] dark:text-[#a4abb6]">
                             {{ __('coach.exercises.show.global') }}
                         </span>
                     @endif
                 </div>
                 <p class="mt-1">
-                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 dark:bg-gray-800 text-[#45515e] dark:text-gray-300">
+                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-[#f3f5f7] dark:bg-[#1d2027] text-[#555b66] dark:text-[#a4abb6]">
                         {{ ucfirst(str_replace('_', ' ', $exercise->muscle_group)) }}
                     </span>
                 </p>
             </div>
             @if($exercise->isCustom())
                 <div class="flex gap-2">
-                    <a href="{{ route('coach.exercises.edit', $exercise) }}" class="inline-flex items-center px-4 py-2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg text-sm font-semibold text-[#45515e] dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                    <a href="{{ route('coach.exercises.edit', $exercise) }}" class="inline-flex items-center px-4 py-2 bg-white dark:bg-[#11141a] border border-[rgba(18,22,31,0.14)] dark:border-[rgba(255,255,255,0.12)] rounded-lg text-sm font-semibold text-[#555b66] dark:text-[#a4abb6] hover:bg-[#f3f5f7] dark:hover:bg-[#1d2027] transition-colors">
                         <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
                         </svg>
@@ -70,7 +70,7 @@
             <!-- Video -->
             <div class="lg:col-span-2">
                 @if($exercise->getYoutubeEmbedUrl())
-                    <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 shadow-card overflow-hidden">
+                    <div class="bg-white dark:bg-[#16191f] rounded-xl border border-[rgba(18,22,31,0.09)] dark:border-[rgba(255,255,255,0.08)] shadow-[0_1px_2px_rgba(18,22,31,.04),0_4px_16px_rgba(18,22,31,.045)] dark:shadow-[0_1px_2px_rgba(0,0,0,.4),0_6px_20px_rgba(0,0,0,.3)] overflow-hidden">
                         <div class="aspect-video">
                             <iframe
                                 src="{{ $exercise->getYoutubeEmbedUrl() }}"
@@ -83,15 +83,15 @@
                         </div>
                     </div>
                 @else
-                    <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 shadow-card overflow-hidden">
-                        <div class="aspect-video flex items-center justify-center bg-gray-50 dark:bg-gray-800">
+                    <div class="bg-white dark:bg-[#16191f] rounded-xl border border-[rgba(18,22,31,0.09)] dark:border-[rgba(255,255,255,0.08)] shadow-[0_1px_2px_rgba(18,22,31,.04),0_4px_16px_rgba(18,22,31,.045)] dark:shadow-[0_1px_2px_rgba(0,0,0,.4),0_6px_20px_rgba(0,0,0,.3)] overflow-hidden">
+                        <div class="aspect-video flex items-center justify-center bg-[#f3f5f7] dark:bg-[#1d2027]">
                             <div class="text-center">
-                                <div class="w-12 h-12 rounded-2xl bg-gray-100 dark:bg-gray-700 flex items-center justify-center mx-auto mb-3">
-                                    <svg class="h-6 w-6 text-[#8e8e93]" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                <div class="w-12 h-12 rounded-2xl bg-gray-100 dark:bg-[#1d2027] flex items-center justify-center mx-auto mb-3">
+                                    <svg class="h-6 w-6 text-[#8c93a0]" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/>
                                     </svg>
                                 </div>
-                                <p class="text-sm text-[#8e8e93] dark:text-gray-500">{{ __('coach.exercises.show.no_video') }}</p>
+                                <p class="text-sm text-[#8c93a0] dark:text-[#6b7280]">{{ __('coach.exercises.show.no_video') }}</p>
                             </div>
                         </div>
                     </div>
@@ -100,17 +100,17 @@
 
             <!-- Details -->
             <div class="space-y-6">
-                <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 shadow-card p-6">
-                    <h2 class="font-display text-base font-semibold text-[#222222] dark:text-gray-100 mb-4">{{ __('coach.exercises.show.details') }}</h2>
+                <div class="bg-white dark:bg-[#16191f] rounded-xl border border-[rgba(18,22,31,0.09)] dark:border-[rgba(255,255,255,0.08)] shadow-[0_1px_2px_rgba(18,22,31,.04),0_4px_16px_rgba(18,22,31,.045)] dark:shadow-[0_1px_2px_rgba(0,0,0,.4),0_6px_20px_rgba(0,0,0,.3)] p-6">
+                    <h2 class="font-display text-base font-semibold text-[#181b22] dark:text-[#f0f2f5] mb-4">{{ __('coach.exercises.show.details') }}</h2>
                     <dl class="space-y-4">
                         <div>
-                            <dt class="text-xs font-medium text-[#8e8e93] dark:text-gray-400 uppercase tracking-wide">{{ __('coach.exercises.show.muscle_group') }}</dt>
-                            <dd class="mt-1 text-sm text-[#222222] dark:text-gray-100">{{ ucfirst(str_replace('_', ' ', $exercise->muscle_group)) }}</dd>
+                            <dt class="text-xs font-medium text-[#8c93a0] dark:text-[#6b7280] uppercase tracking-wide">{{ __('coach.exercises.show.muscle_group') }}</dt>
+                            <dd class="mt-1 text-sm text-[#181b22] dark:text-[#f0f2f5]">{{ ucfirst(str_replace('_', ' ', $exercise->muscle_group)) }}</dd>
                         </div>
                         @if($exercise->video_url)
                             <div>
-                                <dt class="text-xs font-medium text-[#8e8e93] dark:text-gray-400 uppercase tracking-wide">{{ __('coach.exercises.show.video_link') }}</dt>
-                                <dd class="mt-1 text-sm text-[#1456f0] hover:underline break-all">
+                                <dt class="text-xs font-medium text-[#8c93a0] dark:text-[#6b7280] uppercase tracking-wide">{{ __('coach.exercises.show.video_link') }}</dt>
+                                <dd class="mt-1 text-sm text-[#5c7a10] dark:text-[#c6f24e] font-semibold hover:underline break-all">
                                     <a href="{{ $exercise->video_url }}" target="_blank" rel="noopener noreferrer">
                                         {{ $exercise->video_url }}
                                     </a>
@@ -118,16 +118,16 @@
                             </div>
                         @endif
                         <div>
-                            <dt class="text-xs font-medium text-[#8e8e93] dark:text-gray-400 uppercase tracking-wide">{{ __('coach.exercises.show.created') }}</dt>
-                            <dd class="mt-1 text-sm text-[#222222] dark:text-gray-100">{{ $exercise->created_at->format('M d, Y') }}</dd>
+                            <dt class="text-xs font-medium text-[#8c93a0] dark:text-[#6b7280] uppercase tracking-wide">{{ __('coach.exercises.show.created') }}</dt>
+                            <dd class="mt-1 text-sm text-[#181b22] dark:text-[#f0f2f5]">{{ $exercise->created_at->format('M d, Y') }}</dd>
                         </div>
                     </dl>
                 </div>
 
                 @if($exercise->description)
-                    <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 shadow-card p-6">
-                        <h2 class="font-display text-base font-semibold text-[#222222] dark:text-gray-100 mb-4">{{ __('coach.exercises.show.description') }}</h2>
-                        <p class="text-sm text-[#45515e] dark:text-gray-400 whitespace-pre-wrap">{{ $exercise->description }}</p>
+                    <div class="bg-white dark:bg-[#16191f] rounded-xl border border-[rgba(18,22,31,0.09)] dark:border-[rgba(255,255,255,0.08)] shadow-[0_1px_2px_rgba(18,22,31,.04),0_4px_16px_rgba(18,22,31,.045)] dark:shadow-[0_1px_2px_rgba(0,0,0,.4),0_6px_20px_rgba(0,0,0,.3)] p-6">
+                        <h2 class="font-display text-base font-semibold text-[#181b22] dark:text-[#f0f2f5] mb-4">{{ __('coach.exercises.show.description') }}</h2>
+                        <p class="text-sm text-[#555b66] dark:text-[#a4abb6] whitespace-pre-wrap">{{ $exercise->description }}</p>
                     </div>
                 @endif
             </div>

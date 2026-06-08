@@ -5,9 +5,9 @@
         <!-- Header with Date Navigation -->
         <div class="mb-5">
             <div class="flex items-center justify-between">
-                <h1 class="font-display text-xl font-semibold text-[#222222] dark:text-gray-100">{{ __('client.nutrition.heading') }}</h1>
+                <h1 class="font-display text-2xl font-bold text-[#181b22] dark:text-[#f0f2f5] tracking-tight">{{ __('client.nutrition.heading') }}</h1>
                 @if(($unreadCommentCount ?? 0) > 0)
-                    <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold bg-[#1456f0]/10 text-[#1456f0]" data-testid="unread-comments-badge">
+                    <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold bg-[rgba(198,242,78,0.15)] text-[#5c7a10] dark:bg-[rgba(198,242,78,0.12)] dark:text-[#c6f24e]" data-testid="unread-comments-badge">
                         <svg class="w-3.5 h-3.5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
                         </svg>
@@ -18,7 +18,7 @@
                 @endif
             </div>
             <div class="mt-3 flex items-center justify-between">
-                <a :href="prevUrl" class="p-2 rounded-lg text-[#45515e] dark:text-gray-400 hover:text-[#222222] dark:hover:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+                <a :href="prevUrl" class="p-2 rounded-lg text-[#555b66] dark:text-[#a4abb6] hover:text-[#181b22] dark:hover:text-[#f0f2f5] hover:bg-[rgba(18,22,31,0.06)] dark:hover:bg-[rgba(255,255,255,0.06)] transition-colors">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
                     </svg>
@@ -26,15 +26,15 @@
 
                 <div class="flex items-center space-x-2">
                     <input type="date" x-model="currentDate" @change="navigateToDate()" max="{{ now()->format('Y-m-d') }}"
-                        class="rounded-lg border-gray-200 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-[#1456f0] focus:ring-[#1456f0] text-sm text-[#222222] dark:text-gray-100">
+                        class="rounded-lg border-gray-200 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-[#c6f24e] focus:ring-[#c6f24e] text-sm text-[#181b22] dark:text-[#f0f2f5]">
                     <button @click="goToToday()" x-show="currentDate !== today"
-                        class="text-xs text-[#1456f0] hover:opacity-80 font-medium">
+                        class="text-xs text-[#5c7a10] dark:text-[#c6f24e] hover:opacity-80 font-semibold">
                         {{ __('client.nutrition.today') }}
                     </button>
                 </div>
 
                 <template x-if="currentDate < today">
-                    <a :href="nextUrl" class="p-2 rounded-lg text-[#45515e] dark:text-gray-400 hover:text-[#222222] dark:hover:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+                    <a :href="nextUrl" class="p-2 rounded-lg text-[#555b66] dark:text-[#a4abb6] hover:text-[#181b22] dark:hover:text-[#f0f2f5] hover:bg-[rgba(18,22,31,0.06)] dark:hover:bg-[rgba(255,255,255,0.06)] transition-colors">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
                         </svg>
@@ -67,12 +67,12 @@
                 $completedAssigned = $assignedItems->filter(fn ($i) => $i['completed'])->count();
             @endphp
 
-            <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 shadow-card p-5 mb-4">
+            <div class="bg-white dark:bg-[#181b21] rounded-xl border border-[rgba(18,22,31,0.09)] dark:border-[rgba(255,255,255,0.08)] shadow-[0_1px_2px_rgba(18,22,31,.05),0_5px_16px_rgba(18,22,31,.05)] dark:shadow-[0_1px_2px_rgba(0,0,0,.4),0_6px_18px_rgba(0,0,0,.3)] p-5 mb-4">
                 <div class="mb-4">
-                    <h2 class="font-display text-base font-semibold text-[#222222] dark:text-gray-100">
+                    <h2 class="font-display text-base font-semibold text-[#181b22] dark:text-[#f0f2f5]">
                         {{ __('client.nutrition.assigned_plan.heading', ['name' => $assignment->dayPlan->name]) }}
                     </h2>
-                    <p class="text-xs text-[#8e8e93] dark:text-gray-500 mt-0.5">{{ __('client.nutrition.assigned_plan.subtitle') }}</p>
+                    <p class="text-xs text-[#8c93a0] dark:text-[#6b7280] mt-0.5">{{ __('client.nutrition.assigned_plan.subtitle') }}</p>
                 </div>
 
                 <div class="space-y-4">
@@ -80,17 +80,17 @@
                         @php $group = $groupedAssignedItems->get($sectionLabel, collect()); @endphp
                         @if($group->isNotEmpty())
                             <div>
-                                <h3 class="text-xs font-semibold uppercase tracking-wider text-[#8e8e93] dark:text-gray-500 mb-2">{{ $sectionLabel }}</h3>
+                                <h3 class="text-xs font-semibold uppercase tracking-wider text-[#8c93a0] dark:text-[#6b7280] mb-2">{{ $sectionLabel }}</h3>
                                 <div class="space-y-2">
                                     @foreach($group as $entry)
                                         @php
                                             $item = $entry['item'];
                                             $completed = $entry['completed'];
                                         @endphp
-                                        <div class="flex items-center justify-between p-3 rounded-lg border {{ $completed ? 'border-green-200 dark:border-green-900 bg-green-50 dark:bg-green-900/20' : 'border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-950' }}">
+                                        <div class="flex items-center justify-between p-3 rounded-lg border {{ $completed ? 'border-green-200 dark:border-green-900 bg-green-50 dark:bg-green-900/20' : 'border-[rgba(18,22,31,0.09)] dark:border-[rgba(255,255,255,0.08)] bg-gray-50 dark:bg-[rgba(255,255,255,0.03)]' }}">
                                             <div class="flex-1 min-w-0">
-                                                <p class="text-sm font-medium text-[#222222] dark:text-gray-100 truncate">{{ $item->name }}</p>
-                                                <p class="text-xs text-[#8e8e93] dark:text-gray-500 mt-0.5">
+                                                <p class="text-sm font-medium text-[#181b22] dark:text-[#f0f2f5] truncate">{{ $item->name }}</p>
+                                                <p class="text-xs text-[#8c93a0] dark:text-[#6b7280] mt-0.5">
                                                     {{ (int) $item->calories }} kcal &middot;
                                                     P {{ $item->protein }}g &middot;
                                                     C {{ $item->carbs }}g &middot;
@@ -118,7 +118,7 @@
                                                     <input type="hidden" name="protein" value="{{ $item->protein }}">
                                                     <input type="hidden" name="carbs" value="{{ $item->carbs }}">
                                                     <input type="hidden" name="fat" value="{{ $item->fat }}">
-                                                    <button type="submit" class="inline-flex items-center px-3 py-1.5 text-xs font-semibold text-white rounded-lg transition-colors" style="background-color: var(--color-primary)">
+                                                    <button type="submit" class="inline-flex items-center px-3 py-1.5 text-xs font-semibold bg-[#c6f24e] text-[#14180a] rounded-lg transition-colors hover:bg-[#b4e438]">
                                                         <svg class="w-3.5 h-3.5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
                                                         </svg>
@@ -135,7 +135,7 @@
                 </div>
 
                 <div class="mt-4 pt-4 border-t border-gray-100 dark:border-gray-800">
-                    <div class="flex justify-between text-xs text-[#8e8e93] dark:text-gray-500 mb-1">
+                    <div class="flex justify-between text-xs text-[#8c93a0] dark:text-[#6b7280] mb-1">
                         <span>{{ __('client.nutrition.assigned_plan.progress', ['done' => $completedAssigned, 'total' => $totalAssigned]) }}</span>
                         <span>{{ $totalAssigned > 0 ? round(($completedAssigned / $totalAssigned) * 100) : 0 }}%</span>
                     </div>
@@ -151,8 +151,8 @@
                 @csrf
                 <input type="hidden" name="date" value="{{ $date }}">
                 <button type="submit"
-                    class="w-full inline-flex items-center justify-center gap-2 px-4 py-3 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 text-[#222222] dark:text-gray-100 text-sm font-medium rounded-xl shadow-card hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
-                    <svg class="w-4 h-4 text-[#1456f0]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    class="w-full inline-flex items-center justify-center gap-2 px-4 py-3 bg-white dark:bg-[#181b21] border border-[rgba(18,22,31,0.09)] dark:border-[rgba(255,255,255,0.08)] text-[#181b22] dark:text-[#f0f2f5] text-sm font-medium rounded-xl shadow-[0_1px_2px_rgba(18,22,31,.05)] hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+                    <svg class="w-4 h-4 text-[#5c7a10] dark:text-[#c6f24e]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2"/>
                     </svg>
                     {{ __('client.nutrition.quick_log.copy_yesterday') }}
@@ -161,11 +161,11 @@
         @endif
 
         <!-- Macro Progress Bars -->
-        <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 shadow-card p-5">
+        <div class="bg-white dark:bg-[#181b21] rounded-xl border border-[rgba(18,22,31,0.09)] dark:border-[rgba(255,255,255,0.08)] shadow-[0_1px_2px_rgba(18,22,31,.05),0_5px_16px_rgba(18,22,31,.05)] dark:shadow-[0_1px_2px_rgba(0,0,0,.4),0_6px_18px_rgba(0,0,0,.3)] p-5">
             @if($macroGoal)
                 @php
                     $macros = [
-                        ['label' => 'Calories', 'current' => $totals['calories'], 'target' => $macroGoal->calories, 'unit' => 'kcal', 'color' => 'bg-blue-500'],
+                        ['label' => 'Calories', 'current' => $totals['calories'], 'target' => $macroGoal->calories, 'unit' => 'kcal', 'color' => 'bg-[#c6f24e]'],
                         ['label' => 'Protein', 'current' => $totals['protein'], 'target' => $macroGoal->protein, 'unit' => 'g', 'color' => 'bg-green-500'],
                         ['label' => 'Carbs', 'current' => $totals['carbs'], 'target' => $macroGoal->carbs, 'unit' => 'g', 'color' => 'bg-yellow-500'],
                         ['label' => 'Fat', 'current' => $totals['fat'], 'target' => $macroGoal->fat, 'unit' => 'g', 'color' => 'bg-red-500'],
@@ -178,8 +178,8 @@
                         @endphp
                         <div>
                             <div class="flex justify-between text-sm mb-1">
-                                <span class="font-medium text-[#222222] dark:text-gray-100">{{ $macro['label'] }}</span>
-                                <span class="text-[#8e8e93] dark:text-gray-500">{{ number_format($macro['current'], $macro['unit'] === 'kcal' ? 0 : 1) }} / {{ number_format($macro['target'], $macro['unit'] === 'kcal' ? 0 : 1) }}{{ $macro['unit'] }}</span>
+                                <span class="font-medium text-[#181b22] dark:text-[#f0f2f5]">{{ $macro['label'] }}</span>
+                                <span class="text-[#8c93a0] dark:text-[#6b7280]">{{ number_format($macro['current'], $macro['unit'] === 'kcal' ? 0 : 1) }} / {{ number_format($macro['target'], $macro['unit'] === 'kcal' ? 0 : 1) }}{{ $macro['unit'] }}</span>
                             </div>
                             <div class="w-full bg-gray-100 dark:bg-gray-800 rounded-full h-1.5">
                                 <div class="h-1.5 rounded-full {{ $macro['color'] }}" style="width: {{ $pct }}%"></div>
@@ -189,9 +189,9 @@
                 </div>
             @else
                 <div class="text-center py-2">
-                    <p class="text-sm text-[#8e8e93] dark:text-gray-500">{{ __('client.nutrition.no_macro_goals') }}</p>
+                    <p class="text-sm text-[#8c93a0] dark:text-[#6b7280]">{{ __('client.nutrition.no_macro_goals') }}</p>
                     @if($totals['calories'] > 0)
-                        <p class="text-sm text-[#222222] dark:text-gray-100 mt-2">
+                        <p class="text-sm text-[#181b22] dark:text-[#f0f2f5] mt-2">
                             Today: {{ $totals['calories'] }} kcal &middot;
                             P {{ number_format($totals['protein'], 1) }}g &middot;
                             C {{ number_format($totals['carbs'], 1) }}g &middot;
@@ -206,17 +206,17 @@
         @if($mealLogs->count() > 0)
             <div class="space-y-3">
                 @foreach($mealLogs->groupBy('meal_type') as $type => $logs)
-                    <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 shadow-card overflow-hidden">
-                        <div class="px-5 py-3 bg-gray-50 dark:bg-gray-800/50 border-b border-gray-100 dark:border-gray-800">
-                            <h3 class="text-sm font-semibold text-[#222222] dark:text-gray-100">{{ $type }}</h3>
+                    <div class="bg-white dark:bg-[#181b21] rounded-xl border border-[rgba(18,22,31,0.09)] dark:border-[rgba(255,255,255,0.08)] shadow-[0_1px_2px_rgba(18,22,31,.05),0_5px_16px_rgba(18,22,31,.05)] dark:shadow-[0_1px_2px_rgba(0,0,0,.4),0_6px_18px_rgba(0,0,0,.3)] overflow-hidden">
+                        <div class="px-5 py-3 bg-gray-50 dark:bg-[rgba(255,255,255,0.03)] border-b border-[rgba(18,22,31,0.06)] dark:border-[rgba(255,255,255,0.06)]">
+                            <h3 class="text-sm font-semibold text-[#181b22] dark:text-[#f0f2f5]">{{ $type }}</h3>
                         </div>
-                        <div class="divide-y divide-gray-100 dark:divide-gray-800">
+                        <div class="divide-y divide-[rgba(18,22,31,0.06)] dark:divide-[rgba(255,255,255,0.06)]">
                             @foreach($logs as $log)
                                 <div class="px-5 py-3">
                                     <div class="flex items-center justify-between">
                                         <div>
-                                            <p class="text-sm font-medium text-[#222222] dark:text-gray-100">{{ $log->name }}</p>
-                                            <p class="text-xs text-[#8e8e93] dark:text-gray-500 mt-0.5">
+                                            <p class="text-sm font-medium text-[#181b22] dark:text-[#f0f2f5]">{{ $log->name }}</p>
+                                            <p class="text-xs text-[#8c93a0] dark:text-[#6b7280] mt-0.5">
                                                 {{ $log->calories }} kcal &middot;
                                                 P {{ $log->protein }}g &middot;
                                                 C {{ $log->carbs }}g &middot;
@@ -226,7 +226,7 @@
                                         <form method="POST" action="{{ route('client.nutrition.destroy', $log) }}" onsubmit="return confirm('{{ __('client.nutrition.remove_meal_confirm') }}');">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="p-1 text-[#8e8e93] dark:text-gray-500 hover:text-red-500 transition-colors">
+                                            <button type="submit" class="p-1 text-[#8c93a0] dark:text-[#6b7280] hover:text-red-500 transition-colors">
                                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
                                                 </svg>
@@ -235,19 +235,19 @@
                                     </div>
 
                                     @if($log->comments->isNotEmpty())
-                                        <div class="mt-2 ml-2 pl-3 border-l-2 border-[#1456f0]/30 bg-gray-50 dark:bg-gray-800/40 rounded-r-md py-2 pr-2">
-                                            <p class="text-[11px] font-semibold uppercase tracking-wider text-[#8e8e93] dark:text-gray-500 mb-1.5">
+                                        <div class="mt-2 ml-2 pl-3 border-l-2 border-[rgba(198,242,78,0.4)] bg-gray-50 dark:bg-gray-800/40 rounded-r-md py-2 pr-2">
+                                            <p class="text-[11px] font-semibold uppercase tracking-wider text-[#8c93a0] dark:text-[#6b7280] mb-1.5">
                                                 {{ __('client.nutrition.comments.heading') }}
                                             </p>
                                             <ul class="space-y-2">
                                                 @foreach($log->comments as $comment)
                                                     <li class="flex items-start gap-2">
-                                                        <div class="flex-shrink-0 w-6 h-6 rounded-full bg-[#1456f0]/10 text-[#1456f0] text-[11px] font-semibold flex items-center justify-center">
+                                                        <div class="flex-shrink-0 w-6 h-6 rounded-full bg-[rgba(198,242,78,0.15)] text-[#5c7a10] dark:bg-[rgba(198,242,78,0.12)] dark:text-[#c6f24e] text-[11px] font-semibold flex items-center justify-center">
                                                             {{ mb_strtoupper(mb_substr($comment->author?->name ?? '?', 0, 1)) }}
                                                         </div>
                                                         <div class="flex-1 min-w-0">
-                                                            <p class="text-xs text-[#45515e] dark:text-gray-300 whitespace-pre-line">{{ $comment->body }}</p>
-                                                            <p class="text-[11px] text-[#8e8e93] dark:text-gray-500 mt-0.5">
+                                                            <p class="text-xs text-[#555b66] dark:text-gray-300 whitespace-pre-line">{{ $comment->body }}</p>
+                                                            <p class="text-[11px] text-[#8c93a0] dark:text-[#6b7280] mt-0.5">
                                                                 {{ $comment->author?->name }} · {{ $comment->created_at->diffForHumans() }}
                                                             </p>
                                                         </div>
@@ -266,12 +266,12 @@
 
         <!-- Nutrition Charts (Last 30 Days) -->
         @if($nutritionStats['daysLogged'] > 0)
-            <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 shadow-card p-5">
-                <h2 class="font-display text-base font-semibold text-[#222222] dark:text-gray-100 mb-4">{{ __('client.nutrition.charts_heading') }}</h2>
+            <div class="bg-white dark:bg-[#181b21] rounded-xl border border-[rgba(18,22,31,0.09)] dark:border-[rgba(255,255,255,0.08)] shadow-[0_1px_2px_rgba(18,22,31,.05),0_5px_16px_rgba(18,22,31,.05)] dark:shadow-[0_1px_2px_rgba(0,0,0,.4),0_6px_18px_rgba(0,0,0,.3)] p-5">
+                <h2 class="font-display text-base font-semibold text-[#181b22] dark:text-[#f0f2f5] mb-4">{{ __('client.nutrition.charts_heading') }}</h2>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                     <div>
-                        <h3 class="text-sm font-medium text-[#45515e] dark:text-gray-400 mb-2">{{ __('client.nutrition.calories') }}</h3>
+                        <h3 class="text-sm font-medium text-[#555b66] dark:text-[#a4abb6] mb-2">{{ __('client.nutrition.calories') }}</h3>
                         <div class="h-56">
                             <canvas
                                 x-data="clientCaloriesChart({{ json_encode($nutritionData) }})"
@@ -281,7 +281,7 @@
                         </div>
                     </div>
                     <div>
-                        <h3 class="text-sm font-medium text-[#45515e] dark:text-gray-400 mb-2">{{ __('client.nutrition.macros') }}</h3>
+                        <h3 class="text-sm font-medium text-[#555b66] dark:text-[#a4abb6] mb-2">{{ __('client.nutrition.macros') }}</h3>
                         <div class="h-56">
                             <canvas
                                 x-data="clientMacrosChart({{ json_encode($nutritionData) }})"
@@ -294,27 +294,27 @@
 
                 <div class="grid grid-cols-2 sm:grid-cols-5 gap-4 p-4 bg-gray-50 dark:bg-gray-800/50 rounded-xl">
                     <div class="text-center">
-                        <p class="text-xs text-[#8e8e93] dark:text-gray-500 uppercase">{{ __('client.nutrition.avg_calories') }}</p>
-                        <p class="text-lg font-bold font-mono text-[#222222] dark:text-gray-100">{{ number_format($nutritionStats['avgCalories']) }}</p>
+                        <p class="text-xs text-[#8c93a0] dark:text-[#6b7280] uppercase">{{ __('client.nutrition.avg_calories') }}</p>
+                        <p class="text-lg font-bold font-mono text-[#181b22] dark:text-[#f0f2f5]">{{ number_format($nutritionStats['avgCalories']) }}</p>
                     </div>
                     <div class="text-center">
-                        <p class="text-xs text-[#8e8e93] dark:text-gray-500 uppercase">{{ __('client.nutrition.avg_protein') }}</p>
-                        <p class="text-lg font-bold font-mono text-[#222222] dark:text-gray-100">{{ $nutritionStats['avgProtein'] }}g</p>
+                        <p class="text-xs text-[#8c93a0] dark:text-[#6b7280] uppercase">{{ __('client.nutrition.avg_protein') }}</p>
+                        <p class="text-lg font-bold font-mono text-[#181b22] dark:text-[#f0f2f5]">{{ $nutritionStats['avgProtein'] }}g</p>
                     </div>
                     <div class="text-center">
-                        <p class="text-xs text-[#8e8e93] dark:text-gray-500 uppercase">{{ __('client.nutrition.avg_carbs') }}</p>
-                        <p class="text-lg font-bold font-mono text-[#222222] dark:text-gray-100">{{ $nutritionStats['avgCarbs'] }}g</p>
+                        <p class="text-xs text-[#8c93a0] dark:text-[#6b7280] uppercase">{{ __('client.nutrition.avg_carbs') }}</p>
+                        <p class="text-lg font-bold font-mono text-[#181b22] dark:text-[#f0f2f5]">{{ $nutritionStats['avgCarbs'] }}g</p>
                     </div>
                     <div class="text-center">
-                        <p class="text-xs text-[#8e8e93] dark:text-gray-500 uppercase">{{ __('client.nutrition.avg_fat') }}</p>
-                        <p class="text-lg font-bold font-mono text-[#222222] dark:text-gray-100">{{ $nutritionStats['avgFat'] }}g</p>
+                        <p class="text-xs text-[#8c93a0] dark:text-[#6b7280] uppercase">{{ __('client.nutrition.avg_fat') }}</p>
+                        <p class="text-lg font-bold font-mono text-[#181b22] dark:text-[#f0f2f5]">{{ $nutritionStats['avgFat'] }}g</p>
                     </div>
                     <div class="text-center">
-                        <p class="text-xs text-[#8e8e93] dark:text-gray-500 uppercase">{{ __('client.nutrition.adherence') }}</p>
+                        <p class="text-xs text-[#8c93a0] dark:text-[#6b7280] uppercase">{{ __('client.nutrition.adherence') }}</p>
                         @if($nutritionStats['adherenceRate'] !== null)
                             <p class="text-lg font-bold font-mono {{ $nutritionStats['adherenceRate'] >= 80 ? 'text-green-600' : ($nutritionStats['adherenceRate'] >= 50 ? 'text-yellow-600' : 'text-red-600') }}">{{ $nutritionStats['adherenceRate'] }}%</p>
                         @else
-                            <p class="text-lg font-bold font-mono text-[#8e8e93] dark:text-gray-500">—</p>
+                            <p class="text-lg font-bold font-mono text-[#8c93a0] dark:text-[#6b7280]">—</p>
                         @endif
                     </div>
                 </div>
@@ -323,16 +323,16 @@
 
         @if($favorites->isNotEmpty())
             <div x-data="{ active: null, mealType: 'Breakfast', mealTypes: ['Breakfast', 'Lunch', 'Dinner', 'Snack'] }"
-                class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 shadow-card p-5">
+                class="bg-white dark:bg-[#181b21] rounded-xl border border-[rgba(18,22,31,0.09)] dark:border-[rgba(255,255,255,0.08)] shadow-[0_1px_2px_rgba(18,22,31,.05),0_5px_16px_rgba(18,22,31,.05)] dark:shadow-[0_1px_2px_rgba(0,0,0,.4),0_6px_18px_rgba(0,0,0,.3)] p-5">
                 <div class="mb-3">
-                    <h2 class="font-display text-base font-semibold text-[#222222] dark:text-gray-100">{{ __('client.nutrition.quick_log.favorites_heading') }}</h2>
-                    <p class="text-xs text-[#8e8e93] dark:text-gray-500 mt-0.5">{{ __('client.nutrition.quick_log.favorites_subtitle') }}</p>
+                    <h2 class="font-display text-base font-semibold text-[#181b22] dark:text-[#f0f2f5]">{{ __('client.nutrition.quick_log.favorites_heading') }}</h2>
+                    <p class="text-xs text-[#8c93a0] dark:text-[#6b7280] mt-0.5">{{ __('client.nutrition.quick_log.favorites_subtitle') }}</p>
                 </div>
 
                 <div class="flex flex-wrap gap-2">
                     @foreach($favorites as $i => $fav)
                         <button type="button" @click="active = (active === {{ $i }} ? null : {{ $i }})"
-                            :class="active === {{ $i }} ? 'bg-blue-50 dark:bg-blue-900/20 border-[#1456f0] text-[#1456f0]' : 'bg-gray-50 dark:bg-gray-800 border-gray-200 dark:border-gray-700 text-[#45515e] dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'"
+                            :class="active === {{ $i }} ? 'bg-[rgba(198,242,78,0.15)] dark:bg-[rgba(198,242,78,0.12)] border-[#c6f24e] text-[#5c7a10] dark:text-[#c6f24e]' : 'bg-gray-50 dark:bg-gray-800 border-gray-200 dark:border-gray-700 text-[#555b66] dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'"
                             class="px-3 py-1.5 text-xs font-medium border rounded-full transition-colors">
                             {{ $fav['name'] }}
                             <span class="text-[10px] opacity-70 ml-1">{{ (int) $fav['calories'] }} kcal</span>
@@ -341,7 +341,7 @@
                 </div>
 
                 @foreach($favorites as $i => $fav)
-                    <div x-show="active === {{ $i }}" x-cloak x-transition class="mt-4 pt-4 border-t border-gray-100 dark:border-gray-800">
+                    <div x-show="active === {{ $i }}" x-cloak x-transition class="mt-4 pt-4 border-t border-[rgba(18,22,31,0.06)] dark:border-[rgba(255,255,255,0.06)]">
                         <form method="POST" action="{{ route('client.nutrition.store') }}" class="space-y-3">
                             @csrf
                             <input type="hidden" name="date" value="{{ $date }}">
@@ -356,8 +356,8 @@
                             <input type="hidden" name="meal_type" :value="mealType">
 
                             <div class="bg-gray-50 dark:bg-gray-800/50 rounded-lg p-3">
-                                <p class="text-sm font-medium text-[#222222] dark:text-gray-100">{{ $fav['name'] }}</p>
-                                <p class="text-xs text-[#8e8e93] dark:text-gray-500 mt-0.5">
+                                <p class="text-sm font-medium text-[#181b22] dark:text-[#f0f2f5]">{{ $fav['name'] }}</p>
+                                <p class="text-xs text-[#8c93a0] dark:text-[#6b7280] mt-0.5">
                                     {{ (int) $fav['calories'] }} kcal &middot;
                                     P {{ number_format($fav['protein'], 1) }}g &middot;
                                     C {{ number_format($fav['carbs'], 1) }}g &middot;
@@ -366,12 +366,11 @@
                             </div>
 
                             <div>
-                                <label class="block text-sm font-medium text-[#222222] dark:text-gray-100 mb-2">{{ __('client.nutrition.meal_type') }}</label>
+                                <label class="block text-sm font-medium text-[#181b22] dark:text-[#f0f2f5] mb-2">{{ __('client.nutrition.meal_type') }}</label>
                                 <div class="flex flex-wrap gap-2">
                                     <template x-for="type in mealTypes" :key="type">
                                         <button type="button" @click="mealType = type"
-                                            :class="mealType === type ? 'text-white border-[#1456f0]' : 'bg-white dark:bg-gray-800 text-[#45515e] dark:text-gray-300 border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700'"
-                                            :style="mealType === type ? 'background-color: var(--color-primary)' : ''"
+                                            :class="mealType === type ? 'bg-[#c6f24e] text-[#14180a] border-[#c6f24e]' : 'bg-white dark:bg-gray-800 text-[#555b66] dark:text-gray-300 border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700'"
                                             class="px-3 py-1.5 text-sm font-medium border rounded-lg transition-colors" x-text="type"></button>
                                     </template>
                                 </div>
@@ -379,11 +378,11 @@
 
                             <div class="flex gap-2">
                                 <button type="button" @click="active = null"
-                                    class="flex-1 inline-flex items-center justify-center px-4 py-2.5 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-[#45515e] dark:text-gray-300 text-sm font-medium rounded-xl hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                                    class="flex-1 inline-flex items-center justify-center px-4 py-2.5 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-[#555b66] dark:text-gray-300 text-sm font-medium rounded-xl hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
                                     {{ __('client.nutrition.quick_log.favorites_cancel') }}
                                 </button>
                                 <button type="submit"
-                                    class="flex-1 inline-flex items-center justify-center px-4 py-2.5 bg-[#181e25] dark:bg-gray-700 text-white text-sm font-semibold rounded-xl hover:bg-gray-800 dark:hover:bg-gray-600 transition-colors">
+                                    class="flex-1 inline-flex items-center justify-center px-4 py-2.5 bg-[#c6f24e] text-[#14180a] text-sm font-semibold rounded-xl hover:bg-[#b4e438] transition-colors">
                                     {{ __('client.nutrition.quick_log.favorites_save') }}
                                 </button>
                             </div>
@@ -394,18 +393,18 @@
         @endif
 
         <!-- Add Meal Section -->
-        <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 shadow-card overflow-hidden">
-            <div class="border-b border-gray-200 dark:border-gray-800">
+        <div class="bg-white dark:bg-[#181b21] rounded-xl border border-[rgba(18,22,31,0.09)] dark:border-[rgba(255,255,255,0.08)] shadow-[0_1px_2px_rgba(18,22,31,.05),0_5px_16px_rgba(18,22,31,.05)] dark:shadow-[0_1px_2px_rgba(0,0,0,.4),0_6px_18px_rgba(0,0,0,.3)] overflow-hidden">
+            <div class="border-b border-[rgba(18,22,31,0.09)] dark:border-[rgba(255,255,255,0.08)]">
                 <nav class="flex">
-                    <button @click="mode = 'library'" :class="mode === 'library' ? 'border-[#1456f0] text-[#1456f0]' : 'border-transparent text-[#8e8e93] dark:text-gray-400 hover:text-[#45515e] dark:hover:text-gray-300 hover:border-gray-300 dark:hover:border-gray-600'"
+                    <button @click="mode = 'library'" :class="mode === 'library' ? 'border-[#c6f24e] text-[#5c7a10] dark:text-[#c6f24e]' : 'border-transparent text-[#8c93a0] dark:text-[#6b7280] hover:text-[#555b66] dark:hover:text-gray-300 hover:border-gray-300 dark:hover:border-gray-600'"
                         class="flex-1 py-3 px-4 text-center text-sm font-medium border-b-2 transition-colors" type="button">
                         {{ __('client.nutrition.library') }}
                     </button>
-                    <button @click="mode = 'custom'" :class="mode === 'custom' ? 'border-[#1456f0] text-[#1456f0]' : 'border-transparent text-[#8e8e93] dark:text-gray-400 hover:text-[#45515e] dark:hover:text-gray-300 hover:border-gray-300 dark:hover:border-gray-600'"
+                    <button @click="mode = 'custom'" :class="mode === 'custom' ? 'border-[#c6f24e] text-[#5c7a10] dark:text-[#c6f24e]' : 'border-transparent text-[#8c93a0] dark:text-[#6b7280] hover:text-[#555b66] dark:hover:text-gray-300 hover:border-gray-300 dark:hover:border-gray-600'"
                         class="flex-1 py-3 px-4 text-center text-sm font-medium border-b-2 transition-colors" type="button">
                         {{ __('client.nutrition.custom') }}
                     </button>
-                    <button @click="mode = 'search'" :class="mode === 'search' ? 'border-[#1456f0] text-[#1456f0]' : 'border-transparent text-[#8e8e93] dark:text-gray-400 hover:text-[#45515e] dark:hover:text-gray-300 hover:border-gray-300 dark:hover:border-gray-600'"
+                    <button @click="mode = 'search'" :class="mode === 'search' ? 'border-[#c6f24e] text-[#5c7a10] dark:text-[#c6f24e]' : 'border-transparent text-[#8c93a0] dark:text-[#6b7280] hover:text-[#555b66] dark:hover:text-gray-300 hover:border-gray-300 dark:hover:border-gray-600'"
                         class="flex-1 py-3 px-4 text-center text-sm font-medium border-b-2 transition-colors" type="button">
                         {{ __('client.nutrition.food_search.tab') }}
                     </button>
@@ -417,16 +416,16 @@
                 <div x-show="mode === 'library'" class="space-y-4">
                     <div>
                         <input type="text" x-model="mealSearch" @input.debounce.300ms="searchMeals()" placeholder="{{ __('client.nutrition.search_meals') }}"
-                            class="w-full rounded-lg border-gray-200 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-[#1456f0] focus:ring-[#1456f0] text-sm">
+                            class="w-full rounded-lg border-gray-200 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-[#c6f24e] focus:ring-[#c6f24e] text-sm">
                     </div>
 
                     <div x-show="libraryMeals.length > 0" class="max-h-60 overflow-y-auto space-y-2">
                         <template x-for="meal in libraryMeals" :key="meal.id">
                             <button @click="selectLibraryMeal(meal)" type="button"
-                                :class="selectedMeal && selectedMeal.id === meal.id ? 'border-[#1456f0] bg-blue-50 dark:bg-blue-900/20' : 'border-gray-200 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-800'"
+                                :class="selectedMeal && selectedMeal.id === meal.id ? 'border-[#c6f24e] bg-[rgba(198,242,78,0.12)] dark:bg-[rgba(198,242,78,0.08)]' : 'border-[rgba(18,22,31,0.09)] dark:border-[rgba(255,255,255,0.08)] hover:bg-gray-50 dark:hover:bg-gray-800'"
                                 class="w-full text-left p-3 rounded-xl border transition-colors">
-                                <p class="text-sm font-medium text-[#222222] dark:text-gray-100" x-text="meal.name"></p>
-                                <p class="text-xs text-[#8e8e93] dark:text-gray-500 mt-0.5">
+                                <p class="text-sm font-medium text-[#181b22] dark:text-[#f0f2f5]" x-text="meal.name"></p>
+                                <p class="text-xs text-[#8c93a0] dark:text-[#6b7280] mt-0.5">
                                     <span x-text="meal.calories"></span> kcal &middot;
                                     P <span x-text="meal.protein"></span>g &middot;
                                     C <span x-text="meal.carbs"></span>g &middot;
@@ -437,25 +436,23 @@
                     </div>
 
                     <div x-show="mealSearch && libraryMeals.length === 0 && !searching" class="text-center py-4">
-                        <p class="text-sm text-[#8e8e93] dark:text-gray-500">{{ __('client.nutrition.no_meals_found') }}</p>
+                        <p class="text-sm text-[#8c93a0] dark:text-[#6b7280]">{{ __('client.nutrition.no_meals_found') }}</p>
                     </div>
 
                     <div x-show="selectedMeal" class="pt-2 border-t border-gray-100 dark:border-gray-800">
                         <!-- Portion Selector -->
                         <div class="mb-3">
-                            <label class="block text-sm font-medium text-[#222222] dark:text-gray-100 mb-2">{{ __('client.nutrition.quick_log.portion') }}</label>
+                            <label class="block text-sm font-medium text-[#181b22] dark:text-[#f0f2f5] mb-2">{{ __('client.nutrition.quick_log.portion') }}</label>
                             <div class="grid grid-cols-5 gap-2">
                                 <template x-for="p in portionOptions" :key="p">
                                     <button type="button" @click="portion = p; customPortionMode = false"
-                                        :class="(portion === p && !customPortionMode) ? 'text-white border-[#1456f0]' : 'bg-white dark:bg-gray-800 text-[#45515e] dark:text-gray-300 border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700'"
-                                        :style="(portion === p && !customPortionMode) ? 'background-color: var(--color-primary)' : ''"
+                                        :class="(portion === p && !customPortionMode) ? 'bg-[#c6f24e] text-[#14180a] border-[#c6f24e]' : 'bg-white dark:bg-gray-800 text-[#555b66] dark:text-gray-300 border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700'"
                                         class="px-3 py-1.5 text-sm font-medium border rounded-lg transition-colors">
                                         <span x-text="p + '×'"></span>
                                     </button>
                                 </template>
                                 <button type="button" @click="enableCustomPortion()"
-                                    :class="customPortionMode ? 'text-white border-[#1456f0]' : 'bg-white dark:bg-gray-800 text-[#45515e] dark:text-gray-300 border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700'"
-                                    :style="customPortionMode ? 'background-color: var(--color-primary)' : ''"
+                                    :class="customPortionMode ? 'bg-[#c6f24e] text-[#14180a] border-[#c6f24e]' : 'bg-white dark:bg-gray-800 text-[#555b66] dark:text-gray-300 border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700'"
                                     class="px-3 py-1.5 text-sm font-medium border rounded-lg transition-colors">
                                     <span x-show="!(customPortionMode && !portionOptions.includes(portion))">{{ __('client.nutrition.quick_log.portion_custom') }}</span>
                                     <span x-show="customPortionMode && !portionOptions.includes(portion)" x-cloak>
@@ -468,14 +465,13 @@
                                     x-model="customPortionInput"
                                     @keydown.enter.prevent="applyCustomPortion()"
                                     placeholder="{{ __('client.nutrition.quick_log.portion_custom_placeholder') }}"
-                                    class="flex-1 rounded-lg border-gray-200 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-[#1456f0] focus:ring-[#1456f0] text-sm">
+                                    class="flex-1 rounded-lg border-gray-200 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-[#c6f24e] focus:ring-[#c6f24e] text-sm">
                                 <button type="button" @click="applyCustomPortion()"
-                                    class="px-4 py-1.5 text-sm font-medium text-white rounded-lg transition-colors"
-                                    style="background-color: var(--color-primary)">
+                                    class="px-4 py-1.5 text-sm font-medium bg-[#c6f24e] text-[#14180a] rounded-lg transition-colors hover:bg-[#b4e438]">
                                     {{ __('client.nutrition.quick_log.portion_custom_apply') }}
                                 </button>
                             </div>
-                            <div x-show="selectedMeal" class="mt-2 text-xs text-[#8e8e93] dark:text-gray-500">
+                            <div x-show="selectedMeal" class="mt-2 text-xs text-[#8c93a0] dark:text-[#6b7280]">
                                 <span x-text="scaledName"></span> &middot;
                                 <span x-text="scaledCalories"></span> kcal &middot;
                                 P <span x-text="scaledProtein"></span>g &middot;
@@ -496,23 +492,22 @@
 
                             <!-- Meal Type Selector -->
                             <div class="mb-3">
-                                <label class="block text-sm font-medium text-[#222222] dark:text-gray-100 mb-2">{{ __('client.nutrition.meal_type') }}</label>
+                                <label class="block text-sm font-medium text-[#181b22] dark:text-[#f0f2f5] mb-2">{{ __('client.nutrition.meal_type') }}</label>
                                 <div class="flex flex-wrap gap-2">
                                     <template x-for="type in mealTypes" :key="type">
                                         <button type="button" @click="mealType = type; customMealType = ''"
-                                            :class="mealType === type && !customMealType ? 'text-white border-[#1456f0]' : 'bg-white dark:bg-gray-800 text-[#45515e] dark:text-gray-300 border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700'"
-                                            :style="mealType === type && !customMealType ? 'background-color: var(--color-primary)' : ''"
+                                            :class="mealType === type && !customMealType ? 'bg-[#c6f24e] text-[#14180a] border-[#c6f24e]' : 'bg-white dark:bg-gray-800 text-[#555b66] dark:text-gray-300 border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700'"
                                             class="px-3 py-1.5 text-sm font-medium border rounded-lg transition-colors" x-text="type">
                                         </button>
                                     </template>
                                 </div>
                                 <input type="text" x-model="customMealType" @input="if(customMealType) mealType = ''" placeholder="{{ __('client.nutrition.or_type_custom') }}"
-                                    class="mt-2 w-full rounded-lg border-gray-200 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-[#1456f0] focus:ring-[#1456f0] text-sm">
+                                    class="mt-2 w-full rounded-lg border-gray-200 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-[#c6f24e] focus:ring-[#c6f24e] text-sm">
                                 <input type="hidden" name="meal_type" :value="customMealType || mealType">
                             </div>
 
                             <button type="submit" :disabled="!(mealType || customMealType)"
-                                class="w-full inline-flex items-center justify-center px-4 py-3 bg-[#181e25] dark:bg-gray-700 text-white text-sm font-semibold rounded-xl hover:bg-gray-800 dark:hover:bg-gray-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
+                                class="w-full inline-flex items-center justify-center px-4 py-3 bg-[#c6f24e] text-[#14180a] text-sm font-semibold rounded-xl hover:bg-[#b4e438] transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
                                 {{ __('client.nutrition.log_meal') }}
                             </button>
                         </form>
@@ -526,9 +521,9 @@
                         <input type="hidden" name="date" value="{{ $date }}">
 
                         <div>
-                            <label class="block text-sm font-medium text-[#222222] dark:text-gray-100">{{ __('client.nutrition.name') }} <span class="text-red-500">*</span></label>
+                            <label class="block text-sm font-medium text-[#181b22] dark:text-[#f0f2f5]">{{ __('client.nutrition.name') }} <span class="text-red-500">*</span></label>
                             <input type="text" name="name" required value="{{ old('name') }}"
-                                class="mt-1 block w-full rounded-lg border-gray-200 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-[#1456f0] focus:ring-[#1456f0] text-sm"
+                                class="mt-1 block w-full rounded-lg border-gray-200 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-[#c6f24e] focus:ring-[#c6f24e] text-sm"
                                 placeholder="{{ __('client.nutrition.meal_name_placeholder') }}">
                             @error('name')
                                 <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
@@ -537,25 +532,24 @@
 
                         <!-- Meal Type Selector -->
                         <div>
-                            <label class="block text-sm font-medium text-[#222222] dark:text-gray-100 mb-2">{{ __('client.nutrition.meal_type') }} <span class="text-red-500">*</span></label>
+                            <label class="block text-sm font-medium text-[#181b22] dark:text-[#f0f2f5] mb-2">{{ __('client.nutrition.meal_type') }} <span class="text-red-500">*</span></label>
                             <div class="flex flex-wrap gap-2">
                                 <template x-for="type in mealTypes" :key="type">
                                     <button type="button" @click="customFormMealType = type; customFormCustomType = ''"
-                                        :class="customFormMealType === type && !customFormCustomType ? 'text-white border-[#1456f0]' : 'bg-white dark:bg-gray-800 text-[#45515e] dark:text-gray-300 border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700'"
-                                        :style="customFormMealType === type && !customFormCustomType ? 'background-color: var(--color-primary)' : ''"
+                                        :class="customFormMealType === type && !customFormCustomType ? 'bg-[#c6f24e] text-[#14180a] border-[#c6f24e]' : 'bg-white dark:bg-gray-800 text-[#555b66] dark:text-gray-300 border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700'"
                                         class="px-3 py-1.5 text-sm font-medium border rounded-lg transition-colors" x-text="type">
                                     </button>
                                 </template>
                             </div>
                             <input type="text" x-model="customFormCustomType" @input="if(customFormCustomType) customFormMealType = ''" placeholder="{{ __('client.nutrition.or_type_custom') }}"
-                                class="mt-2 w-full rounded-lg border-gray-200 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-[#1456f0] focus:ring-[#1456f0] text-sm">
+                                class="mt-2 w-full rounded-lg border-gray-200 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-[#c6f24e] focus:ring-[#c6f24e] text-sm">
                             <input type="hidden" name="meal_type" :value="customFormCustomType || customFormMealType">
                         </div>
 
                         <div>
-                            <label class="block text-sm font-medium text-[#222222] dark:text-gray-100">{{ __('client.nutrition.calories') }} <span class="text-red-500">*</span></label>
+                            <label class="block text-sm font-medium text-[#181b22] dark:text-[#f0f2f5]">{{ __('client.nutrition.calories') }} <span class="text-red-500">*</span></label>
                             <input type="number" name="calories" required min="0" value="{{ old('calories') }}"
-                                class="mt-1 block w-full rounded-lg border-gray-200 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-[#1456f0] focus:ring-[#1456f0] text-sm"
+                                class="mt-1 block w-full rounded-lg border-gray-200 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-[#c6f24e] focus:ring-[#c6f24e] text-sm"
                                 placeholder="0">
                             @error('calories')
                                 <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
@@ -564,34 +558,34 @@
 
                         <div class="grid grid-cols-3 gap-3">
                             <div>
-                                <label class="block text-sm font-medium text-[#222222] dark:text-gray-100">{{ __('client.nutrition.protein_g') }} <span class="text-red-500">*</span></label>
+                                <label class="block text-sm font-medium text-[#181b22] dark:text-[#f0f2f5]">{{ __('client.nutrition.protein_g') }} <span class="text-red-500">*</span></label>
                                 <input type="number" name="protein" required min="0" step="0.1" value="{{ old('protein') }}"
-                                    class="mt-1 block w-full rounded-lg border-gray-200 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-[#1456f0] focus:ring-[#1456f0] text-sm"
+                                    class="mt-1 block w-full rounded-lg border-gray-200 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-[#c6f24e] focus:ring-[#c6f24e] text-sm"
                                     placeholder="0">
                             </div>
                             <div>
-                                <label class="block text-sm font-medium text-[#222222] dark:text-gray-100">{{ __('client.nutrition.carbs_g') }} <span class="text-red-500">*</span></label>
+                                <label class="block text-sm font-medium text-[#181b22] dark:text-[#f0f2f5]">{{ __('client.nutrition.carbs_g') }} <span class="text-red-500">*</span></label>
                                 <input type="number" name="carbs" required min="0" step="0.1" value="{{ old('carbs') }}"
-                                    class="mt-1 block w-full rounded-lg border-gray-200 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-[#1456f0] focus:ring-[#1456f0] text-sm"
+                                    class="mt-1 block w-full rounded-lg border-gray-200 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-[#c6f24e] focus:ring-[#c6f24e] text-sm"
                                     placeholder="0">
                             </div>
                             <div>
-                                <label class="block text-sm font-medium text-[#222222] dark:text-gray-100">{{ __('client.nutrition.fat_g') }} <span class="text-red-500">*</span></label>
+                                <label class="block text-sm font-medium text-[#181b22] dark:text-[#f0f2f5]">{{ __('client.nutrition.fat_g') }} <span class="text-red-500">*</span></label>
                                 <input type="number" name="fat" required min="0" step="0.1" value="{{ old('fat') }}"
-                                    class="mt-1 block w-full rounded-lg border-gray-200 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-[#1456f0] focus:ring-[#1456f0] text-sm"
+                                    class="mt-1 block w-full rounded-lg border-gray-200 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-[#c6f24e] focus:ring-[#c6f24e] text-sm"
                                     placeholder="0">
                             </div>
                         </div>
 
                         <div>
-                            <label class="block text-sm font-medium text-[#222222] dark:text-gray-100">{{ __('client.nutrition.notes') }}</label>
+                            <label class="block text-sm font-medium text-[#181b22] dark:text-[#f0f2f5]">{{ __('client.nutrition.notes') }}</label>
                             <textarea name="notes" rows="2"
-                                class="mt-1 block w-full rounded-lg border-gray-200 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-[#1456f0] focus:ring-[#1456f0] text-sm"
+                                class="mt-1 block w-full rounded-lg border-gray-200 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-[#c6f24e] focus:ring-[#c6f24e] text-sm"
                                 placeholder="{{ __('client.nutrition.optional_notes') }}">{{ old('notes') }}</textarea>
                         </div>
 
                         <button type="submit" :disabled="!(customFormMealType || customFormCustomType)"
-                            class="w-full inline-flex items-center justify-center px-4 py-3 bg-[#181e25] dark:bg-gray-700 text-white text-sm font-semibold rounded-xl hover:bg-gray-800 dark:hover:bg-gray-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
+                            class="w-full inline-flex items-center justify-center px-4 py-3 bg-[#c6f24e] text-[#14180a] text-sm font-semibold rounded-xl hover:bg-[#b4e438] transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
                             {{ __('client.nutrition.log_meal') }}
                         </button>
                     </form>
@@ -600,48 +594,48 @@
                 <!-- Search Mode (Open Food Facts) -->
                 <div x-show="mode === 'search'" class="space-y-4">
                     <div>
-                        <h3 class="text-sm font-semibold text-[#222222] dark:text-gray-100">{{ __('client.nutrition.food_search.heading') }}</h3>
-                        <p class="text-xs text-[#8e8e93] dark:text-gray-500 mt-0.5">{{ __('client.nutrition.food_search.subtitle') }}</p>
+                        <h3 class="text-sm font-semibold text-[#181b22] dark:text-[#f0f2f5]">{{ __('client.nutrition.food_search.heading') }}</h3>
+                        <p class="text-xs text-[#8c93a0] dark:text-[#6b7280] mt-0.5">{{ __('client.nutrition.food_search.subtitle') }}</p>
                     </div>
 
                     <input type="text" x-model="foodQuery" @input.debounce.300ms="searchFoods()"
                         placeholder="{{ __('client.nutrition.food_search.placeholder') }}"
-                        class="w-full rounded-lg border-gray-200 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-[#1456f0] focus:ring-[#1456f0] text-sm">
+                        class="w-full rounded-lg border-gray-200 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-[#c6f24e] focus:ring-[#c6f24e] text-sm">
 
                     <div x-show="foodSearching" class="text-center py-4">
-                        <p class="text-sm text-[#8e8e93] dark:text-gray-500">{{ __('client.nutrition.food_search.loading') }}</p>
+                        <p class="text-sm text-[#8c93a0] dark:text-[#6b7280]">{{ __('client.nutrition.food_search.loading') }}</p>
                     </div>
 
                     <div x-show="!foodSearching && foodQuery.length > 0 && foodQuery.length < 2" x-cloak class="text-center py-4">
-                        <p class="text-sm text-[#8e8e93] dark:text-gray-500">{{ __('client.nutrition.food_search.min_chars') }}</p>
+                        <p class="text-sm text-[#8c93a0] dark:text-[#6b7280]">{{ __('client.nutrition.food_search.min_chars') }}</p>
                     </div>
 
                     <div x-show="!foodSearching && foodQuery.length >= 2 && foodResults.length === 0 && foodSearched" x-cloak class="text-center py-4">
-                        <p class="text-sm text-[#8e8e93] dark:text-gray-500">{{ __('client.nutrition.food_search.no_results') }}</p>
+                        <p class="text-sm text-[#8c93a0] dark:text-[#6b7280]">{{ __('client.nutrition.food_search.no_results') }}</p>
                     </div>
 
                     <div x-show="foodResults.length > 0" class="max-h-72 overflow-y-auto space-y-2">
                         <template x-for="item in foodResults" :key="item.code">
                             <button @click="selectFoodItem(item)" type="button"
-                                :class="selectedFood && selectedFood.code === item.code ? 'border-[#1456f0] bg-blue-50 dark:bg-blue-900/20' : 'border-gray-200 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-800'"
+                                :class="selectedFood && selectedFood.code === item.code ? 'border-[#c6f24e] bg-[rgba(198,242,78,0.12)] dark:bg-[rgba(198,242,78,0.08)]' : 'border-[rgba(18,22,31,0.09)] dark:border-[rgba(255,255,255,0.08)] hover:bg-gray-50 dark:hover:bg-gray-800'"
                                 class="w-full text-left p-3 rounded-xl border transition-colors flex items-start gap-3">
                                 <template x-if="item.image">
                                     <img :src="item.image" :alt="item.name" class="w-12 h-12 rounded-lg object-cover bg-gray-100 dark:bg-gray-800 flex-shrink-0">
                                 </template>
                                 <template x-if="!item.image">
                                     <div class="w-12 h-12 rounded-lg bg-gray-100 dark:bg-gray-800 flex-shrink-0 flex items-center justify-center">
-                                        <svg class="w-5 h-5 text-[#8e8e93]" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                        <svg class="w-5 h-5 text-[#8c93a0]" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14M4 6h16M4 6v12a2 2 0 002 2h12a2 2 0 002-2V6"/>
                                         </svg>
                                     </div>
                                 </template>
                                 <div class="flex-1 min-w-0">
-                                    <p class="text-sm font-medium text-[#222222] dark:text-gray-100 truncate" x-text="item.name"></p>
-                                    <p x-show="item.brand" class="text-xs text-[#8e8e93] dark:text-gray-500 truncate" x-text="item.brand"></p>
-                                    <p class="text-xs text-[#45515e] dark:text-gray-400 mt-1">
+                                    <p class="text-sm font-medium text-[#181b22] dark:text-[#f0f2f5] truncate" x-text="item.name"></p>
+                                    <p x-show="item.brand" class="text-xs text-[#8c93a0] dark:text-[#6b7280] truncate" x-text="item.brand"></p>
+                                    <p class="text-xs text-[#555b66] dark:text-[#a4abb6] mt-1">
                                         <span x-text="Math.round(item.kcal_per_100g)"></span> kcal &middot;
                                         P<span x-text="item.protein_per_100g"></span>/C<span x-text="item.carbs_per_100g"></span>/F<span x-text="item.fat_per_100g"></span>
-                                        <span class="text-[#8e8e93] dark:text-gray-500">{{ __('client.nutrition.food_search.per_100g') }}</span>
+                                        <span class="text-[#8c93a0] dark:text-[#6b7280]">{{ __('client.nutrition.food_search.per_100g') }}</span>
                                     </p>
                                 </div>
                             </button>
@@ -660,10 +654,10 @@
                             <input type="hidden" name="meal_type" :value="foodCustomMealType || foodMealType">
 
                             <div class="mb-3">
-                                <label class="block text-sm font-medium text-[#222222] dark:text-gray-100 mb-2">{{ __('client.nutrition.food_search.portion_label') }}</label>
+                                <label class="block text-sm font-medium text-[#181b22] dark:text-[#f0f2f5] mb-2">{{ __('client.nutrition.food_search.portion_label') }}</label>
                                 <input type="number" min="1" max="2000" step="1" x-model.number="foodPortion"
-                                    class="w-full rounded-lg border-gray-200 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-[#1456f0] focus:ring-[#1456f0] text-sm">
-                                <p class="mt-2 text-xs text-[#8e8e93] dark:text-gray-500">
+                                    class="w-full rounded-lg border-gray-200 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-[#c6f24e] focus:ring-[#c6f24e] text-sm">
+                                <p class="mt-2 text-xs text-[#8c93a0] dark:text-[#6b7280]">
                                     <span x-text="foodScaledCalories"></span> kcal &middot;
                                     P <span x-text="foodScaledProtein"></span>g &middot;
                                     C <span x-text="foodScaledCarbs"></span>g &middot;
@@ -672,23 +666,22 @@
                             </div>
 
                             <div class="mb-3">
-                                <label class="block text-sm font-medium text-[#222222] dark:text-gray-100 mb-2">{{ __('client.nutrition.food_search.meal_type_label') }}</label>
+                                <label class="block text-sm font-medium text-[#181b22] dark:text-[#f0f2f5] mb-2">{{ __('client.nutrition.food_search.meal_type_label') }}</label>
                                 <div class="flex flex-wrap gap-2">
                                     <template x-for="type in mealTypes" :key="type">
                                         <button type="button" @click="foodMealType = type; foodCustomMealType = ''"
-                                            :class="foodMealType === type && !foodCustomMealType ? 'text-white border-[#1456f0]' : 'bg-white dark:bg-gray-800 text-[#45515e] dark:text-gray-300 border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700'"
-                                            :style="foodMealType === type && !foodCustomMealType ? 'background-color: var(--color-primary)' : ''"
+                                            :class="foodMealType === type && !foodCustomMealType ? 'bg-[#c6f24e] text-[#14180a] border-[#c6f24e]' : 'bg-white dark:bg-gray-800 text-[#555b66] dark:text-gray-300 border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700'"
                                             class="px-3 py-1.5 text-sm font-medium border rounded-lg transition-colors" x-text="type"></button>
                                     </template>
                                 </div>
                                 <input type="text" x-model="foodCustomMealType" @input="if (foodCustomMealType) foodMealType = ''"
                                     placeholder="{{ __('client.nutrition.or_type_custom') }}"
-                                    class="mt-2 w-full rounded-lg border-gray-200 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-[#1456f0] focus:ring-[#1456f0] text-sm">
+                                    class="mt-2 w-full rounded-lg border-gray-200 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 shadow-sm focus:border-[#c6f24e] focus:ring-[#c6f24e] text-sm">
                             </div>
 
                             <button type="submit"
                                 :disabled="!foodFormReady()"
-                                class="w-full inline-flex items-center justify-center px-4 py-3 bg-[#181e25] dark:bg-gray-700 text-white text-sm font-semibold rounded-xl hover:bg-gray-800 dark:hover:bg-gray-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
+                                class="w-full inline-flex items-center justify-center px-4 py-3 bg-[#c6f24e] text-[#14180a] text-sm font-semibold rounded-xl hover:bg-[#b4e438] transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
                                 {{ __('client.nutrition.food_search.save') }}
                             </button>
                         </form>

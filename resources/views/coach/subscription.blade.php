@@ -4,8 +4,8 @@
     <div class="space-y-6">
         <!-- Header -->
         <div>
-            <h1 class="font-display text-2xl font-semibold text-[#222222] dark:text-gray-100">Subscription</h1>
-            <p class="text-sm text-[#8e8e93] dark:text-gray-500 mt-0.5">Manage your LiftDeck subscription and billing.</p>
+            <h1 class="font-display text-[30px] font-bold text-[#181b22] dark:text-[#f0f2f5] tracking-tight">Subscription</h1>
+            <p class="text-sm text-[#8c93a0] dark:text-[#6b7280] mt-0.5">Manage your LiftDeck subscription and billing.</p>
         </div>
 
         @if(session('feature_required'))
@@ -76,7 +76,7 @@
                         </div>
                     </div>
                     <a href="{{ route('coach.subscription.portal') }}"
-                        class="ml-4 inline-flex items-center px-3 py-1.5 bg-[#181e25] dark:bg-gray-700 text-white text-xs font-semibold rounded-lg hover:bg-gray-800 transition-colors">
+                        class="ml-4 inline-flex items-center px-3 py-1.5 bg-[#181b22] dark:bg-[#c6f24e] dark:text-[#14180a] text-xs font-semibold rounded-lg hover:bg-[#2a2f3a] dark:hover:bg-[#b4e438] transition-colors">
                         Manage
                     </a>
                 </div>
@@ -84,41 +84,41 @@
         @endif
 
         <!-- Plans -->
-        <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 shadow-card">
-            <div class="px-6 py-4 border-b border-gray-100 dark:border-gray-800">
-                <h2 class="font-display text-base font-semibold text-[#222222] dark:text-gray-100">Choose a Plan</h2>
-                <p class="text-sm text-[#8e8e93] dark:text-gray-500 mt-0.5">Select the plan that best fits your coaching needs.</p>
+        <div class="bg-white dark:bg-[#16191f] rounded-xl border border-[rgba(18,22,31,0.09)] dark:border-[rgba(255,255,255,0.08)] shadow-[0_1px_2px_rgba(18,22,31,.04),0_4px_16px_rgba(18,22,31,.045)] dark:shadow-[0_1px_2px_rgba(0,0,0,.4),0_6px_20px_rgba(0,0,0,.3)]">
+            <div class="px-6 py-4 border-b border-[rgba(18,22,31,0.06)] dark:border-[rgba(255,255,255,0.06)]">
+                <h2 class="font-display text-base font-semibold text-[#181b22] dark:text-[#f0f2f5]">Choose a Plan</h2>
+                <p class="text-sm text-[#8c93a0] dark:text-[#6b7280] mt-0.5">Select the plan that best fits your coaching needs.</p>
             </div>
 
             <div class="p-6">
                 <div class="grid grid-cols-1 gap-6 sm:grid-cols-3">
                     <!-- Basic Plan -->
-                    <div class="relative rounded-xl border {{ $currentPlanKey === 'basic' ? 'border-[#1456f0] ring-2 ring-[#1456f0]/30' : 'border-gray-200 dark:border-gray-700' }} p-6">
+                    <div class="relative rounded-xl border {{ $currentPlanKey === 'basic' ? 'border-[#c6f24e] ring-2 ring-[rgba(198,242,78,0.3)]' : 'border-[rgba(18,22,31,0.14)] dark:border-[rgba(255,255,255,0.12)]' }} p-6">
                         @if($currentPlanKey === 'basic')
                             <span class="absolute -top-3 left-1/2 -translate-x-1/2 inline-flex items-center px-3 py-0.5 rounded-full text-xs font-medium bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400">Current Plan</span>
                         @endif
                         <div>
-                            <h3 class="font-display text-base font-semibold text-[#222222] dark:text-gray-100">Basic</h3>
-                            <p class="mt-1 text-sm text-[#8e8e93] dark:text-gray-500">For coaches just getting started.</p>
+                            <h3 class="font-display text-base font-semibold text-[#181b22] dark:text-[#f0f2f5]">Basic</h3>
+                            <p class="mt-1 text-sm text-[#8c93a0] dark:text-[#6b7280]">For coaches just getting started.</p>
                             <p class="mt-4">
-                                <span class="text-3xl font-bold text-[#222222] dark:text-gray-100">€10</span>
-                                <span class="text-sm text-[#8e8e93] dark:text-gray-500">/mo</span>
+                                <span class="text-3xl font-bold text-[#181b22] dark:text-[#f0f2f5]">€10</span>
+                                <span class="text-sm text-[#8c93a0] dark:text-[#6b7280]">/mo</span>
                             </p>
                         </div>
                         <ul class="mt-6 space-y-2">
-                            <li class="flex items-center gap-2 text-sm text-[#45515e] dark:text-gray-400">
+                            <li class="flex items-center gap-2 text-sm text-[#555b66] dark:text-[#a4abb6]">
                                 <svg class="h-4 w-4 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
                                 </svg>
                                 Up to 5 clients
                             </li>
-                            <li class="flex items-center gap-2 text-sm text-[#45515e] dark:text-gray-400">
+                            <li class="flex items-center gap-2 text-sm text-[#555b66] dark:text-[#a4abb6]">
                                 <svg class="h-4 w-4 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
                                 </svg>
                                 Programs & workout logs
                             </li>
-                            <li class="flex items-center gap-2 text-sm text-[#45515e] dark:text-gray-400">
+                            <li class="flex items-center gap-2 text-sm text-[#555b66] dark:text-[#a4abb6]">
                                 <svg class="h-4 w-4 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
                                 </svg>
@@ -128,32 +128,32 @@
                     </div>
 
                     <!-- Advanced Plan -->
-                    <div class="relative rounded-xl border {{ $currentPlanKey === 'advanced' ? 'border-[#1456f0] ring-2 ring-[#1456f0]/30' : 'border-gray-200 dark:border-gray-700' }} p-6">
+                    <div class="relative rounded-xl border {{ $currentPlanKey === 'advanced' ? 'border-[#c6f24e] ring-2 ring-[rgba(198,242,78,0.3)]' : 'border-[rgba(18,22,31,0.14)] dark:border-[rgba(255,255,255,0.12)]' }} p-6">
                         @if($currentPlanKey === 'advanced')
                             <span class="absolute -top-3 left-1/2 -translate-x-1/2 inline-flex items-center px-3 py-0.5 rounded-full text-xs font-medium bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400">Current Plan</span>
                         @endif
                         <div>
-                            <h3 class="font-display text-base font-semibold text-[#222222] dark:text-gray-100">Advanced</h3>
-                            <p class="mt-1 text-sm text-[#8e8e93] dark:text-gray-500">For growing coaches.</p>
+                            <h3 class="font-display text-base font-semibold text-[#181b22] dark:text-[#f0f2f5]">Advanced</h3>
+                            <p class="mt-1 text-sm text-[#8c93a0] dark:text-[#6b7280]">For growing coaches.</p>
                             <p class="mt-4">
-                                <span class="text-3xl font-bold text-[#222222] dark:text-gray-100">€45</span>
-                                <span class="text-sm text-[#8e8e93] dark:text-gray-500">/mo</span>
+                                <span class="text-3xl font-bold text-[#181b22] dark:text-[#f0f2f5]">€45</span>
+                                <span class="text-sm text-[#8c93a0] dark:text-[#6b7280]">/mo</span>
                             </p>
                         </div>
                         <ul class="mt-6 space-y-2">
-                            <li class="flex items-center gap-2 text-sm text-[#45515e] dark:text-gray-400">
+                            <li class="flex items-center gap-2 text-sm text-[#555b66] dark:text-[#a4abb6]">
                                 <svg class="h-4 w-4 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
                                 </svg>
                                 Up to 15 clients
                             </li>
-                            <li class="flex items-center gap-2 text-sm text-[#45515e] dark:text-gray-400">
+                            <li class="flex items-center gap-2 text-sm text-[#555b66] dark:text-[#a4abb6]">
                                 <svg class="h-4 w-4 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
                                 </svg>
                                 Everything in Basic
                             </li>
-                            <li class="flex items-center gap-2 text-sm text-[#45515e] dark:text-gray-400">
+                            <li class="flex items-center gap-2 text-sm text-[#555b66] dark:text-[#a4abb6]">
                                 <svg class="h-4 w-4 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
                                 </svg>
@@ -163,33 +163,33 @@
                     </div>
 
                     <!-- Professional Plan -->
-                    <div class="relative rounded-xl border {{ $currentPlanKey === 'professional' ? 'border-[#1456f0] ring-2 ring-[#1456f0]/30' : 'border-gray-200 dark:border-gray-700' }} p-6">
+                    <div class="relative rounded-xl border {{ $currentPlanKey === 'professional' ? 'border-[#c6f24e] ring-2 ring-[rgba(198,242,78,0.3)]' : 'border-[rgba(18,22,31,0.14)] dark:border-[rgba(255,255,255,0.12)]' }} p-6">
                         @if($currentPlanKey === 'professional')
                             <span class="absolute -top-3 left-1/2 -translate-x-1/2 inline-flex items-center px-3 py-0.5 rounded-full text-xs font-medium bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400">Current Plan</span>
                         @endif
                         <div>
-                            <h3 class="font-display text-base font-semibold text-[#222222] dark:text-gray-100">Professional</h3>
-                            <p class="mt-1 text-sm text-[#8e8e93] dark:text-gray-500">For professional coaches at scale.</p>
+                            <h3 class="font-display text-base font-semibold text-[#181b22] dark:text-[#f0f2f5]">Professional</h3>
+                            <p class="mt-1 text-sm text-[#8c93a0] dark:text-[#6b7280]">For professional coaches at scale.</p>
                             <p class="mt-4">
-                                <span class="text-3xl font-bold text-[#222222] dark:text-gray-100">€79</span>
-                                <span class="text-sm text-[#8e8e93] dark:text-gray-500">/mo</span>
+                                <span class="text-3xl font-bold text-[#181b22] dark:text-[#f0f2f5]">€79</span>
+                                <span class="text-sm text-[#8c93a0] dark:text-[#6b7280]">/mo</span>
                             </p>
-                            <p class="mt-1 text-xs font-medium text-[#1456f0]">+ €0.50 per client over 30</p>
+                            <p class="mt-1 text-xs font-medium text-[#5c7a10] dark:text-[#c6f24e]">+ €0.50 per client over 30</p>
                         </div>
                         <ul class="mt-6 space-y-2">
-                            <li class="flex items-center gap-2 text-sm text-[#45515e] dark:text-gray-400">
+                            <li class="flex items-center gap-2 text-sm text-[#555b66] dark:text-[#a4abb6]">
                                 <svg class="h-4 w-4 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
                                 </svg>
                                 30 clients included
                             </li>
-                            <li class="flex items-center gap-2 text-sm text-[#45515e] dark:text-gray-400">
+                            <li class="flex items-center gap-2 text-sm text-[#555b66] dark:text-[#a4abb6]">
                                 <svg class="h-4 w-4 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
                                 </svg>
                                 Everything in Advanced
                             </li>
-                            <li class="flex items-center gap-2 text-sm text-[#45515e] dark:text-gray-400">
+                            <li class="flex items-center gap-2 text-sm text-[#555b66] dark:text-[#a4abb6]">
                                 <svg class="h-4 w-4 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
                                 </svg>
@@ -203,22 +203,22 @@
                 <div class="mt-8 flex justify-center">
                     @if($subscription && $subscription->active())
                         <a href="{{ route('coach.subscription.portal') }}"
-                            class="inline-flex items-center px-6 py-2.5 bg-[#181e25] dark:bg-gray-700 text-white text-sm font-semibold rounded-lg hover:bg-gray-800 transition-colors">
+                            class="inline-flex items-center px-6 py-2.5 bg-[#181b22] dark:bg-[#c6f24e] text-white dark:text-[#14180a] text-sm font-semibold rounded-lg hover:bg-[#2a2f3a] dark:hover:bg-[#b4e438] transition-colors">
                             Manage Subscription
                         </a>
                     @elseif($selectedPlan)
                         <div class="flex flex-col items-center gap-1.5">
                             <a href="{{ route('coach.subscription.checkout') }}"
-                                class="inline-flex items-center px-6 py-2.5 bg-[#181e25] dark:bg-gray-700 text-white text-sm font-semibold rounded-lg hover:bg-gray-800 transition-colors">
+                                class="inline-flex items-center px-6 py-2.5 bg-[#181b22] dark:bg-[#c6f24e] text-white dark:text-[#14180a] text-sm font-semibold rounded-lg hover:bg-[#2a2f3a] dark:hover:bg-[#b4e438] transition-colors">
                                 Subscribe to {{ ucfirst($selectedPlan) }}
                             </a>
                             @if(in_array($selectedPlan, ['advanced', 'professional']))
-                                <p class="text-xs text-[#8e8e93] dark:text-gray-500">Billed monthly — cancel anytime</p>
+                                <p class="text-xs text-[#8c93a0] dark:text-[#6b7280]">Billed monthly — cancel anytime</p>
                             @endif
                         </div>
                     @else
                         <a href="{{ route('coach.plan') }}"
-                            class="inline-flex items-center px-6 py-2.5 bg-[#181e25] dark:bg-gray-700 text-white text-sm font-semibold rounded-lg hover:bg-gray-800 transition-colors">
+                            class="inline-flex items-center px-6 py-2.5 bg-[#181b22] dark:bg-[#c6f24e] text-white dark:text-[#14180a] text-sm font-semibold rounded-lg hover:bg-[#2a2f3a] dark:hover:bg-[#b4e438] transition-colors">
                             Choose a Plan
                         </a>
                     @endif

@@ -4,15 +4,15 @@
     <div class="space-y-6" x-data="checkIn()">
         <!-- Header with Date Navigation -->
         <div>
-            <a href="{{ route('coach.clients.show', $client) }}" class="inline-flex items-center text-sm text-[#8e8e93] dark:text-gray-400 hover:text-[#45515e] dark:hover:text-gray-100 mb-4">
+            <a href="{{ route('coach.clients.show', $client) }}" class="inline-flex items-center text-sm text-[#8c93a0] dark:text-[#6b7280] hover:text-[#45515e] dark:hover:text-[#f0f2f5] mb-4">
                 <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
                 </svg>
                 {{ __('coach.clients.check_in.back', ['name' => $client->name]) }}
             </a>
-            <h1 class="font-display text-2xl font-semibold text-[#222222] dark:text-gray-100">{{ __('coach.clients.check_in.heading', ['name' => $client->name]) }}</h1>
+            <h1 class="font-display text-[30px] font-bold text-[#181b22] dark:text-[#f0f2f5] tracking-tight">{{ __('coach.clients.check_in.heading', ['name' => $client->name]) }}</h1>
             <div class="mt-3 flex items-center justify-between">
-                <a :href="prevUrl" class="p-2 rounded-lg text-[#45515e] dark:text-gray-400 hover:text-[#222222] dark:hover:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+                <a :href="prevUrl" class="p-2 rounded-lg text-[#555b66] dark:text-[#a4abb6] hover:text-[#222222] dark:hover:text-[#f0f2f5] hover:bg-gray-100 dark:hover:bg-[#2a2f3a] transition-colors">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
                     </svg>
@@ -20,14 +20,14 @@
 
                 <div class="flex items-center space-x-2">
                     <input type="date" x-model="currentDate" @change="navigateToDate()"
-                        class="border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-[#222222] dark:text-gray-100 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[#1456f0] focus:ring-2 focus:ring-[#1456f0]/20 transition-colors duration-150">
+                        class="border border-[rgba(18,22,31,0.14)] dark:border-[rgba(255,255,255,0.12)] bg-white dark:bg-[#11141a] text-[#181b22] dark:text-[#f0f2f5] rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[#c6f24e] focus:ring-1 focus:ring-[rgba(198,242,78,0.3)] transition-colors duration-150">
                     <button @click="goToToday()" x-show="currentDate !== today"
-                        class="text-xs font-medium text-[#1456f0] hover:underline">
+                        class="text-xs font-medium text-[#5c7a10] dark:text-[#c6f24e] font-semibold hover:underline">
                         {{ __('coach.clients.check_in.today') }}
                     </button>
                 </div>
 
-                <a :href="nextUrl" class="p-2 rounded-lg text-[#45515e] dark:text-gray-400 hover:text-[#222222] dark:hover:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+                <a :href="nextUrl" class="p-2 rounded-lg text-[#555b66] dark:text-[#a4abb6] hover:text-[#222222] dark:hover:text-[#f0f2f5] hover:bg-gray-100 dark:hover:bg-[#2a2f3a] transition-colors">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
                     </svg>
@@ -56,21 +56,21 @@
                 <input type="hidden" name="date" value="{{ $date }}">
 
                 @foreach($assignedMetrics as $metric)
-                    <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 shadow-card p-5">
-                        <label class="block text-sm font-medium text-[#222222] dark:text-gray-100 mb-1">
+                    <div class="bg-white dark:bg-[#16191f] rounded-xl border border-[rgba(18,22,31,0.09)] dark:border-[rgba(255,255,255,0.08)] shadow-[0_1px_2px_rgba(18,22,31,.04),0_4px_16px_rgba(18,22,31,.045)] dark:shadow-[0_1px_2px_rgba(0,0,0,.4),0_6px_20px_rgba(0,0,0,.3)] p-5">
+                        <label class="block text-sm font-medium text-[#181b22] dark:text-[#f0f2f5] mb-1">
                             {{ $metric->name }}
                             @if($metric->unit)
-                                <span class="text-[#8e8e93] dark:text-gray-500 font-normal">({{ $metric->unit }})</span>
+                                <span class="text-[#8c93a0] dark:text-[#6b7280] font-normal">({{ $metric->unit }})</span>
                             @endif
                         </label>
                         @if($metric->description)
-                            <p class="text-xs text-[#8e8e93] dark:text-gray-400 mb-2">{{ $metric->description }}</p>
+                            <p class="text-xs text-[#8c93a0] dark:text-[#6b7280] mb-2">{{ $metric->description }}</p>
                         @endif
 
                         @if($metric->type === 'number')
                             <input type="number" step="any" name="metrics[{{ $metric->id }}]"
                                 value="{{ $existingLogs->get($metric->id)?->value }}"
-                                class="w-full border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-[#222222] dark:text-gray-100 placeholder-[#8e8e93] dark:placeholder-gray-500 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-[#1456f0] focus:ring-2 focus:ring-[#1456f0]/20 transition-colors duration-150"
+                                class="w-full border border-[rgba(18,22,31,0.14)] dark:border-[rgba(255,255,255,0.12)] bg-white dark:bg-[#11141a] text-[#181b22] dark:text-[#f0f2f5] placeholder-[#8c93a0] dark:placeholder-[#6b7280] rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-[#c6f24e] focus:ring-1 focus:ring-[rgba(198,242,78,0.3)] transition-colors duration-150"
                                 placeholder="{{ __('coach.clients.check_in.enter_value') }}">
 
                         @elseif($metric->type === 'scale')
@@ -80,14 +80,14 @@
                                 <div class="flex items-center justify-between gap-1">
                                     @for($i = $metric->scale_min; $i <= $metric->scale_max; $i++)
                                         <button type="button" @click="value = value === '{{ $i }}' ? '' : '{{ $i }}'"
-                                            :class="value === '{{ $i }}' ? 'text-white border-transparent' : 'bg-white dark:bg-gray-800 text-[#45515e] dark:text-gray-300 border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700'"
+                                            :class="value === '{{ $i }}' ? 'text-white border-transparent' : 'bg-white dark:bg-[#11141a] text-[#555b66] dark:text-[#a4abb6] border-[rgba(18,22,31,0.14)] dark:border-[rgba(255,255,255,0.12)] hover:bg-[#f3f5f7] dark:hover:bg-[#1d2027]'"
                                             :style="value === '{{ $i }}' ? 'background-color: var(--color-primary); border-color: var(--color-primary)' : ''"
                                             class="flex-1 py-2 text-sm font-medium border rounded-lg transition-colors">
                                             {{ $i }}
                                         </button>
                                     @endfor
                                 </div>
-                                <div class="flex justify-between text-xs text-[#8e8e93] dark:text-gray-500">
+                                <div class="flex justify-between text-xs text-[#8c93a0] dark:text-[#6b7280]">
                                     <span>{{ __('coach.clients.check_in.low') }}</span>
                                     <span>{{ __('coach.clients.check_in.high') }}</span>
                                 </div>
@@ -98,12 +98,12 @@
                             <div x-data="{ value: '{{ $currentVal ?? '' }}' }" class="flex gap-3">
                                 <input type="hidden" name="metrics[{{ $metric->id }}]" :value="value">
                                 <button type="button" @click="value = value === '1' ? '' : '1'"
-                                    :class="value === '1' ? 'bg-green-600 text-white border-green-600' : 'bg-white dark:bg-gray-800 text-[#45515e] dark:text-gray-300 border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700'"
+                                    :class="value === '1' ? 'bg-green-600 text-white border-green-600' : 'bg-white dark:bg-[#11141a] text-[#555b66] dark:text-[#a4abb6] border-[rgba(18,22,31,0.14)] dark:border-[rgba(255,255,255,0.12)] hover:bg-[#f3f5f7] dark:hover:bg-[#1d2027]'"
                                     class="flex-1 py-2 text-sm font-medium border rounded-lg transition-colors">
                                     {{ __('coach.clients.check_in.yes') }}
                                 </button>
                                 <button type="button" @click="value = value === '0' ? '' : '0'"
-                                    :class="value === '0' ? 'bg-red-500 text-white border-red-500' : 'bg-white dark:bg-gray-800 text-[#45515e] dark:text-gray-300 border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700'"
+                                    :class="value === '0' ? 'bg-red-500 text-white border-red-500' : 'bg-white dark:bg-[#11141a] text-[#555b66] dark:text-[#a4abb6] border-[rgba(18,22,31,0.14)] dark:border-[rgba(255,255,255,0.12)] hover:bg-[#f3f5f7] dark:hover:bg-[#1d2027]'"
                                     class="flex-1 py-2 text-sm font-medium border rounded-lg transition-colors">
                                     {{ __('coach.clients.check_in.no') }}
                                 </button>
@@ -111,7 +111,7 @@
 
                         @elseif($metric->type === 'text')
                             <textarea name="metrics[{{ $metric->id }}]" rows="2"
-                                class="w-full border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-[#222222] dark:text-gray-100 placeholder-[#8e8e93] dark:placeholder-gray-500 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-[#1456f0] focus:ring-2 focus:ring-[#1456f0]/20 transition-colors duration-150"
+                                class="w-full border border-[rgba(18,22,31,0.14)] dark:border-[rgba(255,255,255,0.12)] bg-white dark:bg-[#11141a] text-[#181b22] dark:text-[#f0f2f5] placeholder-[#8c93a0] dark:placeholder-[#6b7280] rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-[#c6f24e] focus:ring-1 focus:ring-[rgba(198,242,78,0.3)] transition-colors duration-150"
                                 placeholder="{{ __('coach.clients.check_in.write_notes') }}">{{ $existingLogs->get($metric->id)?->value }}</textarea>
 
                         @elseif($metric->type === 'image')
@@ -124,7 +124,7 @@
                                 {{-- Existing image preview --}}
                                 <template x-if="hasExisting && !removed && !previewUrl">
                                     <div class="relative inline-block">
-                                        <img :src="existingThumbUrl" alt="Current photo" class="w-32 h-32 object-cover rounded-xl border border-gray-200 dark:border-gray-800">
+                                        <img :src="existingThumbUrl" alt="Current photo" class="w-32 h-32 object-cover rounded-xl border border-[rgba(18,22,31,0.09)] dark:border-[rgba(255,255,255,0.08)]">
                                         <button type="button" @click="removeImage()" class="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs shadow hover:bg-red-600">
                                             <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
                                         </button>
@@ -143,13 +143,13 @@
 
                                 {{-- Upload area --}}
                                 <template x-if="!previewUrl && (!hasExisting || removed)">
-                                    <label class="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-200 dark:border-gray-700 border-dashed rounded-xl cursor-pointer bg-gray-50 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+                                    <label class="flex flex-col items-center justify-center w-full h-32 border-2 border-[rgba(18,22,31,0.14)] dark:border-[rgba(255,255,255,0.12)] border-dashed rounded-xl cursor-pointer bg-[#f3f5f7] dark:bg-[#1d2027] hover:bg-[#f3f5f7] dark:hover:bg-[#1d2027] transition-colors">
                                         <div class="flex flex-col items-center justify-center pt-5 pb-6">
-                                            <svg class="w-8 h-8 mb-2 text-[#8e8e93] dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                            <svg class="w-8 h-8 mb-2 text-[#8c93a0] dark:text-[#6b7280]" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/>
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/>
                                             </svg>
-                                            <p class="text-xs text-[#8e8e93] dark:text-gray-400">{{ __('coach.clients.check_in.tap_to_upload') }}</p>
+                                            <p class="text-xs text-[#8c93a0] dark:text-[#6b7280]">{{ __('coach.clients.check_in.tap_to_upload') }}</p>
                                         </div>
                                         <input type="file" class="hidden" accept="image/jpeg,image/png,image/webp,image/heic,image/heif" @change="handleFileSelect($event)">
                                     </label>
@@ -170,20 +170,20 @@
                     </div>
                 @endforeach
 
-                <button type="submit" class="w-full inline-flex items-center justify-center px-4 py-3 bg-[#181e25] dark:bg-gray-700 text-white text-sm font-semibold rounded-lg hover:bg-gray-800 transition-colors">
+                <button type="submit" class="w-full inline-flex items-center justify-center px-4 py-3 bg-[#181b22] dark:bg-[#c6f24e] text-white dark:text-[#14180a] text-sm font-semibold rounded-lg hover:bg-[#2a2f3a] dark:hover:bg-[#b4e438] transition-colors">
                     {{ __('coach.clients.check_in.save') }}
                 </button>
             </form>
         @else
-            <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 shadow-card">
+            <div class="bg-white dark:bg-[#16191f] rounded-xl border border-[rgba(18,22,31,0.09)] dark:border-[rgba(255,255,255,0.08)] shadow-[0_1px_2px_rgba(18,22,31,.04),0_4px_16px_rgba(18,22,31,.045)] dark:shadow-[0_1px_2px_rgba(0,0,0,.4),0_6px_20px_rgba(0,0,0,.3)]">
                 <div class="text-center py-12">
-                    <div class="w-12 h-12 rounded-2xl bg-gray-100 dark:bg-gray-800 flex items-center justify-center mx-auto mb-3">
-                        <svg class="h-6 w-6 text-[#8e8e93]" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <div class="w-12 h-12 rounded-2xl bg-[#f3f5f7] dark:bg-[#1d2027] flex items-center justify-center mx-auto mb-3">
+                        <svg class="h-6 w-6 text-[#8c93a0]" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
                         </svg>
                     </div>
-                    <h3 class="text-sm font-semibold text-[#222222] dark:text-gray-100">{{ __('coach.clients.check_in.no_metrics') }}</h3>
-                    <p class="text-sm text-[#8e8e93] dark:text-gray-500 mt-1">{{ __('coach.clients.check_in.no_metrics_description') }}</p>
+                    <h3 class="text-sm font-semibold text-[#181b22] dark:text-[#f0f2f5]">{{ __('coach.clients.check_in.no_metrics') }}</h3>
+                    <p class="text-sm text-[#8c93a0] dark:text-[#6b7280] mt-1">{{ __('coach.clients.check_in.no_metrics_description') }}</p>
                 </div>
             </div>
         @endif

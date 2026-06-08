@@ -6,22 +6,22 @@
             </svg>
         </div>
 
-        <h1 class="font-display text-2xl font-semibold text-[#222222] dark:text-gray-100 mb-2">{{ __('client.welcome.heading') }}</h1>
+        <h1 class="font-display text-2xl font-bold text-[#181b22] dark:text-[#f0f2f5] tracking-tight mb-2">{{ __('client.welcome.heading') }}</h1>
 
-        <p class="text-base text-[#45515e] dark:text-gray-400 mb-8">
+        <p class="text-base text-[#555b66] dark:text-[#a4abb6] mb-8">
             {{ __('client.welcome.connected_with') }}<br>
-            <span class="font-semibold text-[#222222] dark:text-gray-100">{{ $coach->gym_name ?? $coach->name }}</span>
+            <span class="font-semibold text-[#181b22] dark:text-[#f0f2f5]">{{ $coach->gym_name ?? $coach->name }}</span>
         </p>
 
-        <div class="mx-auto h-24 w-24 rounded-full bg-blue-50 dark:bg-blue-900/20 flex items-center justify-center overflow-hidden mb-8">
+        <div class="mx-auto h-24 w-24 rounded-full bg-[rgba(198,242,78,0.15)] dark:bg-[rgba(198,242,78,0.12)] flex items-center justify-center overflow-hidden mb-8">
             @if($coach->avatar)
                 <img src="{{ $coach->avatar }}" alt="{{ $coach->name }}" class="w-full h-full object-cover">
             @else
-                <span class="text-3xl font-bold text-[#1456f0] dark:text-blue-400">{{ strtoupper(substr($coach->name, 0, 1)) }}</span>
+                <span class="text-3xl font-bold text-[#5c7a10] dark:text-[#c6f24e]">{{ strtoupper(substr($coach->name, 0, 1)) }}</span>
             @endif
         </div>
 
-        <p class="text-sm text-[#8e8e93] dark:text-gray-500 mb-8">
+        <p class="text-sm text-[#8c93a0] dark:text-[#6b7280] mb-8">
             @if($coach->onboarding_welcome_text)
                 {{ $coach->onboarding_welcome_text }}
             @else
@@ -29,7 +29,7 @@
             @endif
         </p>
 
-        <a href="{{ route('client.onboarding') }}" class="inline-flex items-center px-6 py-3 bg-[#181e25] dark:bg-gray-700 text-white text-sm font-semibold rounded-xl hover:bg-gray-800 dark:hover:bg-gray-600 transition-colors">
+        <a href="{{ route('client.onboarding') }}" class="inline-flex items-center px-6 py-3 bg-[#c6f24e] text-[#14180a] text-sm font-semibold rounded-xl hover:bg-[#b4e438] transition-colors">
             {{ __('client.welcome.continue') }}
         </a>
     </div>

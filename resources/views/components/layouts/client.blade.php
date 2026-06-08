@@ -8,7 +8,7 @@
 
         <!-- PWA -->
         <link rel="manifest" href="/build/manifest.webmanifest">
-        <meta name="theme-color" content="#2563EB">
+        <meta name="theme-color" content="#c6f24e">
         <meta name="apple-mobile-web-app-capable" content="yes">
         <meta name="apple-mobile-web-app-status-bar-style" content="default">
         <meta name="apple-mobile-web-app-title" content="LiftDeck">
@@ -53,19 +53,25 @@
         <!-- Branding -->
         <style>
             :root {
-                --color-primary: {{ $brandingCoach?->primary_color ?? '#2563EB' }};
-                --color-secondary: {{ $brandingCoach?->secondary_color ?? '#1E40AF' }};
+                --color-primary: {{ $brandingCoach?->primary_color ?? '#c6f24e' }};
+                --color-secondary: {{ $brandingCoach?->secondary_color ?? '#b4e438' }};
             }
         </style>
     </head>
-    <body class="font-sans antialiased bg-white dark:bg-gray-950">
+    <body class="font-sans antialiased bg-[#f1f3f6] dark:bg-[#0e1014]">
         <!-- Top Header (Fixed) -->
-        <div class="fixed top-0 left-0 right-0 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800 z-40">
+        <div class="fixed top-0 left-0 right-0 bg-[#f1f3f6]/85 dark:bg-[#0e1014]/85 border-b border-[rgba(18,22,31,0.09)] dark:border-[rgba(255,255,255,0.08)] z-40" style="backdrop-filter: blur(12px)">
             <div class="flex items-center justify-between px-4 h-16">
                 @if($brandingCoach?->logo)
-                    <img src="{{ $brandingCoach->logo }}" alt="{{ $brandingCoach->gym_name ?? 'My Training' }}" class="h-8">
+                    <img src="{{ $brandingCoach->logo }}" alt="{{ $brandingCoach->gym_name ?? 'LiftDeck' }}" class="h-8">
                 @else
-                    <span class="text-lg font-semibold text-gray-900 dark:text-gray-100">{{ $brandingCoach?->gym_name ?? __('client.layout.title') }}</span>
+                    <div class="flex items-center gap-2">
+                        <img src="/images/logo/liftdeck-monogram-dark.png" alt="LiftDeck" class="h-8 dark:hidden">
+                        <img src="/images/logo/liftdeck-monogram-light.png" alt="LiftDeck" class="h-8 hidden dark:block">
+                        @if($brandingCoach?->gym_name)
+                            <span class="font-display font-bold text-lg tracking-tight text-[#181b22] dark:text-[#f0f2f5]">{{ $brandingCoach->gym_name }}</span>
+                        @endif
+                    </div>
                 @endif
                 @php $unreadNotificationCount = auth()->user()->unreadNotifications()->count(); @endphp
                 <div class="flex items-center space-x-3">
@@ -75,7 +81,7 @@
                         @method('PATCH')
                         <button type="submit"
                             aria-label="{{ auth()->user()->dark_mode ? __('client.layout.switch_to_light') : __('client.layout.switch_to_dark') }}"
-                            class="p-2.5 rounded-md text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-800">
+                            class="p-2.5 rounded-md text-[#555b66] dark:text-[#a4abb6] hover:text-[#181b22] dark:hover:text-[#f0f2f5] hover:bg-[rgba(18,22,31,0.06)] dark:hover:bg-[rgba(255,255,255,0.06)]">
                             @if(auth()->user()->dark_mode)
                                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>
@@ -87,13 +93,13 @@
                             @endif
                         </button>
                     </form>
-                    <a href="{{ route('client.messages') }}" class="p-2.5 rounded-md text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-800">
+                    <a href="{{ route('client.messages') }}" class="p-2.5 rounded-md text-[#555b66] dark:text-[#a4abb6] hover:text-[#181b22] dark:hover:text-[#f0f2f5] hover:bg-[rgba(18,22,31,0.06)] dark:hover:bg-[rgba(255,255,255,0.06)]">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path>
                         </svg>
                     </a>
                     <a href="{{ route('client.settings.edit') }}"
-                        class="w-11 h-11 rounded-full flex items-center justify-center text-white text-sm font-semibold flex-shrink-0 overflow-hidden"
+                        class="w-11 h-11 rounded-full flex items-center justify-center text-[#14180a] text-sm font-semibold flex-shrink-0 overflow-hidden"
                         style="background-color: var(--color-primary)"
                         aria-label="Settings">
                         @if(auth()->user()->avatar)
@@ -106,49 +112,54 @@
             </div>
 
             <!-- Desktop Navigation (md+ only) -->
-            <nav class="hidden md:flex justify-center items-center border-t border-gray-100 dark:border-gray-800 max-w-4xl mx-auto px-4 h-12 gap-1">
+            <nav class="hidden md:flex justify-center items-center border-t border-[rgba(18,22,31,0.09)] dark:border-[rgba(255,255,255,0.08)] max-w-4xl mx-auto px-4 h-12 gap-1">
                 <a href="{{ route('client.dashboard') }}"
                    @class([
                        'flex items-center gap-2 px-5 h-12 text-base font-medium border-b-2 transition-colors',
-                       'text-gray-600 dark:text-gray-400 border-transparent hover:text-gray-900 dark:hover:text-gray-100' => ! request()->routeIs('client.dashboard'),
+                       'text-[#555b66] dark:text-[#a4abb6] border-transparent hover:text-[#181b22] dark:hover:text-[#f0f2f5]' => ! request()->routeIs('client.dashboard'),
+                       'text-[#5c7a10] dark:text-[#c6f24e] border-[#c6f24e]' => request()->routeIs('client.dashboard'),
                    ])
-                   @if(request()->routeIs('client.dashboard')) style="color: var(--color-primary); border-color: var(--color-primary)" aria-current="page" @endif>
+                   @if(request()->routeIs('client.dashboard')) aria-current="page" @endif>
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
                     {{ __('client.layout.nav.home') }}
                 </a>
                 <a href="{{ route('client.program') }}"
                    @class([
                        'flex items-center gap-2 px-5 h-12 text-base font-medium border-b-2 transition-colors',
-                       'text-gray-600 dark:text-gray-400 border-transparent hover:text-gray-900 dark:hover:text-gray-100' => ! request()->routeIs('client.program*'),
+                       'text-[#555b66] dark:text-[#a4abb6] border-transparent hover:text-[#181b22] dark:hover:text-[#f0f2f5]' => ! request()->routeIs('client.program*'),
+                       'text-[#5c7a10] dark:text-[#c6f24e] border-[#c6f24e]' => request()->routeIs('client.program*'),
                    ])
-                   @if(request()->routeIs('client.program*')) style="color: var(--color-primary); border-color: var(--color-primary)" aria-current="page" @endif>
+                   @if(request()->routeIs('client.program*')) aria-current="page" @endif>
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
                     {{ __('client.layout.nav.program') }}
                 </a>
                 <a href="{{ route('client.log') }}"
                    @class([
                        'flex items-center gap-2 px-5 h-12 text-base font-medium border-b-2 transition-colors',
-                       'text-gray-600 dark:text-gray-400 border-transparent hover:text-gray-900 dark:hover:text-gray-100' => ! request()->routeIs('client.log*'),
+                       'text-[#555b66] dark:text-[#a4abb6] border-transparent hover:text-[#181b22] dark:hover:text-[#f0f2f5]' => ! request()->routeIs('client.log*'),
+                       'text-[#5c7a10] dark:text-[#c6f24e] border-[#c6f24e]' => request()->routeIs('client.log*'),
                    ])
-                   @if(request()->routeIs('client.log*')) style="color: var(--color-primary); border-color: var(--color-primary)" aria-current="page" @endif>
+                   @if(request()->routeIs('client.log*')) aria-current="page" @endif>
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
                     {{ __('client.layout.nav.log') }}
                 </a>
                 <a href="{{ route('client.check-in') }}"
                    @class([
                        'flex items-center gap-2 px-5 h-12 text-base font-medium border-b-2 transition-colors',
-                       'text-gray-600 dark:text-gray-400 border-transparent hover:text-gray-900 dark:hover:text-gray-100' => ! request()->routeIs('client.check-in*'),
+                       'text-[#555b66] dark:text-[#a4abb6] border-transparent hover:text-[#181b22] dark:hover:text-[#f0f2f5]' => ! request()->routeIs('client.check-in*'),
+                       'text-[#5c7a10] dark:text-[#c6f24e] border-[#c6f24e]' => request()->routeIs('client.check-in*'),
                    ])
-                   @if(request()->routeIs('client.check-in*')) style="color: var(--color-primary); border-color: var(--color-primary)" aria-current="page" @endif>
+                   @if(request()->routeIs('client.check-in*')) aria-current="page" @endif>
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
                     {{ __('client.layout.nav.check_in') }}
                 </a>
                 <a href="{{ route('client.nutrition') }}"
                    @class([
                        'flex items-center gap-2 px-5 h-12 text-base font-medium border-b-2 transition-colors',
-                       'text-gray-600 dark:text-gray-400 border-transparent hover:text-gray-900 dark:hover:text-gray-100' => ! request()->routeIs('client.nutrition*'),
+                       'text-[#555b66] dark:text-[#a4abb6] border-transparent hover:text-[#181b22] dark:hover:text-[#f0f2f5]' => ! request()->routeIs('client.nutrition*'),
+                       'text-[#5c7a10] dark:text-[#c6f24e] border-[#c6f24e]' => request()->routeIs('client.nutrition*'),
                    ])
-                   @if(request()->routeIs('client.nutrition*')) style="color: var(--color-primary); border-color: var(--color-primary)" aria-current="page" @endif>
+                   @if(request()->routeIs('client.nutrition*')) aria-current="page" @endif>
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
                     {{ __('client.layout.nav.nutrition') }}
                 </a>
@@ -187,18 +198,18 @@
                 }"
             >
                 <template x-for="workout in pendingWorkouts" :key="workout.key">
-                    <div class="mb-4 rounded-lg bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 p-3">
+                    <div class="mb-4 rounded-lg bg-[rgba(198,242,78,0.12)] dark:bg-[rgba(198,242,78,0.08)] border border-[rgba(198,242,78,0.3)] p-3">
                         <div class="flex items-center justify-between gap-3">
                             <div>
-                                <p class="text-sm font-medium text-blue-800 dark:text-blue-300"
+                                <p class="text-sm font-medium text-[#5c7a10] dark:text-[#c6f24e]"
                                     x-text="`{{ str_replace(':name', '', __('client.layout.unfinished_workout')) }}` + workout.workoutName">
                                 </p>
-                                <p class="text-xs text-blue-600 dark:text-blue-400 mt-0.5"
+                                <p class="text-xs text-[#5c7a10]/70 dark:text-[#c6f24e]/70 mt-0.5"
                                     x-text="`{{ str_replace(':time', '', __('client.layout.last_saved')) }}` + workout.savedAtFormatted">
                                 </p>
                             </div>
                             <a :href="workout.resumeUrl"
-                                class="shrink-0 text-xs font-semibold px-3 py-1.5 bg-blue-600 text-white rounded-md hover:bg-blue-700">
+                                class="shrink-0 text-xs font-semibold px-3 py-1.5 bg-[#c6f24e] text-[#14180a] rounded-md hover:bg-[#b4e438]">
                                 {{ __('client.layout.continue') }}
                             </a>
                         </div>
@@ -230,15 +241,14 @@
         </main>
 
         <!-- Bottom Navigation (Fixed) -->
-        <nav class="fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800 z-40 md:hidden">
+        <nav class="fixed bottom-0 left-0 right-0 bg-[#f1f3f6]/85 dark:bg-[#0e1014]/85 border-t border-[rgba(18,22,31,0.09)] dark:border-[rgba(255,255,255,0.08)] z-40 md:hidden" style="backdrop-filter: blur(12px)">
             <div class="max-w-4xl mx-auto">
                 <div class="flex items-stretch">
                     <!-- Home Tab -->
                     <a href="{{ route('client.dashboard') }}"
-                       class="relative flex flex-col items-center justify-center py-2 flex-1 {{ request()->routeIs('client.dashboard') ? '' : 'text-[#8e8e93] dark:text-gray-500' }}"
-                       {!! request()->routeIs('client.dashboard') ? 'style="color: var(--color-primary)"' : '' !!}>
+                       class="relative flex flex-col items-center justify-center py-2 flex-1 {{ request()->routeIs('client.dashboard') ? 'text-[#5c7a10] dark:text-[#c6f24e]' : 'text-[#8c93a0] dark:text-[#6b7280]' }}">
                         @if(request()->routeIs('client.dashboard'))
-                            <span class="absolute top-0 left-1/2 -translate-x-1/2 w-6 h-0.5 rounded-full" style="background-color: var(--color-primary)"></span>
+                            <span class="absolute top-0 left-1/2 -translate-x-1/2 w-6 h-0.5 rounded-full bg-[#c6f24e]"></span>
                         @endif
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
@@ -248,10 +258,9 @@
 
                     <!-- Program Tab -->
                     <a href="{{ route('client.program') }}"
-                       class="relative flex flex-col items-center justify-center py-2 flex-1 {{ request()->routeIs('client.program*') ? '' : 'text-[#8e8e93] dark:text-gray-500' }}"
-                       {!! request()->routeIs('client.program*') ? 'style="color: var(--color-primary)"' : '' !!}>
+                       class="relative flex flex-col items-center justify-center py-2 flex-1 {{ request()->routeIs('client.program*') ? 'text-[#5c7a10] dark:text-[#c6f24e]' : 'text-[#8c93a0] dark:text-[#6b7280]' }}">
                         @if(request()->routeIs('client.program*'))
-                            <span class="absolute top-0 left-1/2 -translate-x-1/2 w-6 h-0.5 rounded-full" style="background-color: var(--color-primary)"></span>
+                            <span class="absolute top-0 left-1/2 -translate-x-1/2 w-6 h-0.5 rounded-full bg-[#c6f24e]"></span>
                         @endif
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
@@ -261,10 +270,9 @@
 
                     <!-- Log Tab -->
                     <a href="{{ route('client.log') }}"
-                       class="relative flex flex-col items-center justify-center py-2 flex-1 {{ request()->routeIs('client.log*') ? '' : 'text-[#8e8e93] dark:text-gray-500' }}"
-                       {!! request()->routeIs('client.log*') ? 'style="color: var(--color-primary)"' : '' !!}>
+                       class="relative flex flex-col items-center justify-center py-2 flex-1 {{ request()->routeIs('client.log*') ? 'text-[#5c7a10] dark:text-[#c6f24e]' : 'text-[#8c93a0] dark:text-[#6b7280]' }}">
                         @if(request()->routeIs('client.log*'))
-                            <span class="absolute top-0 left-1/2 -translate-x-1/2 w-6 h-0.5 rounded-full" style="background-color: var(--color-primary)"></span>
+                            <span class="absolute top-0 left-1/2 -translate-x-1/2 w-6 h-0.5 rounded-full bg-[#c6f24e]"></span>
                         @endif
                         @if($unreadNotificationCount > 0)
                             <span class="absolute top-1.5 right-1/4 flex h-3.5 w-3.5 items-center justify-center rounded-full bg-red-500 text-[9px] font-bold text-white">{{ $unreadNotificationCount > 9 ? '9+' : $unreadNotificationCount }}</span>
@@ -277,10 +285,9 @@
 
                     <!-- Check-in Tab -->
                     <a href="{{ route('client.check-in') }}"
-                       class="relative flex flex-col items-center justify-center py-2 flex-1 {{ request()->routeIs('client.check-in*') ? '' : 'text-[#8e8e93] dark:text-gray-500' }}"
-                       {!! request()->routeIs('client.check-in*') ? 'style="color: var(--color-primary)"' : '' !!}>
+                       class="relative flex flex-col items-center justify-center py-2 flex-1 {{ request()->routeIs('client.check-in*') ? 'text-[#5c7a10] dark:text-[#c6f24e]' : 'text-[#8c93a0] dark:text-[#6b7280]' }}">
                         @if(request()->routeIs('client.check-in*'))
-                            <span class="absolute top-0 left-1/2 -translate-x-1/2 w-6 h-0.5 rounded-full" style="background-color: var(--color-primary)"></span>
+                            <span class="absolute top-0 left-1/2 -translate-x-1/2 w-6 h-0.5 rounded-full bg-[#c6f24e]"></span>
                         @endif
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
@@ -290,10 +297,9 @@
 
                     <!-- Nutrition Tab -->
                     <a href="{{ route('client.nutrition') }}"
-                       class="relative flex flex-col items-center justify-center py-2 flex-1 {{ request()->routeIs('client.nutrition*') ? '' : 'text-[#8e8e93] dark:text-gray-500' }}"
-                       {!! request()->routeIs('client.nutrition*') ? 'style="color: var(--color-primary)"' : '' !!}>
+                       class="relative flex flex-col items-center justify-center py-2 flex-1 {{ request()->routeIs('client.nutrition*') ? 'text-[#5c7a10] dark:text-[#c6f24e]' : 'text-[#8c93a0] dark:text-[#6b7280]' }}">
                         @if(request()->routeIs('client.nutrition*'))
-                            <span class="absolute top-0 left-1/2 -translate-x-1/2 w-6 h-0.5 rounded-full" style="background-color: var(--color-primary)"></span>
+                            <span class="absolute top-0 left-1/2 -translate-x-1/2 w-6 h-0.5 rounded-full bg-[#c6f24e]"></span>
                         @endif
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>

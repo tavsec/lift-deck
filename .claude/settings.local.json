@@ -83,7 +83,27 @@
       "Bash(APP_BASE_PATH=\"/Users/timotejavsec/Documents/Projects/lift-deck\" php artisan test --compact tests/Feature/Auth tests/Feature/ProfileTest.php)",
       "Bash(APP_BASE_PATH=\"/Users/timotejavsec/Documents/Projects/lift-deck\" php artisan test tests/Feature/Auth tests/Feature/ProfileTest.php)",
       "Bash(APP_BASE_PATH=/Users/timotejavsec/Documents/Projects/lift-deck php -r ' *)",
-      "Bash(APP_BASE_PATH=\"/Users/timotejavsec/Documents/Projects/lift-deck\" php artisan test --compact tests/Feature/SeoTest.php tests/Feature/LandingLocaleTest.php)"
+      "Bash(APP_BASE_PATH=\"/Users/timotejavsec/Documents/Projects/lift-deck\" php artisan test --compact tests/Feature/SeoTest.php tests/Feature/LandingLocaleTest.php)",
+      "Bash(lsof -nP -iTCP -sTCP:LISTEN)",
+      "Bash(lsof -nP -iTCP:8000 -sTCP:LISTEN)",
+      "Bash(sed -i '' 's#^APP_URL=.*#APP_URL=http://localhost:8000#' .env)",
+      "Bash(docker run *)",
+      "Bash(php artisan *)",
+      "Read(//tmp/**)",
+      "Bash(npm ls *)",
+      "Bash(npm i *)",
+      "mcp__laravel-boost__list-routes",
+      "Bash(sed -n '1,80p' app/Http/Controllers/Client/AchievementController.php)",
+      "Bash(sed -n '1,120p' app/Http/Controllers/Client/DashboardController.php)",
+      "Bash(node scripts/marketing-screenshots.mjs)",
+      "Bash(grep -nE \"fillable|protected \\\\\\\\\\\\$|function \" app/Models/Message.php)",
+      "WebFetch(domain:api.anthropic.com)",
+      "Read(//private/tmp/**)",
+      "Bash(xxd /tmp/client_design.html)",
+      "Bash(zcat /tmp/client_design.html)",
+      "Bash(zcat /tmp/coach_design.html)",
+      "Bash(gunzip -c /tmp/client_design.html)",
+      "Bash(python3 -c \"import gzip; f=gzip.open\\('/tmp/client_design.html','rt'\\); print\\(f.read\\(5000\\)\\)\")"
     ]
   },
   "enabledMcpjsonServers": [
