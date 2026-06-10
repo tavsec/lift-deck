@@ -37,7 +37,7 @@ registerRoute(
 
 // --- Exercises JSON API: network-first, 1-day cache ---
 registerRoute(
-    ({ url }) => url.pathname === '/log/exercises',
+    ({ url }) => url.pathname === '/client/log/exercises',
     new NetworkFirst({
         cacheName: 'api-exercises',
         plugins: [
@@ -48,22 +48,22 @@ registerRoute(
 
 // --- Client HTML pages: network-first, 7-day cache ---
 const clientRoutes = [
-    '/dashboard',
-    '/log',
-    '/program',
-    '/history',
-    '/check-in',
-    '/nutrition',
-    '/achievements',
-    '/loyalty',
-    '/rewards',
+    '/client/dashboard',
+    '/client/log',
+    '/client/program',
+    '/client/history',
+    '/client/check-in',
+    '/client/nutrition',
+    '/client/achievements',
+    '/client/loyalty',
+    '/client/rewards',
 ];
 
 registerRoute(
     ({ url, request }) =>
         request.mode === 'navigate' &&
-        (clientRoutes.some(r => url.pathname === r || url.pathname.startsWith(r + '/')) ||
-            url.pathname.startsWith('/log/')),
+        request.method === 'GET' &&
+        clientRoutes.some(r => url.pathname === r || url.pathname.startsWith(r + '/')),
     new NetworkFirst({
         cacheName: 'client-pages',
         plugins: [
@@ -117,7 +117,7 @@ const workoutSyncPlugin = new BackgroundSyncPlugin('sync-workout-logs', {
 });
 
 registerRoute(
-    ({ url, request }) => url.pathname === '/log' && request.method === 'POST',
+    ({ url, request }) => url.pathname === '/client/log' && request.method === 'POST',
     new NetworkFirst({
         cacheName: 'workout-submissions',
         plugins: [workoutSyncPlugin],
