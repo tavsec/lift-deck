@@ -17,8 +17,6 @@ Route::get('/', [LandingLocaleController::class, 'index'])->name('landing.detect
 Route::get('/sitemap.xml', [SitemapController::class, 'sitemap'])->name('sitemap');
 Route::get('/robots.txt', [SitemapController::class, 'robots'])->name('robots');
 
-Route::get('/offline', fn () => view('offline'))->name('offline');
-
 // Client registration via invitation code
 Route::middleware('guest')->group(function () {
     Route::get('join', [App\Http\Controllers\Auth\ClientRegistrationController::class, 'showCodeForm'])->name('join');
