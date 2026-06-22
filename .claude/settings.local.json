@@ -88,7 +88,13 @@
       "mcp__laravel-boost__browser-logs",
       "Bash(node *)",
       "mcp__laravel-boost__database-query",
-      "mcp__laravel-boost__get-absolute-url"
+      "mcp__laravel-boost__get-absolute-url",
+      "Bash(grep -n \"workoutLogger\\\\|return {$\\\\|exercises:\\\\|restoreBanner\\\\|validationErrors\\\\|init\\(\\)\" /Users/timotejavsec/Documents/Projects/lift-deck/resources/views/client/log-workout.blade.php)",
+      "WebSearch",
+      "WebFetch(domain:community.koyeb.com)",
+      "WebFetch(domain:laracasts.com)",
+      "WebFetch(domain:medium.com)",
+      "WebFetch(domain:cloud.laravel.com)"
     ]
   },
   "enabledMcpjsonServers": [

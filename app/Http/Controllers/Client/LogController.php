@@ -225,7 +225,7 @@ class LogController extends Controller
 
         foreach ($validated['exercises'] as $exerciseData) {
             foreach ($exerciseData['sets'] as $setIndex => $setData) {
-                if ($setData['weight'] == 0 || $setData['reps'] == 0) {
+                if (empty($setData['reps']) || $setData['weight'] == 0) {
                     continue;
                 }
                 ExerciseLog::create([
