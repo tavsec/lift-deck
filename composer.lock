@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "25aaceabe45d24c69e9f0c9e21730177",
+    "content-hash": "24315f6fb24bd660c03b0be4549f8d5d",
     "packages": [
         {
             "name": "anourvalar/eloquent-serialize",
@@ -372,6 +372,258 @@
                 }
             ],
             "time": "2026-01-20T09:46:32+00:00"
+        },
+        {
+            "name": "bladewindui/bladewindui",
+            "version": "v4.5.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/bladewindui/bladewindui.git",
+                "reference": "9036a4f8dc48f43f606af976fd98eeae1d4cb2b5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/bladewindui/bladewindui/zipball/9036a4f8dc48f43f606af976fd98eeae1d4cb2b5",
+                "reference": "9036a4f8dc48f43f606af976fd98eeae1d4cb2b5",
+                "shasum": ""
+            },
+            "require": {
+                "bladewindui/ui": "^4.4"
+            },
+            "type": "metapackage",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Michael K. Ocansey",
+                    "email": "mike@bladewindui.com"
+                }
+            ],
+            "description": "Moved to bladewindui/ui. This package forwards to it so existing installs keep working.",
+            "support": {
+                "issues": "https://github.com/bladewindui/bladewindui/issues",
+                "source": "https://github.com/bladewindui/bladewindui/tree/v4.5.0"
+            },
+            "abandoned": "bladewindui/ui",
+            "time": "2026-08-29T07:53:20+00:00"
+        },
+        {
+            "name": "bladewindui/ui",
+            "version": "v4.5.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/bladewindui/ui.git",
+                "reference": "d608a0082c3256b463f6b785e016e277252a3ec0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/bladewindui/ui/zipball/d608a0082c3256b463f6b785e016e277252a3ec0",
+                "reference": "d608a0082c3256b463f6b785e016e277252a3ec0",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "^10.0|^11.0|^12.0|^13.0",
+                "php": ">=8.1"
+            },
+            "replace": {
+                "bladewindui/accordion": "4.5.0",
+                "bladewindui/alert": "4.5.0",
+                "bladewindui/avatar": "4.5.0",
+                "bladewindui/bell": "4.5.0",
+                "bladewindui/breadcrumbs": "4.5.0",
+                "bladewindui/button": "4.5.0",
+                "bladewindui/card": "4.5.0",
+                "bladewindui/centered-content": "4.5.0",
+                "bladewindui/chart": "4.5.0",
+                "bladewindui/checkbox": "4.5.0",
+                "bladewindui/checkcards": "4.5.0",
+                "bladewindui/code": "4.5.0",
+                "bladewindui/colorpicker": "4.5.0",
+                "bladewindui/contact-card": "4.5.0",
+                "bladewindui/content": "4.5.0",
+                "bladewindui/core": "4.5.0",
+                "bladewindui/datepicker": "4.5.0",
+                "bladewindui/drawer": "4.5.0",
+                "bladewindui/dropmenu": "4.5.0",
+                "bladewindui/empty-state": "4.5.0",
+                "bladewindui/filepicker": "4.5.0",
+                "bladewindui/forms": "4.5.0",
+                "bladewindui/horizontal-line-graph": "4.5.0",
+                "bladewindui/icon": "4.5.0",
+                "bladewindui/input": "4.5.0",
+                "bladewindui/listview": "4.5.0",
+                "bladewindui/modal": "4.5.0",
+                "bladewindui/navigation": "4.5.0",
+                "bladewindui/notification": "4.5.0",
+                "bladewindui/number": "4.5.0",
+                "bladewindui/pagination": "4.5.0",
+                "bladewindui/popover": "4.5.0",
+                "bladewindui/progress": "4.5.0",
+                "bladewindui/radio": "4.5.0",
+                "bladewindui/rating": "4.5.0",
+                "bladewindui/script": "4.5.0",
+                "bladewindui/select": "4.5.0",
+                "bladewindui/sidebar": "4.5.0",
+                "bladewindui/slider": "4.5.0",
+                "bladewindui/sortable": "4.5.0",
+                "bladewindui/spinner": "4.5.0",
+                "bladewindui/statistic": "4.5.0",
+                "bladewindui/stepper": "4.5.0",
+                "bladewindui/tab": "4.5.0",
+                "bladewindui/table": "4.5.0",
+                "bladewindui/tag": "4.5.0",
+                "bladewindui/textarea": "4.5.0",
+                "bladewindui/theme-switcher": "4.5.0",
+                "bladewindui/timeline": "4.5.0",
+                "bladewindui/timepicker": "4.5.0",
+                "bladewindui/toggle": "4.5.0",
+                "bladewindui/tooltip": "4.5.0",
+                "mkocansey/bladewind": "4.5.0"
+            },
+            "require-dev": {
+                "orchestra/testbench": "^10.0",
+                "phpunit/phpunit": "^11.0",
+                "symplify/monorepo-builder": "^11.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Mkocansey\\Bladewind\\Core\\BladewindCoreServiceProvider",
+                        "Mkocansey\\Bladewind\\Icon\\BladewindIconServiceProvider",
+                        "Mkocansey\\Bladewind\\Script\\BladewindScriptServiceProvider",
+                        "Mkocansey\\Bladewind\\Spinner\\BladewindSpinnerServiceProvider",
+                        "Mkocansey\\Bladewind\\Button\\BladewindButtonServiceProvider",
+                        "Mkocansey\\Bladewind\\Breadcrumbs\\BladewindBreadcrumbsServiceProvider",
+                        "Mkocansey\\Bladewind\\Stepper\\BladewindStepperServiceProvider",
+                        "Mkocansey\\Bladewind\\Sidebar\\BladewindSidebarServiceProvider",
+                        "Mkocansey\\Bladewind\\Alert\\BladewindAlertServiceProvider",
+                        "Mkocansey\\Bladewind\\Bell\\BladewindBellServiceProvider",
+                        "Mkocansey\\Bladewind\\Modal\\BladewindModalServiceProvider",
+                        "Mkocansey\\Bladewind\\Drawer\\BladewindDrawerServiceProvider",
+                        "Mkocansey\\Bladewind\\Table\\BladewindTableServiceProvider",
+                        "Mkocansey\\Bladewind\\Input\\BladewindInputServiceProvider",
+                        "Mkocansey\\Bladewind\\Textarea\\BladewindTextareaServiceProvider",
+                        "Mkocansey\\Bladewind\\Select\\BladewindSelectServiceProvider",
+                        "Mkocansey\\Bladewind\\Checkbox\\BladewindCheckboxServiceProvider",
+                        "Mkocansey\\Bladewind\\Radio\\BladewindRadioServiceProvider",
+                        "Mkocansey\\Bladewind\\Toggle\\BladewindToggleServiceProvider",
+                        "Mkocansey\\Bladewind\\Datepicker\\BladewindDatepickerServiceProvider",
+                        "Mkocansey\\Bladewind\\Timepicker\\BladewindTimepickerServiceProvider",
+                        "Mkocansey\\Bladewind\\Colorpicker\\BladewindColorpickerServiceProvider",
+                        "Mkocansey\\Bladewind\\Filepicker\\BladewindFilepickerServiceProvider",
+                        "Mkocansey\\Bladewind\\Slider\\BladewindSliderServiceProvider",
+                        "Mkocansey\\Bladewind\\Checkcards\\BladewindCheckcardsServiceProvider",
+                        "Mkocansey\\Bladewind\\Number\\BladewindNumberServiceProvider",
+                        "Mkocansey\\Bladewind\\Code\\BladewindCodeServiceProvider",
+                        "Mkocansey\\Bladewind\\Card\\BladewindCardServiceProvider",
+                        "Mkocansey\\Bladewind\\ContactCard\\BladewindContactCardServiceProvider",
+                        "Mkocansey\\Bladewind\\Avatar\\BladewindAvatarServiceProvider",
+                        "Mkocansey\\Bladewind\\Accordion\\BladewindAccordionServiceProvider",
+                        "Mkocansey\\Bladewind\\Tag\\BladewindTagServiceProvider",
+                        "Mkocansey\\Bladewind\\Timeline\\BladewindTimelineServiceProvider",
+                        "Mkocansey\\Bladewind\\Statistic\\BladewindStatisticServiceProvider",
+                        "Mkocansey\\Bladewind\\Rating\\BladewindRatingServiceProvider",
+                        "Mkocansey\\Bladewind\\HorizontalLineGraph\\BladewindHorizontalLineGraphServiceProvider",
+                        "Mkocansey\\Bladewind\\EmptyState\\BladewindEmptyStateServiceProvider",
+                        "Mkocansey\\Bladewind\\CenteredContent\\BladewindCenteredContentServiceProvider",
+                        "Mkocansey\\Bladewind\\Chart\\BladewindChartServiceProvider",
+                        "Mkocansey\\Bladewind\\Progress\\BladewindProgressServiceProvider",
+                        "Mkocansey\\Bladewind\\Listview\\BladewindListviewServiceProvider",
+                        "Mkocansey\\Bladewind\\Tooltip\\BladewindTooltipServiceProvider",
+                        "Mkocansey\\Bladewind\\Popover\\BladewindPopoverServiceProvider",
+                        "Mkocansey\\Bladewind\\Sortable\\BladewindSortableServiceProvider",
+                        "Mkocansey\\Bladewind\\Tab\\BladewindTabServiceProvider",
+                        "Mkocansey\\Bladewind\\Dropmenu\\BladewindDropmenuServiceProvider",
+                        "Mkocansey\\Bladewind\\Pagination\\BladewindPaginationServiceProvider",
+                        "Mkocansey\\Bladewind\\ThemeSwitcher\\BladewindThemeSwitcherServiceProvider",
+                        "Mkocansey\\Bladewind\\Notification\\BladewindNotificationServiceProvider",
+                        "Mkocansey\\Bladewind\\BladewindServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "files": [
+                    "packages/core/src/BladewindHelpers.php"
+                ],
+                "psr-4": {
+                    "Mkocansey\\Bladewind\\": "packages/meta/src/",
+                    "Mkocansey\\Bladewind\\Tab\\": "packages/tab/src/",
+                    "Mkocansey\\Bladewind\\Tag\\": "packages/tag/src/",
+                    "Mkocansey\\Bladewind\\Bell\\": "packages/bell/src/",
+                    "Mkocansey\\Bladewind\\Card\\": "packages/card/src/",
+                    "Mkocansey\\Bladewind\\Code\\": "packages/code/src/",
+                    "Mkocansey\\Bladewind\\Core\\": "packages/core/src/",
+                    "Mkocansey\\Bladewind\\Icon\\": "packages/icon/src/",
+                    "Mkocansey\\Bladewind\\Alert\\": "packages/alert/src/",
+                    "Mkocansey\\Bladewind\\Chart\\": "packages/chart/src/",
+                    "Mkocansey\\Bladewind\\Input\\": "packages/input/src/",
+                    "Mkocansey\\Bladewind\\Modal\\": "packages/modal/src/",
+                    "Mkocansey\\Bladewind\\Radio\\": "packages/radio/src/",
+                    "Mkocansey\\Bladewind\\Table\\": "packages/table/src/",
+                    "Mkocansey\\Bladewind\\Avatar\\": "packages/avatar/src/",
+                    "Mkocansey\\Bladewind\\Button\\": "packages/button/src/",
+                    "Mkocansey\\Bladewind\\Drawer\\": "packages/drawer/src/",
+                    "Mkocansey\\Bladewind\\Number\\": "packages/number/src/",
+                    "Mkocansey\\Bladewind\\Rating\\": "packages/rating/src/",
+                    "Mkocansey\\Bladewind\\Script\\": "packages/script/src/",
+                    "Mkocansey\\Bladewind\\Select\\": "packages/select/src/",
+                    "Mkocansey\\Bladewind\\Slider\\": "packages/slider/src/",
+                    "Mkocansey\\Bladewind\\Toggle\\": "packages/toggle/src/",
+                    "Mkocansey\\Bladewind\\Popover\\": "packages/popover/src/",
+                    "Mkocansey\\Bladewind\\Sidebar\\": "packages/sidebar/src/",
+                    "Mkocansey\\Bladewind\\Spinner\\": "packages/spinner/src/",
+                    "Mkocansey\\Bladewind\\Stepper\\": "packages/stepper/src/",
+                    "Mkocansey\\Bladewind\\Tooltip\\": "packages/tooltip/src/",
+                    "Mkocansey\\Bladewind\\Checkbox\\": "packages/checkbox/src/",
+                    "Mkocansey\\Bladewind\\Dropmenu\\": "packages/dropmenu/src/",
+                    "Mkocansey\\Bladewind\\Listview\\": "packages/listview/src/",
+                    "Mkocansey\\Bladewind\\Progress\\": "packages/progress/src/",
+                    "Mkocansey\\Bladewind\\Sortable\\": "packages/sortable/src/",
+                    "Mkocansey\\Bladewind\\Textarea\\": "packages/textarea/src/",
+                    "Mkocansey\\Bladewind\\Timeline\\": "packages/timeline/src/",
+                    "Mkocansey\\Bladewind\\Accordion\\": "packages/accordion/src/",
+                    "Mkocansey\\Bladewind\\Statistic\\": "packages/statistic/src/",
+                    "Mkocansey\\Bladewind\\Checkcards\\": "packages/checkcards/src/",
+                    "Mkocansey\\Bladewind\\Datepicker\\": "packages/datepicker/src/",
+                    "Mkocansey\\Bladewind\\EmptyState\\": "packages/empty-state/src/",
+                    "Mkocansey\\Bladewind\\Filepicker\\": "packages/filepicker/src/",
+                    "Mkocansey\\Bladewind\\Pagination\\": "packages/pagination/src/",
+                    "Mkocansey\\Bladewind\\Timepicker\\": "packages/timepicker/src/",
+                    "Mkocansey\\Bladewind\\Breadcrumbs\\": "packages/breadcrumbs/src/",
+                    "Mkocansey\\Bladewind\\Colorpicker\\": "packages/colorpicker/src/",
+                    "Mkocansey\\Bladewind\\ContactCard\\": "packages/contact-card/src/",
+                    "Mkocansey\\Bladewind\\Notification\\": "packages/notification/src/",
+                    "Mkocansey\\Bladewind\\ThemeSwitcher\\": "packages/theme-switcher/src/",
+                    "Mkocansey\\Bladewind\\CenteredContent\\": "packages/centered-content/src/",
+                    "Mkocansey\\Bladewind\\HorizontalLineGraph\\": "packages/horizontal-line-graph/src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Michael K. Ocansey",
+                    "email": "mike@bladewindui.com"
+                }
+            ],
+            "description": "BladewindUI — elegant Laravel Blade UI components powered by TailwindCSS",
+            "keywords": [
+                "Ui Components",
+                "blade",
+                "bladewindui",
+                "laravel",
+                "tailwindcss"
+            ],
+            "support": {
+                "issues": "https://github.com/bladewindui/ui/issues",
+                "source": "https://github.com/bladewindui/ui/tree/v4.5.0"
+            },
+            "time": "2026-08-29T08:09:12+00:00"
         },
         {
             "name": "brick/math",
@@ -4462,59 +4714,6 @@
                 "source": "https://github.com/MarkBaker/PHPMatrix/tree/3.0.1"
             },
             "time": "2022-12-02T22:17:43+00:00"
-        },
-        {
-            "name": "mkocansey/bladewind",
-            "version": "v3.3.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/mkocansey/bladewind.git",
-                "reference": "5d3379df018f55e3ffa9b9769193524a5eb69b2c"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/mkocansey/bladewind/zipball/5d3379df018f55e3ffa9b9769193524a5eb69b2c",
-                "reference": "5d3379df018f55e3ffa9b9769193524a5eb69b2c",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=8.0"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "Mkocansey\\Bladewind\\BladewindServiceProvider"
-                    ]
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Mkocansey\\Bladewind\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Michael K. Ocansey",
-                    "email": "mike@bladewindui.com"
-                }
-            ],
-            "description": "Laravel UI Components using TailwindCSS, Blade Templates and vanilla Javascript",
-            "keywords": [
-                "Ui Components",
-                "blade components",
-                "laravel",
-                "tailwindcss"
-            ],
-            "support": {
-                "issues": "https://github.com/mkocansey/bladewind/issues",
-                "source": "https://github.com/mkocansey/bladewind/tree/v3.3.0"
-            },
-            "time": "2025-12-01T14:35:53+00:00"
         },
         {
             "name": "moneyphp/money",
