@@ -73,12 +73,12 @@
             <button
                 type="button"
                 @click="acceptAll()"
-                class="flex-1 rounded-lg bg-blue-600 px-3 py-2 text-xs font-semibold text-white hover:bg-blue-700 transition-colors"
+                class="flex-1 rounded-lg bg-blue-600 px-3 min-h-[44px] text-xs font-semibold text-white hover:bg-blue-700 transition-colors"
             >{{ __('cookies.banner.accept_all') }}</button>
             <button
                 type="button"
                 @click="rejectAll()"
-                class="flex-1 rounded-lg border border-gray-200 dark:border-gray-700 px-3 py-2 text-xs font-semibold text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
+                class="flex-1 rounded-lg border border-gray-200 dark:border-gray-700 px-3 min-h-[44px] text-xs font-semibold text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
             >{{ __('cookies.banner.reject_all') }}</button>
             <button
                 type="button"
@@ -92,12 +92,12 @@
             <button
                 type="button"
                 @click="save()"
-                class="flex-1 rounded-lg bg-blue-600 px-3 py-2 text-xs font-semibold text-white hover:bg-blue-700 transition-colors"
+                class="flex-1 rounded-lg bg-blue-600 px-3 min-h-[44px] text-xs font-semibold text-white hover:bg-blue-700 transition-colors"
             >{{ __('cookies.banner.save') }}</button>
             <button
                 type="button"
                 @click="acceptAll()"
-                class="flex-1 rounded-lg border border-gray-200 dark:border-gray-700 px-3 py-2 text-xs font-semibold text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
+                class="flex-1 rounded-lg border border-gray-200 dark:border-gray-700 px-3 min-h-[44px] text-xs font-semibold text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
             >{{ __('cookies.banner.accept_all') }}</button>
             <button
                 type="button"

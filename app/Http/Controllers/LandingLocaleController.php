@@ -5,8 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Http;
 use Illuminate\View\View;
 
 class LandingLocaleController extends Controller
@@ -31,12 +29,19 @@ class LandingLocaleController extends Controller
         'hr' => 'hr',
     ];
 
+    /**
+     * Redirect the root URL to a localized landing page.
+     *
+     * Crawlers always get the x-default locale so search engines see a stable target;
+     * humans are routed by the country Cloudflare resolves for their IP.
+     */
     public function index(Request $request): RedirectResponse
     {
-        $locale = $this->detectLocaleFromIp($request->ip());
-        $urlPath = self::LOCALE_TO_URL[$locale] ?? 'en';
+        $locale = $this->isCrawler($request)
+            ? 'en'
+            : self::COUNTRY_TO_LOCALE[strtoupper((string) $request->header('CF-IPCountry'))] ?? 'en';
 
-        return redirect("/{$urlPath}");
+        return redirect('/'.self::LOCALE_TO_URL[$locale]);
     }
 
     public function show(string $locale): View
@@ -48,22 +53,8 @@ class LandingLocaleController extends Controller
         return view('welcome');
     }
 
-    private function detectLocaleFromIp(string $ip): string
+    private function isCrawler(Request $request): bool
     {
-        return Cache::remember("ip_locale_{$ip}", now()->addDays(30), function () use ($ip): string {
-            try {
-                $response = Http::timeout(3)->get("http://ip-api.com/json/{$ip}");
-
-                if ($response->ok()) {
-                    $countryCode = $response->json('countryCode', '');
-
-                    return self::COUNTRY_TO_LOCALE[$countryCode] ?? 'en';
-                }
-            } catch (\Throwable) {
-                // Fall through to default
-            }
-
-            return 'en';
-        });
+        return (bool) preg_match('/bot|crawl|spider|slurp|mediapartners|facebookexternalhit|embedly|preview/i', (string) $request->userAgent());
     }
 }

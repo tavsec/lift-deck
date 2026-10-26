@@ -14,14 +14,17 @@
         '@context' => 'https://schema.org',
         '@graph'   => [
             [
-                '@type' => 'Organization',
-                '@id'   => $siteUrl . '/#organization',
-                'name'  => 'LiftDeck',
-                'url'   => $siteUrl,
-                'email' => 'info@liftdeck.io',
-                'logo'  => [
-                    '@type' => 'ImageObject',
-                    'url'   => asset('favicon-32.png'),
+                '@type'     => 'Organization',
+                '@id'       => $siteUrl . '/#organization',
+                'name'      => 'LiftDeck',
+                'legalName' => 'LiftDeck d.o.o.',
+                'url'       => $siteUrl,
+                'email'     => 'info@liftdeck.io',
+                'logo'      => [
+                    '@type'  => 'ImageObject',
+                    'url'    => asset('favicon-512.png'),
+                    'width'  => 512,
+                    'height' => 512,
                 ],
                 'image' => asset('images/og.png'),
             ],
@@ -30,8 +33,19 @@
                 '@id'        => $siteUrl . '/#website',
                 'url'        => $siteUrl,
                 'name'       => 'LiftDeck',
-                'inLanguage' => str_replace('_', '-', $currentLocale),
+                'inLanguage' => ['en', 'sl', 'hr'],
                 'publisher'  => ['@id' => $siteUrl . '/#organization'],
+            ],
+            [
+                '@type'              => 'WebPage',
+                '@id'                => $canonicalUrl . '#webpage',
+                'url'                => $canonicalUrl,
+                'name'               => __('landing.meta.title'),
+                'description'        => __('landing.meta.description'),
+                'inLanguage'         => str_replace('_', '-', $currentLocale),
+                'isPartOf'           => ['@id' => $siteUrl . '/#website'],
+                'about'              => ['@id' => $siteUrl . '/#software'],
+                'primaryImageOfPage' => ['@type' => 'ImageObject', 'url' => asset('images/og.png')],
             ],
             [
                 '@type'               => 'SoftwareApplication',
@@ -39,8 +53,9 @@
                 'name'                => 'LiftDeck',
                 'url'                 => $canonicalUrl,
                 'description'         => __('landing.meta.description'),
-                'applicationCategory' => 'HealthApplication',
+                'applicationCategory' => 'BusinessApplication',
                 'operatingSystem'     => 'Web',
+                'image'               => asset('images/og.png'),
                 'publisher'           => ['@id' => $siteUrl . '/#organization'],
                 'offers'              => [
                     '@type'         => 'AggregateOffer',
@@ -49,9 +64,9 @@
                     'highPrice'     => '79',
                     'offerCount'    => '3',
                     'offers'        => [
-                        ['@type' => 'Offer', 'price' => '10', 'priceCurrency' => 'EUR', 'name' => __('landing.pricing.basic.name')],
-                        ['@type' => 'Offer', 'price' => '45', 'priceCurrency' => 'EUR', 'name' => __('landing.pricing.advanced.name')],
-                        ['@type' => 'Offer', 'price' => '79', 'priceCurrency' => 'EUR', 'name' => __('landing.pricing.professional.name')],
+                        ['@type' => 'Offer', 'price' => '10', 'priceCurrency' => 'EUR', 'name' => __('landing.pricing.basic.name'), 'url' => $canonicalUrl . '#pricing', 'availability' => 'https://schema.org/InStock'],
+                        ['@type' => 'Offer', 'price' => '45', 'priceCurrency' => 'EUR', 'name' => __('landing.pricing.advanced.name'), 'url' => $canonicalUrl . '#pricing', 'availability' => 'https://schema.org/InStock'],
+                        ['@type' => 'Offer', 'price' => '79', 'priceCurrency' => 'EUR', 'name' => __('landing.pricing.professional.name'), 'url' => $canonicalUrl . '#pricing', 'availability' => 'https://schema.org/InStock'],
                     ],
                 ],
             ],
@@ -151,6 +166,10 @@
         gtag('config', 'G-4NVX4MTRKN');
     </script>
 
+    {{-- Preload above-the-fold fonts (hero heading + body) --}}
+    <link rel="preload" as="font" type="font/woff2" href="{{ Vite::asset('resources/fonts/outfit-latin.woff2') }}" crossorigin>
+    <link rel="preload" as="font" type="font/woff2" href="{{ Vite::asset('resources/fonts/dm-sans-latin.woff2') }}" crossorigin>
+
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="font-sans antialiased bg-white text-[#222222]">
@@ -170,15 +189,15 @@
 
     {{-- NAVIGATION --}}
     <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-sm border-b border-gray-100">
-        <div class="max-w-6xl mx-auto px-6 h-16 flex items-center gap-8">
-            <a href="{{ url('/' . $currentPath) }}" class="font-display font-bold text-xl tracking-tight flex-shrink-0" aria-label="LiftDeck home">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center gap-4 sm:gap-8">
+            <a href="{{ url('/' . $currentPath) }}" class="inline-flex items-center min-h-[44px] font-display font-bold text-xl tracking-tight flex-shrink-0" aria-label="LiftDeck home">
                 Lift<span class="text-[#1456f0]">Deck</span>
             </a>
             <nav class="hidden md:flex items-center gap-1 flex-1" aria-label="Main navigation">
                 <a href="#features" class="px-4 py-2 rounded-full text-sm font-medium text-[#45515e] hover:text-[#222222] hover:bg-black/5 transition-colors">{{ __('landing.nav.features') }}</a>
                 <a href="#pricing" class="px-4 py-2 rounded-full text-sm font-medium text-[#45515e] hover:text-[#222222] hover:bg-black/5 transition-colors">{{ __('landing.nav.pricing') }}</a>
             </nav>
-            <div class="flex items-center gap-3 ml-auto">
+            <div class="flex items-center gap-2 sm:gap-3 ml-auto">
                 {{-- Locale switcher --}}
                 <div x-data="{ open: false }" class="relative">
                     <button
@@ -186,7 +205,7 @@
                         @click.outside="open = false"
                         type="button"
                         aria-label="Select language"
-                        class="flex items-center gap-1.5 px-3 py-2 rounded-full text-sm text-[#45515e] hover:text-[#222222] hover:bg-black/5 transition-colors"
+                        class="flex items-center gap-1.5 px-3 min-h-[44px] rounded-full text-sm text-[#45515e] hover:text-[#222222] hover:bg-black/5 transition-colors"
                     >
                         <span class="text-base leading-none">{{ $landingLocales[$currentLocale]['flag'] }}</span>
                         <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -214,10 +233,10 @@
                 </div>
 
                 @if(Route::has('login'))
-                    <a href="{{ route('login') }}" class="text-sm font-medium text-[#45515e] hover:text-[#222222] transition-colors">{{ __('landing.nav.sign_in') }}</a>
+                    <a href="{{ route('login') }}" class="hidden sm:inline-flex items-center min-h-[44px] whitespace-nowrap text-sm font-medium text-[#45515e] hover:text-[#222222] transition-colors">{{ __('landing.nav.sign_in') }}</a>
                 @endif
                 @if(Route::has('register'))
-                    <a href="{{ route('register') }}" class="px-4 py-2.5 bg-[#181e25] text-white text-sm font-semibold rounded-lg hover:bg-gray-800 transition-colors">
+                    <a href="{{ route('register') }}" class="inline-flex items-center min-h-[44px] whitespace-nowrap px-3 sm:px-4 bg-[#181e25] text-white text-sm font-semibold rounded-lg hover:bg-gray-800 transition-colors">
                         {{ __('landing.nav.get_started') }}
                     </a>
                 @endif
@@ -289,6 +308,7 @@
                             <div class="relative w-full" style="aspect-ratio: 1440 / 900;">
                                 @foreach($heroSlides as $i => $slide)
                                     <picture class="ld-slide ld-slide-{{ $i + 1 }}">
+                                        <source media="(max-width: 1023px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
                                         <source type="image/webp" srcset="{{ asset('images/landing/' . $slide['file'] . '-full@1x.webp') }} 1x, {{ asset('images/landing/' . $slide['file'] . '-full@2x.webp') }} 2x">
                                         <img
                                             src="{{ asset('images/landing/' . $slide['file'] . '-full@1x.png') }}"
@@ -338,6 +358,7 @@
                                             width="390" height="844"
                                             class="absolute inset-0 block w-full h-full object-cover object-top"
                                             loading="{{ $i === 0 ? 'eager' : 'lazy' }}"
+                                            @if($i === 0) fetchpriority="high" @endif
                                         >
                                     </picture>
                                 @endforeach

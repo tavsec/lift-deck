@@ -1,15 +1,14 @@
 User-agent: *
-Allow: /$
-Allow: /en
-Allow: /si
-Allow: /hr
-Allow: /sitemap.xml
-Allow: /build/
-Allow: /images/
-Allow: /css/
-Allow: /js/
-Allow: /fonts/
-Allow: /vendor/
-Disallow: /
+Disallow: /coach$
+Disallow: /coach/
+Disallow: /client$
+Disallow: /client/
+Disallow: /admin$
+Disallow: /admin/
+Disallow: /join
+Disallow: /verify-email
+Disallow: /confirm-password
+Disallow: /reset-password
+Disallow: /livewire/
 
 Sitemap: {{ $sitemapUrl }}

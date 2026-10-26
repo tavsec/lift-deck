@@ -25,3 +25,10 @@ Thumbs.db
 /storage/media-library/
 .worktrees
 .superpowers/
+
+# Claude Code: per-user settings
+/.claude/settings.local.json
+
+# Generated artifacts (launch videos, SEO audit reports)
+/brag-output/
+/*-audit/

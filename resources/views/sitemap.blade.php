@@ -9,8 +9,6 @@
         <xhtml:link rel="alternate" hreflang="{{ $altHreflang }}" href="{{ $landingUrls[$altHreflang] }}"/>
         @endforeach
         <xhtml:link rel="alternate" hreflang="x-default" href="{{ $xDefault }}"/>
-        <changefreq>weekly</changefreq>
-        <priority>1.0</priority>
     </url>
 @endforeach
 @foreach($locales as $hreflang => $path)
@@ -20,8 +18,6 @@
         <xhtml:link rel="alternate" hreflang="{{ $altHreflang }}" href="{{ $termsUrls[$altHreflang] }}"/>
         @endforeach
         <xhtml:link rel="alternate" hreflang="x-default" href="{{ $termsUrls['en'] }}"/>
-        <changefreq>yearly</changefreq>
-        <priority>0.3</priority>
     </url>
 @endforeach
 </urlset>

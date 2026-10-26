@@ -17,6 +17,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'subscribed' => \App\Http\Middleware\EnsureCoachSubscribed::class,
             'subscription.feature' => \App\Http\Middleware\EnsureSubscriptionFeature::class,
         ]);
+        $middleware->prepend(\App\Http\Middleware\RedirectTrailingSlash::class);
         $middleware->web(append: [
             \App\Http\Middleware\SetLocale::class,
         ]);
